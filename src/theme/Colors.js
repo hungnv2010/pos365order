@@ -3,8 +3,8 @@ import { Platform} from 'react-native'
 const colors = {
   colorchinh: "#FF5722", // Red orange
   colorPhu:"#2196F3", // Blue
-  backgroundWhite:"#FFFFFF",
-  backgroundYellow:"#FFF8E1",
+  backgroundWhite:"#FFF8E1",
+  backgroundYellow:"#FFFFFF",
 
   colorBottomIndicator: "#fff",
   colorButtonOK: "#0070c1",

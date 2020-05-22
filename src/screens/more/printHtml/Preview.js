@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, TextInput, NativeModules } from 'react-native';
+import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { Images, Colors, Metrics } from '../../../theme';
 import { WebView } from 'react-native-webview';
 import useDidMountEffect from '../../../customHook/useDidMountEffect';
@@ -12,7 +12,6 @@ import { dateToDate, DATE_FORMAT, currencyToString } from '../../../common/Utils
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
 import { useSelector } from 'react-redux';
-const { Print } = NativeModules;
 
 const typeHeader1 = "HOÁ ĐƠN TEST PRINT"
 const code1 = "HD000000"
@@ -29,10 +28,6 @@ export default forwardRef((props, ref) => {
         console.log("useSelector state ", state);
         return state.Common.deviceType
     });
-
-    useEffect(() => {
-        Print.registerPrint("Hung")
-    },[])
 
     useEffect(() => {
         console.log("Preview props", props);
@@ -145,8 +140,6 @@ export default forwardRef((props, ref) => {
 
     function clickPrint() {
         alert("clickPrint")
-        
-        Print.printImage("Hung")
     }
 
     useImperativeHandle(ref, () => ({

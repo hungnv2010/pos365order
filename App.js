@@ -136,8 +136,8 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <StatusBar barStyle="light-content" backgroundColor="red" />
-      <SafeAreaView style={{ flex: 0, backgroundColor:"red" }} />
+      <StatusBar barStyle="light-content" backgroundColor="orange" />
+      <SafeAreaView style={{ flex: 0, backgroundColor:"orange" }} />
       <SafeAreaView
         forceInset={{ top: 'never' }}
         style={{ flex: 1 }}>

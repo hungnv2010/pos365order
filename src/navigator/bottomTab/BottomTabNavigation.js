@@ -51,15 +51,6 @@ export default () => {
                         <Image style={{ width: 20, height: 20, padding: 5 }} color={color} source={Images.icon_more} />
                 ),
             }} />
-            <Tab.Screen name="WrapSelectFood" component={WrapSelectFood} options={{
-                tabBarLabel: 'More',
-                tabBarIcon: ({ color }) => (
-                    color == colors.colorchinh ?
-                        <Image style={{ width: 20, height: 20, padding: 5 }} color={color} source={Images.icon_more_active} />
-                        :
-                        <Image style={{ width: 20, height: 20, padding: 5 }} color={color} source={Images.icon_more} />
-                ),
-            }} />
 
         </Tab.Navigator>
     );

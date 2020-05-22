@@ -5,7 +5,8 @@ import { Observable, map } from 'rxjs';
 
 class DataManager {
     constructor() {
-        this.dataChoosing = []
+        this.dataChoosing = [];
+        this.listTopping = [];
     }
 
     syncServerEvent = async () => {
@@ -43,11 +44,11 @@ class DataManager {
     syncAllDatas = async () => {
         console.log("syncAllDatas");
         await this.syncServerEvent(),
-        await this.syncProduct(),
-        await this.syncTopping(),
-        await this.syncData(ApiPath.SYNC_ROOMS, SchemaName.ROOM),
-        await this.syncData(ApiPath.SYNC_ROOM_GROUPS, SchemaName.ROOM_GROUP),
-        await this.syncData(ApiPath.SYNC_CATEGORIES, SchemaName.CATEGORIES)
+            await this.syncProduct(),
+            await this.syncTopping(),
+            await this.syncData(ApiPath.SYNC_ROOMS, SchemaName.ROOM),
+            await this.syncData(ApiPath.SYNC_ROOM_GROUPS, SchemaName.ROOM_GROUP),
+            await this.syncData(ApiPath.SYNC_CATEGORIES, SchemaName.CATEGORIES)
     }
 
 }
