@@ -13,6 +13,8 @@ import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
 import { useSelector } from 'react-redux';
 const { Print } = NativeModules;
+import ViewShot from 'react-native-view-shot';
+const dimension = { width: 300, height: 300 };
 
 const typeHeader1 = "HOÁ ĐƠN TEST PRINT"
 const code1 = "HD000000"
@@ -21,6 +23,13 @@ const number1 = "0000"
 const CONTENT_FOOTER_POS365 = "Powered by POS365.VN"
 
 export default forwardRef((props, ref) => {
+
+    const [source, setSource] = useState(null);
+    const onCapture = useCallback(uri => {
+        console.log("onCapture uri ", uri);
+        setSource({ uri })
+    }
+        , []);
 
     const [data, setData] = useState("");
     const [vendorSession, setVendorSession] = useState({});
@@ -31,8 +40,8 @@ export default forwardRef((props, ref) => {
     });
 
     useEffect(() => {
-        Print.registerPrint("Hung")
-    },[])
+        // Print.registerPrint("192.168.99.104")
+    }, [])
 
     useEffect(() => {
         console.log("Preview props", props);
@@ -119,6 +128,8 @@ export default forwardRef((props, ref) => {
             HTMLBase = HTMLBase.replace("{Chan_Trang}", "Xin cảm ơn, hẹn gặp quý khách!")
             HTMLBase = HTMLBase.replace("{FOOTER_POS_365}", CONTENT_FOOTER_POS365)
         }
+        console.log("html ", JSON.stringify(HTMLBase));
+        
         setData(HTMLBase)
     }
 
@@ -144,9 +155,8 @@ export default forwardRef((props, ref) => {
     }
 
     function clickPrint() {
-        alert("clickPrint")
-        
-        Print.printImage("Hung")
+        console.log("clickPrint data ", data)
+        Print.printImage(data)
     }
 
     useImperativeHandle(ref, () => ({
@@ -165,16 +175,20 @@ export default forwardRef((props, ref) => {
                 clickPrint={() => clickPrint()}
                 clickCheck={() => clickCheck()}
             /> : null}
-            <WebView
-                source={{ html: data }}
-                style={{ marginTop: 0, flex: 1 }}
-                onError={syntheticEvent => {
-                    dialogManager.hiddenLoading();
-                }}
-                onLoadEnd={syntheticEvent => {
-                    dialogManager.hiddenLoading();
-                }}
-            />
+            {/* <ViewShot onCapture={onCapture} captureMode="update" style={{ height: 200}}> */}
+                <WebView
+                    source={{ html: data }}
+                    style={{ marginTop: 0, flex: 1 }}
+                    onError={syntheticEvent => {
+                        dialogManager.hiddenLoading();
+                    }}
+                    onLoadEnd={syntheticEvent => {
+                        dialogManager.hiddenLoading();
+                    }}
+                />
+            {/* </ViewShot> */}
+
+            {/* <Image fadeDuration={0} source={source} style={{flex: 1}} /> */}
         </View>
     );
 });

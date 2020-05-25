@@ -12,11 +12,11 @@
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1A528571247226050090BA8A /* PrinterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A528570247226050090BA8A /* PrinterManager.m */; };
 		1A528574247226170090BA8A /* libRTPrinterSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A528573247226170090BA8A /* libRTPrinterSDK.a */; };
 		1A528576247226310090BA8A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A528575247226310090BA8A /* CoreBluetooth.framework */; };
 		1A528578247226380090BA8A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A528577247226380090BA8A /* libz.tbd */; };
 		1A52857C247228580090BA8A /* Print.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A52857B247228580090BA8A /* Print.m */; };
+		1A5285A724726E930090BA8A /* PrinterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A52859E24726E930090BA8A /* PrinterManager.m */; };
 		27768AA63A0175EB35BA285D /* libPods-Pos365Order.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F37C705F6B7232F4419AE7C1 /* libPods-Pos365Order.a */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -56,51 +56,51 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Pos365Order/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Pos365Order/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Pos365Order/main.m; sourceTree = "<group>"; };
-		1A528549247225E90090BA8A /* BitmapSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BitmapSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/BitmapSetting.h; sourceTree = "<group>"; };
-		1A52854A247225E90090BA8A /* PrinterStatusObj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrinterStatusObj.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PrinterStatusObj.h; sourceTree = "<group>"; };
-		1A52854B247225E90090BA8A /* PlistUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlistUtils.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PlistUtils.h; sourceTree = "<group>"; };
-		1A52854C247225E90090BA8A /* SafeMutableArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SafeMutableArray.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/SafeMutableArray.h; sourceTree = "<group>"; };
-		1A52854D247225E90090BA8A /* CPCLCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CPCLCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/CPCLCmd.h; sourceTree = "<group>"; };
-		1A52854E247225E90090BA8A /* PinPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinPrinter.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PinPrinter.h; sourceTree = "<group>"; };
-		1A52854F247225E90090BA8A /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/Header.h; sourceTree = "<group>"; };
-		1A528550247225E90090BA8A /* LabelCommonSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LabelCommonSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/LabelCommonSetting.h; sourceTree = "<group>"; };
-		1A528551247225E90090BA8A /* PinPrinterFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinPrinterFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PinPrinterFactory.h; sourceTree = "<group>"; };
-		1A528552247225E90090BA8A /* ESCCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ESCCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ESCCmd.h; sourceTree = "<group>"; };
-		1A528553247225E90090BA8A /* RTBlueToothPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RTBlueToothPI.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/RTBlueToothPI.h; sourceTree = "<group>"; };
-		1A528554247225E90090BA8A /* ObserverObj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ObserverObj.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ObserverObj.h; sourceTree = "<group>"; };
-		1A528555247225E90090BA8A /* RTDeviceinfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RTDeviceinfo.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/RTDeviceinfo.h; sourceTree = "<group>"; };
-		1A528556247225EA0090BA8A /* WIFIFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WIFIFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/WIFIFactory.h; sourceTree = "<group>"; };
-		1A528557247225EA0090BA8A /* ZPLCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZPLCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ZPLCmd.h; sourceTree = "<group>"; };
-		1A528558247225EA0090BA8A /* BlueToothFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlueToothFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/BlueToothFactory.h; sourceTree = "<group>"; };
-		1A528559247225EA0090BA8A /* ThermalPrinterFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThermalPrinterFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ThermalPrinterFactory.h; sourceTree = "<group>"; };
-		1A52855A247225EA0090BA8A /* PrinterInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrinterInterface.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PrinterInterface.h; sourceTree = "<group>"; };
-		1A52855B247225EA0090BA8A /* ZPLFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZPLFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ZPLFactory.h; sourceTree = "<group>"; };
-		1A52855C247225EA0090BA8A /* LabelPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LabelPrinter.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/LabelPrinter.h; sourceTree = "<group>"; };
-		1A52855D247225EA0090BA8A /* BarcodeSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BarcodeSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/BarcodeSetting.h; sourceTree = "<group>"; };
-		1A52855E247225EA0090BA8A /* LabelPrinterFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LabelPrinterFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/LabelPrinterFactory.h; sourceTree = "<group>"; };
-		1A52855F247225EA0090BA8A /* TSCCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TSCCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/TSCCmd.h; sourceTree = "<group>"; };
-		1A528560247225EA0090BA8A /* PrinterFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrinterFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PrinterFactory.h; sourceTree = "<group>"; };
-		1A528561247225EB0090BA8A /* Printer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Printer.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/Printer.h; sourceTree = "<group>"; };
-		1A528562247225EB0090BA8A /* ESCFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ESCFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ESCFactory.h; sourceTree = "<group>"; };
-		1A528563247225EB0090BA8A /* CmdFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CmdFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/CmdFactory.h; sourceTree = "<group>"; };
-		1A528564247225EB0090BA8A /* TSCFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TSCFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/TSCFactory.h; sourceTree = "<group>"; };
-		1A528565247225EB0090BA8A /* PinCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PinCmd.h; sourceTree = "<group>"; };
-		1A528566247225EB0090BA8A /* PIFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PIFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PIFactory.h; sourceTree = "<group>"; };
-		1A528567247225EB0090BA8A /* CommonSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommonSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/CommonSetting.h; sourceTree = "<group>"; };
-		1A528568247225EB0090BA8A /* Cmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Cmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/Cmd.h; sourceTree = "<group>"; };
-		1A528569247225EB0090BA8A /* TextSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/TextSetting.h; sourceTree = "<group>"; };
-		1A52856A247225EB0090BA8A /* ThermalPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThermalPrinter.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ThermalPrinter.h; sourceTree = "<group>"; };
-		1A52856B247225EC0090BA8A /* PinCmdFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinCmdFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PinCmdFactory.h; sourceTree = "<group>"; };
-		1A52856C247225EC0090BA8A /* EnumTypeDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EnumTypeDef.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/EnumTypeDef.h; sourceTree = "<group>"; };
-		1A52856D247225EC0090BA8A /* CPCLFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CPCLFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/CPCLFactory.h; sourceTree = "<group>"; };
-		1A52856E247225EC0090BA8A /* WifiInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WifiInterface.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/WifiInterface.h; sourceTree = "<group>"; };
-		1A52856F247226050090BA8A /* PrinterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterManager.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Common/PrinterManager.h; sourceTree = "<group>"; };
-		1A528570247226050090BA8A /* PrinterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrinterManager.m; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Common/PrinterManager.m; sourceTree = "<group>"; };
 		1A528573247226170090BA8A /* libRTPrinterSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRTPrinterSDK.a; sourceTree = "<group>"; };
 		1A528575247226310090BA8A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		1A528577247226380090BA8A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		1A52857A247228480090BA8A /* Print.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Print.h; sourceTree = "<group>"; };
 		1A52857B247228580090BA8A /* Print.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Print.m; sourceTree = "<group>"; };
+		1A52857F24726E910090BA8A /* ZPLFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZPLFactory.h; path = Common/ZPLFactory.h; sourceTree = "<group>"; };
+		1A52858024726E910090BA8A /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = Common/Header.h; sourceTree = "<group>"; };
+		1A52858124726E910090BA8A /* PrinterInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterInterface.h; path = Common/PrinterInterface.h; sourceTree = "<group>"; };
+		1A52858224726E910090BA8A /* PIFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIFactory.h; path = Common/PIFactory.h; sourceTree = "<group>"; };
+		1A52858324726E910090BA8A /* CmdFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CmdFactory.h; path = Common/CmdFactory.h; sourceTree = "<group>"; };
+		1A52858424726E910090BA8A /* PinCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinCmd.h; path = Common/PinCmd.h; sourceTree = "<group>"; };
+		1A52858524726E910090BA8A /* WifiInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WifiInterface.h; path = Common/WifiInterface.h; sourceTree = "<group>"; };
+		1A52858624726E910090BA8A /* ESCFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ESCFactory.h; path = Common/ESCFactory.h; sourceTree = "<group>"; };
+		1A52858724726E910090BA8A /* LabelCommonSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelCommonSetting.h; path = Common/LabelCommonSetting.h; sourceTree = "<group>"; };
+		1A52858824726E910090BA8A /* PinPrinter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinPrinter.h; path = Common/PinPrinter.h; sourceTree = "<group>"; };
+		1A52858924726E910090BA8A /* BarcodeSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BarcodeSetting.h; path = Common/BarcodeSetting.h; sourceTree = "<group>"; };
+		1A52858A24726E910090BA8A /* CPCLFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPCLFactory.h; path = Common/CPCLFactory.h; sourceTree = "<group>"; };
+		1A52858B24726E910090BA8A /* LabelPrinterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelPrinterFactory.h; path = Common/LabelPrinterFactory.h; sourceTree = "<group>"; };
+		1A52858C24726E910090BA8A /* WIFIFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WIFIFactory.h; path = Common/WIFIFactory.h; sourceTree = "<group>"; };
+		1A52858D24726E920090BA8A /* TSCFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSCFactory.h; path = Common/TSCFactory.h; sourceTree = "<group>"; };
+		1A52858E24726E920090BA8A /* CommonSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonSetting.h; path = Common/CommonSetting.h; sourceTree = "<group>"; };
+		1A52858F24726E920090BA8A /* PinCmdFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinCmdFactory.h; path = Common/PinCmdFactory.h; sourceTree = "<group>"; };
+		1A52859024726E920090BA8A /* RTBlueToothPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTBlueToothPI.h; path = Common/RTBlueToothPI.h; sourceTree = "<group>"; };
+		1A52859124726E920090BA8A /* RTDeviceinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTDeviceinfo.h; path = Common/RTDeviceinfo.h; sourceTree = "<group>"; };
+		1A52859224726E920090BA8A /* Printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Printer.h; path = Common/Printer.h; sourceTree = "<group>"; };
+		1A52859324726E920090BA8A /* PinPrinterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinPrinterFactory.h; path = Common/PinPrinterFactory.h; sourceTree = "<group>"; };
+		1A52859424726E920090BA8A /* EnumTypeDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumTypeDef.h; path = Common/EnumTypeDef.h; sourceTree = "<group>"; };
+		1A52859524726E920090BA8A /* Cmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cmd.h; path = Common/Cmd.h; sourceTree = "<group>"; };
+		1A52859624726E920090BA8A /* PrinterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterFactory.h; path = Common/PrinterFactory.h; sourceTree = "<group>"; };
+		1A52859724726E920090BA8A /* CPCLCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPCLCmd.h; path = Common/CPCLCmd.h; sourceTree = "<group>"; };
+		1A52859824726E920090BA8A /* ThermalPrinterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThermalPrinterFactory.h; path = Common/ThermalPrinterFactory.h; sourceTree = "<group>"; };
+		1A52859924726E920090BA8A /* TSCCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSCCmd.h; path = Common/TSCCmd.h; sourceTree = "<group>"; };
+		1A52859A24726E920090BA8A /* PrinterStatusObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterStatusObj.h; path = Common/PrinterStatusObj.h; sourceTree = "<group>"; };
+		1A52859B24726E930090BA8A /* PrinterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterManager.h; path = Common/PrinterManager.h; sourceTree = "<group>"; };
+		1A52859C24726E930090BA8A /* PlistUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlistUtils.h; path = Common/PlistUtils.h; sourceTree = "<group>"; };
+		1A52859D24726E930090BA8A /* ESCCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ESCCmd.h; path = Common/ESCCmd.h; sourceTree = "<group>"; };
+		1A52859E24726E930090BA8A /* PrinterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrinterManager.m; path = Common/PrinterManager.m; sourceTree = "<group>"; };
+		1A52859F24726E930090BA8A /* LabelPrinter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelPrinter.h; path = Common/LabelPrinter.h; sourceTree = "<group>"; };
+		1A5285A024726E930090BA8A /* SafeMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SafeMutableArray.h; path = Common/SafeMutableArray.h; sourceTree = "<group>"; };
+		1A5285A124726E930090BA8A /* ThermalPrinter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThermalPrinter.h; path = Common/ThermalPrinter.h; sourceTree = "<group>"; };
+		1A5285A224726E930090BA8A /* BlueToothFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlueToothFactory.h; path = Common/BlueToothFactory.h; sourceTree = "<group>"; };
+		1A5285A324726E930090BA8A /* ObserverObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObserverObj.h; path = Common/ObserverObj.h; sourceTree = "<group>"; };
+		1A5285A424726E930090BA8A /* TextSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSetting.h; path = Common/TextSetting.h; sourceTree = "<group>"; };
+		1A5285A524726E930090BA8A /* BitmapSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitmapSetting.h; path = Common/BitmapSetting.h; sourceTree = "<group>"; };
+		1A5285A624726E930090BA8A /* ZPLCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZPLCmd.h; path = Common/ZPLCmd.h; sourceTree = "<group>"; };
 		251A9A3B511EFF6C1D73B685 /* Pods-Pos365Order.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order.debug.xcconfig"; path = "Target Support Files/Pods-Pos365Order/Pods-Pos365Order.debug.xcconfig"; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Pos365Order-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pos365Order-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Pos365Order-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pos365Order-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,46 +195,46 @@
 		1A528548247225D10090BA8A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				1A52855D247225EA0090BA8A /* BarcodeSetting.h */,
-				1A528549247225E90090BA8A /* BitmapSetting.h */,
-				1A52856F247226050090BA8A /* PrinterManager.h */,
-				1A528570247226050090BA8A /* PrinterManager.m */,
-				1A528558247225EA0090BA8A /* BlueToothFactory.h */,
-				1A528568247225EB0090BA8A /* Cmd.h */,
-				1A528563247225EB0090BA8A /* CmdFactory.h */,
-				1A528567247225EB0090BA8A /* CommonSetting.h */,
-				1A52854D247225E90090BA8A /* CPCLCmd.h */,
-				1A52856D247225EC0090BA8A /* CPCLFactory.h */,
-				1A52856C247225EC0090BA8A /* EnumTypeDef.h */,
-				1A528552247225E90090BA8A /* ESCCmd.h */,
-				1A528562247225EB0090BA8A /* ESCFactory.h */,
-				1A52854F247225E90090BA8A /* Header.h */,
-				1A528550247225E90090BA8A /* LabelCommonSetting.h */,
-				1A52855C247225EA0090BA8A /* LabelPrinter.h */,
-				1A52855E247225EA0090BA8A /* LabelPrinterFactory.h */,
-				1A528554247225E90090BA8A /* ObserverObj.h */,
-				1A528566247225EB0090BA8A /* PIFactory.h */,
-				1A528565247225EB0090BA8A /* PinCmd.h */,
-				1A52856B247225EC0090BA8A /* PinCmdFactory.h */,
-				1A52854E247225E90090BA8A /* PinPrinter.h */,
-				1A528551247225E90090BA8A /* PinPrinterFactory.h */,
-				1A52854B247225E90090BA8A /* PlistUtils.h */,
-				1A528561247225EB0090BA8A /* Printer.h */,
-				1A528560247225EA0090BA8A /* PrinterFactory.h */,
-				1A52855A247225EA0090BA8A /* PrinterInterface.h */,
-				1A52854A247225E90090BA8A /* PrinterStatusObj.h */,
-				1A528553247225E90090BA8A /* RTBlueToothPI.h */,
-				1A528555247225E90090BA8A /* RTDeviceinfo.h */,
-				1A52854C247225E90090BA8A /* SafeMutableArray.h */,
-				1A528569247225EB0090BA8A /* TextSetting.h */,
-				1A52856A247225EB0090BA8A /* ThermalPrinter.h */,
-				1A528559247225EA0090BA8A /* ThermalPrinterFactory.h */,
-				1A52855F247225EA0090BA8A /* TSCCmd.h */,
-				1A528564247225EB0090BA8A /* TSCFactory.h */,
-				1A528556247225EA0090BA8A /* WIFIFactory.h */,
-				1A52856E247225EC0090BA8A /* WifiInterface.h */,
-				1A528557247225EA0090BA8A /* ZPLCmd.h */,
-				1A52855B247225EA0090BA8A /* ZPLFactory.h */,
+				1A52858924726E910090BA8A /* BarcodeSetting.h */,
+				1A5285A524726E930090BA8A /* BitmapSetting.h */,
+				1A5285A224726E930090BA8A /* BlueToothFactory.h */,
+				1A52859524726E920090BA8A /* Cmd.h */,
+				1A52858324726E910090BA8A /* CmdFactory.h */,
+				1A52858E24726E920090BA8A /* CommonSetting.h */,
+				1A52859724726E920090BA8A /* CPCLCmd.h */,
+				1A52858A24726E910090BA8A /* CPCLFactory.h */,
+				1A52859424726E920090BA8A /* EnumTypeDef.h */,
+				1A52859D24726E930090BA8A /* ESCCmd.h */,
+				1A52858624726E910090BA8A /* ESCFactory.h */,
+				1A52858024726E910090BA8A /* Header.h */,
+				1A52858724726E910090BA8A /* LabelCommonSetting.h */,
+				1A52859F24726E930090BA8A /* LabelPrinter.h */,
+				1A52858B24726E910090BA8A /* LabelPrinterFactory.h */,
+				1A5285A324726E930090BA8A /* ObserverObj.h */,
+				1A52858224726E910090BA8A /* PIFactory.h */,
+				1A52858424726E910090BA8A /* PinCmd.h */,
+				1A52858F24726E920090BA8A /* PinCmdFactory.h */,
+				1A52858824726E910090BA8A /* PinPrinter.h */,
+				1A52859324726E920090BA8A /* PinPrinterFactory.h */,
+				1A52859C24726E930090BA8A /* PlistUtils.h */,
+				1A52859224726E920090BA8A /* Printer.h */,
+				1A52859624726E920090BA8A /* PrinterFactory.h */,
+				1A52858124726E910090BA8A /* PrinterInterface.h */,
+				1A52859B24726E930090BA8A /* PrinterManager.h */,
+				1A52859E24726E930090BA8A /* PrinterManager.m */,
+				1A52859A24726E920090BA8A /* PrinterStatusObj.h */,
+				1A52859024726E920090BA8A /* RTBlueToothPI.h */,
+				1A52859124726E920090BA8A /* RTDeviceinfo.h */,
+				1A5285A024726E930090BA8A /* SafeMutableArray.h */,
+				1A5285A424726E930090BA8A /* TextSetting.h */,
+				1A5285A124726E930090BA8A /* ThermalPrinter.h */,
+				1A52859824726E920090BA8A /* ThermalPrinterFactory.h */,
+				1A52859924726E920090BA8A /* TSCCmd.h */,
+				1A52858D24726E920090BA8A /* TSCFactory.h */,
+				1A52858C24726E910090BA8A /* WIFIFactory.h */,
+				1A52858524726E910090BA8A /* WifiInterface.h */,
+				1A5285A624726E930090BA8A /* ZPLCmd.h */,
+				1A52857F24726E910090BA8A /* ZPLFactory.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -412,14 +412,20 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = S8C4LR9F7U;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = S8C4LR9F7U;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = S8C4LR9F7U;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = S8C4LR9F7U;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -700,8 +706,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				1A528571247226050090BA8A /* PrinterManager.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				1A5285A724726E930090BA8A /* PrinterManager.m in Sources */,
 				1A52857C247228580090BA8A /* Print.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -756,6 +762,7 @@
 			baseConfigurationReference = AC70D0E37990FA7015CE0141 /* Pods-Pos365OrderTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -780,6 +787,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				INFOPLIST_FILE = Pos365OrderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -801,6 +809,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				INFOPLIST_FILE = Pos365Order/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -825,6 +834,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				INFOPLIST_FILE = Pos365Order/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -854,6 +864,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Pos365Order-tvOS/Info.plist";
@@ -883,6 +894,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Pos365Order-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -909,6 +921,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Pos365Order-tvOSTests/Info.plist";
@@ -937,6 +950,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Pos365Order-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

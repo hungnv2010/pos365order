@@ -13,17 +13,25 @@
 @interface Print ()
 {
   PrinterManager * _printerManager;
+  UIImage *imagePrint;
+  UIImage *imagePrint1;
+  UIImage *imagePrint2;
+  
 }
 @end
 
 @implementation Print {
   bool isConnectAndPrint;
+  UIWebView * webView;
+  NSString *html;
+  NSString *IP;
 }
 
 RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(registerPrint:(NSString *)param) {
   NSLog(@"registerPrint param %@", param);
+  IP = param;
   isConnectAndPrint = NO;
   _printerManager = [PrinterManager sharedInstance];
   [_printerManager AddConnectObserver:self selector:@selector(handleNotification:)];//Add
@@ -31,15 +39,170 @@ RCT_EXPORT_METHOD(registerPrint:(NSString *)param) {
 
 RCT_EXPORT_METHOD(printImage:(NSString *)param) {
   NSLog(@"printImage param %@", param);
+  html = param;
   isConnectAndPrint = YES;
-  [_printerManager DoConnectwifi:@"192.168.99.103" Port:9100];
+  [_printerManager DoConnectwifi:IP Port:9100];
   
 }
 
-//- (void)savePushNotification: (NSString *) param {
-//    NSLog(@"savePushNotification param %@", param);
-//    [_printerManager DoConnectwifi:@"192.168.99.103" Port:9100];
-//}
+- (void)loadWebview{
+  NSLog(@"loadWebview ");
+  
+  CGRect frame = CGRectMake(0,0,200,600);
+  webView =[[UIWebView alloc] initWithFrame:frame];
+  webView.delegate = self;
+  
+  webView.userInteractionEnabled = NO;
+  webView.opaque = NO;
+  webView.backgroundColor = [UIColor whiteColor];
+  [webView loadHTMLString: html baseURL: nil];
+  
+  
+  double delayInSeconds = 1;
+  dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)); // 1
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){ // 2
+    
+    //    });
+    //
+    
+    CGRect originalFrame = webView.frame;
+    
+    //get the width and height of webpage using js (you might need to use another call, this doesn't work always)
+    int webViewHeight = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollHeight;"] integerValue];
+    int webViewWidth = [[webView stringByEvaluatingJavaScriptFromString:@"document.body.scrollWidth;"] integerValue];
+    
+    NSLog(@"webViewWidth=%d",webViewWidth);
+    NSLog(@"webViewHeight=%d",webViewHeight);
+    //set the webview's frames to match the size of the page
+    [webView setFrame:CGRectMake(0, 0, webViewWidth, webViewHeight)];
+    
+    //make the snapshot
+    UIGraphicsBeginImageContextWithOptions(webView.frame.size, false, 0.0);
+    [webView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    //set the webview's frame to the original size
+    [webView setFrame:originalFrame];
+    
+    //and VOILA :)
+    imagePrint = image;
+    //                           self.imageView.image = imagePrint;
+    NSLog(@".width=%d",image.size.width);
+    NSLog(@".height=%d",image.size.height);
+    //                           self.imageView.contentMode = UIViewContentModeScaleAspectFit;
+    //                           [self imageWithImage:imagePrint scaledToWidth:5000 ];
+    
+    float i_width = 5000;
+    float oldWidth = imagePrint.size.width;
+    float oldHeight = imagePrint.size.height;
+    
+    float scaleFactor = i_width / oldWidth;
+    NSLog(@"i_width=%f",i_width);
+    NSLog(@"oldWidth=%f",oldWidth);
+    NSLog(@"scaleFactor=%f",scaleFactor);
+    
+    float newHeight = oldHeight * scaleFactor;
+    float newWidth = oldWidth * scaleFactor;
+    
+    NSLog(@"newWidth=%f",newWidth);
+    NSLog(@"newHeight=%f",newHeight);
+    UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+    [imagePrint drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+    UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+    imagePrint = newImage;
+    
+    CGImageRef tmpImgRef = newImage.CGImage;
+    CGImageRef topImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, 0, newImage.size.width, newImage.size.height / 2.0));
+    imagePrint1 = [UIImage imageWithCGImage:topImgRef];
+    CGImageRelease(topImgRef);
+    
+    CGImageRef bottomImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, newImage.size.height / 2.0,  newImage.size.width, newImage.size.height / 2.0));
+    imagePrint2 = [UIImage imageWithCGImage:bottomImgRef];
+    CGImageRelease(bottomImgRef);
+    
+    for (int i=0; i<2; i++) {
+      Cmd *cmd = [_printerManager CreateCmdClass:_printerManager.CurrentPrinterCmdType];
+      [cmd Clear];
+      cmd.encodingType =Encoding_UTF8;
+      NSData *headercmd = [_printerManager GetHeaderCmd:cmd cmdtype:_printerManager.CurrentPrinterCmdType];
+      [cmd Append:headercmd];
+      
+      NSLog(@"imageFromWebview 4");
+      Printer *currentprinter = _printerManager.CurrentPrinter;
+      BitmapSetting *bitmapSetting  = currentprinter.BitmapSetts;
+      //                                       bitmapSetting.Alignmode = Align_Right;
+      bitmapSetting.Alignmode = Align_Center;
+      bitmapSetting.limitWidth = 60*9;//ESC
+      
+      
+      NSLog(@"imageFromWebview 5");
+      
+      NSData *data;
+      if(i == 0){
+        data = [cmd GetBitMapCmd:bitmapSetting image:imagePrint1];
+      }else {
+        data = [cmd GetBitMapCmd:bitmapSetting image:imagePrint2];
+      }
+      [cmd Append:data];
+      [cmd Append:[cmd GetCutPaperCmd:CutterMode_half]];
+      if ([_printerManager.CurrentPrinter IsOpen]){
+        NSData *data=[cmd GetCmd];
+        NSLog(@"data bytes=%@",data);
+        //        NSLog(@"===========================");
+        //        Byte *b =[data bytes];
+        //        NSMutableString * s = [NSMutableString new];
+        //        for (int i=0; i<data.length; i++) {
+        //            [s appendFormat:@"%02x ",b[i]];
+        //            if ((i+1) % 16==0)
+        //              [s appendString:@"\r"];
+        //        }
+        //        NSLog(@"s=%@",s);
+        // NSString *aString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+        //aString = [aString stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+        //NSLog(@"data string=%@",aString);
+        [currentprinter Write:data];
+      }
+      data = nil;
+      cmd=nil;
+      
+    }
+  });
+}
+
+- (UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width
+{
+  NSLog(@"sourceImage.size.width=%f",sourceImage.size.width);
+  NSLog(@"sourceImage.size.height=%f",sourceImage.size.height);
+  float oldWidth = sourceImage.size.width;
+  float oldHeight = sourceImage.size.height;
+  
+  float scaleFactor = i_width / oldWidth;
+  NSLog(@"i_width=%f",i_width);
+  NSLog(@"oldWidth=%f",oldWidth);
+  NSLog(@"scaleFactor=%f",scaleFactor);
+  
+  float newHeight = oldHeight * scaleFactor;
+  float newWidth = oldWidth * scaleFactor;
+  
+  NSLog(@"newWidth=%f",newWidth);
+  NSLog(@"newHeight=%f",newHeight);
+  UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
+  [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
+  UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
+  imagePrint = newImage;
+  
+  CGImageRef tmpImgRef = newImage.CGImage;
+  CGImageRef topImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, 0, newImage.size.width, newImage.size.height / 2.0));
+  imagePrint1 = [UIImage imageWithCGImage:topImgRef];
+  CGImageRelease(topImgRef);
+  
+  CGImageRef bottomImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, newImage.size.height / 2.0,  newImage.size.width, newImage.size.height / 2.0));
+  imagePrint2 = [UIImage imageWithCGImage:bottomImgRef];
+  CGImageRelease(bottomImgRef);
+  UIGraphicsEndImageContext();
+  return newImage;
+}
 
 #pragma handleNotification
 - (void)handleNotification:(NSNotification *)notification{
@@ -50,7 +213,7 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
       NSLog(@"notification PrinterConnectedNotification");
       if (isConnectAndPrint) {
         NSLog(@"isConnectAndPrint");
-        [self PrintImageBase64];
+        [self loadWebview];
       }
     }else if([notification.name isEqualToString:(NSString *)PrinterDisconnectedNotification])
     {
@@ -62,85 +225,5 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     
   });
 }
-
-- (void) PrintImageBase64{
-  Cmd *cmd = [_printerManager CreateCmdClass:_printerManager.CurrentPrinterCmdType];
-  [cmd Clear];
-  cmd.encodingType =Encoding_UTF8;
-  NSData *headercmd = [_printerManager GetHeaderCmd:cmd cmdtype:_printerManager.CurrentPrinterCmdType];
-  [cmd Append:headercmd];
-  
-  
-  Printer *currentprinter = _printerManager.CurrentPrinter;
-  BitmapSetting *bitmapSetting  = currentprinter.BitmapSetts;
-  bitmapSetting.Alignmode = Align_Left;
-  bitmapSetting.Alignmode = Align_Center;
-  bitmapSetting.limitWidth = 72*8;//ESC
-  switch (_printerManager.CurrentPrinterCmdType) {
-      
-    case PrinterCmdESC:
-      bitmapSetting.Alignmode = Align_Center;
-      bitmapSetting.limitWidth = 72*8;//ESC
-      break;
-    case PrinterCmdTSC:
-    case PrinterCmdCPCL:
-      bitmapSetting.pos_X = 20;
-      bitmapSetting.pos_Y = 40;
-      bitmapSetting.limitWidth = 60*8;
-      break;
-      //            case PrinterCmdPIN:
-      //                bitmapSetting.limitWidth = self.imageView.image.size.width;
-      //                break;
-    case PrinterCmdZPL:
-      bitmapSetting.limitWidth = 92*8;
-      bitmapSetting.pos_X = 10;
-      bitmapSetting.pos_Y = 10;
-      break;
-    default:
-      break;
-  }
-  
-  
-  NSString *base64String = @"data:image/jpeg;base64,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";
-  
-  NSURL *url = [NSURL URLWithString:base64String];
-  NSData *imageData = [NSData dataWithContentsOfURL:url];
-  UIImage *image = [UIImage imageWithData:imageData];
-  
-  
-  NSData *data= [cmd GetBitMapCmd:bitmapSetting image:image];
-  [cmd Append:data];
-  for (int i=0; i<2; i++) {
-    [cmd Append:[cmd GetLFCRCmd]];
-  }
-  [cmd Append:[cmd GetPrintEndCmd:1]];
-  //询问打印是否完成，打印完成，返回 “print Ok" 适用于 Rpp80Use 定制客户使用。
-  //Inquire whether the printing is completed, printing is completed, return "print Ok" For Rpp80Use custom customer use.
-  // [cmd Append:[cmd GetAskPrintOkCmd]];
-  
-  if ([_printerManager.CurrentPrinter IsOpen]){
-    NSData *data=[cmd GetCmd];
-    //        NSLog(@"data bytes=%@",data);
-    //        NSLog(@"===========================");
-    //        Byte *b =[data bytes];
-    //        NSMutableString * s = [NSMutableString new];
-    //        for (int i=0; i<data.length; i++) {
-    //            [s appendFormat:@"%02x ",b[i]];
-    //            if ((i+1) % 16==0)
-    //              [s appendString:@"\r"];
-    //        }
-    //        NSLog(@"s=%@",s);
-    // NSString *aString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    //aString = [aString stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-    //NSLog(@"data string=%@",aString);
-    [currentprinter Write:data];
-  }
-  
-  data = nil;
-  cmd=nil;
-  [_printerManager.CurrentPrinter Close];
-  isConnectAndPrint = NO;
-}
-
 
 @end

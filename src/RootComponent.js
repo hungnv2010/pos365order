@@ -13,7 +13,7 @@ import {
     ScrollView,
     View,
     Text,
-    BackHandler,
+    NativeModules,
     Dimensions, ToastAndroid
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -24,7 +24,8 @@ import { navigationRef } from './navigator/stack/StackNavigation';
 import RNExitApp from "react-native-exit-app";
 import I18n from './common/language/i18n'
 import signalRManager from './common/SignalR';
-
+import { getFileDuLieuString } from './data/fileStore/FileStorage';
+const { Print } = NativeModules;
 let time = 0;
 
 export default () => {
@@ -54,6 +55,15 @@ export default () => {
         setForceUpdate(!forceUpdate);
         dispatch({ type: 'TYPE_DEVICE', deviceType: isTablet() })
         dispatch({ type: 'ORIENTAITION', orientaition: isPortrait() })
+
+        const getCurrentIP = async () => {
+            let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
+            console.log('getCurrentIP ', getCurrentIP);
+            if (getCurrentIP && getCurrentIP != "") {
+                Print.registerPrint(getCurrentIP) 
+            }
+        }
+        getCurrentIP()
     }, [])
 
 
