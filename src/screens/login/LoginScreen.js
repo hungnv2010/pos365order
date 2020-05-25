@@ -114,10 +114,7 @@ const LoginScreen = (props) => {
             } else {
                 error = I18n.t('ban_khong_co_quyen_truy_cap');
                 setShowToast(true)
-                props.navigation.navigate("Home")
             }
-
-
             dialogManager.hiddenLoading();
         }).catch((e) => {
             dialogManager.hiddenLoading();

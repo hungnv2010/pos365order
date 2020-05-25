@@ -9,7 +9,10 @@ import dialogManager from '../../../components/dialog/DialogManager';
 import { HTTPService } from '../../../data/services/HttpService';
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
-import Topping from '../Topping'
+import useDebounce from '../../../customHook/useDebounce';
+import { useSelector } from 'react-redux';
+
+
 
 export default (props) => {
 
@@ -18,6 +21,12 @@ export default (props) => {
     const [list, setListOrder] = useState(() => props.listProducts)
     const [vendorSession, setVendorSession] = useState({})
     const [itemOrder, setItemOrder] = useState({})
+    // const listToppingDeb = useDebounce(props.listTopping)
+    const { deviceType } = useSelector(state => {
+        console.log("useSelector state ", state);
+        return state.Common
+    });
+
 
     useEffect(() => {
         console.log("Customer props ", props);
@@ -42,9 +51,6 @@ export default (props) => {
         }
     }
 
-    useEffect(() => {
-        console.log(listPosition, 'listPosition');
-    }, [listPosition])
 
     const syncListProducts = (listProducts) => {
         console.log('syncListProducts');
@@ -54,46 +60,77 @@ export default (props) => {
 
     useEffect(() => {
         console.log('useEffect props.position', props.position);
-        listPosition.forEach(element => {
-            if (element.key == props.position) {
-                syncListProducts([...element.list])
-            } else {
-                console.log('not exist this position');
-
-            }
-        })
-    }, [props.position, listPosition])
-
-    useEffect(() => {
-        if (props.listProducts.length == 0) {
-            return
-        }
-        console.log('useEffect props.listProducts', props.listProducts);
         let exist = false
         listPosition.forEach(element => {
             if (element.key == props.position) {
                 exist = true
-                element.list = props.listProducts
+                syncListProducts([...element.list])
             }
         })
         if (!exist) {
-            listPosition.push({ key: props.position, list: props.listProducts })
+            listPosition.push({ key: props.position, list: [] })
+            syncListProducts([])
         }
-        let ls = JSON.parse(JSON.stringify(props.listProducts))
-        setListOrder(ls)
-        savePosition()
+    }, [props.position, listPosition])
+
+    useEffect(() => {
+        props.outputPosition(props.position)
+    }, [props.position])
+
+    useEffect(() => {
+        if (props.listProducts.length > 0) {
+            console.log('useEffect props.listProducts', props.listProducts);
+            let exist = false
+            listPosition.forEach(element => {
+                if (element.key == props.position) {
+                    exist = true
+                    element.list = props.listProducts
+                }
+            })
+            if (!exist) {
+                listPosition.push({ key: props.position, list: props.listProducts })
+            }
+            setListOrder(props.listProducts)
+            savePosition()
+        }
     }, [props.listProducts])
+
+    useEffect(() => {
+        setItemOrder(props.itemOrder)
+    }, [props.itemOrder])
+
+    useEffect(() => {
+        const getDescription = (listTopping) => {
+            let description = '';
+            listTopping.forEach(item => {
+                if (item.Quantity > 0) {
+                    description += `* ${item.Name}x${item.Quantity};\n`
+                }
+            })
+            return description
+        }
+        let description = getDescription(props.listTopping)
+        list.forEach(element => {
+            if (element.Sid == props.itemOrder.Sid) {
+                element.Description = description
+            }
+        });
+        setListOrder([...list])
+    }, [props.listTopping])
+
+
+
 
     const savePosition = () => {
         let exist = false
         dataManager.dataChoosing.forEach(element => {
             if (element.Id == props.route.params.room.Id) {
                 exist = true
-                element.data = [...listPosition]
+                element.data = listPosition
             }
         })
         if (!exist) {
-            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, data: [...listPosition] })
+            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, data: listPosition })
         }
         console.log(dataManager.dataChoosing, 'savePosition');
     }
@@ -132,7 +169,6 @@ export default (props) => {
                 console.log("sendOrder res ", res);
                 syncListProducts([])
                 let tempListPosition = dataManager.dataChoosing.filter(item => item.Id != props.route.params.room.Id)
-                console.log("sendOrder tempListPosition ", tempListPosition);
                 dataManager.dataChoosing = tempListPosition;
                 dialogManager.hiddenLoading()
             }).catch((e) => {
@@ -142,20 +178,27 @@ export default (props) => {
         }
     }
 
+    const dellAll = () => {
+        syncListProducts([])
+        dataManager.dataChoosing.forEach(item => {
+            if (item.Id == props.route.params.room.Id) {
+                item.data = item.data.filter(it => it.key != props.position)
+            }
+        })
+    }
+
     const mapDataToList = (data) => {
         console.log("mapDataToList(data) ", data);
-        let ls = []
         list.forEach(element => {
             if (element.Id == data.Id) {
-                // element = data;
-                ls.push(data)
-            } else {
-                ls.push(element)
+                element.Description = data.Description
+                element.Quantity = data.Quantity
             }
         });
-        console.log("mapDataToList(ls) ", ls);
-        setListOrder([...ls])
+        console.log("mapDataToList(ls) ", list);
+        setListOrder([...list])
     }
+
 
     let _menu = null;
 
@@ -171,55 +214,125 @@ export default (props) => {
         _menu.show();
     };
 
+    const renderForTablet = (item, index) => {
+        return (
+            <TouchableOpacity key={index} onPress={() => {
+                console.log("setItemOrder ", item);
+                setItemOrder(item)
+                setShowModal(!showModal)
+            }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : null }}>
+                    <TouchableOpacity onPress={() => {
+                        console.log('delete');
+                        item.Quantity = 0
+                        syncListProducts([...list])
+                    }}>
+                        <Icon name="trash-can-outline" size={50} color="gray" />
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: "column", flex: 1 }}>
+                        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
+                        <Text>{item.Price}x</Text>
+                        <Text>{item.Description}</Text>
+                    </View>
+                    <View style={{ alignItems: "center", flexDirection: "row" }}>
+                        <TouchableOpacity onPress={() => {
+                            item.Quantity++
+                            props.outputListProducts([...list])
+                        }}>
+                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>+</Text>
+                        </TouchableOpacity>
+                        <Text style={{ padding: 20 }}>{item.Quantity}</Text>
+                        <TouchableOpacity onPress={() => {
+                            item.Quantity--
+                            setListOrder([...list])
+                            props.outputListProducts([...list])
+                        }}>
+                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>-</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                        style={{ marginLeft: 10 }}
+                        onPress={() => {
+                            props.outputItemOrder(item)
+                        }}>
+                        <Icon name="access-point" size={50} color="orange" />
+                    </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
+    const renderForPhone = (item, index) => {
+        return (
+            <TouchableOpacity key={index} onPress={() => {
+                console.log("setItemOrder ", item);
+                setItemOrder(item)
+                setShowModal(!showModal)
+            }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Id == props.itemOrder.Id ? "#EED6A7" : null }}>
+                    <TouchableOpacity onPress={() => {
+                        console.log('delete');
+                        item.Quantity = 0
+                        syncListProducts([...list])
+
+                    }}>
+                        <Icon name="trash-can-outline" size={50} color="gray" />
+                    </TouchableOpacity>
+                    <View style={{ flexDirection: "column", flex: 1 }}>
+                        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
+                        <Text>{item.Price}x</Text>
+                        <Text>{item.Description}</Text>
+                    </View>
+                    <View style={{ alignItems: "center", flexDirection: "row" }}>
+                        <TouchableOpacity onPress={() => {
+                            item.Quantity++
+                            props.outputListProducts([...list])
+                        }}>
+                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>+</Text>
+                        </TouchableOpacity>
+                        <Text style={{ padding: 20 }}>{item.Quantity}</Text>
+                        <TouchableOpacity onPress={() => {
+                            item.Quantity--
+                            setListOrder([...list])
+                            props.outputListProducts([...list])
+                        }}>
+                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>-</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <TouchableOpacity
+                        style={{ marginLeft: 10 }}
+                        onPress={() => {
+                            props.outputItemOrder(item)
+                            props.outputIsTopping()
+                        }}>
+                        <Icon name="access-point" size={50} color="orange" />
+                    </TouchableOpacity>
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
+                {deviceType == Constant.TABLET ?
+                    null
+                    :
+                    <TouchableOpacity
+                        style={{ alignItems: "center", backgroundColor: "brown", borderRadius: 10, paddingVertical: 5, marginTop: 2 }}
+                        onPress={() => {
+                            props.outputIsSelectFood()
+                        }}>
+                        <Text>Chon mon</Text>
+                    </TouchableOpacity>}
                 <ScrollView style={{ flex: 1 }}>
                     {
                         list.map((item, index) => {
                             return item.Quantity > 0 ? (
-                                <TouchableOpacity key={index} onPress={() => {
-                                    console.log("setItemOrder ", item);
-                                    setItemOrder(item)
-                                    setShowModal(!showModal)
-                                }}>
-                                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5 }}>
-                                        <TouchableOpacity onPress={() => {
-                                            console.log('delete');
-                                            item.Quantity = 0
-                                            setListOrder([...list])
-                                            props.outputListProducts([...list])
-                                        }}>
-                                            <Icon name="trash-can-outline" size={50} color="gray" />
-                                        </TouchableOpacity>
-                                        <View style={{ flexDirection: "column", flex: 1 }}>
-                                            <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
-                                            <Text>{item.Price}x</Text>
-                                            <Text>{item.Description}</Text>
-                                        </View>
-                                        <View style={{ alignItems: "center", flexDirection: "row" }}>
-                                            <TouchableOpacity onPress={() => {
-                                                item.Quantity++
-                                                props.outputListProducts([...list])
-                                            }}>
-                                                <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>+</Text>
-                                            </TouchableOpacity>
-                                            <Text style={{ padding: 20 }}>{item.Quantity}</Text>
-                                            <TouchableOpacity onPress={() => {
-                                                item.Quantity--
-                                                setListOrder([...list])
-                                                props.outputListProducts([...list])
-                                            }}>
-                                                <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>-</Text>
-                                            </TouchableOpacity>
-                                        </View>
-                                        <TouchableOpacity
-                                            style={{ marginLeft: 10 }}
-                                            onPress={() => { }}>
-                                            <Icon name="access-point" size={50} color="orange" />
-                                        </TouchableOpacity>
-                                    </View>
-                                </TouchableOpacity>
+                                deviceType == Constant.TABLET ?
+                                    renderForTablet(item, index)
+                                    :
+                                    renderForPhone(item, index)
                             ) :
                                 null
                         })
@@ -250,6 +363,9 @@ export default (props) => {
                 </TouchableOpacity>
                 <TouchableOpacity onPress={sendOrder} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
                     <Text style={{ fontSize: 18, color: "#fff", fontWeight: "bold" }}>Gửi thực đơn</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={dellAll} style={{ justifyContent: "center", alignItems: "center", paddingHorizontal: 10, borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
+                    <Icon name="delete-forever" size={40} color="black" />
                 </TouchableOpacity>
             </View>
             <Modal

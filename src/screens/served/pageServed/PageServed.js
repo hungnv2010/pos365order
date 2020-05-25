@@ -17,10 +17,6 @@ export default (props) => {
         setShowModal(false);
     }
 
-    const outputListProducts = (listProducts) => {
-        props.outputListProducts(listProducts)
-    }
-    
     let _menu = null;
 
     const setMenuRef = ref => {
@@ -64,7 +60,7 @@ export default (props) => {
                 </TouchableOpacity>
             </View>
             {tab == 1 ?
-                <CustomerOrder position={position} {...props} outputListProducts={outputListProducts} />
+                <CustomerOrder position={position} {...props} />
                 :
                 <MenuConfirm position={position} {...props} />
             }

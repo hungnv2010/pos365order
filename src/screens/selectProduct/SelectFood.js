@@ -97,11 +97,13 @@ export default (props) => {
   }
 
   const onClickProduct = (item, index) => {
+    item.Sid = Date.now()
+    item = JSON.parse(JSON.stringify(item))
     console.log(item, 'onClickProduct');
     if (item.SplitForSalesOrder) {
       item.Quantity = 1
       listProducts.unshift(item)
-      props.outputListProducts([...listProducts])
+      item.index = index
     }
     else {
       let exist = false;
@@ -111,14 +113,12 @@ export default (props) => {
           exist = true;
         }
       })
-      if (exist) {
-        props.outputListProducts([...listProducts])
-      } else {
+      if (!exist) {
         item.Quantity = 1
         listProducts.unshift(item)
-        props.outputListProducts([...listProducts])
       }
     }
+    props.outputListProducts([...listProducts])
   }
 
   const handleButtonIncrease = (item, index) => {
@@ -133,9 +133,9 @@ export default (props) => {
     setProduct([...product])
   }
 
-  const CheckItemExistInProducts = (arr, arrItem) => {
+  const CheckItemExistInProducts = (arrItem) => {
     let exist = false
-    arr.forEach(item => {
+    listProducts.forEach(item => {
       if (item.Id == arrItem.Id) {
         exist = true
       }
@@ -164,7 +164,7 @@ export default (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 0.5, flexDirection: "row", marginVertical: 10, marginHorizontal: 2 }}>
+      <View style={{ flex: 0.5, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
         <View style={{ flex: 1 }}>
           {isSearching ?
             <TouchableOpacity style={[styles.renderCateItem, { backgroundColor: "orange", flex: 1 }]}>
@@ -186,12 +186,13 @@ export default (props) => {
         <View style={{ flex: 1, justifyContent: "center", }}>
           {hasProducts ?
             <FlatList
+              removeClippedSubviews={true}
               showsVerticalScrollIndicator={false}
               data={product}
               key={props.numColumns}
               numColumns={props.numColumns}
               renderItem={({ item, index }) => <ProductsItem
-                CheckItemExistInProducts={CheckItemExistInProducts(listProducts, item)}
+                CheckItemExistInProducts={CheckItemExistInProducts(item)}
                 item={item}
                 index={index}
                 onClickProduct={onClickProduct}

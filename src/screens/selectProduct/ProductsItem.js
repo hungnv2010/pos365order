@@ -8,7 +8,8 @@ import { Constant } from '../../common/Constant';
 
 
 const ProductsItem = (props) => {
-    const { deviceType, orientaition } = useSelector(state => {
+
+    const { deviceType } = useSelector(state => {
         return state.Common
     });
 
@@ -18,10 +19,10 @@ const ProductsItem = (props) => {
 
     return deviceType == Constant.TABLET ?
         (
-            <TouchableOpacity onPress={onClickItem} key={props.index} style={{ backgroundColor: "white", borderRadius: 10, flex: 1, marginBottom: 7, marginLeft: 2 }}>
+            <TouchableOpacity onPress={onClickItem} key={props.index} style={{ backgroundColor: "white", borderRadius: 10, flex: 1 / 4, marginBottom: 7, marginLeft: 2 }}>
                 <View style={{}}>
                     <Image
-                        style={{ height: deviceType == Constant.PHONE ? 100 : 150, width: "100%", borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
+                        style={{ height: 150, width: "100%", borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
                         source={JSON.parse(props.item.ProductImages).length > 0 ? { uri: JSON.parse(props.item.ProductImages)[0].ImageURL } : Images.default_food_image}
                     />
                     <View style={{ marginLeft: 10 }}>
@@ -49,7 +50,7 @@ const ProductsItem = (props) => {
                 </View>
                 <View style={{ flex: 1.5, flexDirection: "row", justifyContent: "space-around", alignItems: "center", }}>
 
-                    {props.item.Quantity > 0 ?
+                    {props.CheckItemExistInProducts  > 0 ?
                         <>
                             <TouchableOpacity onPress={() => { props.handleButtonIncrease(props.item, props.index) }}>
                                 <Text style={[styles.button]}>+</Text>
