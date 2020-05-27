@@ -7,7 +7,6 @@ import BottomTabNavigation from '../bottomTab/BottomTabNavigation';
 import PrintHtml from '../../screens/more/printHtml/PrintHtml'
 import Preview from '../../screens/more/printHtml/Preview'
 import Topping from '../../screens/served/Topping';
-import SelectFood from '../../screens/selectProduct/SelectFood';
 
 const MainStack = createStackNavigator();
 export const navigationRef = createRef();

@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import { ActivityIndicator, Image, View, StyleSheet, Picker, Text, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, Alert } from 'react-native';
+import { Image, View, Text, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput } from 'react-native';
 import { Colors, Images, Metrics } from '../../../theme';
-import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
+import Menu from 'react-native-material-menu';
 import dataManager from '../../../data/DataManager';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { ApiPath } from '../../../data/services/ApiPath';
@@ -9,9 +9,9 @@ import dialogManager from '../../../components/dialog/DialogManager';
 import { HTTPService } from '../../../data/services/HttpService';
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
-import useDebounce from '../../../customHook/useDebounce';
+import TextTicker from 'react-native-text-ticker';
 import { useSelector } from 'react-redux';
-
+import { currencyToString } from '../../../common/Utils'
 
 
 export default (props) => {
@@ -21,7 +21,6 @@ export default (props) => {
     const [list, setListOrder] = useState(() => props.listProducts)
     const [vendorSession, setVendorSession] = useState({})
     const [itemOrder, setItemOrder] = useState({})
-    // const listToppingDeb = useDebounce(props.listTopping)
     const { deviceType } = useSelector(state => {
         console.log("useSelector state ", state);
         return state.Common
@@ -100,19 +99,24 @@ export default (props) => {
     }, [props.itemOrder])
 
     useEffect(() => {
-        const getDescription = (listTopping) => {
+        console.log(props.listTopping, 'props.listTopping');
+        const getInfoTopping = (listTopping) => {
             let description = '';
+            let totalPrice = 0;
             listTopping.forEach(item => {
                 if (item.Quantity > 0) {
-                    description += `* ${item.Name}x${item.Quantity};\n`
+                    description += ` -- ${item.Name} x ${item.Quantity} = ${currencyToString(item.Quantity * item.Price)}; \n `
+                    totalPrice += item.Quantity * item.Price
                 }
             })
-            return description
+            return [description, totalPrice]
         }
-        let description = getDescription(props.listTopping)
+        let [description, totalPrice] = getInfoTopping(props.listTopping)
         list.forEach(element => {
             if (element.Sid == props.itemOrder.Sid) {
                 element.Description = description
+                element.Topping = JSON.stringify(props.listTopping)
+                element.TotalTopping = totalPrice
             }
         });
         setListOrder([...list])
@@ -187,6 +191,11 @@ export default (props) => {
         })
     }
 
+    const onClickTopping = (item) => {
+        props.outputItemOrder(item)
+        props.outputIsTopping()
+    }
+
     const mapDataToList = (data) => {
         console.log("mapDataToList(data) ", data);
         list.forEach(element => {
@@ -221,7 +230,7 @@ export default (props) => {
                 setItemOrder(item)
                 setShowModal(!showModal)
             }}>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : null }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 5, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : null }}>
                     <TouchableOpacity onPress={() => {
                         console.log('delete');
                         item.Quantity = 0
@@ -230,24 +239,39 @@ export default (props) => {
                         <Icon name="trash-can-outline" size={50} color="gray" />
                     </TouchableOpacity>
                     <View style={{ flexDirection: "column", flex: 1 }}>
-                        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
-                        <Text>{item.Price}x</Text>
-                        <Text>{item.Description}</Text>
+                        <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
+                        <Text>{currencyToString(item.Price)} x </Text>
+                        <TextTicker
+                            style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}
+                            duration={6000}
+                            marqueeDelay={1000}>
+                            {item.Description}
+                        </TextTicker>
                     </View>
                     <View style={{ alignItems: "center", flexDirection: "row" }}>
                         <TouchableOpacity onPress={() => {
-                            item.Quantity++
-                            props.outputListProducts([...list])
-                        }}>
-                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>+</Text>
-                        </TouchableOpacity>
-                        <Text style={{ padding: 20 }}>{item.Quantity}</Text>
-                        <TouchableOpacity onPress={() => {
                             item.Quantity--
-                            setListOrder([...list])
-                            props.outputListProducts([...list])
+                            syncListProducts([...list])
                         }}>
-                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>-</Text>
+                            <Icon name="minus-circle" size={40} color={Colors.colorchinh} />
+                        </TouchableOpacity>
+                        <TextInput
+                            placeholder="1"
+                            onChangeText={numb => {
+                                if (numb == '') item.Quantity = 1
+                                else {
+                                    item.Quantity = numb;
+                                    syncListProducts([...list])
+                                }
+                            }}
+                            keyboardType="numeric"
+                            textAlign="center"
+                            style={{ width: 50, borderBottomWidth: .5 }}>{item.Quantity}</TextInput>
+                        <TouchableOpacity onPress={() => {
+                            item.Quantity++
+                            syncListProducts([...list])
+                        }}>
+                            <Icon name="plus-circle" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>
                     </View>
                     <TouchableOpacity
@@ -269,43 +293,33 @@ export default (props) => {
                 setItemOrder(item)
                 setShowModal(!showModal)
             }}>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Id == props.itemOrder.Id ? "#EED6A7" : null }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingVertical: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : null }}>
                     <TouchableOpacity onPress={() => {
                         console.log('delete');
                         item.Quantity = 0
                         syncListProducts([...list])
 
                     }}>
-                        <Icon name="trash-can-outline" size={50} color="gray" />
+                        <Icon name="trash-can-outline" size={40} color="gray" />
                     </TouchableOpacity>
-                    <View style={{ flexDirection: "column", flex: 1 }}>
-                        <Text style={{ fontSize: 18, fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
-                        <Text>{item.Price}x</Text>
-                        <Text>{item.Description}</Text>
-                    </View>
-                    <View style={{ alignItems: "center", flexDirection: "row" }}>
-                        <TouchableOpacity onPress={() => {
-                            item.Quantity++
-                            props.outputListProducts([...list])
-                        }}>
-                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>+</Text>
-                        </TouchableOpacity>
-                        <Text style={{ padding: 20 }}>{item.Quantity}</Text>
-                        <TouchableOpacity onPress={() => {
-                            item.Quantity--
-                            setListOrder([...list])
-                            props.outputListProducts([...list])
-                        }}>
-                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>-</Text>
-                        </TouchableOpacity>
+                    <View style={{ flex: 1, }}>
+                        <Text style={{ fontWeight: "bold" }}>{item.Name}</Text>
+                        <Text style={{fontSize: 12}}>{currencyToString(item.Price)} x <Text style={{ color: "red", fontWeight: "bold" }}>{item.Quantity}</Text></Text>
+                        {item.Description != "" ?
+                            <TextTicker
+                                style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}
+                                duration={10000}
+                                bounce={false}
+                                marqueeDelay={1000}>
+                                {item.Description}
+                            </TextTicker>
+                            :
+                            null}
                     </View>
                     <TouchableOpacity
                         style={{ marginLeft: 10 }}
-                        onPress={() => {
-                            props.outputItemOrder(item)
-                            props.outputIsTopping()
-                        }}>
-                        <Icon name="access-point" size={50} color="orange" />
+                        onPress={() => onClickTopping(item)}>
+                        <Icon name="access-point" size={40} color="orange" />
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>
@@ -315,25 +329,17 @@ export default (props) => {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                {deviceType == Constant.TABLET ?
-                    null
-                    :
-                    <TouchableOpacity
-                        style={{ alignItems: "center", backgroundColor: "brown", borderRadius: 10, paddingVertical: 5, marginTop: 2 }}
-                        onPress={() => {
-                            props.outputIsSelectFood()
-                        }}>
-                        <Text>Chon mon</Text>
-                    </TouchableOpacity>}
                 <ScrollView style={{ flex: 1 }}>
                     {
                         list.map((item, index) => {
-                            return item.Quantity > 0 ? (
-                                deviceType == Constant.TABLET ?
-                                    renderForTablet(item, index)
-                                    :
-                                    renderForPhone(item, index)
-                            ) :
+                            return item.Quantity > 0 ?
+                                (
+                                    deviceType == Constant.TABLET ?
+                                        renderForTablet(item, index)
+                                        :
+                                        renderForPhone(item, index)
+                                )
+                                :
                                 null
                         })
                     }
@@ -401,7 +407,7 @@ export default (props) => {
                             width: Metrics.screenWidth * 0.8,
                         }}>
                             <PopupDetail
-                                setIsTopping={() => { props.setIsTopping() }}
+                                onClickTopping={() => onClickTopping(itemOrder)}
                                 item={itemOrder}
                                 getDataOnClick={(data) => {
                                     console.log("getDataOnClick ", data);
@@ -431,7 +437,7 @@ const PopupDetail = (props) => {
     }
 
     const onClickTopping = () => {
-        props.setIsTopping()
+        props.onClickTopping()
         props.setShowModal(false)
     }
 

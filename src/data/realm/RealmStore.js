@@ -218,7 +218,7 @@ const ProductSchema = {
         labelPrinted: { type: 'double', default: 0.0 },
         Serveby: { type: 'double', default: 0.0 },
         Checkout: { type: 'string', default: '' },
-        Topping: { type: 'string', default: "{}" },
+        Topping: { type: 'string', default: "" },
         TotalTopping: { type: 'double', default: 0.0 },
         StopTimer: { type: 'bool', default: false },
         Hidden: { type: 'bool', default: false },
@@ -256,7 +256,7 @@ const ToppingsSchema = {
 const databaseOption = {
     path: 'Pos365Boss.realm',
     schema: [ServerEventSchema, RoomSchema, RoomGroupSchema, ProductSchema, CategoriesSchema, ToppingsSchema],
-    schemaVersion: 9
+    schemaVersion: 19
 }
 
 const realm = new Realm(databaseOption);
@@ -264,5 +264,3 @@ const realm = new Realm(databaseOption);
 const realmStore = new RealmStore();
 
 export default realmStore;
-
-//export default realm = new Realm(databaseOption);

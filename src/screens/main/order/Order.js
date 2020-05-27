@@ -19,7 +19,6 @@ import { Constant } from '../../../common/Constant'
 
 
 export default (props) => {
-
     const onItemPress = (item) => {
         console.log(item, 'item', props);
         props.navigation.navigate('Served', { room: { Id: item.Id, Name: item.Name, Position: 'A' } })
@@ -73,13 +72,13 @@ export default (props) => {
         return () => {
             realmStore.removeAllListener()
         }
-    }, [])
+    }, [props.forceUpdate])
 
     const init = async () => {
         rooms = await realmStore.queryRooms()
         roomGroups = await realmStore.queryRoomGroups()
         serverEvents = await realmStore.queryServerEvents()
-        console.log("init: ", rooms, roomGroups, serverEvents);
+        console.log("init: ", JSON.parse(JSON.stringify(rooms, roomGroups, serverEvents)));
 
         let newDatas = insertServerEvent(getDatas(rooms, roomGroups), serverEvents)
         setData(newDatas)

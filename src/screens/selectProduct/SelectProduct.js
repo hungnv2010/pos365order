@@ -3,10 +3,13 @@ import { ActivityIndicator, View, StyleSheet, Text, TouchableOpacity, FlatList }
 import realmStore from '../../data/realm/RealmStore';
 import dialogManager from '../../components/dialog/DialogManager';
 import ProductsItem from './ProductsItem';
+import ProductsItemForPhone from './ProductsItemForPhone';
 import { Constant } from '../../common/Constant';
 import I18n from '../../common/language/i18n';
 import { change_alias } from '../../common/Utils';
+import { useSelector } from 'react-redux';
 import useDebounce from '../../customHook/useDebounce';
+
 
 export default (props) => {
   const [isLoadMore, setIsLoadMore] = useState(false)
@@ -21,6 +24,9 @@ export default (props) => {
   const count = useRef(0)
   const debouncedVal = useDebounce(valueSearch)
 
+  const { deviceType } = useSelector(state => {
+    return state.Common
+  });
 
   useEffect(() => {
     const getSearchResult = async () => {
@@ -45,6 +51,7 @@ export default (props) => {
 
 
   useEffect(() => {
+    console.log(props.listProducts, 'props.listProducts');
     setListProducts(props.listProducts)
   }, [props.listProducts])
 
@@ -98,17 +105,16 @@ export default (props) => {
 
   const onClickProduct = (item, index) => {
     item.Sid = Date.now()
-    item = JSON.parse(JSON.stringify(item))
     console.log(item, 'onClickProduct');
     if (item.SplitForSalesOrder) {
       item.Quantity = 1
       listProducts.unshift(item)
-      item.index = index
     }
     else {
       let exist = false;
       listProducts.forEach(listProduct => {
         if (listProduct.Id === item.Id) {
+          item.Quantity++
           listProduct.Quantity++
           exist = true;
         }
@@ -118,19 +124,50 @@ export default (props) => {
         listProducts.unshift(item)
       }
     }
-    props.outputListProducts([...listProducts])
+    setProduct([...product])
+    props.outputListProducts([...listProducts], 0)
+  }
+
+  const onClickProductForPhone = (item, index) => {
+    let exist = false;
+    item.Sid = Date.now()
+    listProducts.forEach(listProduct => {
+      if (listProduct.Id === item.Id) {
+        item.Quantity++
+        listProduct.Quantity++
+        exist = true;
+      }
+    })
+    if (!exist) {
+      item.Quantity = 1
+      listProducts.unshift(item)
+    }
+    console.log(item, 'onClickProduct');
+    setProduct([...product])
+    props.outputListProducts([...listProducts], 0)
   }
 
   const handleButtonIncrease = (item, index) => {
     console.log('handleButtonIncrease', item, index);
+    listProducts.forEach(listProduct => {
+      if (listProduct.Id === item.Id) {
+        listProduct.Quantity++
+      }
+    })
     product[index].Quantity += 1;
     setProduct([...product])
+    props.outputListProducts([...listProducts], 0)
   }
 
   const handleButtonDecrease = (item, index) => {
-    console.log('handleButtonIncrease', item, index);
+    listProducts.forEach(listProduct => {
+      if (listProduct.Id === item.Id) {
+        listProduct.Quantity--
+      }
+    })
     product[index].Quantity -= 1;
     setProduct([...product])
+    props.outputListProducts([...listProducts], 0)
   }
 
   const CheckItemExistInProducts = (arrItem) => {
@@ -191,14 +228,24 @@ export default (props) => {
               data={product}
               key={props.numColumns}
               numColumns={props.numColumns}
-              renderItem={({ item, index }) => <ProductsItem
-                CheckItemExistInProducts={CheckItemExistInProducts(item)}
-                item={item}
-                index={index}
-                onClickProduct={onClickProduct}
-                handleButtonDecrease={handleButtonDecrease}
-                handleButtonIncrease={handleButtonIncrease}
-              />}
+              renderItem={({ item, index }) => {
+                return deviceType == Constant.TABLET ?
+                  (<ProductsItem
+                    CheckItemExistInProducts={CheckItemExistInProducts(item)}
+                    item={item}
+                    index={index}
+                    onClickProduct={onClickProduct}
+                  />)
+                  :
+                  (<ProductsItemForPhone
+                    CheckItemExistInProducts={CheckItemExistInProducts(item)}
+                    item={item}
+                    index={index}
+                    onClickProduct={onClickProductForPhone}
+                    handleButtonDecrease={handleButtonDecrease}
+                    handleButtonIncrease={handleButtonIncrease}
+                  />)
+              }}
               keyExtractor={(item, index) => '' + index}
               extraData={product.Quantity}
               onEndReached={(info) => { loadMore(info) }}

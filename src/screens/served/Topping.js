@@ -4,6 +4,7 @@ import { Colors, Metrics, Images } from '../../theme'
 import realmStore from '../../data/realm/RealmStore';
 import I18n from '../../common/language/i18n';
 import dataManager from '../../data/DataManager';
+import { currencyToString } from '../../common/Utils'
 
 
 export default (props) => {
@@ -162,15 +163,15 @@ export default (props) => {
             <View key={item.Id} style={[styles.toppingItem, { backgroundColor: item.Quantity > 0 ? "#6EA2D6" : "white" }]}>
                 <View style={{ flex: 3, paddingRight: 10 }}>
                     <Text numberOfLines={2} style={{}}>{item.Name}</Text>
-                    <Text numberOfLines={2} style={{}}>{item.Price}</Text>
+                    <Text numberOfLines={2} style={{ fontStyle: "italic", fontSize: 13, color: "gray" }}>{currencyToString(item.Price)}</Text>
                 </View>
                 <View style={{ flexDirection: "row", flex: 2, justifyContent: "space-between", alignItems: "center" }}>
-                    <TouchableOpacity onPress={() => { handleButtonDecrease(item, index) }}>
-                        <Text style={styles.button}>+</Text>
-                    </TouchableOpacity>
-                    <Text>{item.Quantity}</Text>
                     <TouchableOpacity onPress={() => { handleButtonIncrease(item, index) }}>
                         <Text style={styles.button}>-</Text>
+                    </TouchableOpacity>
+                    <Text>{item.Quantity}</Text>
+                    <TouchableOpacity onPress={() => { handleButtonDecrease(item, index) }}>
+                        <Text style={styles.button}>+</Text>
                     </TouchableOpacity>
                 </View>
             </View >
@@ -182,14 +183,14 @@ export default (props) => {
         <View style={{ flex: 1 }}>
             <View style={{ height: 45, backgroundColor: Colors.colorchinh, flexDirection: "row" }}>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                    <Text>{itemOrder ? itemOrder.Name : ''}</Text>
+                    <Text style={{ color: "white", textAlign: "center" }}>{itemOrder ? itemOrder.Name : ''}</Text>
                 </View>
                 <View style={{ flex: 5, justifyContent: "center", alignItems: "center" }}>
-                    <Text>Topping</Text>
+                    <Text style={{ color: "white" }}>Topping</Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}>
                     <TouchableOpacity style={{}} onPress={() => { onclose() }}>
-                        <Text style={{ fontStyle: "italic", paddingHorizontal: 5 }}>Đóng</Text>
+                        <Text style={{ fontStyle: "italic", paddingHorizontal: 5, color: "white" }}>{I18n.t('dong')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -221,8 +222,8 @@ export default (props) => {
 
 const styles = StyleSheet.create({
     cateItem: { borderWidth: 0.5, padding: 15, margin: 5, borderRadius: 10 },
-    toppingItem: { flex: 1, flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 10, paddingVertical: 20, alignItems: "center", borderRadius: 10, margin: 3 },
-    button: { borderWidth: 1, padding: 20, borderRadius: 10 },
+    toppingItem: { flex: 1, flexDirection: "row", justifyContent: "space-between", padding: 10, alignItems: "center", borderRadius: 10, margin: 3 },
+    button: { borderWidth: .5, padding: 15, borderRadius: 10 },
 })
 
 

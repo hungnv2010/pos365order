@@ -1,24 +1,23 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { ActivityIndicator, Image, View, StyleSheet, Picker, Text, ScrollView, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useMemo } from 'react';
+import { View } from 'react-native';
 import { useSelector } from 'react-redux';
-import dialogManager from '../../components/dialog/DialogManager';
-import ToolBarSelectFood from './ToolBarServed';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
-import SelectFood from '../selectProduct/SelectFood';
+import ToolBarSelectProduct from '../../components/toolbar/ToolBarSelectProduct'
+import ToolBarServed from '../../components/toolbar/ToolBarServed'
+import SelectProduct from '../selectProduct/SelectProduct';
 import PageServed from './pageServed/PageServed';
 import Topping from './Topping';
+import { Constant } from '../../common/Constant';
 
 export default (props) => {
 
-    const [numColumns, setNumColumns] = useState(1);
     const [listProducts, setListProducts] = useState([])
     const [value, setValue] = useState('');
     const [itemOrder, setItemOrder] = useState({})
     const [listTopping, setListTopping] = useState([])
     const [position, setPosition] = useState("")
-    const [isSelectFood, setIsSelectFood] = useState(false)
+    const [isSelectProduct, setIsSelectProduct] = useState(false)
     const [isTopping, setIsTopping] = useState(false)
-    const [numColumnsForTopping, setNumColumnsForTopping] = useState(1);
     const meMoItemOrder = useMemo(() => itemOrder, [itemOrder])
 
     const { deviceType } = useSelector(state => {
@@ -27,34 +26,12 @@ export default (props) => {
     });
 
 
-    useEffect(() => {
-        const onOrientationChange = () => {
-            dialogManager.showLoading()
-            switch (deviceType) {
-                case 'PHONE':
-                    setNumColumns(1)
-                    setNumColumnsForTopping(1)
-                    break;
-                case 'TABLET':
-                    setNumColumns(4)
-                    setNumColumnsForTopping(2)
-                    break;
-                default:
-                    break;
-            }
-            dialogManager.hiddenLoading()
-        }
-        onOrientationChange()
-    }, [deviceType])
-
-
-    const outputListProducts = (newList) => {
+    const outputListProducts = (newList, type) => {
         newList = newList.filter(item => item.Quantity > 0)
+        if (type === 0) newList = JSON.parse(JSON.stringify(newList))
         setListProducts(newList)
         console.log(newList, 'newlist');
-
     }
-
 
     const outputTextSearch = (text) => {
         setValue(text)
@@ -72,8 +49,8 @@ export default (props) => {
         setListTopping(listTopping)
     }
 
-    const outputIsSelectFood = () => {
-        setIsSelectFood(!isSelectFood)
+    const outputIsSelectProduct = () => {
+        setIsSelectProduct(!isSelectProduct)
     }
 
     const outputIsTopping = () => {
@@ -83,21 +60,21 @@ export default (props) => {
     const renderForTablet = () => {
         return (
             <>
-                <ToolBarSelectFood navigation={props.navigation}
+                <ToolBarServed navigation={props.navigation}
                     outputTextSearch={outputTextSearch} />
                 <View style={{ flex: 1, flexDirection: "row" }}>
                     <View style={{ flex: 6, }}>
                         <View style={!itemOrder.Id ? { flex: 1 } : { width: 0, height: 0 }}>
-                            <SelectFood
+                            <SelectProduct
                                 valueSearch={value}
-                                numColumns={numColumns}
+                                numColumns={3}
                                 listProducts={[...listProducts]}
                                 outputListProducts={outputListProducts} />
                         </View>
                         <View style={itemOrder.Id ? { flex: 1 } : { width: 0, height: 0 }}>
                             <Topping
                                 {...props}
-                                numColumns={numColumnsForTopping}
+                                numColumns={2}
                                 position={position}
                                 itemOrder={meMoItemOrder}
                                 onClose={() => { setItemOrder({}) }}
@@ -123,34 +100,43 @@ export default (props) => {
     const renderForPhone = () => {
         return (
             <>
-                <View style={isSelectFood ? { flex: 1, } : { width: 0, height: 0 }}>
-                    <ToolBarDefault
+                <View style={isSelectProduct ? { flex: 1, } : { width: 0, height: 0 }}>
+                    <ToolBarSelectProduct
                         leftIcon="keyboard-backspace"
-                        clickLeftIcon={outputIsSelectFood} />
-                    <SelectFood
+                        clickLeftIcon={outputIsSelectProduct} />
+                    <SelectProduct
                         valueSearch={value}
-                        numColumns={numColumns}
+                        numColumns={1}
                         listProducts={[...listProducts]}
                         outputListProducts={outputListProducts} />
                 </View>
 
                 <View style={isTopping ? { flex: 1 } : { width: 0, height: 0 }}>
-                    <ToolBarDefault
+                    {/* <ToolBarDefault
                         leftIcon="keyboard-backspace"
-                        clickLeftIcon={outputIsTopping} />
+                        clickLeftIcon={() => {
+                            setItemOrder({})
+                            outputIsTopping();
+                        }} /> */}
                     <Topping
                         {...props}
                         position={position}
+                        numColumns={1}
                         itemOrder={meMoItemOrder}
-                        onClose={() => { setItemOrder({}) }}
+                        onClose={() => {
+                            setItemOrder({})
+                            outputIsTopping();
+                        }}
                         outputListTopping={outputListTopping}
                     />
                 </View>
 
-                <View style={!(isTopping || isSelectFood) ? { flex: 1 } : { width: 0, height: 0 }}>
+                <View style={!(isTopping || isSelectProduct) ? { flex: 1 } : { width: 0, height: 0 }}>
                     <ToolBarDefault
                         leftIcon="keyboard-backspace"
-                        clickLeftIcon={() => { }} />
+                        clickLeftIcon={() => { props.navigation.goBack() }}
+                        rightIcon="plus"
+                        clickRightIcon={outputIsSelectProduct} />
                     <PageServed
                         {...props}
                         itemOrder={meMoItemOrder}
@@ -159,7 +145,7 @@ export default (props) => {
                         outputItemOrder={outputItemOrder}
                         outputPosition={outputPosition}
                         outputIsTopping={outputIsTopping}
-                        outputIsSelectFood={outputIsSelectFood}
+                        outputIsSelectProduct={outputIsSelectProduct}
                         listTopping={listTopping}
                     />
                 </View>
@@ -169,7 +155,7 @@ export default (props) => {
 
     return (
         <View style={{ flex: 1 }}>
-            {deviceType == 'TABLET' ?
+            {deviceType == Constant.TABLET ?
                 renderForTablet()
                 :
                 renderForPhone()

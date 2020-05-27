@@ -8,21 +8,17 @@ import {
 import { Colors, Metrics, Images } from '../../theme'
 import { IconButton, Subheading } from "react-native-paper";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Fonts from '../../theme/Fonts';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 
-export default function ToolBarPreviewHtml(props) {
-
-    onClickBack = () => {
-        props.navigation.pop();
-    };
+export default function ToolBarDefault(props) {
 
     return (
         <LinearGradient
             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
             colors={['#FFAB40', '#FF5722']}
-            style={{ height: 44 }}
+            style={{ height: 45 }}
         >
             <View style={styles.toolbarContainer}>
                 <View style={{
@@ -34,15 +30,15 @@ export default function ToolBarPreviewHtml(props) {
                 >
 
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.clickRightIcon}>
-                            {props.rightIcon && props.clickRightIcon ?
-                                <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
-                                :
-                                <Icon delayPressIn={0} name="keyboard-backspace" onPress={onClickBack} size={24} />
-                            }
-                        </TouchableOpacity>
+                        {props.clickLeftIcon && props.leftIcon ?
+                            <TouchableOpacity onPress={props.clickLeftIcon}>
+                                <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
+                            </TouchableOpacity>
+                            :
+                            null
+                        }
                     </View>
-                    <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                    <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <Subheading
                             numberOfLines={1}
                             style={{
@@ -52,15 +48,15 @@ export default function ToolBarPreviewHtml(props) {
                             {props.title}
                         </Subheading>
                     </View>
+
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.clickPrint} >
-                            <Text style={{ color: 'white' }}>IN</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{ flex: 1, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.clickCheck} >
-                            <Icon delayPressIn={0} name="check" size={24} />
-                        </TouchableOpacity>
+                        {props.clickRightIcon && props.rightIcon ?
+                            <TouchableOpacity onPress={props.clickRightIcon}>
+                                <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
+                            </TouchableOpacity>
+                            :
+                            <Ionicons name="md-search" size={30} color="white" style={{}} /> 
+                        }
                     </View>
                 </View>
             </View>
@@ -72,7 +68,7 @@ export default function ToolBarPreviewHtml(props) {
 const styles = StyleSheet.create({
 
     toolbarContainer: {
-        height: 44,
+        height: 45,
         flex: 1,
         shadowColor: Colors.black,
         shadowOffset: {
@@ -84,7 +80,7 @@ const styles = StyleSheet.create({
     },
 })
 
-ToolBarPreviewHtml.propTypes = {
+ToolBarDefault.propTypes = {
     title: PropTypes.string,
     rightIcon: PropTypes.string,
     leftIcon: PropTypes.string,
@@ -92,6 +88,6 @@ ToolBarPreviewHtml.propTypes = {
     clickLeftIcon: PropTypes.func
 }
 
-ToolBarPreviewHtml.defaultProps = {
+ToolBarDefault.defaultProps = {
 
 }

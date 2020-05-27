@@ -10,7 +10,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 
-export default function ToolBarSelectFood(props) {
+export default function ToolBarServed(props) {
 
     const [value, onChangeText] = useState('');
     const [isSearch, setIsSearch] = useState(false);
@@ -43,7 +43,7 @@ export default function ToolBarSelectFood(props) {
                         <Subheading
                             numberOfLines={1}
                             style={{ color: 'white' }}
-                        >Select Food
+                        >{props.title}
                         </Subheading>
                     </View>
                     <View style={{ flex: 3, }}>
@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     },
 })
 
-ToolBarSelectFood.propTypes = {
+ToolBarServed.propTypes = {
     title: PropTypes.string,
     rightIcon: PropTypes.string,
     leftIcon: PropTypes.string,
@@ -107,6 +107,6 @@ ToolBarSelectFood.propTypes = {
     clickLeftIcon: PropTypes.func
 }
 
-ToolBarSelectFood.defaultProps = {
+ToolBarServed.defaultProps = {
 
 }
