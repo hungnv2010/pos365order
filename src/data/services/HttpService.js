@@ -5,7 +5,10 @@ import store from "../../store/configureStore";
 import { NavigateScreen, ScreenList } from '../../common/ScreenList';
 import { ApiPath } from './ApiPath';
 import { Platform, NativeModules } from 'react-native';
+import { Constant } from '../../common/Constant';
+import { setFileLuuDuLieu } from '../fileStore/FileStorage';
 const { AzureHub } = NativeModules;
+import NavigationService from "../../navigator/NavigationService";
 
 const URL_DEBUG = "https://kt365cafe.pos365.vn/";
 
@@ -95,8 +98,10 @@ const extractData = (response) => {
     }
     else {
         if (response.status == 401) {
-            // if (!response.url.includes(ApiPath.LOGIN))
-            //     NavigationService.navigate(ScreenList.LoginScreen, {}, true);
+            // if (!(response.url.includes(ApiPath.RETAILER_INFO) || response.url.includes(ApiPath.LOGIN))) {
+            setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
+            NavigationService.navigate("Login", {}, true);
+            // }
         } else
             dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'), () => {
                 dialogManager.destroy();

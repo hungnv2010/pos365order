@@ -8,23 +8,23 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* Pos365OrderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Pos365OrderTests.m */; };
+		0AA7B82D98C10FC7CB4DD302 /* libPods-Pos365Order-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C102D7554F33C7F2E91EE91C /* libPods-Pos365Order-tvOSTests.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1A528571247226050090BA8A /* PrinterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A528570247226050090BA8A /* PrinterManager.m */; };
+		19932F186E698697CF0A7E5E /* libPods-Pos365Order.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6A0ED5839C1DFC765C1E6A6C /* libPods-Pos365Order.a */; };
 		1A528574247226170090BA8A /* libRTPrinterSDK.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A528573247226170090BA8A /* libRTPrinterSDK.a */; };
 		1A528576247226310090BA8A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A528575247226310090BA8A /* CoreBluetooth.framework */; };
 		1A528578247226380090BA8A /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A528577247226380090BA8A /* libz.tbd */; };
 		1A52857C247228580090BA8A /* Print.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A52857B247228580090BA8A /* Print.m */; };
-		27768AA63A0175EB35BA285D /* libPods-Pos365Order.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F37C705F6B7232F4419AE7C1 /* libPods-Pos365Order.a */; };
+		1A5285A724726E930090BA8A /* PrinterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 1A52859E24726E930090BA8A /* PrinterManager.m */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* Pos365OrderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* Pos365OrderTests.m */; };
-		82777C70E68FD969A16718DB /* libPods-Pos365OrderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 59DB188E6235B74E8CD8CFDA /* libPods-Pos365OrderTests.a */; };
-		A890E05FF8EFE51B8E6E672E /* libPods-Pos365Order-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E5CC82B45ADC1AC1604478D7 /* libPods-Pos365Order-tvOS.a */; };
-		EEDFED8B64E5F6CD4344842C /* libPods-Pos365Order-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3DC6D044340579D2D8DAA2E /* libPods-Pos365Order-tvOSTests.a */; };
+		8878E8C1370A35994331A062 /* libPods-Pos365OrderTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C27990B52DC92A4256819DF /* libPods-Pos365OrderTests.a */; };
+		F555ED54BBB8CF4EA225AFFF /* libPods-Pos365Order-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3313BDDD123AC8BE2D5AEB0 /* libPods-Pos365Order-tvOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +49,7 @@
 		00E356EE1AD99517003FC87E /* Pos365OrderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Pos365OrderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* Pos365OrderTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Pos365OrderTests.m; sourceTree = "<group>"; };
+		057DE499ECC4E6A42F7C8AF6 /* Pods-Pos365OrderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365OrderTests.debug.xcconfig"; path = "Target Support Files/Pods-Pos365OrderTests/Pods-Pos365OrderTests.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* Pos365Order.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pos365Order.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Pos365Order/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Pos365Order/AppDelegate.m; sourceTree = "<group>"; };
@@ -56,67 +57,66 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Pos365Order/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Pos365Order/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Pos365Order/main.m; sourceTree = "<group>"; };
-		1A528549247225E90090BA8A /* BitmapSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BitmapSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/BitmapSetting.h; sourceTree = "<group>"; };
-		1A52854A247225E90090BA8A /* PrinterStatusObj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrinterStatusObj.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PrinterStatusObj.h; sourceTree = "<group>"; };
-		1A52854B247225E90090BA8A /* PlistUtils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PlistUtils.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PlistUtils.h; sourceTree = "<group>"; };
-		1A52854C247225E90090BA8A /* SafeMutableArray.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SafeMutableArray.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/SafeMutableArray.h; sourceTree = "<group>"; };
-		1A52854D247225E90090BA8A /* CPCLCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CPCLCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/CPCLCmd.h; sourceTree = "<group>"; };
-		1A52854E247225E90090BA8A /* PinPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinPrinter.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PinPrinter.h; sourceTree = "<group>"; };
-		1A52854F247225E90090BA8A /* Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Header.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/Header.h; sourceTree = "<group>"; };
-		1A528550247225E90090BA8A /* LabelCommonSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LabelCommonSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/LabelCommonSetting.h; sourceTree = "<group>"; };
-		1A528551247225E90090BA8A /* PinPrinterFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinPrinterFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PinPrinterFactory.h; sourceTree = "<group>"; };
-		1A528552247225E90090BA8A /* ESCCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ESCCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ESCCmd.h; sourceTree = "<group>"; };
-		1A528553247225E90090BA8A /* RTBlueToothPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RTBlueToothPI.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/RTBlueToothPI.h; sourceTree = "<group>"; };
-		1A528554247225E90090BA8A /* ObserverObj.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ObserverObj.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ObserverObj.h; sourceTree = "<group>"; };
-		1A528555247225E90090BA8A /* RTDeviceinfo.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RTDeviceinfo.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/RTDeviceinfo.h; sourceTree = "<group>"; };
-		1A528556247225EA0090BA8A /* WIFIFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WIFIFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/WIFIFactory.h; sourceTree = "<group>"; };
-		1A528557247225EA0090BA8A /* ZPLCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZPLCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ZPLCmd.h; sourceTree = "<group>"; };
-		1A528558247225EA0090BA8A /* BlueToothFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlueToothFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/BlueToothFactory.h; sourceTree = "<group>"; };
-		1A528559247225EA0090BA8A /* ThermalPrinterFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThermalPrinterFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ThermalPrinterFactory.h; sourceTree = "<group>"; };
-		1A52855A247225EA0090BA8A /* PrinterInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrinterInterface.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PrinterInterface.h; sourceTree = "<group>"; };
-		1A52855B247225EA0090BA8A /* ZPLFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZPLFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ZPLFactory.h; sourceTree = "<group>"; };
-		1A52855C247225EA0090BA8A /* LabelPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LabelPrinter.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/LabelPrinter.h; sourceTree = "<group>"; };
-		1A52855D247225EA0090BA8A /* BarcodeSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BarcodeSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/BarcodeSetting.h; sourceTree = "<group>"; };
-		1A52855E247225EA0090BA8A /* LabelPrinterFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LabelPrinterFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/LabelPrinterFactory.h; sourceTree = "<group>"; };
-		1A52855F247225EA0090BA8A /* TSCCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TSCCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/TSCCmd.h; sourceTree = "<group>"; };
-		1A528560247225EA0090BA8A /* PrinterFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PrinterFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PrinterFactory.h; sourceTree = "<group>"; };
-		1A528561247225EB0090BA8A /* Printer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Printer.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/Printer.h; sourceTree = "<group>"; };
-		1A528562247225EB0090BA8A /* ESCFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ESCFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ESCFactory.h; sourceTree = "<group>"; };
-		1A528563247225EB0090BA8A /* CmdFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CmdFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/CmdFactory.h; sourceTree = "<group>"; };
-		1A528564247225EB0090BA8A /* TSCFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TSCFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/TSCFactory.h; sourceTree = "<group>"; };
-		1A528565247225EB0090BA8A /* PinCmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinCmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PinCmd.h; sourceTree = "<group>"; };
-		1A528566247225EB0090BA8A /* PIFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PIFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PIFactory.h; sourceTree = "<group>"; };
-		1A528567247225EB0090BA8A /* CommonSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommonSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/CommonSetting.h; sourceTree = "<group>"; };
-		1A528568247225EB0090BA8A /* Cmd.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Cmd.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/Cmd.h; sourceTree = "<group>"; };
-		1A528569247225EB0090BA8A /* TextSetting.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextSetting.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/TextSetting.h; sourceTree = "<group>"; };
-		1A52856A247225EB0090BA8A /* ThermalPrinter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ThermalPrinter.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/ThermalPrinter.h; sourceTree = "<group>"; };
-		1A52856B247225EC0090BA8A /* PinCmdFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PinCmdFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/PinCmdFactory.h; sourceTree = "<group>"; };
-		1A52856C247225EC0090BA8A /* EnumTypeDef.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EnumTypeDef.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/EnumTypeDef.h; sourceTree = "<group>"; };
-		1A52856D247225EC0090BA8A /* CPCLFactory.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CPCLFactory.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/CPCLFactory.h; sourceTree = "<group>"; };
-		1A52856E247225EC0090BA8A /* WifiInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WifiInterface.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Lib/SDK/include/RTPrinterSDK/WifiInterface.h; sourceTree = "<group>"; };
-		1A52856F247226050090BA8A /* PrinterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterManager.h; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Common/PrinterManager.h; sourceTree = "<group>"; };
-		1A528570247226050090BA8A /* PrinterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrinterManager.m; path = ../../../../../Users/doanhuy/Downloads/IOS_Printer_SDK_4.10.17/PrinterExample/PrinterExample/Common/PrinterManager.m; sourceTree = "<group>"; };
+		166245070632AFE97E043172 /* Pods-Pos365Order-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Pos365Order-tvOS/Pods-Pos365Order-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		1A528573247226170090BA8A /* libRTPrinterSDK.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRTPrinterSDK.a; sourceTree = "<group>"; };
 		1A528575247226310090BA8A /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		1A528577247226380090BA8A /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		1A52857A247228480090BA8A /* Print.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Print.h; sourceTree = "<group>"; };
 		1A52857B247228580090BA8A /* Print.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Print.m; sourceTree = "<group>"; };
-		251A9A3B511EFF6C1D73B685 /* Pods-Pos365Order.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order.debug.xcconfig"; path = "Target Support Files/Pods-Pos365Order/Pods-Pos365Order.debug.xcconfig"; sourceTree = "<group>"; };
+		1A52857F24726E910090BA8A /* ZPLFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZPLFactory.h; path = Common/ZPLFactory.h; sourceTree = "<group>"; };
+		1A52858024726E910090BA8A /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Header.h; path = Common/Header.h; sourceTree = "<group>"; };
+		1A52858124726E910090BA8A /* PrinterInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterInterface.h; path = Common/PrinterInterface.h; sourceTree = "<group>"; };
+		1A52858224726E910090BA8A /* PIFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PIFactory.h; path = Common/PIFactory.h; sourceTree = "<group>"; };
+		1A52858324726E910090BA8A /* CmdFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CmdFactory.h; path = Common/CmdFactory.h; sourceTree = "<group>"; };
+		1A52858424726E910090BA8A /* PinCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinCmd.h; path = Common/PinCmd.h; sourceTree = "<group>"; };
+		1A52858524726E910090BA8A /* WifiInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WifiInterface.h; path = Common/WifiInterface.h; sourceTree = "<group>"; };
+		1A52858624726E910090BA8A /* ESCFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ESCFactory.h; path = Common/ESCFactory.h; sourceTree = "<group>"; };
+		1A52858724726E910090BA8A /* LabelCommonSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelCommonSetting.h; path = Common/LabelCommonSetting.h; sourceTree = "<group>"; };
+		1A52858824726E910090BA8A /* PinPrinter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinPrinter.h; path = Common/PinPrinter.h; sourceTree = "<group>"; };
+		1A52858924726E910090BA8A /* BarcodeSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BarcodeSetting.h; path = Common/BarcodeSetting.h; sourceTree = "<group>"; };
+		1A52858A24726E910090BA8A /* CPCLFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPCLFactory.h; path = Common/CPCLFactory.h; sourceTree = "<group>"; };
+		1A52858B24726E910090BA8A /* LabelPrinterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelPrinterFactory.h; path = Common/LabelPrinterFactory.h; sourceTree = "<group>"; };
+		1A52858C24726E910090BA8A /* WIFIFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = WIFIFactory.h; path = Common/WIFIFactory.h; sourceTree = "<group>"; };
+		1A52858D24726E920090BA8A /* TSCFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSCFactory.h; path = Common/TSCFactory.h; sourceTree = "<group>"; };
+		1A52858E24726E920090BA8A /* CommonSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CommonSetting.h; path = Common/CommonSetting.h; sourceTree = "<group>"; };
+		1A52858F24726E920090BA8A /* PinCmdFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinCmdFactory.h; path = Common/PinCmdFactory.h; sourceTree = "<group>"; };
+		1A52859024726E920090BA8A /* RTBlueToothPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTBlueToothPI.h; path = Common/RTBlueToothPI.h; sourceTree = "<group>"; };
+		1A52859124726E920090BA8A /* RTDeviceinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RTDeviceinfo.h; path = Common/RTDeviceinfo.h; sourceTree = "<group>"; };
+		1A52859224726E920090BA8A /* Printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Printer.h; path = Common/Printer.h; sourceTree = "<group>"; };
+		1A52859324726E920090BA8A /* PinPrinterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PinPrinterFactory.h; path = Common/PinPrinterFactory.h; sourceTree = "<group>"; };
+		1A52859424726E920090BA8A /* EnumTypeDef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EnumTypeDef.h; path = Common/EnumTypeDef.h; sourceTree = "<group>"; };
+		1A52859524726E920090BA8A /* Cmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Cmd.h; path = Common/Cmd.h; sourceTree = "<group>"; };
+		1A52859624726E920090BA8A /* PrinterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterFactory.h; path = Common/PrinterFactory.h; sourceTree = "<group>"; };
+		1A52859724726E920090BA8A /* CPCLCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CPCLCmd.h; path = Common/CPCLCmd.h; sourceTree = "<group>"; };
+		1A52859824726E920090BA8A /* ThermalPrinterFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThermalPrinterFactory.h; path = Common/ThermalPrinterFactory.h; sourceTree = "<group>"; };
+		1A52859924726E920090BA8A /* TSCCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TSCCmd.h; path = Common/TSCCmd.h; sourceTree = "<group>"; };
+		1A52859A24726E920090BA8A /* PrinterStatusObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterStatusObj.h; path = Common/PrinterStatusObj.h; sourceTree = "<group>"; };
+		1A52859B24726E930090BA8A /* PrinterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PrinterManager.h; path = Common/PrinterManager.h; sourceTree = "<group>"; };
+		1A52859C24726E930090BA8A /* PlistUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlistUtils.h; path = Common/PlistUtils.h; sourceTree = "<group>"; };
+		1A52859D24726E930090BA8A /* ESCCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ESCCmd.h; path = Common/ESCCmd.h; sourceTree = "<group>"; };
+		1A52859E24726E930090BA8A /* PrinterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PrinterManager.m; path = Common/PrinterManager.m; sourceTree = "<group>"; };
+		1A52859F24726E930090BA8A /* LabelPrinter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LabelPrinter.h; path = Common/LabelPrinter.h; sourceTree = "<group>"; };
+		1A5285A024726E930090BA8A /* SafeMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SafeMutableArray.h; path = Common/SafeMutableArray.h; sourceTree = "<group>"; };
+		1A5285A124726E930090BA8A /* ThermalPrinter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ThermalPrinter.h; path = Common/ThermalPrinter.h; sourceTree = "<group>"; };
+		1A5285A224726E930090BA8A /* BlueToothFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BlueToothFactory.h; path = Common/BlueToothFactory.h; sourceTree = "<group>"; };
+		1A5285A324726E930090BA8A /* ObserverObj.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObserverObj.h; path = Common/ObserverObj.h; sourceTree = "<group>"; };
+		1A5285A424726E930090BA8A /* TextSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TextSetting.h; path = Common/TextSetting.h; sourceTree = "<group>"; };
+		1A5285A524726E930090BA8A /* BitmapSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BitmapSetting.h; path = Common/BitmapSetting.h; sourceTree = "<group>"; };
+		1A5285A624726E930090BA8A /* ZPLCmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZPLCmd.h; path = Common/ZPLCmd.h; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* Pos365Order-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pos365Order-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* Pos365Order-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Pos365Order-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		2ECDD16AA6B1885924C2FDF2 /* Pods-Pos365Order-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Pos365Order-tvOS/Pods-Pos365Order-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
-		43C399C3DB7A44983709809A /* Pods-Pos365Order-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Pos365Order-tvOSTests/Pods-Pos365Order-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
-		59DB188E6235B74E8CD8CFDA /* libPods-Pos365OrderTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pos365OrderTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		992B5FC0BB88F7BBE5AC0723 /* Pods-Pos365Order-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Pos365Order-tvOSTests/Pods-Pos365Order-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
-		A9EAC17E0D04593BDD67A78F /* Pods-Pos365Order-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order-tvOS.release.xcconfig"; path = "Target Support Files/Pods-Pos365Order-tvOS/Pods-Pos365Order-tvOS.release.xcconfig"; sourceTree = "<group>"; };
-		AC70D0E37990FA7015CE0141 /* Pods-Pos365OrderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365OrderTests.debug.xcconfig"; path = "Target Support Files/Pods-Pos365OrderTests/Pods-Pos365OrderTests.debug.xcconfig"; sourceTree = "<group>"; };
-		B7C18F85D69FA7F663B2D590 /* Pods-Pos365OrderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365OrderTests.release.xcconfig"; path = "Target Support Files/Pods-Pos365OrderTests/Pods-Pos365OrderTests.release.xcconfig"; sourceTree = "<group>"; };
-		C3DC6D044340579D2D8DAA2E /* libPods-Pos365Order-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pos365Order-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D86767FD566E80532E8A15F4 /* Pods-Pos365Order.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order.release.xcconfig"; path = "Target Support Files/Pods-Pos365Order/Pods-Pos365Order.release.xcconfig"; sourceTree = "<group>"; };
-		E5CC82B45ADC1AC1604478D7 /* libPods-Pos365Order-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pos365Order-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		402A6A0C48FD3CD39A9D0EEA /* Pods-Pos365OrderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365OrderTests.release.xcconfig"; path = "Target Support Files/Pods-Pos365OrderTests/Pods-Pos365OrderTests.release.xcconfig"; sourceTree = "<group>"; };
+		4232146EED0222861105CD1E /* Pods-Pos365Order-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-Pos365Order-tvOS/Pods-Pos365Order-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
+		6617621057B4C52677488AEC /* Pods-Pos365Order.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order.release.xcconfig"; path = "Target Support Files/Pods-Pos365Order/Pods-Pos365Order.release.xcconfig"; sourceTree = "<group>"; };
+		6A0ED5839C1DFC765C1E6A6C /* libPods-Pos365Order.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pos365Order.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		8BF7FD65B19D4E175A1A0738 /* Pods-Pos365Order.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order.debug.xcconfig"; path = "Target Support Files/Pods-Pos365Order/Pods-Pos365Order.debug.xcconfig"; sourceTree = "<group>"; };
+		8C1605767C4E385B9032DC85 /* Pods-Pos365Order-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-Pos365Order-tvOSTests/Pods-Pos365Order-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
+		8C27990B52DC92A4256819DF /* libPods-Pos365OrderTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pos365OrderTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B3313BDDD123AC8BE2D5AEB0 /* libPods-Pos365Order-tvOS.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pos365Order-tvOS.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C102D7554F33C7F2E91EE91C /* libPods-Pos365Order-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pos365Order-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
-		F37C705F6B7232F4419AE7C1 /* libPods-Pos365Order.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Pos365Order.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC997C20223923704A985E2E /* Pods-Pos365Order-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pos365Order-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-Pos365Order-tvOSTests/Pods-Pos365Order-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,7 +124,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				82777C70E68FD969A16718DB /* libPods-Pos365OrderTests.a in Frameworks */,
+				8878E8C1370A35994331A062 /* libPods-Pos365OrderTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,8 +134,8 @@
 			files = (
 				1A528578247226380090BA8A /* libz.tbd in Frameworks */,
 				1A528576247226310090BA8A /* CoreBluetooth.framework in Frameworks */,
-				27768AA63A0175EB35BA285D /* libPods-Pos365Order.a in Frameworks */,
 				1A528574247226170090BA8A /* libRTPrinterSDK.a in Frameworks */,
+				19932F186E698697CF0A7E5E /* libPods-Pos365Order.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -143,7 +143,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A890E05FF8EFE51B8E6E672E /* libPods-Pos365Order-tvOS.a in Frameworks */,
+				F555ED54BBB8CF4EA225AFFF /* libPods-Pos365Order-tvOS.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,7 +151,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEDFED8B64E5F6CD4344842C /* libPods-Pos365Order-tvOSTests.a in Frameworks */,
+				0AA7B82D98C10FC7CB4DD302 /* libPods-Pos365Order-tvOSTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,46 +195,46 @@
 		1A528548247225D10090BA8A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				1A52855D247225EA0090BA8A /* BarcodeSetting.h */,
-				1A528549247225E90090BA8A /* BitmapSetting.h */,
-				1A52856F247226050090BA8A /* PrinterManager.h */,
-				1A528570247226050090BA8A /* PrinterManager.m */,
-				1A528558247225EA0090BA8A /* BlueToothFactory.h */,
-				1A528568247225EB0090BA8A /* Cmd.h */,
-				1A528563247225EB0090BA8A /* CmdFactory.h */,
-				1A528567247225EB0090BA8A /* CommonSetting.h */,
-				1A52854D247225E90090BA8A /* CPCLCmd.h */,
-				1A52856D247225EC0090BA8A /* CPCLFactory.h */,
-				1A52856C247225EC0090BA8A /* EnumTypeDef.h */,
-				1A528552247225E90090BA8A /* ESCCmd.h */,
-				1A528562247225EB0090BA8A /* ESCFactory.h */,
-				1A52854F247225E90090BA8A /* Header.h */,
-				1A528550247225E90090BA8A /* LabelCommonSetting.h */,
-				1A52855C247225EA0090BA8A /* LabelPrinter.h */,
-				1A52855E247225EA0090BA8A /* LabelPrinterFactory.h */,
-				1A528554247225E90090BA8A /* ObserverObj.h */,
-				1A528566247225EB0090BA8A /* PIFactory.h */,
-				1A528565247225EB0090BA8A /* PinCmd.h */,
-				1A52856B247225EC0090BA8A /* PinCmdFactory.h */,
-				1A52854E247225E90090BA8A /* PinPrinter.h */,
-				1A528551247225E90090BA8A /* PinPrinterFactory.h */,
-				1A52854B247225E90090BA8A /* PlistUtils.h */,
-				1A528561247225EB0090BA8A /* Printer.h */,
-				1A528560247225EA0090BA8A /* PrinterFactory.h */,
-				1A52855A247225EA0090BA8A /* PrinterInterface.h */,
-				1A52854A247225E90090BA8A /* PrinterStatusObj.h */,
-				1A528553247225E90090BA8A /* RTBlueToothPI.h */,
-				1A528555247225E90090BA8A /* RTDeviceinfo.h */,
-				1A52854C247225E90090BA8A /* SafeMutableArray.h */,
-				1A528569247225EB0090BA8A /* TextSetting.h */,
-				1A52856A247225EB0090BA8A /* ThermalPrinter.h */,
-				1A528559247225EA0090BA8A /* ThermalPrinterFactory.h */,
-				1A52855F247225EA0090BA8A /* TSCCmd.h */,
-				1A528564247225EB0090BA8A /* TSCFactory.h */,
-				1A528556247225EA0090BA8A /* WIFIFactory.h */,
-				1A52856E247225EC0090BA8A /* WifiInterface.h */,
-				1A528557247225EA0090BA8A /* ZPLCmd.h */,
-				1A52855B247225EA0090BA8A /* ZPLFactory.h */,
+				1A52858924726E910090BA8A /* BarcodeSetting.h */,
+				1A5285A524726E930090BA8A /* BitmapSetting.h */,
+				1A5285A224726E930090BA8A /* BlueToothFactory.h */,
+				1A52859524726E920090BA8A /* Cmd.h */,
+				1A52858324726E910090BA8A /* CmdFactory.h */,
+				1A52858E24726E920090BA8A /* CommonSetting.h */,
+				1A52859724726E920090BA8A /* CPCLCmd.h */,
+				1A52858A24726E910090BA8A /* CPCLFactory.h */,
+				1A52859424726E920090BA8A /* EnumTypeDef.h */,
+				1A52859D24726E930090BA8A /* ESCCmd.h */,
+				1A52858624726E910090BA8A /* ESCFactory.h */,
+				1A52858024726E910090BA8A /* Header.h */,
+				1A52858724726E910090BA8A /* LabelCommonSetting.h */,
+				1A52859F24726E930090BA8A /* LabelPrinter.h */,
+				1A52858B24726E910090BA8A /* LabelPrinterFactory.h */,
+				1A5285A324726E930090BA8A /* ObserverObj.h */,
+				1A52858224726E910090BA8A /* PIFactory.h */,
+				1A52858424726E910090BA8A /* PinCmd.h */,
+				1A52858F24726E920090BA8A /* PinCmdFactory.h */,
+				1A52858824726E910090BA8A /* PinPrinter.h */,
+				1A52859324726E920090BA8A /* PinPrinterFactory.h */,
+				1A52859C24726E930090BA8A /* PlistUtils.h */,
+				1A52859224726E920090BA8A /* Printer.h */,
+				1A52859624726E920090BA8A /* PrinterFactory.h */,
+				1A52858124726E910090BA8A /* PrinterInterface.h */,
+				1A52859B24726E930090BA8A /* PrinterManager.h */,
+				1A52859E24726E930090BA8A /* PrinterManager.m */,
+				1A52859A24726E920090BA8A /* PrinterStatusObj.h */,
+				1A52859024726E920090BA8A /* RTBlueToothPI.h */,
+				1A52859124726E920090BA8A /* RTDeviceinfo.h */,
+				1A5285A024726E930090BA8A /* SafeMutableArray.h */,
+				1A5285A424726E930090BA8A /* TextSetting.h */,
+				1A5285A124726E930090BA8A /* ThermalPrinter.h */,
+				1A52859824726E920090BA8A /* ThermalPrinterFactory.h */,
+				1A52859924726E920090BA8A /* TSCCmd.h */,
+				1A52858D24726E920090BA8A /* TSCFactory.h */,
+				1A52858C24726E910090BA8A /* WIFIFactory.h */,
+				1A52858524726E910090BA8A /* WifiInterface.h */,
+				1A5285A624726E930090BA8A /* ZPLCmd.h */,
+				1A52857F24726E910090BA8A /* ZPLFactory.h */,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -263,10 +263,10 @@
 				1A528575247226310090BA8A /* CoreBluetooth.framework */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
 				ED2971642150620600B7C4FE /* JavaScriptCore.framework */,
-				F37C705F6B7232F4419AE7C1 /* libPods-Pos365Order.a */,
-				E5CC82B45ADC1AC1604478D7 /* libPods-Pos365Order-tvOS.a */,
-				C3DC6D044340579D2D8DAA2E /* libPods-Pos365Order-tvOSTests.a */,
-				59DB188E6235B74E8CD8CFDA /* libPods-Pos365OrderTests.a */,
+				6A0ED5839C1DFC765C1E6A6C /* libPods-Pos365Order.a */,
+				B3313BDDD123AC8BE2D5AEB0 /* libPods-Pos365Order-tvOS.a */,
+				C102D7554F33C7F2E91EE91C /* libPods-Pos365Order-tvOSTests.a */,
+				8C27990B52DC92A4256819DF /* libPods-Pos365OrderTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -307,14 +307,14 @@
 		DAF8AE9510FDBB34FD52E9B3 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				251A9A3B511EFF6C1D73B685 /* Pods-Pos365Order.debug.xcconfig */,
-				D86767FD566E80532E8A15F4 /* Pods-Pos365Order.release.xcconfig */,
-				2ECDD16AA6B1885924C2FDF2 /* Pods-Pos365Order-tvOS.debug.xcconfig */,
-				A9EAC17E0D04593BDD67A78F /* Pods-Pos365Order-tvOS.release.xcconfig */,
-				43C399C3DB7A44983709809A /* Pods-Pos365Order-tvOSTests.debug.xcconfig */,
-				992B5FC0BB88F7BBE5AC0723 /* Pods-Pos365Order-tvOSTests.release.xcconfig */,
-				AC70D0E37990FA7015CE0141 /* Pods-Pos365OrderTests.debug.xcconfig */,
-				B7C18F85D69FA7F663B2D590 /* Pods-Pos365OrderTests.release.xcconfig */,
+				8BF7FD65B19D4E175A1A0738 /* Pods-Pos365Order.debug.xcconfig */,
+				6617621057B4C52677488AEC /* Pods-Pos365Order.release.xcconfig */,
+				4232146EED0222861105CD1E /* Pods-Pos365Order-tvOS.debug.xcconfig */,
+				166245070632AFE97E043172 /* Pods-Pos365Order-tvOS.release.xcconfig */,
+				FC997C20223923704A985E2E /* Pods-Pos365Order-tvOSTests.debug.xcconfig */,
+				8C1605767C4E385B9032DC85 /* Pods-Pos365Order-tvOSTests.release.xcconfig */,
+				057DE499ECC4E6A42F7C8AF6 /* Pods-Pos365OrderTests.debug.xcconfig */,
+				402A6A0C48FD3CD39A9D0EEA /* Pods-Pos365OrderTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -326,7 +326,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "Pos365OrderTests" */;
 			buildPhases = (
-				6674671EF66C0AD577B1526D /* [CP] Check Pods Manifest.lock */,
+				F99FB458FF61A7A07D2EE49F /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
@@ -345,13 +345,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "Pos365Order" */;
 			buildPhases = (
-				B6DFDF65EB2BD16956C3FD43 /* [CP] Check Pods Manifest.lock */,
+				D2300A435F3BA20556ED6C96 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				CD1843A7B02E48DF5252E5F1 /* [CP] Copy Pods Resources */,
+				AE2B76233D1B7AE3E958F029 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -366,7 +366,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BA1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Pos365Order-tvOS" */;
 			buildPhases = (
-				E2FD6A51B9E388A7EBE0A882 /* [CP] Check Pods Manifest.lock */,
+				8FB421F36C2405B8B911E7C6 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F122414F3F0027D42C /* Start Packager */,
 				2D02E4771E0B4A5D006451C7 /* Sources */,
 				2D02E4781E0B4A5D006451C7 /* Frameworks */,
@@ -386,7 +386,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2D02E4BB1E0B4A5E006451C7 /* Build configuration list for PBXNativeTarget "Pos365Order-tvOSTests" */;
 			buildPhases = (
-				4AF91DF1A0ECA052C88BE958 /* [CP] Check Pods Manifest.lock */,
+				1DE2FB72A630087C7BB3A2EC /* [CP] Check Pods Manifest.lock */,
 				2D02E48C1E0B4A5D006451C7 /* Sources */,
 				2D02E48D1E0B4A5D006451C7 /* Frameworks */,
 				2D02E48E1E0B4A5D006451C7 /* Resources */,
@@ -412,14 +412,20 @@
 				TargetAttributes = {
 					00E356ED1AD99517003FC87E = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = S8C4LR9F7U;
 						TestTargetID = 13B07F861A680F5B00A75B9A;
+					};
+					13B07F861A680F5B00A75B9A = {
+						DevelopmentTeam = S8C4LR9F7U;
 					};
 					2D02E47A1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = S8C4LR9F7U;
 						ProvisioningStyle = Automatic;
 					};
 					2D02E48F1E0B4A5D006451C7 = {
 						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = S8C4LR9F7U;
 						ProvisioningStyle = Automatic;
 						TestTargetID = 2D02E47A1E0B4A5D006451C7;
 					};
@@ -496,21 +502,7 @@
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
 		};
-		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Bundle React Native Code And Images";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
-		};
-		4AF91DF1A0ECA052C88BE958 /* [CP] Check Pods Manifest.lock */ = {
+		1DE2FB72A630087C7BB3A2EC /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -532,7 +524,21 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6674671EF66C0AD577B1526D /* [CP] Check Pods Manifest.lock */ = {
+		2D02E4CB1E0B4B27006451C7 /* Bundle React Native Code And Images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native Code And Images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		8FB421F36C2405B8B911E7C6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -547,36 +553,14 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Pos365OrderTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Pos365Order-tvOS-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		B6DFDF65EB2BD16956C3FD43 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Pos365Order-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		CD1843A7B02E48DF5252E5F1 /* [CP] Copy Pods Resources */ = {
+		AE2B76233D1B7AE3E958F029 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -624,7 +608,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Pos365Order/Pods-Pos365Order-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E2FD6A51B9E388A7EBE0A882 /* [CP] Check Pods Manifest.lock */ = {
+		D2300A435F3BA20556ED6C96 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -639,7 +623,29 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Pos365Order-tvOS-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Pos365Order-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F99FB458FF61A7A07D2EE49F /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Pos365OrderTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -700,8 +706,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */,
-				1A528571247226050090BA8A /* PrinterManager.m in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				1A5285A724726E930090BA8A /* PrinterManager.m in Sources */,
 				1A52857C247228580090BA8A /* Print.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -753,9 +759,10 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AC70D0E37990FA7015CE0141 /* Pods-Pos365OrderTests.debug.xcconfig */;
+			baseConfigurationReference = 057DE499ECC4E6A42F7C8AF6 /* Pods-Pos365OrderTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -776,10 +783,11 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B7C18F85D69FA7F663B2D590 /* Pods-Pos365OrderTests.release.xcconfig */;
+			baseConfigurationReference = 402A6A0C48FD3CD39A9D0EEA /* Pods-Pos365OrderTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				INFOPLIST_FILE = Pos365OrderTests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -796,11 +804,12 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 251A9A3B511EFF6C1D73B685 /* Pods-Pos365Order.debug.xcconfig */;
+			baseConfigurationReference = 8BF7FD65B19D4E175A1A0738 /* Pods-Pos365Order.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				INFOPLIST_FILE = Pos365Order/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -821,10 +830,11 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D86767FD566E80532E8A15F4 /* Pods-Pos365Order.release.xcconfig */;
+			baseConfigurationReference = 6617621057B4C52677488AEC /* Pods-Pos365Order.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				INFOPLIST_FILE = Pos365Order/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
@@ -845,7 +855,7 @@
 		};
 		2D02E4971E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2ECDD16AA6B1885924C2FDF2 /* Pods-Pos365Order-tvOS.debug.xcconfig */;
+			baseConfigurationReference = 4232146EED0222861105CD1E /* Pods-Pos365Order-tvOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -854,6 +864,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Pos365Order-tvOS/Info.plist";
@@ -873,7 +884,7 @@
 		};
 		2D02E4981E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A9EAC17E0D04593BDD67A78F /* Pods-Pos365Order-tvOS.release.xcconfig */;
+			baseConfigurationReference = 166245070632AFE97E043172 /* Pods-Pos365Order-tvOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -883,6 +894,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Pos365Order-tvOS/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -901,7 +913,7 @@
 		};
 		2D02E4991E0B4A5E006451C7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 43C399C3DB7A44983709809A /* Pods-Pos365Order-tvOSTests.debug.xcconfig */;
+			baseConfigurationReference = FC997C20223923704A985E2E /* Pods-Pos365Order-tvOSTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -909,6 +921,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				ENABLE_TESTABILITY = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Pos365Order-tvOSTests/Info.plist";
@@ -928,7 +941,7 @@
 		};
 		2D02E49A1E0B4A5E006451C7 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 992B5FC0BB88F7BBE5AC0723 /* Pods-Pos365Order-tvOSTests.release.xcconfig */;
+			baseConfigurationReference = 8C1605767C4E385B9032DC85 /* Pods-Pos365Order-tvOSTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ANALYZER_NONNULL = YES;
@@ -937,6 +950,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = S8C4LR9F7U;
 				GCC_NO_COMMON_BLOCKS = YES;
 				INFOPLIST_FILE = "Pos365Order-tvOSTests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";

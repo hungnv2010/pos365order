@@ -36,7 +36,7 @@ export default () => {
                     </View>
                 ),
             }} />
-            <Tab.Screen name="Settings" component={More} options={{
+            <Tab.Screen name="Settings" component={()=>{return(<View><Text>Setting</Text></View>)}} options={{
                 tabBarLabel: 'Settings',
                 tabBarIcon: ({ color }) => (
                     <Image style={{ width: 20, height: 20, padding: 5 }} source={Images.icon_transfer_money} />

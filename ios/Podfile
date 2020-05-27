@@ -34,6 +34,8 @@ target 'Pos365Order' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
+  pod 'react-native-view-shot', :path => '../node_modules/react-native-view-shot'
+
   target 'Pos365OrderTests' do
     inherit! :search_paths
     # Pods for testing

@@ -9,6 +9,7 @@ export default {
   bao_cao: "Báo cáo",
   ban_co_chac_chan_muon_huy_nhan_thong_bao: "Quý khách có chắc chắn muốn huỷ nhận thông báo không?",
   ban_hang: "Bán hàng",
+  bao_che_bien_sau_thanh_toan: "Báo chế biến sau khi thanh toán",
   // TODO: C
   chuyen_thiet_bi_cai_dat_otp: 'Chuyển thiết bị cài đặt Smart OTP',
   cai_dat: "Cài đặt",
@@ -44,6 +45,7 @@ dang_trong:"Đang trống",
   hang_muc: "Hạng mục",
 
   // TODO: I
+  in_tam_tinh: "In tạm tính",
 
   // TODO: K
   khach_le: "Khách lẻ",
@@ -66,6 +68,7 @@ dang_trong:"Đang trống",
   loai_hang: "Loại hàng",
   lan: "lần",
   lich_su_giao_dich: "Lịch sử giao dịch",
+  logout: "Đăng xuất",
 
   // TODO: M
   mang_luoi: 'Mạng lưới',

@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, TextInput, NativeModules } from 'react-native';
 import { Images, Colors, Metrics } from '../../../theme';
 import { WebView } from 'react-native-webview';
 import useDidMountEffect from '../../../customHook/useDidMountEffect';
@@ -12,6 +12,9 @@ import { dateToDate, DATE_FORMAT, currencyToString } from '../../../common/Utils
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
 import { useSelector } from 'react-redux';
+const { Print } = NativeModules;
+import ViewShot from 'react-native-view-shot';
+const dimension = { width: 300, height: 300 };
 
 const typeHeader1 = "HOÁ ĐƠN TEST PRINT"
 const code1 = "HD000000"
@@ -21,6 +24,13 @@ const CONTENT_FOOTER_POS365 = "Powered by POS365.VN"
 
 export default forwardRef((props, ref) => {
 
+    const [source, setSource] = useState(null);
+    const onCapture = useCallback(uri => {
+        console.log("onCapture uri ", uri);
+        setSource({ uri })
+    }
+        , []);
+
     const [data, setData] = useState("");
     const [vendorSession, setVendorSession] = useState({});
 
@@ -28,6 +38,10 @@ export default forwardRef((props, ref) => {
         console.log("useSelector state ", state);
         return state.Common.deviceType
     });
+
+    useEffect(() => {
+        // Print.registerPrint("192.168.99.104")
+    }, [])
 
     useEffect(() => {
         console.log("Preview props", props);
@@ -114,6 +128,7 @@ export default forwardRef((props, ref) => {
             HTMLBase = HTMLBase.replace("{Chan_Trang}", "Xin cảm ơn, hẹn gặp quý khách!")
             HTMLBase = HTMLBase.replace("{FOOTER_POS_365}", CONTENT_FOOTER_POS365)
         }
+        console.log("html ", JSON.stringify(HTMLBase));
         setData(HTMLBase)
     }
 
@@ -139,7 +154,8 @@ export default forwardRef((props, ref) => {
     }
 
     function clickPrint() {
-        alert("clickPrint")
+        console.log("clickPrint data ", data)
+        Print.printImage(data)
     }
 
     useImperativeHandle(ref, () => ({
@@ -158,16 +174,16 @@ export default forwardRef((props, ref) => {
                 clickPrint={() => clickPrint()}
                 clickCheck={() => clickCheck()}
             /> : null}
-            <WebView
-                source={{ html: data }}
-                style={{ marginTop: 0, flex: 1 }}
-                onError={syntheticEvent => {
-                    dialogManager.hiddenLoading();
-                }}
-                onLoadEnd={syntheticEvent => {
-                    dialogManager.hiddenLoading();
-                }}
-            />
+                <WebView
+                    source={{ html: data }}
+                    style={{ marginTop: 0, flex: 1 }}
+                    onError={syntheticEvent => {
+                        dialogManager.hiddenLoading();
+                    }}
+                    onLoadEnd={syntheticEvent => {
+                        dialogManager.hiddenLoading();
+                    }}
+                />
         </View>
     );
 });
