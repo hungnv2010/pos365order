@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, TextInput, NativeModules } from 'react-native';
 import { Images, Colors, Metrics } from '../../../theme';
 import { WebView } from 'react-native-webview';
 import useDidMountEffect from '../../../customHook/useDidMountEffect';
@@ -129,7 +129,6 @@ export default forwardRef((props, ref) => {
             HTMLBase = HTMLBase.replace("{FOOTER_POS_365}", CONTENT_FOOTER_POS365)
         }
         console.log("html ", JSON.stringify(HTMLBase));
-        
         setData(HTMLBase)
     }
 
@@ -175,7 +174,6 @@ export default forwardRef((props, ref) => {
                 clickPrint={() => clickPrint()}
                 clickCheck={() => clickCheck()}
             /> : null}
-            {/* <ViewShot onCapture={onCapture} captureMode="update" style={{ height: 200}}> */}
                 <WebView
                     source={{ html: data }}
                     style={{ marginTop: 0, flex: 1 }}
@@ -186,9 +184,6 @@ export default forwardRef((props, ref) => {
                         dialogManager.hiddenLoading();
                     }}
                 />
-            {/* </ViewShot> */}
-
-            {/* <Image fadeDuration={0} source={source} style={{flex: 1}} /> */}
         </View>
     );
 });

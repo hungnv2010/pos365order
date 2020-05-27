@@ -82,7 +82,7 @@ export default {
   loai_hang: "Type",
   lan: "time",
   lich_su_giao_dich: "Transaction history",
-
+  logout: "Logout",
 
   // TODO: M
   mang_luoi: 'Network',

@@ -4,14 +4,27 @@ import { Images, Colors, Metrics } from '../../theme';
 import { setFileLuuDuLieu, getFileDuLieuString } from '../../data/fileStore/FileStorage';
 import { Constant } from '../../common/Constant';
 import realmStore from '../../data/realm/RealmStore';
+import I18n from '../../common/language/i18n'
+import { Switch, Snackbar } from 'react-native-paper';
+import dialogManager from '../../components/dialog/DialogManager';
+import { HTTPService } from '../../data/services/HttpService';
+import { ApiPath } from '../../data/services/ApiPath';
 const { Print } = NativeModules;
 const IP_DEFAULT = "192.168.99.";
 
 export default (props) => {
 
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
+
+    const handlerToast = (text) => {
+        setToastDescription(text)
+        setShowToast(true)
+    }
+
     return (
         <View style={{ flex: 1 }}>
-            <HeaderComponent />
+            <HeaderComponent showToast={(text) => handlerToast(text)} />
             <ContentComponent {...props} />
             <View
                 style={{
@@ -20,21 +33,34 @@ export default (props) => {
                     justifyContent: 'center',
                 }}>
             </View>
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </View>
     );
 };
 
-const HeaderComponent = () => {
+const HeaderComponent = (props) => {
 
     const [Logo, setLogo] = useState("");
     const [Name, setName] = useState("");
     const [Branch, setBranch] = useState({});
+    const [vendorSession, setVendorSession] = useState({});
+    const [showModal, setShowModal] = useState(false);
+
 
     useEffect(() => {
         const getVendorSession = async () => {
             let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
-            console.log('data', JSON.parse(data));
+            console.log('HeaderComponent data', JSON.parse(data));
             data = JSON.parse(data)
+            setVendorSession(data);
             if (data.CurrentRetailer && data.CurrentRetailer.Logo) {
                 setLogo(data.CurrentRetailer.Logo)
             }
@@ -42,12 +68,22 @@ const HeaderComponent = () => {
                 setName(data.CurrentRetailer.Name)
             }
 
-            let CurrentBranch = data.Branchs.filter(item => item.Id == data.CurrentBranchId)
-            console.log("CurrentBranch ", CurrentBranch);
-            if (CurrentBranch.length == 1) {
-                CurrentBranch = CurrentBranch[0]
-                setBranch(CurrentBranch)
+            let branch = await getFileDuLieuString(Constant.CURRENT_BRANCH, true);
+            console.log('HeaderComponent branch', JSON.parse(branch));
+            if (branch) {
+                setBranch(JSON.parse(branch))
+            } else {
+                setBranch(data.Branchs[0])
             }
+
+            // let CurrentBranch = data.Branchs.filter(item => item.Id == data.CurrentBranchId)
+            // console.log("CurrentBranch ", CurrentBranch);
+            // if (CurrentBranch.length == 1) {
+            //     CurrentBranch = CurrentBranch[0]
+            //     setBranch(CurrentBranch)
+            // } else if (CurrentBranch.length > 1) {
+               
+            // }
         }
         getVendorSession()
     }, [])
@@ -55,6 +91,32 @@ const HeaderComponent = () => {
     useEffect(() => {
 
     }, [Logo])
+
+    const onClickBranh = () => {
+        console.log("onClickBranh ", vendorSession);
+
+        if (vendorSession.Branchs.length > 1) {
+            setShowModal(true)
+        } else {
+            props.showToast("Bạn đang có ít hơn 2 chi nhánh.")
+        }
+    }
+
+    const onClickItemBranch = (item) => {
+        console.log("onClickItemBranch ", item);
+        setShowModal(false)
+        let params = { branchId: item.Id }
+        dialogManager.showLoading();
+        new HTTPService().setPath(ApiPath.CHANGE_BRANCH).POST(params).then((res) => {
+            console.log("onClickItemBranch res ", res);
+            setFileLuuDuLieu(Constant.CURRENT_BRANCH, JSON.stringify(item));
+            setBranch(item)
+            dialogManager.hiddenLoading()
+        }).catch((e) => {
+            console.log("onClickItemBranch err ", e);
+            dialogManager.hiddenLoading()
+        })
+    }
 
     return (
         <View style={{ backgroundColor: Colors.colorchinh, justifyContent: "space-between", flexDirection: "row", alignItems: "center", padding: 20 }}>
@@ -68,12 +130,58 @@ const HeaderComponent = () => {
                             :
                             <Image key="2" source={Images.icon_person} style={[{ width: 50, height: 50, marginRight: 20 }]} />
                     }
-
                     <Text style={{ marginTop: 10 }}>{Name}</Text>
                 </View>
-                <Text style={{ marginTop: 15 }}>{Branch.Name && Branch.Name != "" ? Branch.Name : 'Chi nhánh'}</Text>
+                <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", marginTop: 15 }} onPress={() => onClickBranh()}>
+                    <Image source={Images.icon_placeholder} style={[{ width: 10, height: 17, marginRight: 5 }]} />
+                    <Text style={{}}>{Branch.Name && Branch.Name != "" ? Branch.Name : 'Chi nhánh'}</Text>
+                </TouchableOpacity>
             </View>
-            <Text style={{ textDecorationLine: "underline" }}>Đăng xuất</Text>
+            <Text style={{ textDecorationLine: "underline" }}>{I18n.t('logout')}</Text>
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={showModal}
+                supportedOrientations={['portrait', 'landscape']}
+                onRequestClose={() => {
+                }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                    <TouchableWithoutFeedback
+                        onPress={() => {
+                            setShowModal(false)
+                        }}
+                    >
+                        <View style={[{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)'
+                        }]}></View>
+
+                    </TouchableWithoutFeedback>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+                        <View style={{
+                            padding: 5,
+                            backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
+                            width: Metrics.screenWidth * 0.8
+                        }}>
+                            <View style={{ padding: 10 }}>
+                                <Text style={{ marginBottom: 15, fontSize: 18, fontWeight: 'bold' }}>Select branch</Text>
+                                {
+                                    vendorSession.Branchs && vendorSession.Branchs.length > 0 ?
+                                        vendorSession.Branchs.map(item => (
+                                            <TouchableOpacity onPress={() => onClickItemBranch(item)}>
+                                                <Text style={{ paddingVertical: 10 }}>{item.Name}</Text>
+                                            </TouchableOpacity>
+                                        ))
+                                        : null
+                                }
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
 
     )
@@ -82,7 +190,11 @@ const HeaderComponent = () => {
 const ContentComponent = (props) => {
 
     const [showModal, setShowModal] = useState(false);
+    const [ipInput, setIpInput] = useState(IP_DEFAULT);
     const [ip, setIp] = useState(IP_DEFAULT);
+    const [isSwitchOn, setSwitchOn] = useState(false);
+    const [isSwitchOnNoticeProcess, setSwitchOnNoticeProcess] = useState(false);
+    const [paperSize, setPaperSize] = useState("");
 
     useEffect(() => {
         const getCurrentIP = async () => {
@@ -102,7 +214,8 @@ const ContentComponent = (props) => {
     }
 
     const onClickSaveIP = () => {
-        if (ip.length > 11) {
+        if (ipInput.length > 11) {
+            setIp(ipInput)
             setFileLuuDuLieu(Constant.IPPRINT, ip)
             Print.registerPrint(ip)
         }
@@ -124,10 +237,32 @@ const ContentComponent = (props) => {
                 <TouchableOpacity onPress={() => { props.navigation.navigate("PrintHtml") }}>
                     <Text style={{ marginTop: 20 }}>HTML print</Text>
                 </TouchableOpacity>
+                <View style={{ flexDirection: "row", marginTop: 15, alignItems: "center" }}>
+                    <View style={{ flex: 1, flexDirection: "column", height: 40, justifyContent: "center" }}>
+                        <Text style={{ textAlign: "left", }}>{I18n.t('in_tam_tinh')}</Text>
+                    </View>
+                    <Switch
+                        color={Colors.colorchinh}
+                        value={isSwitchOn}
+                        onValueChange={() => { setSwitchOn(!isSwitchOn) }
+                        }
+                    />
+                </View>
+                <View style={{ flexDirection: "row", marginTop: 5, alignItems: "center" }}>
+                    <View style={{ flex: 1, flexDirection: "column", height: 40, justifyContent: "center" }}>
+                        <Text style={{ textAlign: "left", }}>{I18n.t('bao_che_bien_sau_thanh_toan')}</Text>
+                    </View>
+                    <Switch
+                        color={Colors.colorchinh}
+                        value={isSwitchOnNoticeProcess}
+                        onValueChange={() => { setSwitchOnNoticeProcess(!isSwitchOnNoticeProcess) }
+                        }
+                    />
+                </View>
             </View>
             <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
                 <TouchableOpacity onPress={() => onClickLogOut()}>
-                    <Text style={{ marginTop: 20 }}>Logout</Text>
+                    <Text style={{ marginTop: 0 }}>{I18n.t('logout')}</Text>
                 </TouchableOpacity>
             </View>
             <Modal
@@ -163,7 +298,8 @@ const ContentComponent = (props) => {
                         }}>
                             <View style={{ padding: 10 }}>
                                 <Text style={{ marginBottom: 15, fontSize: 18, fontWeight: 'bold' }}>IP connect</Text>
-                                <TextInput style={{ padding: 10, borderRadius: 5, borderWidth: 1, borderColor: Colors.colorchinh }} onChangeText={(text) => setIp(text)} value={ip} placeholder="Địa chỉ ip" />
+                                <TextInput style={{ padding: 10, borderRadius: 5, borderWidth: 1, borderColor: Colors.colorchinh }} onChangeText={(text) => setIpInput(text)} value={ipInput} placeholder="Địa chỉ ip" />
+                                <TextInput style={{ padding: 10, borderRadius: 5, borderWidth: 1, borderColor: Colors.colorchinh, marginTop: 15 }} onChangeText={(text) => setPaperSize(text)} value={paperSize} placeholder="Khổ giấy 58..80" />
                                 <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
                                     <TouchableOpacity style={{ alignItems: "flex-end", marginTop: 15 }} onPress={() => {
                                         setShowModal(false)
