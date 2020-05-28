@@ -16,7 +16,7 @@ import { saveDeviceInfoToStore, updateStatusLogin, saveCurrentBranch, saveNotifi
 import useDidMountEffect from '../../customHook/useDidMountEffect';
 import { getFileDuLieuString, setFileLuuDuLieu } from "../../data/fileStore/FileStorage";
 import dialogManager from '../../components/dialog/DialogManager';
-
+import { CommonActions } from '@react-navigation/native';
 
 let error = "";
 
@@ -40,11 +40,21 @@ const LoginScreen = (props) => {
                 currentAccount = JSON.parse(currentAccount);
                 URL.link = "https://" + currentAccount.Link + ".pos365.vn/";
                 dispatch(saveDeviceInfoToStore({ SessionId: currentAccount.SessionId }))
-                getRetailerInfoAndNavigate();
+                getRetailerInfoAndNavigate(currentAccount.SessionId);
             } else {
-                setTimeout(() => {
+                let rememberAccount = await getFileDuLieuString(Constant.REMEMBER_ACCOUNT, true);
+                console.log('rememberAccount', rememberAccount);
+                if (rememberAccount && rememberAccount != "") {
+                    rememberAccount = JSON.parse(rememberAccount);
                     setHasLogin(false)
-                }, 2000);
+                    setShop(rememberAccount.Link)
+                    setUserName(rememberAccount.UserName)
+                } else {
+                    setHasLogin(false)
+                }
+                // setTimeout(() => {
+                //     setHasLogin(false)
+                // }, 2000);
             }
         }
         getCurrentAccount()
@@ -54,6 +64,11 @@ const LoginScreen = (props) => {
         if (props.route.params && props.route.params.param == "logout") {
             console.log("LOGOUT");
             setHasLogin(false)
+            // let currentAccount = await getFileDuLieuString(Constant.CURRENT_ACCOUNT, true);
+            // console.log('currentAccount', typeof currentAccount);
+            // if (currentAccount && currentAccount != "") {
+            //     currentAccount = JSON.parse(currentAccount);
+            // }
         }
     }, [(props) => props.route.params])
 
@@ -98,19 +113,30 @@ const LoginScreen = (props) => {
     }, [onClickLogin])
 
     const handlerLoginSuccess = (params, res) => {
-        let account = { SessionId: res.SessionId, UserName: params.UserName, Link: shop };
-        setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, JSON.stringify(account));
-        getRetailerInfoAndNavigate();
+        // let account = { SessionId: res.SessionId, UserName: params.UserName, Link: shop };
+        // setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, JSON.stringify(account));
+        getRetailerInfoAndNavigate(res.SessionId);
     }
 
-    const getRetailerInfoAndNavigate = () => {
+    const getRetailerInfoAndNavigate = (SessionId) => {
         let inforParams = {};
         new HTTPService().setPath(ApiPath.VENDOR_SESSION).GET(inforParams, getHeaders()).then((res) => {
             console.log("getDataRetailerInfo res ", res);
             setFileLuuDuLieu(Constant.VENDOR_SESSION, JSON.stringify(res))
 
             if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
-                props.navigation.navigate("Home")
+                // props.navigation.navigate("Home")
+                let account = { SessionId: SessionId, UserName: userName, Link: shop };
+                setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
+                props.navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [
+                            { name: 'Home' },
+                        ],
+                    })
+                )
+
             } else {
                 error = I18n.t('ban_khong_co_quyen_truy_cap');
                 setShowToast(true)
