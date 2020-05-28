@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
@@ -8,6 +8,7 @@ import SelectProduct from '../selectProduct/SelectProduct';
 import PageServed from './pageServed/PageServed';
 import Topping from './Topping';
 import { Constant } from '../../common/Constant';
+import dialogManager from '../../components/dialog/DialogManager';
 
 export default (props) => {
 
@@ -19,6 +20,7 @@ export default (props) => {
     const [isSelectProduct, setIsSelectProduct] = useState(false)
     const [isTopping, setIsTopping] = useState(false)
     const meMoItemOrder = useMemo(() => itemOrder, [itemOrder])
+    const SelectProductRef = useRef()
 
     const { deviceType } = useSelector(state => {
         console.log("useSelector state ", state);
@@ -97,14 +99,41 @@ export default (props) => {
         )
     }
 
+    const onClickDone = () => {
+        SelectProductRef.current.onClickDoneInRef()
+        outputIsSelectProduct()
+    }
+
+    const onClickSearch = () => {
+
+    }
+
     const renderForPhone = () => {
         return (
             <>
                 <View style={isSelectProduct ? { flex: 1, } : { width: 0, height: 0 }}>
                     <ToolBarSelectProduct
                         leftIcon="keyboard-backspace"
-                        clickLeftIcon={outputIsSelectProduct} />
+                        clickLeftIcon={() => {
+                            console.log(SelectProductRef.current.listProductsRef());
+                            if (SelectProductRef.current.listProductsRef().length > 0) {
+                                dialogManager.showPopupTwoButton('', 'Thong bao', (value) => {
+
+                                    if (value == 1) {
+                                        onClickDone()
+                                    } else {
+                                        outputIsSelectProduct()
+                                    }
+                                })
+                            } else {
+                                outputIsSelectProduct()
+                            }
+                        }}
+                        onClickDone={onClickDone}
+                        title="Select Product"
+                        onClickSearch={onClickSearch} />
                     <SelectProduct
+                        ref={SelectProductRef}
                         valueSearch={value}
                         numColumns={1}
                         listProducts={[...listProducts]}
@@ -112,12 +141,6 @@ export default (props) => {
                 </View>
 
                 <View style={isTopping ? { flex: 1 } : { width: 0, height: 0 }}>
-                    {/* <ToolBarDefault
-                        leftIcon="keyboard-backspace"
-                        clickLeftIcon={() => {
-                            setItemOrder({})
-                            outputIsTopping();
-                        }} /> */}
                     <Topping
                         {...props}
                         position={position}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback } from 'react';
+import React, { useEffect, useState, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { ActivityIndicator, View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
 import realmStore from '../../data/realm/RealmStore';
 import dialogManager from '../../components/dialog/DialogManager';
@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import useDebounce from '../../customHook/useDebounce';
 
 
-export default (props) => {
+export default forwardRef((props, ref) => {
   const [isLoadMore, setIsLoadMore] = useState(false)
   const [hasProducts, setHasProducts] = useState(false)
   const [category, setCategory] = useState([])
@@ -114,7 +114,6 @@ export default (props) => {
       let exist = false;
       listProducts.forEach(listProduct => {
         if (listProduct.Id === item.Id) {
-          item.Quantity++
           listProduct.Quantity++
           exist = true;
         }
@@ -124,7 +123,6 @@ export default (props) => {
         listProducts.unshift(item)
       }
     }
-    setProduct([...product])
     props.outputListProducts([...listProducts], 0)
   }
 
@@ -133,7 +131,6 @@ export default (props) => {
     item.Sid = Date.now()
     listProducts.forEach(listProduct => {
       if (listProduct.Id === item.Id) {
-        item.Quantity++
         listProduct.Quantity++
         exist = true;
       }
@@ -142,9 +139,8 @@ export default (props) => {
       item.Quantity = 1
       listProducts.unshift(item)
     }
-    console.log(item, 'onClickProduct');
+    console.log('onClickProductForPhone', [...listProducts]);
     setProduct([...product])
-    props.outputListProducts([...listProducts], 0)
   }
 
   const handleButtonIncrease = (item, index) => {
@@ -156,7 +152,6 @@ export default (props) => {
     })
     product[index].Quantity += 1;
     setProduct([...product])
-    props.outputListProducts([...listProducts], 0)
   }
 
   const handleButtonDecrease = (item, index) => {
@@ -167,7 +162,6 @@ export default (props) => {
     })
     product[index].Quantity -= 1;
     setProduct([...product])
-    props.outputListProducts([...listProducts], 0)
   }
 
   const getQuantityProduct = (arrItem) => {
@@ -180,6 +174,10 @@ export default (props) => {
     return Quantity
   }
 
+  const onClickDone = () => {
+    props.outputListProducts([...listProducts], 0)
+  }
+
   const loadMore = (info) => {
     console.log(info, 'loadMore');
     if (count.current > 0) {
@@ -187,6 +185,15 @@ export default (props) => {
       setSkip((prevSkip) => prevSkip + Constant.LOAD_LIMIT);
     }
   }
+
+  useImperativeHandle(ref, () => ({
+    onClickDoneInRef() {
+      onClickDone()
+    },
+    listProductsRef() {
+      return listProducts
+    }
+  }));
 
 
   const renderCateItem = (item, index) => {
@@ -196,7 +203,6 @@ export default (props) => {
       </TouchableOpacity>
     );
   }
-
 
 
   return (
@@ -257,7 +263,7 @@ export default (props) => {
       {isLoadMore ? <ActivityIndicator style={{ position: "absolute", right: 5, bottom: 5 }} color="orange" /> : null}
     </View>
   );
-};
+})
 
 const styles = StyleSheet.create({
   renderCateItem: { justifyContent: "center", alignItems: "center", paddingHorizontal: 5, marginLeft: 5, width: 150 },
