@@ -9,6 +9,7 @@ import { Switch, Snackbar } from 'react-native-paper';
 import dialogManager from '../../components/dialog/DialogManager';
 import { HTTPService } from '../../data/services/HttpService';
 import { ApiPath } from '../../data/services/ApiPath';
+import { CommonActions } from '@react-navigation/native';
 const { Print } = NativeModules;
 const IP_DEFAULT = "192.168.99.";
 
@@ -122,7 +123,15 @@ const HeaderComponent = (props) => {
         realmStore.deleteAll()
         setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
         setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
-        props.navigation.navigate('Login', { param: "logout" })
+        // props.navigation.navigate('Login', { param: "logout" })
+        props.navigation.dispatch(
+            CommonActions.reset({
+                index: 1,
+                routes: [
+                    { name: 'Login', params: { param: "logout" } },
+                ],
+            })
+        )
     }
 
     return (
@@ -220,7 +229,15 @@ const ContentComponent = (props) => {
         realmStore.deleteAll()
         setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
         setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
-        props.navigation.navigate('Login', { param: "logout" })
+        // props.navigation.navigate('Login', { param: "logout" })
+        props.navigation.dispatch(
+            CommonActions.reset({
+                index: 1,
+                routes: [
+                    { name: 'Login', params: { param: "logout" } },
+                ],
+            })
+        )
     }
 
     const onClickSaveIP = () => {

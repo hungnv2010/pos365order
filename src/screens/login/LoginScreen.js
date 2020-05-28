@@ -16,7 +16,7 @@ import { saveDeviceInfoToStore, updateStatusLogin, saveCurrentBranch, saveNotifi
 import useDidMountEffect from '../../customHook/useDidMountEffect';
 import { getFileDuLieuString, setFileLuuDuLieu } from "../../data/fileStore/FileStorage";
 import dialogManager from '../../components/dialog/DialogManager';
-
+import { CommonActions } from '@react-navigation/native';
 
 let error = "";
 
@@ -30,21 +30,27 @@ const LoginScreen = (props) => {
     const [hasLogin, setHasLogin] = useState(true);
     const dispatch = useDispatch();
 
-
-
     useEffect(() => {
         const getCurrentAccount = async () => {
             let currentAccount = await getFileDuLieuString(Constant.CURRENT_ACCOUNT, true);
-            console.log('currentAccount', typeof currentAccount);
+            console.log('currentAccount', currentAccount);
             if (currentAccount && currentAccount != "") {
+                dialogManager.showLoading();
                 currentAccount = JSON.parse(currentAccount);
                 URL.link = "https://" + currentAccount.Link + ".pos365.vn/";
                 dispatch(saveDeviceInfoToStore({ SessionId: currentAccount.SessionId }))
                 getRetailerInfoAndNavigate();
             } else {
-                setTimeout(() => {
+                let rememberAccount = await getFileDuLieuString(Constant.REMEMBER_ACCOUNT, true);
+                console.log('rememberAccount', rememberAccount);
+                if (rememberAccount && rememberAccount != "") {
+                    rememberAccount = JSON.parse(rememberAccount);
                     setHasLogin(false)
-                }, 2000);
+                    setShop(rememberAccount.Link)
+                    setUserName(rememberAccount.UserName)
+                } else {
+                    setHasLogin(false)
+                }
             }
         }
         getCurrentAccount()
@@ -54,6 +60,11 @@ const LoginScreen = (props) => {
         if (props.route.params && props.route.params.param == "logout") {
             console.log("LOGOUT");
             setHasLogin(false)
+            // let currentAccount = await getFileDuLieuString(Constant.CURRENT_ACCOUNT, true);
+            // console.log('currentAccount', typeof currentAccount);
+            // if (currentAccount && currentAccount != "") {
+            //     currentAccount = JSON.parse(currentAccount);
+            // }
         }
     }, [(props) => props.route.params])
 
@@ -110,7 +121,18 @@ const LoginScreen = (props) => {
             setFileLuuDuLieu(Constant.VENDOR_SESSION, JSON.stringify(res))
 
             if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
-                props.navigation.navigate("Home")
+                // props.navigation.navigate("Home")
+                let account = {UserName: userName, Link: shop };
+                setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
+                props.navigation.dispatch(
+                    CommonActions.reset({
+                        index: 1,
+                        routes: [
+                            { name: 'Home' },
+                        ],
+                    })
+                )
+
             } else {
                 error = I18n.t('ban_khong_co_quyen_truy_cap');
                 setShowToast(true)
@@ -153,8 +175,8 @@ const LoginScreen = (props) => {
 
     if (hasLogin) {
         return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
-                <Text>INTRO</Text>
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: Colors.colorchinh }}>
+                {/* <Text>INTRO</Text> */}
             </View>
         );
     }
