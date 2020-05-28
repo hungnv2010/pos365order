@@ -50,13 +50,15 @@ export default function ToolBarDefault(props) {
                     </View>
 
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        {props.clickRightIcon && props.rightIcon ?
-                            <TouchableOpacity onPress={props.clickRightIcon}>
-                                <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
-                            </TouchableOpacity>
-                            :
-                            <Ionicons name="md-search" size={30} color="white" style={{}} /> 
-                        }
+                        <TouchableOpacity onPress={props.onClickSearch}>
+                            <Ionicons name="md-search" size={30} color="white" style={{}} />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{ flex: 1, alignItems: "center" }}>
+                        <TouchableOpacity onPress={props.onClickDone}>
+                            <Icon name="check" size={30} color="white" style={{}} />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>
@@ -82,10 +84,10 @@ const styles = StyleSheet.create({
 
 ToolBarDefault.propTypes = {
     title: PropTypes.string,
-    rightIcon: PropTypes.string,
     leftIcon: PropTypes.string,
-    clickRightIcon: PropTypes.func,
-    clickLeftIcon: PropTypes.func
+    onClickSearch: PropTypes.func,
+    clickLeftIcon: PropTypes.func,
+    onClickDone: PropTypes.func
 }
 
 ToolBarDefault.defaultProps = {
