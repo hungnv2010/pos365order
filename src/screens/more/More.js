@@ -24,7 +24,7 @@ export default (props) => {
 
     return (
         <View style={{ flex: 1 }}>
-            <HeaderComponent showToast={(text) => handlerToast(text)} />
+            <HeaderComponent {...props} showToast={(text) => handlerToast(text)} />
             <ContentComponent {...props} />
             <View
                 style={{
@@ -69,8 +69,8 @@ const HeaderComponent = (props) => {
             }
 
             let branch = await getFileDuLieuString(Constant.CURRENT_BRANCH, true);
-            console.log('HeaderComponent branch', JSON.parse(branch));
             if (branch) {
+                console.log('HeaderComponent branch', JSON.parse(branch));
                 setBranch(JSON.parse(branch))
             } else {
                 setBranch(data.Branchs[0])
@@ -82,7 +82,7 @@ const HeaderComponent = (props) => {
             //     CurrentBranch = CurrentBranch[0]
             //     setBranch(CurrentBranch)
             // } else if (CurrentBranch.length > 1) {
-               
+
             // }
         }
         getVendorSession()
@@ -98,7 +98,7 @@ const HeaderComponent = (props) => {
         if (vendorSession.Branchs.length > 1) {
             setShowModal(true)
         } else {
-            props.showToast("Bạn đang có ít hơn 2 chi nhánh.")
+            props.showToast(I18n.t('ban_dang_co_it_hon_hai_chi_nhanh'))
         }
     }
 
@@ -118,6 +118,13 @@ const HeaderComponent = (props) => {
         })
     }
 
+    const onClickLogOut = () => {
+        realmStore.deleteAll()
+        setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
+        setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
+        props.navigation.navigate('Login', { param: "logout" })
+    }
+
     return (
         <View style={{ backgroundColor: Colors.colorchinh, justifyContent: "space-between", flexDirection: "row", alignItems: "center", padding: 20 }}>
             <View >
@@ -134,10 +141,12 @@ const HeaderComponent = (props) => {
                 </View>
                 <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", marginTop: 15 }} onPress={() => onClickBranh()}>
                     <Image source={Images.icon_placeholder} style={[{ width: 10, height: 17, marginRight: 5 }]} />
-                    <Text style={{}}>{Branch.Name && Branch.Name != "" ? Branch.Name : 'Chi nhánh'}</Text>
+                    <Text style={{}}>{Branch.Name && Branch.Name != "" ? Branch.Name : I18n.t('chi_nhanh')}</Text>
                 </TouchableOpacity>
             </View>
-            <Text style={{ textDecorationLine: "underline" }}>{I18n.t('logout')}</Text>
+            <TouchableOpacity onPress={() => onClickLogOut()}>
+                <Text style={{ textDecorationLine: "underline" }}>{I18n.t('logout')}</Text>
+            </TouchableOpacity>
             <Modal
                 animationType="fade"
                 transparent={true}
@@ -167,7 +176,7 @@ const HeaderComponent = (props) => {
                             width: Metrics.screenWidth * 0.8
                         }}>
                             <View style={{ padding: 10 }}>
-                                <Text style={{ marginBottom: 15, fontSize: 18, fontWeight: 'bold' }}>Select branch</Text>
+                                <Text style={{ marginBottom: 15, fontSize: 18, fontWeight: 'bold' }}>{I18n.t('chon_chi_nhanh')}</Text>
                                 {
                                     vendorSession.Branchs && vendorSession.Branchs.length > 0 ?
                                         vendorSession.Branchs.map(item => (
@@ -226,15 +235,15 @@ const ContentComponent = (props) => {
     return (
         <View>
             <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
-                <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>Print connect</Text>
+                <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>{I18n.t('ket_noi_may_in')}</Text>
                 <TouchableOpacity onPress={() => {
                     setShowModal(true)
                 }}>
-                    <Text style={{ marginTop: 20 }}>Máy in tạm tính (qua mạng LAN {ip})</Text>
+                    <Text style={{ marginTop: 20 }}>{I18n.t('may_in_tam_tinh')} ({I18n.t('qua_mang_lan')} {ip})</Text>
                 </TouchableOpacity>
             </View>
             <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
-                <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>Print setup</Text>
+                <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>{I18n.t('cai_dat_may_in')}</Text>
                 <TouchableOpacity onPress={() => { props.navigation.navigate("PrintHtml") }}>
                     <Text style={{ marginTop: 20 }}>HTML print</Text>
                 </TouchableOpacity>
@@ -289,7 +298,6 @@ const ContentComponent = (props) => {
                             right: 0,
                             bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)'
                         }]}></View>
-
                     </TouchableWithoutFeedback>
                     <View style={{ justifyContent: 'center', alignItems: 'center', }}>
                         <View style={{
@@ -319,7 +327,6 @@ const ContentComponent = (props) => {
                     </View>
                 </View>
             </Modal>
-
         </View>
     )
 }
