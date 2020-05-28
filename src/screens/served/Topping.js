@@ -94,6 +94,7 @@ export default (props) => {
     }
 
     const onclose = () => {
+        setlistCateId([I18n.t('tat_ca')])
         props.onClose()
     }
 
@@ -101,7 +102,7 @@ export default (props) => {
         topping[index].Quantity += 1;
         setTopping([...topping])
         saveListTopping()
-    }
+    } 
 
     const handleButtonIncrease = (item, index) => {
         if (item.Quantity == 0) {
@@ -113,9 +114,8 @@ export default (props) => {
     }
 
     const saveListTopping = () => {
-        console.log('saveListTopping');
         let exist = false
-        let ls = topping.filter(item => item.Quantity > 0)
+        let ls = toppingRef.current.filter(item => item.Quantity > 0)
         ls = JSON.parse(JSON.stringify(ls))
         listTopping.forEach(lt => {
             if (lt.Id == itemOrder.Sid && lt.Key == props.position) {

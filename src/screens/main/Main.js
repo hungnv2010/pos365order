@@ -4,7 +4,6 @@ import MainToolBar from './MainToolBar';
 import dataManager from '../../data/DataManager'
 import realmStore from '../../data/realm/RealmStore'
 import Order from './order/Order';
-import { syncServerEvent } from '../../data/DataManager'
 import { useSelector } from 'react-redux';
 import Images from '../../theme/Images';
 import I18n from '../../common/language/i18n';
@@ -14,12 +13,15 @@ export default (props) => {
 
   const [forceUpdate, setForceUpdate] = useState(false)
 
-  // useEffect(() => {
-  //   syncServerEvent().then(res =>
-  //     alert("Sync Done")
-  //   )
-  // }
-  //   , [])
+  useEffect(() => {
+    const syncAllDatas = async () => {
+      dialogManager.showLoading()
+      await dataManager.syncAllDatas()
+      setForceUpdate(!forceUpdate)
+      dialogManager.hiddenLoading()
+    }
+    syncAllDatas()
+  }, [])
 
 
   const clickRightIcon = async () => {
