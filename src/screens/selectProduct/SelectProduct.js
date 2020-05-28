@@ -150,7 +150,6 @@ export default forwardRef((props, ref) => {
         listProduct.Quantity++
       }
     })
-    product[index].Quantity += 1;
     setProduct([...product])
   }
 
@@ -160,7 +159,6 @@ export default forwardRef((props, ref) => {
         listProduct.Quantity--
       }
     })
-    product[index].Quantity -= 1;
     setProduct([...product])
   }
 
