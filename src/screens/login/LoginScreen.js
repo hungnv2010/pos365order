@@ -35,12 +35,13 @@ const LoginScreen = (props) => {
     useEffect(() => {
         const getCurrentAccount = async () => {
             let currentAccount = await getFileDuLieuString(Constant.CURRENT_ACCOUNT, true);
-            console.log('currentAccount', typeof currentAccount);
+            console.log('currentAccount', currentAccount);
             if (currentAccount && currentAccount != "") {
+                dialogManager.showLoading();
                 currentAccount = JSON.parse(currentAccount);
                 URL.link = "https://" + currentAccount.Link + ".pos365.vn/";
                 dispatch(saveDeviceInfoToStore({ SessionId: currentAccount.SessionId }))
-                getRetailerInfoAndNavigate(currentAccount.SessionId);
+                getRetailerInfoAndNavigate();
             } else {
                 let rememberAccount = await getFileDuLieuString(Constant.REMEMBER_ACCOUNT, true);
                 console.log('rememberAccount', rememberAccount);
@@ -52,9 +53,6 @@ const LoginScreen = (props) => {
                 } else {
                     setHasLogin(false)
                 }
-                // setTimeout(() => {
-                //     setHasLogin(false)
-                // }, 2000);
             }
         }
         getCurrentAccount()
@@ -113,12 +111,12 @@ const LoginScreen = (props) => {
     }, [onClickLogin])
 
     const handlerLoginSuccess = (params, res) => {
-        // let account = { SessionId: res.SessionId, UserName: params.UserName, Link: shop };
-        // setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, JSON.stringify(account));
-        getRetailerInfoAndNavigate(res.SessionId);
+        let account = { SessionId: res.SessionId, UserName: params.UserName, Link: shop };
+        setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, JSON.stringify(account));
+        getRetailerInfoAndNavigate();
     }
 
-    const getRetailerInfoAndNavigate = (SessionId) => {
+    const getRetailerInfoAndNavigate = () => {
         let inforParams = {};
         new HTTPService().setPath(ApiPath.VENDOR_SESSION).GET(inforParams, getHeaders()).then((res) => {
             console.log("getDataRetailerInfo res ", res);
@@ -126,7 +124,7 @@ const LoginScreen = (props) => {
 
             if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
                 // props.navigation.navigate("Home")
-                let account = { SessionId: SessionId, UserName: userName, Link: shop };
+                let account = {UserName: userName, Link: shop };
                 setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
                 props.navigation.dispatch(
                     CommonActions.reset({
@@ -179,8 +177,8 @@ const LoginScreen = (props) => {
 
     if (hasLogin) {
         return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", }}>
-                <Text>INTRO</Text>
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: Colors.colorchinh }}>
+                {/* <Text>INTRO</Text> */}
             </View>
         );
     }
