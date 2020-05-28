@@ -11,7 +11,9 @@
 #import "React/RCTBridgeModule.h"
 #import "React/RCTEventEmitter.h"
 
-@interface Print : NSObject <RCTBridgeModule>
+//@interface Print : NSObject <RCTBridgeModule>
+
+@interface Print :  RCTEventEmitter <RCTBridgeModule>
  
 @end
 

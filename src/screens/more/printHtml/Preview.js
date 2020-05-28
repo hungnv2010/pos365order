@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
-import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, TextInput, NativeModules } from 'react-native';
+import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, NativeEventEmitter, NativeModules } from 'react-native';
 import { Images, Colors, Metrics } from '../../../theme';
 import { WebView } from 'react-native-webview';
 import useDidMountEffect from '../../../customHook/useDidMountEffect';
@@ -12,7 +12,9 @@ import { dateToDate, DATE_FORMAT, currencyToString } from '../../../common/Utils
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
 import { useSelector } from 'react-redux';
-const { Print } = NativeModules;
+import { Snackbar } from 'react-native-paper';
+const { Print } = NativeModules;;
+const eventSwicthScreen = new NativeEventEmitter(Print);
 
 const typeHeader1 = "HOÁ ĐƠN TEST PRINT"
 const code1 = "HD000000"
@@ -22,6 +24,8 @@ const CONTENT_FOOTER_POS365 = "Powered by POS365.VN"
 
 export default forwardRef((props, ref) => {
 
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
     const [source, setSource] = useState(null);
     const onCapture = useCallback(uri => {
         console.log("onCapture uri ", uri);
@@ -38,7 +42,19 @@ export default forwardRef((props, ref) => {
     });
 
     useEffect(() => {
-        // Print.registerPrint("192.168.99.104")
+        let check = false;
+        this.swicthScreen = eventSwicthScreen.addListener('sendSwicthScreen', (text) => {
+            console.log("eventSwicthScreen ", text);
+            if (check == false) {
+                // alert("Kiểm tra kết nối máy in." + text)
+                check = true;
+                setToastDescription("Kiểm tra kết nối máy in. Địa chỉ IP " + text)
+                setShowToast(true)
+            }
+            setTimeout(() => {
+                check = false;
+            }, 1000);
+        });
     }, [])
 
     useEffect(() => {
@@ -172,16 +188,25 @@ export default forwardRef((props, ref) => {
                 clickPrint={() => clickPrint()}
                 clickCheck={() => clickCheck()}
             /> : null}
-                <WebView
-                    source={{ html: data }}
-                    style={{ marginTop: 0, flex: 1 }}
-                    onError={syntheticEvent => {
-                        dialogManager.hiddenLoading();
-                    }}
-                    onLoadEnd={syntheticEvent => {
-                        dialogManager.hiddenLoading();
-                    }}
-                />
+            <WebView
+                source={{ html: data }}
+                style={{ marginTop: 0, flex: 1 }}
+                onError={syntheticEvent => {
+                    dialogManager.hiddenLoading();
+                }}
+                onLoadEnd={syntheticEvent => {
+                    dialogManager.hiddenLoading();
+                }}
+            />
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </View>
     );
 });

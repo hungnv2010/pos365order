@@ -25,6 +25,7 @@
   UIWebView * webView;
   NSString *html;
   NSString *IP;
+  bool hasListeners;
 }
 
 RCT_EXPORT_MODULE();
@@ -218,12 +219,47 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     }else if([notification.name isEqualToString:(NSString *)PrinterDisconnectedNotification])
     {
       NSLog(@"notification PrinterDisconnectedNotification");
+      [self SendSwicthScreen: @"Error"];
     } else if (([notification.name isEqualToString:(NSString *)BleDeviceDataChanged]))
     {
       NSLog(@"notification BleDeviceDataChanged");
     }
     
   });
+}
+
++ (id)allocWithZone:(NSZone *)zone {
+    static Print *sharedInstance = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedInstance = [super allocWithZone:zone];
+    });
+    return sharedInstance;
+}
+
+// Will be called when this module's first listener is added.
+-(void)startObserving {
+    hasListeners = YES;
+    // Set up any upstream listeners or background tasks as necessary
+}
+
+// Will be called when this module's last listener is removed, or on dealloc.
+-(void)stopObserving {
+    hasListeners = NO;
+    // Remove upstream listeners, stop unnecessary background tasks
+}
+  
+- (NSArray<NSString *> *)supportedEvents
+{
+  return @[@"sendSwicthScreen"];
+}
+- (void)SendSwicthScreen: (NSString *) info
+{
+  if (hasListeners) {
+    [self sendEventWithName:@"sendSwicthScreen" body:IP];
+  } else {
+   
+  }
 }
 
 @end

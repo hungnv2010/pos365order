@@ -10,22 +10,26 @@ export default {
   ban_co_chac_chan_muon_huy_nhan_thong_bao: "Quý khách có chắc chắn muốn huỷ nhận thông báo không?",
   ban_hang: "Bán hàng",
   bao_che_bien_sau_thanh_toan: "Báo chế biến sau khi thanh toán",
+  ban_dang_co_it_hon_hai_chi_nhanh: "Bạn đang có ít hơn 2 chi nhánh.",
   // TODO: C
   chuyen_thiet_bi_cai_dat_otp: 'Chuyển thiết bị cài đặt Smart OTP',
   cai_dat: "Cài đặt",
   chon_chi_nhanh: "Chọn chi nhánh",
   chiet_khau: "Chiết khấu",
   chon_ngay: "Chọn ngày",
-  chon_nhom:"Chọn nhóm",
+  chon_nhom: "Chọn nhóm",
   cho_phep_nhan_thong_bao: "Cho phép nhận thông báo từ các chi nhánh",
   cau_hinh_chi_nhanh: "Cấu hình chi nhánh",
   chua_cap_nhat: "Chưa cập nhât",
   chi_tiet: "Chi tiết",
   con_lai: "Còn lại",
+  chi_nhanh: "Chi nhánh",
+  cai_dat_may_in: "Cài đặt máy in",
 
   // TODO: D
-dang_dung:"Đang dùng",
-dang_trong:"Đang trống",
+  dang_dung: "Đang dùng",
+  dang_trong: "Đang trống",
+  dong_y: "Đồng ý",
   // TODO: E
 
 
@@ -52,6 +56,7 @@ dang_trong:"Đang trống",
   kiem_ke: "Kiểm kê",
   khach_hang: "Khách hàng",
   khac: "Khác",
+  ket_noi_may_in: "Kết nối máy in",
 
   // TODO: H
   hoa_don: "Hoá đơn",
@@ -77,10 +82,11 @@ dang_trong:"Đang trống",
   mat_khau: "Mật khẩu",
   ma_HH: "Mã HH",
   moi_ban_nhap_tin_nhan: "Mời bạn nhập tin nhắn",
-  man_hinh_thu_ngan:"Màn hình thu ngân",
+  man_hinh_thu_ngan: "Màn hình thu ngân",
+  may_in_tam_tinh: "Máy in tạm tính",
 
   // TODO: N
-  no:"Nợ",
+  no: "Nợ",
   ngon_ngu: 'Ngôn ngữ',
   ngay_giao_dich: "Ngày giao dịch",
   nguoi_thu_chi: "Người thu chi",
@@ -97,7 +103,7 @@ dang_trong:"Đang trống",
   ngay_sinh: "Ngày sinh",
   nam: "Nam",
   nu: "Nữ",
-  nhan_vien_order:"Nhân viên Order",
+  nhan_vien_order: "Nhân viên Order",
 
   // TODO: O
 
@@ -114,6 +120,7 @@ dang_trong:"Đang trống",
   quy_khach_vui_long_nhap_mat_khau: "Quý khách vui lòng nhập mật khẩu",
   quy_khach_vui_long_nhap_ten_tai_khoan: "Quý khách vui lòng nhập tên tài khoản",
   quy_khach_vui_long_nhap_ten_cua_hang: "Quý khách vui lòng nhập tên cửa hàng",
+  qua_mang_lan: "qua mạng LAN",
 
   // TODO: R
 
@@ -172,8 +179,8 @@ dang_trong:"Đang trống",
   tong_cong: "Tổng cộng",
   tong_giao_dich: "Tổng giao dịch",
   tinh_thanh: "Tỉnh thành",
-  tong_giao_dich_theo_thoi_gian:"TỔNG GIAO DỊCH THEO THỜI GIAN",
-  TGD:"TGD",
+  tong_giao_dich_theo_thoi_gian: "TỔNG GIAO DỊCH THEO THỜI GIAN",
+  TGD: "TGD",
   // TODO: U
 
   // TODO: V
