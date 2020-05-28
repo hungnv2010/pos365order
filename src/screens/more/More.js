@@ -229,7 +229,15 @@ const ContentComponent = (props) => {
         realmStore.deleteAll()
         setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
         setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
-        props.navigation.navigate('Login', { param: "logout" })
+        // props.navigation.navigate('Login', { param: "logout" })
+        props.navigation.dispatch(
+            CommonActions.reset({
+                index: 1,
+                routes: [
+                    { name: 'Login', params: { param: "logout" } },
+                ],
+            })
+        )
     }
 
     const onClickSaveIP = () => {

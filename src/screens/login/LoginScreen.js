@@ -30,8 +30,6 @@ const LoginScreen = (props) => {
     const [hasLogin, setHasLogin] = useState(true);
     const dispatch = useDispatch();
 
-
-
     useEffect(() => {
         const getCurrentAccount = async () => {
             let currentAccount = await getFileDuLieuString(Constant.CURRENT_ACCOUNT, true);
