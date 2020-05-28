@@ -172,7 +172,7 @@ const HeaderComponent = (props) => {
                                     vendorSession.Branchs && vendorSession.Branchs.length > 0 ?
                                         vendorSession.Branchs.map(item => (
                                             <TouchableOpacity onPress={() => onClickItemBranch(item)}>
-                                                <Text style={{ paddingVertical: 10 }}>{item.Name}</Text>
+                                                <Text style={{ paddingVertical: 12 }}>{item.Name}</Text>
                                             </TouchableOpacity>
                                         ))
                                         : null
@@ -210,6 +210,7 @@ const ContentComponent = (props) => {
     const onClickLogOut = () => {
         realmStore.deleteAll()
         setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
+        setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
         props.navigation.navigate('Login', { param: "logout" })
     }
 
