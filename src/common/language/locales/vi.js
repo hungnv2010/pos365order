@@ -29,6 +29,7 @@ export default {
   // TODO: D
   dang_dung: "Đang dùng",
   dang_trong: "Đang trống",
+  dong_y: "Đồng ý",
   // TODO: E
 
 

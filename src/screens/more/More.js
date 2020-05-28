@@ -226,8 +226,8 @@ const ContentComponent = (props) => {
     const onClickSaveIP = () => {
         if (ipInput.length > 11) {
             setIp(ipInput)
-            setFileLuuDuLieu(Constant.IPPRINT, ip)
-            Print.registerPrint(ip)
+            setFileLuuDuLieu(Constant.IPPRINT, ipInput)
+            Print.registerPrint(ipInput)
         }
         setShowModal(false)
     }
@@ -285,9 +285,6 @@ const ContentComponent = (props) => {
                 <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
                     <TouchableWithoutFeedback
                         onPress={() => {
-                            if (ip.length < 12) {
-                                setIp(IP_DEFAULT)
-                            }
                             setShowModal(false)
                         }}
                     >
@@ -312,14 +309,11 @@ const ContentComponent = (props) => {
                                 <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
                                     <TouchableOpacity style={{ alignItems: "flex-end", marginTop: 15 }} onPress={() => {
                                         setShowModal(false)
-                                        if (ip.length < 12) {
-                                            setIp(IP_DEFAULT)
-                                        }
                                     }}>
-                                        <Text style={{ margin: 5, fontSize: 16, fontWeight: "500", marginRight: 15, color: "red" }}>Huỷ</Text>
+                                        <Text style={{ margin: 5, fontSize: 16, fontWeight: "500", marginRight: 15, color: "red" }}>{I18n.t('huy')}</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity style={{ alignItems: "flex-end", marginTop: 15 }} onPress={() => onClickSaveIP()}>
-                                        <Text style={{ margin: 5, fontSize: 16, fontWeight: "500" }}>Đồng ý</Text>
+                                        <Text style={{ margin: 5, fontSize: 16, fontWeight: "500" }}>{I18n.t('dong_y')}</Text>
                                     </TouchableOpacity>
                                 </View>
                             </View>
