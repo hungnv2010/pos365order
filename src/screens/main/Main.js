@@ -13,15 +13,15 @@ export default (props) => {
 
   const [forceUpdate, setForceUpdate] = useState(false)
 
-  useEffect(() => {
-    const syncAllDatas = async () => {
-      dialogManager.showLoading()
-      await dataManager.syncAllDatas()
-      setForceUpdate(!forceUpdate)
-      dialogManager.hiddenLoading()
-    }
-    syncAllDatas()
-  }, [])
+  // useEffect(() => {
+  //   const syncAllDatas = async () => {
+  //     dialogManager.showLoading()
+  //     await dataManager.syncAllDatas()
+  //     setForceUpdate(!forceUpdate)
+  //     dialogManager.hiddenLoading()
+  //   }
+  //   syncAllDatas()
+  // }, [])
 
 
   const clickRightIcon = async () => {
