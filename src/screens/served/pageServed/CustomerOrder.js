@@ -304,7 +304,7 @@ export default (props) => {
                     </TouchableOpacity>
                     <View style={{ flex: 1, }}>
                         <Text style={{ fontWeight: "bold" }}>{item.Name}</Text>
-                        <Text style={{fontSize: 12}}>{currencyToString(item.Price)} x <Text style={{ color: "red", fontWeight: "bold" }}>{item.Quantity}</Text></Text>
+                        <Text style={{ fontSize: 12 }}>{currencyToString(item.Price)} x <Text style={{ color: "red", fontWeight: "bold" }}>{item.Quantity}</Text></Text>
                         {item.Description != "" ?
                             <TextTicker
                                 style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}
@@ -346,7 +346,8 @@ export default (props) => {
                 </ScrollView>
             </View>
             <View style={{ height: 50, flexDirection: "row", backgroundColor: "#0072bc", alignItems: "center" }}>
-                <TouchableOpacity onPress={showMenu}>
+                <TouchableOpacity
+                    onPress={showMenu}>
                     <Menu
                         ref={setMenuRef}
                         button={<Image style={{ width: 24, height: 24, margin: 20 }} source={Images.icon_menu} />}
@@ -356,11 +357,11 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                         }}>
                             <Text style={{ margin: 15, fontSize: 16 }}>Giờ vào: 27/04/2020 08:00</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={() => _menu.hide()}>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={hideMenu}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
                                 <Text style={{ margin: 15, fontSize: 16 }}>Yêu cầu thanh toán</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={() => _menu.hide()}>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={hideMenu}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
                                 <Text style={{ margin: 15, fontSize: 16 }}>Gửi thông báo tới thu ngân</Text>
                             </TouchableOpacity>

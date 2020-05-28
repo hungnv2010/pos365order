@@ -24,12 +24,12 @@ const ProductsItemForPhone = (props) => {
             </View>
             <View style={{ flex: 1.5, flexDirection: "row", alignItems: "center", marginRight: 25 }}>
 
-                {props.CheckItemExistInProducts ?
+                {props.getQuantityProduct > 0 ?
                     <>
                         <TouchableOpacity onPress={() => { props.handleButtonDecrease(props.item, props.index) }}>
                             <Icon name="minus-circle" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>
-                        <TextInput keyboardType="numeric" textAlign="center" style={{ width: 50, borderBottomWidth: .5 }}>{props.item.Quantity}</TextInput>
+                        <TextInput keyboardType="numeric" textAlign="center" style={{ width: 50, borderBottomWidth: .5 }}>{props.getQuantityProduct}</TextInput>
                         <TouchableOpacity onPress={() => { props.handleButtonIncrease(props.item, props.index) }}>
                             <Icon name="plus-circle" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>

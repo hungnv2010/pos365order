@@ -13,8 +13,6 @@ import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
 import { useSelector } from 'react-redux';
 const { Print } = NativeModules;
-import ViewShot from 'react-native-view-shot';
-const dimension = { width: 300, height: 300 };
 
 const typeHeader1 = "HOÁ ĐƠN TEST PRINT"
 const code1 = "HD000000"

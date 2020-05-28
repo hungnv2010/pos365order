@@ -170,14 +170,14 @@ export default (props) => {
     props.outputListProducts([...listProducts], 0)
   }
 
-  const CheckItemExistInProducts = (arrItem) => {
-    let exist = false
+  const getQuantityProduct = (arrItem) => {
+    let Quantity = 0
     listProducts.forEach(item => {
       if (item.Id == arrItem.Id) {
-        exist = true
+        Quantity = item.Quantity
       }
     })
-    return exist
+    return Quantity
   }
 
   const loadMore = (info) => {
@@ -231,14 +231,14 @@ export default (props) => {
               renderItem={({ item, index }) => {
                 return deviceType == Constant.TABLET ?
                   (<ProductsItem
-                    CheckItemExistInProducts={CheckItemExistInProducts(item)}
+                    getQuantityProduct={getQuantityProduct(item)}
                     item={item}
                     index={index}
                     onClickProduct={onClickProduct}
                   />)
                   :
                   (<ProductsItemForPhone
-                    CheckItemExistInProducts={CheckItemExistInProducts(item)}
+                    getQuantityProduct={getQuantityProduct(item)}
                     item={item}
                     index={index}
                     onClickProduct={onClickProductForPhone}
