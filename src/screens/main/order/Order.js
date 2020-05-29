@@ -41,24 +41,29 @@ export default (props) => {
             :
             (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
                 style={[styles.room, { width: widthRoom - 7, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
-                <View style={{ flex: 1, flexDirection: 'column', justifyContent: "space-between" }}>
-                    <View style={{ justifyContent: "center", alignItems: "center", padding: 4, flex: 1 }}>
+                <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ alignItems: "center", padding: 4, flex: 1 }}>
                         {/* <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text> */}
-                        <TextTicker
-                            style={{
-                                fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' 
-                            }}
-                            duration={6000}
-                            bounce={false}
-                            marqueeDelay={1000}
-                        >
-                            {item.Name}
-                        </TextTicker>
-                        <View style={{ height: 0.5, width: "99%", backgroundColor: "#ddd" }}></View>
-                        <Text style={{ paddingTop: 10, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
+                        <View style={{ justifyContent: "center", alignItems: "center", flex: 1, height: "90%" }}>
+                            <TextTicker
+                                style={{
+                                    fontSize: 13, textAlign: "center", textAlignVertical: "center", textTransform: "uppercase", margin: 0, marginTop: 0, color: item.IsActive ? 'white' : 'black'
+                                }}
+                                duration={6000}
+                                bounce={false}
+                                marqueeDelay={1000}
+                            >
+                                {item.Name}
+                            </TextTicker>
+                        </View>
+
                     </View>
-                    <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 1 }}>
-                        <Text style={{ paddingTop: 10, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
+                    <View style={{ height: 0.5, width: "90%", backgroundColor: "#ddd", justifyContent: "center", alignItems: "center" }}></View>
+                    <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 2 }}>
+                        {item.IsActive ?
+                            <Text style={{ paddingTop: 0, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
+                            : null}
+                        <Text style={{ paddingTop: item.IsActive ? 10 : 0, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
