@@ -48,6 +48,8 @@ export default (props) => {
     }
 
     const outputListTopping = (listTopping) => {
+        console.log('outputListTopping', listTopping);
+
         setListTopping(listTopping)
     }
 
@@ -104,6 +106,21 @@ export default (props) => {
         outputIsSelectProduct()
     }
 
+    const clickLeftIcon = () => {
+        console.log(SelectProductRef.current.listProductsRef());
+        if (SelectProductRef.current.listProductsRef().length > 0) {
+            dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
+                if (value == 1) {
+                    onClickDone()
+                } else {
+                    outputIsSelectProduct()
+                }
+            })
+        } else {
+            outputIsSelectProduct()
+        }
+    }
+
     const onClickSearch = () => {
 
     }
@@ -111,67 +128,61 @@ export default (props) => {
     const renderForPhone = () => {
         return (
             <>
-                <View style={isSelectProduct ? { flex: 1, } : { width: 0, height: 0 }}>
-                    <ToolBarSelectProduct
-                        leftIcon="keyboard-backspace"
-                        clickLeftIcon={() => {
-                            console.log(SelectProductRef.current.listProductsRef());
-                            if (SelectProductRef.current.listProductsRef().length > 0) {
-                                dialogManager.showPopupTwoButton('', 'Thong bao', (value) => {
-
-                                    if (value == 1) {
-                                        onClickDone()
-                                    } else {
-                                        outputIsSelectProduct()
-                                    }
-                                })
-                            } else {
-                                outputIsSelectProduct()
-                            }
-                        }}
-                        onClickDone={onClickDone}
-                        title="Select Product"
-                        onClickSearch={onClickSearch} />
-                    <SelectProduct
-                        ref={SelectProductRef}
-                        valueSearch={value}
-                        numColumns={1}
-                        listProducts={[...listProducts]}
-                        outputListProducts={outputListProducts} />
-                </View>
-
-                <View style={isTopping ? { flex: 1 } : { width: 0, height: 0 }}>
-                    <Topping
-                        {...props}
-                        position={position}
-                        numColumns={1}
-                        itemOrder={meMoItemOrder}
-                        onClose={() => {
-                            setItemOrder({})
-                            outputIsTopping();
-                        }}
-                        outputListTopping={outputListTopping}
-                    />
-                </View>
-
-                <View style={!(isTopping || isSelectProduct) ? { flex: 1 } : { width: 0, height: 0 }}>
-                    <ToolBarDefault
-                        leftIcon="keyboard-backspace"
-                        clickLeftIcon={() => { props.navigation.goBack() }}
-                        rightIcon="plus"
-                        clickRightIcon={outputIsSelectProduct} />
-                    <PageServed
-                        {...props}
-                        itemOrder={meMoItemOrder}
-                        listProducts={[...listProducts]}
-                        outputListProducts={outputListProducts}
-                        outputItemOrder={outputItemOrder}
-                        outputPosition={outputPosition}
-                        outputIsTopping={outputIsTopping}
-                        outputIsSelectProduct={outputIsSelectProduct}
-                        listTopping={listTopping}
-                    />
-                </View>
+                {isSelectProduct ?
+                    <View style={{ flex: 1 }}>
+                        <ToolBarSelectProduct
+                            leftIcon="keyboard-backspace"
+                            clickLeftIcon={clickLeftIcon}
+                            onClickDone={onClickDone}
+                            title="Select Product"
+                            onClickSearch={onClickSearch} />
+                        <SelectProduct
+                            ref={SelectProductRef}
+                            valueSearch={value}
+                            numColumns={1}
+                            listProducts={[...listProducts]}
+                            outputListProducts={outputListProducts} />
+                    </View> :
+                    null
+                }
+                {isTopping ?
+                    <View style={{ flex: 1 }}>
+                        <Topping
+                            {...props}
+                            position={position}
+                            numColumns={1}
+                            itemOrder={meMoItemOrder}
+                            onClose={() => {
+                                // setItemOrder({})
+                                outputIsTopping();
+                            }}
+                            outputListTopping={outputListTopping}
+                        />
+                    </View> :
+                    null
+                }
+                {!(isTopping || isSelectProduct) ?
+                    <View style={{ flex: 1 }}>
+                        <ToolBarDefault
+                            leftIcon="keyboard-backspace"
+                            title="Đơn hàng"
+                            clickLeftIcon={() => { props.navigation.goBack() }}
+                            rightIcon="plus"
+                            clickRightIcon={outputIsSelectProduct} />
+                        <PageServed
+                            {...props}
+                            itemOrder={meMoItemOrder}
+                            listProducts={[...listProducts]}
+                            outputListProducts={outputListProducts}
+                            outputItemOrder={outputItemOrder}
+                            outputPosition={outputPosition}
+                            outputIsTopping={outputIsTopping}
+                            outputIsSelectProduct={outputIsSelectProduct}
+                            listTopping={listTopping}
+                        />
+                    </View> :
+                    null
+                }
             </>
         )
     }

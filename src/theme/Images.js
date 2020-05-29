@@ -14,6 +14,7 @@ const images = {
     icon_logout: require('../../assets/icons/logout.png'),
     background: require('../../assets/images/background.png'),
     logo_365_boss_white: require('../../assets/images/logo_365_boss_white.png'),
+    logo_365: require('../../assets/images/pos365.jpg'),
     icon_shop: require('../../assets/icons/icon_shop.png'),
     icon_password: require('../../assets/icons/icon_password.png'),
     icon_user_name: require('../../assets/icons/icon_user_name.png'),

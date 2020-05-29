@@ -18,6 +18,7 @@ export default (props) => {
 
 
     useEffect(() => {
+        console.log('dataManager.listTopping', dataManager.listTopping);
         const getTopping = async () => {
             let newCategories = [{ Id: -1, Name: I18n.t('tat_ca') }]
             let newTopping = []
@@ -42,6 +43,9 @@ export default (props) => {
         }
         getTopping()
         init()
+        return () => {
+            console.log('dataManager.listTopping', dataManager.listTopping);
+        }
     }, [])
 
     useEffect(() => {
@@ -55,25 +59,23 @@ export default (props) => {
     }, [listCateId])
 
     useEffect(() => {
+        console.log(props.itemOrder, 'props.itemOrder');
         setItemOrder(props.itemOrder)
     }, [props.itemOrder])
 
 
     useEffect(() => {
         let exist = false
+        resetTopping()
         listTopping.forEach(lt => {
             if (lt.Id == itemOrder.Sid && lt.Key == props.position) {
                 exist = true
                 mergeTopping(lt.List)
             }
         })
-        if (!exist) {
-            resetTopping()
-        }
-    }, [itemOrder, props.position])
+    }, [listTopping, itemOrder, props.position])
 
     const mergeTopping = (list) => {
-        resetTopping()
         console.log('mergeTopping', list);
         topping.forEach(top => {
             list.forEach(ls => {
@@ -102,7 +104,7 @@ export default (props) => {
         topping[index].Quantity += 1;
         setTopping([...topping])
         saveListTopping()
-    } 
+    }
 
     const handleButtonIncrease = (item, index) => {
         if (item.Quantity == 0) {
@@ -210,7 +212,7 @@ export default (props) => {
                         showsVerticalScrollIndicator={false}
                         renderItem={({ item, index }) => renderTopping(item, index)}
                         keyExtractor={(item, index) => '' + index}
-                        extraData={topping.Quantity}
+                        extraData={topping}
                         key={props.numColumns}
                         numColumns={props.numColumns} />
                 </View>

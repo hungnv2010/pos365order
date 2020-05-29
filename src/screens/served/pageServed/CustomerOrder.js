@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import { Image, View, Text, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { Image, View, Text, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground } from 'react-native';
 import { Colors, Images, Metrics } from '../../../theme';
 import Menu from 'react-native-material-menu';
 import dataManager from '../../../data/DataManager';
@@ -58,21 +58,6 @@ export default (props) => {
     }
 
     useEffect(() => {
-        console.log('useEffect props.position', props.position);
-        let exist = false
-        listPosition.forEach(element => {
-            if (element.key == props.position) {
-                exist = true
-                syncListProducts([...element.list])
-            }
-        })
-        if (!exist) {
-            listPosition.push({ key: props.position, list: [] })
-            syncListProducts([])
-        }
-    }, [props.position, listPosition])
-
-    useEffect(() => {
         props.outputPosition(props.position)
     }, [props.position])
 
@@ -89,10 +74,27 @@ export default (props) => {
             if (!exist) {
                 listPosition.push({ key: props.position, list: props.listProducts })
             }
+            console.log(listPosition, 'listPosition');
+
             setListOrder(props.listProducts)
             savePosition()
         }
     }, [props.listProducts])
+
+    useEffect(() => {
+        console.log('useEffect props.position', props.position);
+        let exist = false
+        listPosition.forEach(element => {
+            if (element.key == props.position) {
+                exist = true
+                syncListProducts([...element.list])
+            }
+        })
+        if (!exist) {
+            listPosition.push({ key: props.position, list: [] })
+            syncListProducts([])
+        }
+    }, [props.position, listPosition])
 
     useEffect(() => {
         setItemOrder(props.itemOrder)
@@ -100,6 +102,7 @@ export default (props) => {
 
     useEffect(() => {
         console.log(props.listTopping, 'props.listTopping');
+        console.log(props.itemOrder, 'props.itemOrder');
         const getInfoTopping = (listTopping) => {
             let description = '';
             let totalPrice = 0;
@@ -296,7 +299,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingVertical: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : null }}>
                     <TouchableOpacity onPress={() => {
                         console.log('delete');
-                        item.Quantity = 0
+                        list.splice(index, 1)
                         syncListProducts([...list])
 
                     }}>
@@ -329,50 +332,52 @@ export default (props) => {
     return (
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
-                <ScrollView style={{ flex: 1 }}>
-                    {
-                        list.map((item, index) => {
-                            return item.Quantity > 0 ?
-                                (
+                {list.length > 0 ?
+                    <ScrollView style={{ flex: 1 }}>
+                        {
+                            list.map((item, index) => {
+                                return (
                                     deviceType == Constant.TABLET ?
                                         renderForTablet(item, index)
                                         :
                                         renderForPhone(item, index)
                                 )
-                                :
-                                null
-                        })
-                    }
-                </ScrollView>
+
+                            })
+                        }
+                    </ScrollView>
+                    :
+                    <ImageBackground source={Images.logo_365} style={{ flex: 1, opacity: .2 }}>
+                    </ImageBackground>
+                }
             </View>
-            <View style={{ height: 50, flexDirection: "row", backgroundColor: "#0072bc", alignItems: "center" }}>
+            <View style={{ height: 40, flexDirection: "row", backgroundColor: "#0072bc", alignItems: "center" }}>
                 <TouchableOpacity
                     onPress={showMenu}>
                     <Menu
                         ref={setMenuRef}
-                        button={<Image style={{ width: 24, height: 24, margin: 20 }} source={Images.icon_menu} />}
+                        button={<Icon style={{ paddingHorizontal: 10 }} name="menu" size={30} color="white" />}
                     >
                         <View style={{
-                            padding: 5,
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                         }}>
-                            <Text style={{ margin: 15, fontSize: 16 }}>Giờ vào: 27/04/2020 08:00</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={hideMenu}>
+                            <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ margin: 15, fontSize: 16 }}>Yêu cầu thanh toán</Text>
+                                <Text style={{ padding: 10, fontSize: 16 }}>Yêu cầu thanh toán</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={hideMenu}>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ margin: 15, fontSize: 16 }}>Gửi thông báo tới thu ngân</Text>
+                                <Text style={{ padding: 10, fontSize: 16 }}>Gửi thông báo tới thu ngân</Text>
                             </TouchableOpacity>
                         </View>
                     </Menu>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={sendOrder} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
-                    <Text style={{ fontSize: 18, color: "#fff", fontWeight: "bold" }}>Gửi thực đơn</Text>
+                    <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>Gửi thực đơn</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={dellAll} style={{ justifyContent: "center", alignItems: "center", paddingHorizontal: 10, borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
-                    <Icon name="delete-forever" size={40} color="black" />
+                    <Icon name="delete-forever" size={30} color="white" />
                 </TouchableOpacity>
             </View>
             <Modal

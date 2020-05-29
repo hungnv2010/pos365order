@@ -25,6 +25,7 @@ export default {
   con_lai: "Còn lại",
   chi_nhanh: "Chi nhánh",
   cai_dat_may_in: "Cài đặt máy in",
+  chuyen_ban: "Chuyển bàn",
 
   // TODO: D
   dang_dung: "Đang dùng",
@@ -57,6 +58,7 @@ export default {
   khach_hang: "Khách hàng",
   khac: "Khác",
   ket_noi_may_in: "Kết nối máy in",
+  khach_phai_tra: "Khách phải trả",
 
   // TODO: H
   hoa_don: "Hoá đơn",
@@ -181,6 +183,8 @@ export default {
   tinh_thanh: "Tỉnh thành",
   tong_giao_dich_theo_thoi_gian: "TỔNG GIAO DỊCH THEO THỜI GIAN",
   TGD: "TGD",
+  tong_thanh_tien: "Tổng thành tiền",
+  tong_chiet_khau: "Tổng chiết khấu",
   // TODO: U
 
   // TODO: V

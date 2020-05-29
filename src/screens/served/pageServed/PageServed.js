@@ -4,6 +4,7 @@ import { Colors, Images, Metrics } from '../../../theme';
 import MenuConfirm from './MenuConfirm';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
 import CustomerOrder from './CustomerOrder';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default (props) => {
 
@@ -34,29 +35,30 @@ export default (props) => {
 
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ backgroundColor: Colors.colorchinh, alignItems: "center", flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 0 }}>
-                <View style={{ flex: 1, height: 45, justifyContent: "center" }}>
-                    <Text style={{ paddingHorizontal: 20 }}>{props.route && props.route.params && props.route.params.room && props.route.params.room.Name ? props.route.params.room.Name : ""}</Text>
+            <View style={{ backgroundColor: Colors.colorchinh, alignItems: "center", flexDirection: "row", justifyContent: "space-between", paddingBottom: 5 }}>
+                <View style={{ flex: 1, justifyContent: "center" }}>
+                    <Text style={{ paddingLeft: 20, textTransform: "uppercase", color: "white", fontWeight: "bold" }}>{props.route && props.route.params && props.route.params.room && props.route.params.room.Name ? props.route.params.room.Name : ""}</Text>
                 </View>
-                <TouchableOpacity onPress={showMenu} style={{ flex: 1, height: 45, paddingHorizontal: 20, flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
+                <TouchableOpacity onPress={showMenu} style={{ flex: 1, paddingHorizontal: 20, flexDirection: "row", justifyContent: "flex-end", alignItems: "center" }}>
                     <Menu
+                        style={{ width: 50 }}
                         ref={setMenuRef}
-                        button={<Text onPress={showMenu}>{position}</Text>}
+                        button={<Text style={{ color: "white", fontWeight: "bold" }} onPress={showMenu}>{position}</Text>}
                     >
                         <MenuItem onPress={() => hideMenu("A")}>A</MenuItem>
                         <MenuItem onPress={() => hideMenu("B")}>B</MenuItem>
                         <MenuItem onPress={() => hideMenu("C")}>C</MenuItem>
                         <MenuItem onPress={() => hideMenu("D")}>D</MenuItem>
                     </Menu>
-                    <Image source={Images.arrow_down} style={{ width: 16, height: 16, marginLeft: 5 }} />
+                    <Icon style={{}} name="chevron-down" size={20} color="white" />
                 </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", paddingHorizontal: 0, marginTop: 2 }}>
-                <TouchableOpacity onPress={() => setTab(1)} style={{ flex: 1, justifyContent: "center", alignItems: "center", height: 45, backgroundColor: tab == 1 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
-                    <Text>Thực đơn đã gọi</Text>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 2 }}>
+                <TouchableOpacity onPress={() => setTab(1)} style={{ paddingVertical: 5, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 1 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
+                    <Text style={{ color: tab == 1 ? "white" : Colors.colorchinh, fontWeight: "bold" }}>Thực đơn đã gọi</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setTab(2)} style={{ flex: 1, justifyContent: "center", alignItems: "center", height: 45, backgroundColor: tab == 2 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
-                    <Text>Món đã xác nhận</Text>
+                <TouchableOpacity onPress={() => setTab(2)} style={{ paddingVertical: 5, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 2 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
+                    <Text style={{ color: tab == 2 ? "white" : Colors.colorchinh, fontWeight: "bold" }}>Món đã xác nhận</Text>
                 </TouchableOpacity>
             </View>
             {tab == 1 ?
