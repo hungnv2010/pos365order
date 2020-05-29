@@ -29,7 +29,7 @@ export default function MainToolBar(props) {
                 }}
                 >
 
-                    <View style={{ flex: 2.5, alignItems: "center" }}>
+                    <View style={{ flex: 2, alignItems: "center", marginLeft: 15 }}>
                         {/* {props.clickLeftIcon && props.leftIcon ?
                             <TouchableOpacity onPress={props.clickLeftIcon}>
                                 <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />

@@ -14,16 +14,37 @@ import PropTypes from 'prop-types';
 
 export default function ToolBarDefault(props) {
 
+    let blockClick = false;
+
     return (
 
-        <View style={styles.toolbarContainer}>
-            <View style={{
-                flex: 1,
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: "center"
-            }}
-            >
+                    <View style={{ flex: 1, alignItems: "center" }}>
+                        {/* {props.clickLeftIcon && props.leftIcon ? */}
+                        <TouchableOpacity onPress={() => {
+                            if (blockClick == false) {
+                                blockClick = true;
+                                props.navigation.pop()
+                                setTimeout(() => {
+                                    blockClick = false;
+                                }, 1000);
+                            }
+                        }}>
+                            <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
+                        </TouchableOpacity>
+                        {/* :
+                    null */}
+                        {/* } */}
+                    </View>
+                    <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                        <Subheading
+                            numberOfLines={1}
+                            style={{
+                                color: 'white'
+                            }}
+                        >
+                            {props.title}
+                        </Subheading>
+                    </View>
 
                 <View style={{ flex: 1, alignItems: "center" }}>
                     {props.clickLeftIcon && props.leftIcon ?
@@ -55,7 +76,11 @@ export default function ToolBarDefault(props) {
                     }
                 </View>
             </View>
+<<<<<<< HEAD
         </View>
+=======
+        </LinearGradient >
+>>>>>>> 290330b70fa7fd0c19a6ece633d3ca340c9fc079
     )
 
 }

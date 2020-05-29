@@ -18,6 +18,7 @@ import moment from "moment";
 import { Constant } from '../../../common/Constant'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from '../../../theme/Colors';
+import TextTicker from 'react-native-text-ticker';
 
 const _nodes = new Map();
 
@@ -36,19 +37,33 @@ export default (props) => {
     const renderRoom = (item, widthRoom) => {
         widthRoom = parseInt(widthRoom)
         return item.isEmpty ?
-            (<View style={{ width: widthRoom - 7 }}></View>)
+            (<View style={{ width: widthRoom - 4 }}></View>)
             :
             (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
-                style={[styles.room, { width: widthRoom - 7, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
-                <View style={{ flex: 1, flexDirection: 'column', justifyContent: "space-between" }}>
-                    <View style={{ justifyContent: "center", padding: 4, flex: 1 }}>
-                        <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text>
-                        <View style={{height: 0.5, width: "99%", backgroundColor: "#ddd"}}></View>
-                        <Text style={{ paddingTop: 10, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
-                    </View>
+                style={[styles.room, { width: widthRoom - 4.3, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
+                <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ alignItems: "center", padding: 0, flex: 1 }}>
+                        {/* <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text> */}
+                        <View style={{ justifyContent: "center", alignItems: "center", flex: 1, height: "90%" }}>
+                            <TextTicker
+                                style={{
+                                    fontSize: 13, textAlign: "center", textAlignVertical: "center", textTransform: "uppercase", padding: 4, marginTop: 0, color: item.IsActive ? 'white' : 'black'
+                                }}
+                                duration={6000}
+                                bounce={false}
+                                marqueeDelay={1000}
+                            >
+                                {item.Name}
+                            </TextTicker>
+                        </View>
 
-                    <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 1 }}>
-                        <Text style={{ paddingTop: 10, color: item.IsActive ? "#fff" : "#000",textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
+                    </View>
+                    <View style={{ height: 0.5, width: "90%", backgroundColor: "#ddd", justifyContent: "center", alignItems: "center" }}></View>
+                    <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 2 }}>
+                        {item.IsActive ?
+                            <Text style={{ paddingTop: 0, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
+                            : null}
+                        <Text style={{ paddingTop: item.IsActive ? 10 : 0, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -201,23 +216,13 @@ export default (props) => {
                         listRoom.map((data, index) =>
                             <TouchableOpacity onPress={() => {
                                 setIndexRoom(index)
-                                let indexGroup = 0;
-                                datas.map((item, index) => {
-                                    if (item.Id == data.Id)
-                                        indexGroup = index
-                                })
                                 console.log("_nodes.size ", _nodes.size);
                                 console.log("listNode ", listNode);
-                                // let position = listNode.filter(item=> {return item.Id == data.Id})
                                 const node = _nodes.get(data.Id);
-
                                 console.log("node ", node);
-                                // let position = findNodeHandle(node) - 100;
-                                // console.log("position ", position);
-
                                 refScroll.scrollTo({ y: node })
                             }} style={{ height: "100%", justifyContent: "center", alignItems: "center", paddingHorizontal: 15 }}>
-                                <Text style={{ color: indexRoom == index ? "#000" : "#fff", textTransform: 'uppercase' }}>{data.Name}</Text>
+                                <Text style={{ color: indexRoom == index ? "#444444" : "#fff", textTransform: 'uppercase' }}>{data.Name}</Text>
                             </TouchableOpacity>
                         )
                         : null}
@@ -239,8 +244,8 @@ export default (props) => {
                     <Text>{I18n.t('dang_trong')}</Text>
                 </View>
             </View>
-            <View style={{ flex: 1,padding: 3 }}>
-                <ScrollView scrollToOverflowEnabled={true} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
+            <View style={{ flex: 1, padding: 2 }}>
+                <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
                     <View style={styles.containerRoom}>
                         {datas ?
                             datas.map((data, idx) =>
@@ -257,7 +262,7 @@ export default (props) => {
                                     //     if (data.isGroup)
                                     //         _nodes.set(idx, ref)
                                     // }} 
-                                    style={{ flexDirection: "row" }}>
+                                    style={{ flexDirection: "row"}}>
                                     {data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)}
                                 </View>
                             ) : null
@@ -282,7 +287,7 @@ const styles = StyleSheet.create({
     },
     room: {
         justifyContent: "center",
-        margin: 3,
+        margin: 2,
         borderRadius: 4
     },
     roomGroup: {

@@ -126,7 +126,7 @@ const LoginScreen = (props) => {
                 setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
                 props.navigation.dispatch(
                     CommonActions.reset({
-                        index: 1,
+                        index: 0,
                         routes: [
                             { name: 'Home' },
                         ],

@@ -46,12 +46,12 @@ export default function ToolBarPrintHtml(props) {
                 }}
                 >
 
-                    <View style={{ flex: 1, alignItems: "center" }}>
+                    <View style={{ flex: 0.6, alignItems: "center" }}>
                         <TouchableOpacity onPress={props.clickRightIcon}>
                             {props.rightIcon && props.clickRightIcon ?
                                 <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
                                 :
-                                <Icon delayPressIn={0} name="keyboard-backspace" onPress={onClickBack} size={24} />
+                                <Icon delayPressIn={0} size={30} name="keyboard-backspace" color="white" onPress={onClickBack} />
                             }
                         </TouchableOpacity>
                     </View>
@@ -82,7 +82,7 @@ export default function ToolBarPrintHtml(props) {
                             </TouchableOpacity>
                         </View>
                         :
-                        <View style={{flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
+                        <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
                             <View style={{ alignItems: "center" }}>
                                 <TouchableOpacity onPress={props.clickPrint} >
                                     <Text style={{ color: 'white' }}>IN</Text>
