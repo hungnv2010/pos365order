@@ -105,7 +105,7 @@ export default (props) => {
             let totalPrice = 0;
             listTopping.forEach(item => {
                 if (item.Quantity > 0) {
-                    description += ` -- ${item.Name} x ${item.Quantity} = ${currencyToString(item.Quantity * item.Price)}; \n `
+                    description += ` -- ${item.Name} x ${item.Quantity} = ${currencyToString(item.Quantity * item.Price)} ; `
                     totalPrice += item.Quantity * item.Price
                 }
             })
