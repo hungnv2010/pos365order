@@ -156,8 +156,9 @@ export default (props) => {
 
                 <View style={!(isTopping || isSelectProduct) ? { flex: 1 } : { width: 0, height: 0 }}>
                     <ToolBarDefault
+                        {...props}
                         leftIcon="keyboard-backspace"
-                        clickLeftIcon={() => { props.navigation.goBack() }}
+                        // clickLeftIcon={() => { props.navigation.goBack() }}
                         rightIcon="plus"
                         clickRightIcon={outputIsSelectProduct} />
                     <PageServed

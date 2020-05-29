@@ -14,6 +14,8 @@ import PropTypes from 'prop-types';
 
 export default function ToolBarDefault(props) {
 
+    let blockClick = false;
+
     return (
         <LinearGradient
             start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
@@ -30,13 +32,21 @@ export default function ToolBarDefault(props) {
                 >
 
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        {props.clickLeftIcon && props.leftIcon ?
-                            <TouchableOpacity onPress={props.clickLeftIcon}>
-                                <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
-                            </TouchableOpacity>
-                            :
-                            null
-                        }
+                        {/* {props.clickLeftIcon && props.leftIcon ? */}
+                        <TouchableOpacity onPress={() => {
+                            if (blockClick == false) {
+                                blockClick = true;
+                                props.navigation.pop()
+                                setTimeout(() => {
+                                    blockClick = false;
+                                }, 1000);
+                            }
+                        }}>
+                            <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
+                        </TouchableOpacity>
+                        {/* :
+                    null */}
+                        {/* } */}
                     </View>
                     <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <Subheading
@@ -60,7 +70,7 @@ export default function ToolBarDefault(props) {
                     </View>
                 </View>
             </View>
-        </LinearGradient>
+        </LinearGradient >
     )
 
 }
