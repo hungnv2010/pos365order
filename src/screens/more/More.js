@@ -146,15 +146,15 @@ const HeaderComponent = (props) => {
                             :
                             <Image key="2" source={Images.icon_person} style={[{ width: 50, height: 50, marginRight: 20 }]} />
                     }
-                    <Text style={{ marginTop: 10 }}>{Name}</Text>
+                    <Text style={{ marginTop: 10,color: "#fff" }}>{Name}</Text>
                 </View>
                 <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", marginTop: 15 }} onPress={() => onClickBranh()}>
                     <Image source={Images.icon_placeholder} style={[{ width: 10, height: 17, marginRight: 5 }]} />
-                    <Text style={{}}>{Branch.Name && Branch.Name != "" ? Branch.Name : I18n.t('chi_nhanh')}</Text>
+                    <Text style={{color: "#fff"}}>{Branch.Name && Branch.Name != "" ? Branch.Name : I18n.t('chi_nhanh')}</Text>
                 </TouchableOpacity>
             </View>
             <TouchableOpacity onPress={() => onClickLogOut()}>
-                <Text style={{ textDecorationLine: "underline" }}>{I18n.t('logout')}</Text>
+                <Text style={{ textDecorationLine: "underline", color: "#fff" }}>{I18n.t('logout')}</Text>
             </TouchableOpacity>
             <Modal
                 animationType="fade"

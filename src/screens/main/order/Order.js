@@ -18,6 +18,7 @@ import moment from "moment";
 import { Constant } from '../../../common/Constant'
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from '../../../theme/Colors';
+import TextTicker from 'react-native-text-ticker';
 
 const _nodes = new Map();
 
@@ -41,14 +42,23 @@ export default (props) => {
             (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
                 style={[styles.room, { width: widthRoom - 7, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: "space-between" }}>
-                    <View style={{ justifyContent: "center", padding: 4, flex: 1 }}>
-                        <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text>
-                        <View style={{height: 0.5, width: "99%", backgroundColor: "#ddd"}}></View>
+                    <View style={{ justifyContent: "center", alignItems: "center", padding: 4, flex: 1 }}>
+                        {/* <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text> */}
+                        <TextTicker
+                            style={{
+                                fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' 
+                            }}
+                            duration={6000}
+                            bounce={false}
+                            marqueeDelay={1000}
+                        >
+                            {item.Name}
+                        </TextTicker>
+                        <View style={{ height: 0.5, width: "99%", backgroundColor: "#ddd" }}></View>
                         <Text style={{ paddingTop: 10, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
                     </View>
-
                     <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 1 }}>
-                        <Text style={{ paddingTop: 10, color: item.IsActive ? "#fff" : "#000",textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
+                        <Text style={{ paddingTop: 10, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -239,8 +249,8 @@ export default (props) => {
                     <Text>{I18n.t('dang_trong')}</Text>
                 </View>
             </View>
-            <View style={{ flex: 1,padding: 3 }}>
-                <ScrollView scrollToOverflowEnabled={true} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
+            <View style={{ flex: 1, padding: 3 }}>
+                <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
                     <View style={styles.containerRoom}>
                         {datas ?
                             datas.map((data, idx) =>
