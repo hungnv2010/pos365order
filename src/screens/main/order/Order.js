@@ -37,17 +37,17 @@ export default (props) => {
     const renderRoom = (item, widthRoom) => {
         widthRoom = parseInt(widthRoom)
         return item.isEmpty ?
-            (<View style={{ width: widthRoom - 7 }}></View>)
+            (<View style={{ width: widthRoom - 4 }}></View>)
             :
             (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
-                style={[styles.room, { width: widthRoom - 7, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
+                style={[styles.room, { width: widthRoom - 4.3, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
-                    <View style={{ alignItems: "center", padding: 4, flex: 1 }}>
+                    <View style={{ alignItems: "center", padding: 0, flex: 1 }}>
                         {/* <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text> */}
                         <View style={{ justifyContent: "center", alignItems: "center", flex: 1, height: "90%" }}>
                             <TextTicker
                                 style={{
-                                    fontSize: 13, textAlign: "center", textAlignVertical: "center", textTransform: "uppercase", margin: 0, marginTop: 0, color: item.IsActive ? 'white' : 'black'
+                                    fontSize: 13, textAlign: "center", textAlignVertical: "center", textTransform: "uppercase", padding: 4, marginTop: 0, color: item.IsActive ? 'white' : 'black'
                                 }}
                                 duration={6000}
                                 bounce={false}
@@ -244,7 +244,7 @@ export default (props) => {
                     <Text>{I18n.t('dang_trong')}</Text>
                 </View>
             </View>
-            <View style={{ flex: 1, padding: 3 }}>
+            <View style={{ flex: 1, padding: 2 }}>
                 <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
                     <View style={styles.containerRoom}>
                         {datas ?
@@ -262,7 +262,7 @@ export default (props) => {
                                     //     if (data.isGroup)
                                     //         _nodes.set(idx, ref)
                                     // }} 
-                                    style={{ flexDirection: "row" }}>
+                                    style={{ flexDirection: "row"}}>
                                     {data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)}
                                 </View>
                             ) : null
@@ -287,7 +287,7 @@ const styles = StyleSheet.create({
     },
     room: {
         justifyContent: "center",
-        margin: 3,
+        margin: 2,
         borderRadius: 4
     },
     roomGroup: {
