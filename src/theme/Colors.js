@@ -3,6 +3,7 @@ import { Platform} from 'react-native'
 const colors = {
   colorchinh: "#FF5722", // Red orange
   colorPhu:"#2196F3", // Blue
+  colorLightBlue: "#0072bc",
   backgroundWhite:"#FFF8E1",
   backgroundYellow:"#FFFFFF",
 

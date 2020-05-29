@@ -15,11 +15,11 @@ import PropTypes from 'prop-types';
 export default function MainToolBar(props) {
 
     return (
-        <LinearGradient
-            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-            colors={['#FFAB40', '#FF5722']}
-            style={{ height: 44 }}
-        >
+        // <LinearGradient
+        //     start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+        //     colors={['#FFAB40', '#FF5722']}
+        //     style={{ height: 44 }}
+        // >
             <View style={styles.toolbarContainer}>
                 <View style={{
                     flex: 1,
@@ -29,20 +29,24 @@ export default function MainToolBar(props) {
                 }}
                 >
 
-                    <View style={{ flex: 1, alignItems: "center" }}>
-                        {props.clickLeftIcon && props.leftIcon ?
+                    <View style={{ flex: 2.5, alignItems: "center" }}>
+                        {/* {props.clickLeftIcon && props.leftIcon ?
                             <TouchableOpacity onPress={props.clickLeftIcon}>
                                 <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
                             </TouchableOpacity>
                             :
                             null
-                        }
+                        } */}
+                        <Image source={Images.logo_365_boss_white}
+                            style={{ width: 172, height: 40, resizeMode: 'contain' }} />
                     </View>
-                    <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                    <View style={{ flex: 4, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
                         <Subheading
                             numberOfLines={1}
                             style={{
-                                color: 'white'
+                                color: 'white',
+                                fontWeight: "bold",
+                                fontSize: 18
                             }}
                         >
                             {props.title}
@@ -52,7 +56,7 @@ export default function MainToolBar(props) {
                     <View style={{ flex: 1, alignItems: "center" }}>
                         {props.clickRightIcon && props.rightIcon ?
                             <TouchableOpacity onPress={props.clickRightIcon}>
-                                <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
+                                <Icon name={props.rightIcon} size={props.size ? props.size : 28} color="white" />
                             </TouchableOpacity>
                             :
                             null
@@ -60,7 +64,7 @@ export default function MainToolBar(props) {
                     </View>
                 </View>
             </View>
-        </LinearGradient>
+        // </LinearGradient>
     )
 
 }
@@ -69,7 +73,7 @@ const styles = StyleSheet.create({
 
     toolbarContainer: {
         height: 44,
-        flex: 1,
+        // flex: 1,
         shadowColor: Colors.black,
         shadowOffset: {
             width: 0,
@@ -77,6 +81,8 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.24,
         shadowRadius: 0.3,
+        backgroundColor: Colors.colorchinh,
+        height: 44 
     },
 })
 

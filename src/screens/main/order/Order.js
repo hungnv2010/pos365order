@@ -6,7 +6,8 @@ import {
     Text,
     TouchableOpacity,
     Image,
-    Dimensions
+    Dimensions,
+    findNodeHandle
 } from 'react-native';
 import Images from '../../../theme/Images';
 import I18n from '../../../common/language/i18n';
@@ -15,10 +16,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import { currencyToString, dateUTCToMoment, momentToDateUTC } from '../../../common/Utils'
 import moment from "moment";
 import { Constant } from '../../../common/Constant'
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import colors from '../../../theme/Colors';
 
-
+const _nodes = new Map();
 
 export default (props) => {
+
+
+    useEffect(() => {
+        // _nodes = new Map();
+    }, [])
+
     const onItemPress = (item) => {
         console.log(item, 'item', props);
         props.navigation.navigate('Served', { room: { Id: item.Id, Name: item.Name, Position: 'A' } })
@@ -27,18 +36,19 @@ export default (props) => {
     const renderRoom = (item, widthRoom) => {
         widthRoom = parseInt(widthRoom)
         return item.isEmpty ?
-            (<View style={{ width: widthRoom - 8 }}></View>)
+            (<View style={{ width: widthRoom - 7 }}></View>)
             :
             (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
-                style={[styles.room, { width: widthRoom - 8, height: widthRoom, backgroundColor: item.IsActive ? 'blue' : 'white' }]}>
+                style={[styles.room, { width: widthRoom - 7, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: "space-between" }}>
                     <View style={{ justifyContent: "center", padding: 4, flex: 1 }}>
-                        <Text style={{ fontSize: 14, textTransform: "uppercase", color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text>
-                        <Text style={{ paddingTop: 10, fontSize: 12, color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
+                        <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text>
+                        <View style={{height: 0.5, width: "99%", backgroundColor: "#ddd"}}></View>
+                        <Text style={{ paddingTop: 10, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
                     </View>
 
-                    <View style={{ justifyContent: "center", padding: 0, alignItems: "flex-end" }}>
-                        <Text style={{ paddingTop: 10, color: "red", fontSize: 13 }}>{currencyToString(item.Total)}</Text>
+                    <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 1 }}>
+                        <Text style={{ paddingTop: 10, color: item.IsActive ? "#fff" : "#000",textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -48,7 +58,7 @@ export default (props) => {
     const renderRoomGroup = (item) => {
         return (
             <View key={item.Id} style={styles.roomGroup}>
-                <Text style={{ padding: 0, fontSize: 16, textTransform: "uppercase" }}>{item.Name}</Text>
+                <Text style={{ padding: 0, fontSize: 16, textTransform: "uppercase", color: colors.colorLightBlue, paddingLeft: 3 }}>{item.Name}</Text>
             </View>
         )
     }
@@ -67,12 +77,19 @@ export default (props) => {
     const [valueAll, setValueAll] = useState({})
     const widthRoom = Dimensions.get('screen').width / numberColumn;
 
+    const [indexRoom, setIndexRoom] = useState(0)
+
+    const RoomAll = { Name: "Tất cả", Id: "All" }
+    const [listRoom, setListRoom] = useState([])
+
     useEffect(() => {
         init()
         return () => {
             realmStore.removeAllListener()
         }
     }, [props.forceUpdate])
+
+
 
     const init = async () => {
         rooms = await realmStore.queryRooms()
@@ -81,13 +98,24 @@ export default (props) => {
         console.log("init: ", JSON.parse(JSON.stringify(rooms, roomGroups, serverEvents)));
 
         let newDatas = insertServerEvent(getDatas(rooms, roomGroups), serverEvents)
+        console.log("init: newDatas ", newDatas);
+
         setData(newDatas)
+
+        let list = []
+        list = [RoomAll].concat(newDatas.filter(item => item.isGroup))
+        console.log("list  ======= ", list.length);
+
+        setListRoom(list)
+
         serverEvents.addListener((collection, changes) => {
             if (changes.insertions.length || changes.modifications.length) {
                 let newDatas = insertServerEvent(getDatas(rooms, roomGroups), serverEvents)
                 setData(newDatas)
             }
         })
+
+
     }
 
     const getDatas = (rooms, roomGroups) => {
@@ -155,15 +183,53 @@ export default (props) => {
         return newDatas
     }
 
+    let refScroll = null;
+
+    const scrollToInitialPosition = () => {
+        refScroll.scrollTo({ y: 500 })
+    }
+
+    let indexGroup = 0;
+    let listNode = [];
+
+
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingVertical: 5, borderBottomWidth: 1, borderBottomColor: "red" }}>
+            <View style={{ height: 40 }}>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} style={{ backgroundColor: colors.colorchinh }}>
+                    {listRoom ?
+                        listRoom.map((data, index) =>
+                            <TouchableOpacity onPress={() => {
+                                setIndexRoom(index)
+                                let indexGroup = 0;
+                                datas.map((item, index) => {
+                                    if (item.Id == data.Id)
+                                        indexGroup = index
+                                })
+                                console.log("_nodes.size ", _nodes.size);
+                                console.log("listNode ", listNode);
+                                // let position = listNode.filter(item=> {return item.Id == data.Id})
+                                const node = _nodes.get(data.Id);
+
+                                console.log("node ", node);
+                                // let position = findNodeHandle(node) - 100;
+                                // console.log("position ", position);
+
+                                refScroll.scrollTo({ y: node })
+                            }} style={{ height: "100%", justifyContent: "center", alignItems: "center", paddingHorizontal: 15 }}>
+                                <Text style={{ color: indexRoom == index ? "#000" : "#fff", textTransform: 'uppercase' }}>{data.Name}</Text>
+                            </TouchableOpacity>
+                        )
+                        : null}
+                </ScrollView>
+            </View>
+            <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 12, paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: "red" }}>
                 <View style={{ flexDirection: "row", flex: 1 }}>
                     <Image source={Images.icon_transfer_money} style={{ width: 20, height: 20 }}></Image>
                     <Text>{currencyToString(valueAll.cash)}</Text>
                 </View>
                 <View style={{ flexDirection: "row", flex: 1, justifyContent: "space-around" }}>
-                    <View style={{ backgroundColor: "blue", borderRadius: 5 }}>
+                    <View style={{ backgroundColor: colors.colorLightBlue, justifyContent: "center", borderRadius: 5 }}>
                         <Text style={{ color: "white", fontSize: 12, paddingHorizontal: 2 }}>{valueAll.use}/{valueAll.room}</Text>
                     </View>
                     <Text>{I18n.t('dang_dung')}</Text>
@@ -173,12 +239,27 @@ export default (props) => {
                     <Text>{I18n.t('dang_trong')}</Text>
                 </View>
             </View>
-            <View style={{ flex: 1 }}>
-                <ScrollView style={{ flex: 1 }}>
+            <View style={{ flex: 1,padding: 3 }}>
+                <ScrollView scrollToOverflowEnabled={true} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
                     <View style={styles.containerRoom}>
                         {datas ?
-                            datas.map(data =>
-                                data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)
+                            datas.map((data, idx) =>
+                                <View
+                                    onLayout={(e) => {
+                                        footerY = e.nativeEvent.layout.y;
+                                        if (data.isGroup) {
+                                            console.log("footerY ", footerY);
+                                            _nodes.set(data.Id, footerY)
+                                            listNode.push({ Id: data.Id, footerY: footerY })
+                                        }
+                                    }}
+                                    // ref={ref => {
+                                    //     if (data.isGroup)
+                                    //         _nodes.set(idx, ref)
+                                    // }} 
+                                    style={{ flexDirection: "row" }}>
+                                    {data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)}
+                                </View>
                             ) : null
                         }
                     </View>
@@ -201,14 +282,15 @@ const styles = StyleSheet.create({
     },
     room: {
         justifyContent: "center",
-        margin: 4,
+        margin: 3,
+        borderRadius: 4
     },
     roomGroup: {
-        backgroundColor: "white",
+        // backgroundColor: "white",
         marginVertical: 4,
         flexDirection: "row", alignItems: "center",
         width: "100%",
-        borderBottomColor: "#ddd", borderBottomWidth: 1
+        borderBottomColor: "#ddd", borderBottomWidth: 0
     },
     header: {
         fontSize: 32,
