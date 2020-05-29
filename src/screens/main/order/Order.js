@@ -211,23 +211,13 @@ export default (props) => {
                         listRoom.map((data, index) =>
                             <TouchableOpacity onPress={() => {
                                 setIndexRoom(index)
-                                let indexGroup = 0;
-                                datas.map((item, index) => {
-                                    if (item.Id == data.Id)
-                                        indexGroup = index
-                                })
                                 console.log("_nodes.size ", _nodes.size);
                                 console.log("listNode ", listNode);
-                                // let position = listNode.filter(item=> {return item.Id == data.Id})
                                 const node = _nodes.get(data.Id);
-
                                 console.log("node ", node);
-                                // let position = findNodeHandle(node) - 100;
-                                // console.log("position ", position);
-
                                 refScroll.scrollTo({ y: node })
                             }} style={{ height: "100%", justifyContent: "center", alignItems: "center", paddingHorizontal: 15 }}>
-                                <Text style={{ color: indexRoom == index ? "#000" : "#fff", textTransform: 'uppercase' }}>{data.Name}</Text>
+                                <Text style={{ color: indexRoom == index ? "#444444" : "#fff", textTransform: 'uppercase' }}>{data.Name}</Text>
                             </TouchableOpacity>
                         )
                         : null}
