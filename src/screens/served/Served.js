@@ -9,6 +9,7 @@ import PageServed from './pageServed/PageServed';
 import Topping from './Topping';
 import { Constant } from '../../common/Constant';
 import dialogManager from '../../components/dialog/DialogManager';
+import I18n from '../../common/language/i18n';
 
 export default (props) => {
 
@@ -153,7 +154,6 @@ export default (props) => {
                             numColumns={1}
                             itemOrder={meMoItemOrder}
                             onClose={() => {
-                                // setItemOrder({})
                                 outputIsTopping();
                             }}
                             outputListTopping={outputListTopping}
@@ -166,7 +166,7 @@ export default (props) => {
                         <ToolBarDefault
                         {...props}
                             leftIcon="keyboard-backspace"
-                            title="Đơn hàng"
+                            title={I18n.t('don_hang')}
                             clickLeftIcon={() => { props.navigation.goBack() }}
                             rightIcon="plus"
                             clickRightIcon={outputIsSelectProduct} />

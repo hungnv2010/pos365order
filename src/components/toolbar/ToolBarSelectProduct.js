@@ -15,54 +15,48 @@ import PropTypes from 'prop-types';
 export default function ToolBarDefault(props) {
 
     return (
-        <LinearGradient
-            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-            colors={['#FFAB40', '#FF5722']}
-            style={{ height: 45 }}
-        >
-            <View style={styles.toolbarContainer}>
-                <View style={{
-                    flex: 1,
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    justifyContent: "center"
-                }}
-                >
+        <View style={styles.toolbarContainer}>
+            <View style={{
+                flex: 1,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: "center"
+            }}
+            >
 
-                    <View style={{ flex: 1, alignItems: "center" }}>
-                        {props.clickLeftIcon && props.leftIcon ?
-                            <TouchableOpacity onPress={props.clickLeftIcon}>
-                                <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
-                            </TouchableOpacity>
-                            :
-                            null
-                        }
-                    </View>
-                    <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                        <Subheading
-                            numberOfLines={1}
-                            style={{
-                                color: 'white'
-                            }}
-                        >
-                            {props.title}
-                        </Subheading>
-                    </View>
-
-                    <View style={{ flex: 1, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.onClickSearch}>
-                            <Ionicons name="md-search" size={30} color="white" style={{}} />
+                <View style={{ flex: 1, alignItems: "center" }}>
+                    {props.clickLeftIcon && props.leftIcon ?
+                        <TouchableOpacity onPress={props.clickLeftIcon}>
+                            <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
                         </TouchableOpacity>
-                    </View>
+                        :
+                        null
+                    }
+                </View>
+                <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                    <Subheading
+                        numberOfLines={1}
+                        style={{
+                            color: 'white', fontWeight: "bold"
+                        }}
+                    >
+                        {props.title}
+                    </Subheading>
+                </View>
 
-                    <View style={{ flex: 1, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.onClickDone}>
-                            <Icon name="check" size={30} color="white" style={{}} />
-                        </TouchableOpacity>
-                    </View>
+                <View style={{ flex: 1, alignItems: "center" }}>
+                    <TouchableOpacity onPress={props.onClickSearch}>
+                        <Ionicons name="md-search" size={30} color="white" style={{}} />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ flex: 1, alignItems: "center" }}>
+                    <TouchableOpacity onPress={props.onClickDone}>
+                        <Icon name="check" size={30} color="white" style={{}} />
+                    </TouchableOpacity>
                 </View>
             </View>
-        </LinearGradient>
+        </View>
     )
 
 }
@@ -71,14 +65,7 @@ const styles = StyleSheet.create({
 
     toolbarContainer: {
         height: 45,
-        flex: 1,
-        shadowColor: Colors.black,
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.24,
-        shadowRadius: 0.3,
+        backgroundColor: Colors.colorchinh
     },
 })
 

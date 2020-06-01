@@ -32,26 +32,6 @@ export default function ToolBarDefault(props) {
                     <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
                 </TouchableOpacity>
             </View>
-            {/* <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                <Subheading
-                    numberOfLines={1}
-                    style={{
-                        color: 'white'
-                    }}
-                >
-                    {props.title}
-                </Subheading>
-            </View> */}
-
-            {/* <View style={{ flex: 1, alignItems: "center" }}>
-                {props.clickLeftIcon && props.leftIcon ?
-                    <TouchableOpacity onPress={props.clickLeftIcon}>
-                        <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
-                    </TouchableOpacity>
-                    :
-                    null
-                }
-            </View> */}
             <View style={{ flex: 5, paddingLeft: 10, alignItems: 'center', flexDirection: 'row' }}>
                 <Subheading
                     numberOfLines={1}

@@ -19,21 +19,6 @@ export default (props) => {
 
     useEffect(() => {
         console.log('dataManager.listTopping', dataManager.listTopping);
-        const getTopping = async () => {
-            let newCategories = [{ Id: -1, Name: I18n.t('tat_ca') }]
-            let newTopping = []
-            let results = await realmStore.queryTopping().then(res => res.slice(0.5))
-            console.log(results, 'getTopping');
-            results.forEach(item => {
-                if (item.ExtraGroup !== '' && newCategories.filter(cate => cate.Name == item.ExtraGroup).length == 0) {
-                    newCategories.push({ Id: item.Id, Name: item.ExtraGroup })
-                }
-                newTopping.push({ ...JSON.parse(JSON.stringify(item)), Quantity: 0 })
-            })
-            toppingRef.current = [...newTopping]
-            setCategories(newCategories)
-            setTopping(newTopping)
-        }
         const init = () => {
             dataManager.listTopping.forEach(item => {
                 if (item.IdRoom == props.route.params.room.Id) {
@@ -41,12 +26,44 @@ export default (props) => {
                 }
             })
         }
-        getTopping()
         init()
-        return () => {
-            console.log('dataManager.listTopping', dataManager.listTopping);
-        }
     }, [])
+
+    useEffect(() => {
+        console.log(props.itemOrder, 'props.itemOrder');
+        setItemOrder(props.itemOrder)
+    }, [props.itemOrder])
+
+    useEffect(() => {
+        const getTopping = async () => {
+            let newCategories = [{ Id: -1, Name: I18n.t('tat_ca') }]
+            let newTopping = []
+            let exist = false
+            let results = await realmStore.queryTopping().then(res => res.slice(0.5))
+            results.forEach(item => {
+                if (item.ExtraGroup !== '' && newCategories.filter(cate => cate.Name == item.ExtraGroup).length == 0) {
+                    newCategories.push({ Id: item.Id, Name: item.ExtraGroup })
+                }
+                newTopping.push({ ...JSON.parse(JSON.stringify(item)), Quantity: 0 })
+            })
+            toppingRef.current = [...newTopping]
+            listTopping.forEach(lt => {
+                if (lt.Id == itemOrder.Sid && lt.Key == props.position) {
+                    exist = true
+                    newTopping.forEach(top => {
+                        lt.List.forEach(ls => {
+                            if (top.Id == ls.Id) {
+                                top.Quantity = ls.Quantity
+                            }
+                        })
+                    })
+                }
+            })
+            setCategories(newCategories)
+            setTopping(newTopping)
+        }
+        getTopping()
+    }, [listTopping, itemOrder])
 
     useEffect(() => {
         if (listCateId[0] == I18n.t('tat_ca')) {
@@ -58,45 +75,8 @@ export default (props) => {
         }
     }, [listCateId])
 
-    useEffect(() => {
-        console.log(props.itemOrder, 'props.itemOrder');
-        setItemOrder(props.itemOrder)
-    }, [props.itemOrder])
-
-
-    useEffect(() => {
-        let exist = false
-        resetTopping()
-        listTopping.forEach(lt => {
-            if (lt.Id == itemOrder.Sid && lt.Key == props.position) {
-                exist = true
-                mergeTopping(lt.List)
-            }
-        })
-    }, [listTopping, itemOrder, props.position])
-
-    const mergeTopping = (list) => {
-        console.log('mergeTopping', list);
-        topping.forEach(top => {
-            list.forEach(ls => {
-                if (top.Id == ls.Id) {
-                    top.Quantity = ls.Quantity
-                }
-            })
-        })
-        setTopping([...topping])
-    }
-
-    const resetTopping = () => {
-        console.log('resetTopping');
-        topping.forEach(item => {
-            item.Quantity = 0
-        })
-        setTopping([...topping])
-    }
 
     const onclose = () => {
-        setlistCateId([I18n.t('tat_ca')])
         props.onClose()
     }
 
