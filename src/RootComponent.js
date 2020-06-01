@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { useState, useEffect, useFocusEffect, useCallback } from 'react';
 import {
     SafeAreaView,
@@ -50,7 +42,7 @@ export default () => {
     }
 
     useEffect(() => {
-        signalRManager.init()
+        // signalRManager.init()
         I18n.locale = "vi";
         setForceUpdate(!forceUpdate);
         dispatch({ type: 'TYPE_DEVICE', deviceType: isTablet() })

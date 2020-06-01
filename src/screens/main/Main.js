@@ -1,13 +1,11 @@
 import React, { useEffect, useState, useRef, createRef } from 'react';
-import { StatusBar, Image, View, StyleSheet, TouchableOpacity, Text, ScrollView, SectionList } from 'react-native';
+import { View } from 'react-native';
 import MainToolBar from './MainToolBar';
 import dataManager from '../../data/DataManager'
-import realmStore from '../../data/realm/RealmStore'
 import Order from './order/Order';
-import { useSelector } from 'react-redux';
-import Images from '../../theme/Images';
-import I18n from '../../common/language/i18n';
+import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
 import dialogManager from '../../components/dialog/DialogManager';
+import I18n from '../../common/language/i18n';
 
 export default (props) => {
 
@@ -31,18 +29,22 @@ export default (props) => {
     dialogManager.hiddenLoading()
   }
 
-
-  const clickLeftIcon = () => {
-  }
-
   return (
     <View style={{ flex: 1 }}>
-      <MainToolBar
-        navigation={props.navigation}
-        title="Main"
-        rightIcon="refresh"
-        clickRightIcon={clickRightIcon}
-      />
+      {props.changeTable ?
+        <ToolBarDefault
+          navigation={props.navigation}
+          title={I18n.t('chuyen_ban')}
+          leftIcon="keyboard-backspace"
+          clickLeftIcon={() => { props.outputIsChangeTable() }} />
+        :
+        <MainToolBar
+          navigation={props.navigation}
+          title={I18n.t('nhan_vien_order')}
+          rightIcon="refresh"
+          clickRightIcon={clickRightIcon}
+        />
+      }
       <Order {...props} forceUpdate={forceUpdate}></Order>
     </View>
   );

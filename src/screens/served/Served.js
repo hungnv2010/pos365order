@@ -10,6 +10,7 @@ import Topping from './Topping';
 import { Constant } from '../../common/Constant';
 import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
+import Main from '../../screens/main/Main';
 
 export default (props) => {
 
@@ -20,6 +21,7 @@ export default (props) => {
     const [position, setPosition] = useState("")
     const [isSelectProduct, setIsSelectProduct] = useState(false)
     const [isTopping, setIsTopping] = useState(false)
+    const [isChangeTable, setIsChangeTable] = useState(false)
     const meMoItemOrder = useMemo(() => itemOrder, [itemOrder])
     const SelectProductRef = useRef()
 
@@ -60,6 +62,10 @@ export default (props) => {
 
     const outputIsTopping = () => {
         setIsTopping(!isTopping)
+    }
+
+    const outputIsChangeTable = () => {
+        setIsChangeTable(!isChangeTable)
     }
 
     const renderForTablet = () => {
@@ -161,10 +167,10 @@ export default (props) => {
                     </View> :
                     null
                 }
-                {!(isTopping || isSelectProduct) ?
+                {!(isTopping || isSelectProduct || isChangeTable) ?
                     <View style={{ flex: 1 }}>
                         <ToolBarDefault
-                        {...props}
+                            {...props}
                             leftIcon="keyboard-backspace"
                             title={I18n.t('don_hang')}
                             clickLeftIcon={() => { props.navigation.goBack() }}
@@ -179,11 +185,21 @@ export default (props) => {
                             outputPosition={outputPosition}
                             outputIsTopping={outputIsTopping}
                             outputIsSelectProduct={outputIsSelectProduct}
+                            outputIsChangeTable={outputIsChangeTable}
                             listTopping={listTopping}
                         />
                     </View> :
                     null
                 }
+                {isChangeTable ?
+                    <View style={{ flex: 1 }}>
+                        <Main
+                            {...props}
+                            outputIsChangeTable={outputIsChangeTable}
+                            changeTable={true} />
+                    </View>
+                    :
+                    null}
             </>
         )
     }

@@ -12,6 +12,7 @@ import Fonts from '../../theme/Fonts';
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
 
+
 export default function ToolBarDefault(props) {
 
     let blockClick = false;
@@ -20,17 +21,23 @@ export default function ToolBarDefault(props) {
         <View style={styles.toolbarContainer}>
 
             <View style={{ flex: 1, alignItems: "center" }}>
-                <TouchableOpacity onPress={() => {
-                    if (blockClick == false) {
-                        blockClick = true;
-                        props.navigation.pop()
-                        setTimeout(() => {
-                            blockClick = false;
-                        }, 1000);
-                    }
-                }}>
-                    <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
-                </TouchableOpacity>
+                {props.clickLeftIcon ?
+                    <TouchableOpacity onPress={props.clickLeftIcon}>
+                        <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
+                    </TouchableOpacity>
+                    :
+                    <TouchableOpacity onPress={() => {
+                        if (blockClick == false) {
+                            blockClick = true;
+                            props.navigation.pop()
+                            setTimeout(() => {
+                                blockClick = false;
+                            }, 1000);
+                        }
+                    }}>
+                        <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
+                    </TouchableOpacity>
+                }
             </View>
             <View style={{ flex: 5, paddingLeft: 10, alignItems: 'center', flexDirection: 'row' }}>
                 <Subheading
@@ -77,5 +84,5 @@ ToolBarDefault.propTypes = {
 }
 
 ToolBarDefault.defaultProps = {
-
+    leftIcon: "keyboard-backspace"
 }

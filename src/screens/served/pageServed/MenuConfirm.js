@@ -7,7 +7,9 @@ import Menu from 'react-native-material-menu';
 import I18n from '../../../common/language/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { currencyToString } from '../../../common/Utils'
-import FadeInView from '../../../components/animate/FadeInView';
+import { HTTPService } from '../../../data/services/HttpService';
+import dialogManager from '../../../components/dialog/DialogManager';
+
 
 export default (props) => {
 
@@ -45,7 +47,11 @@ export default (props) => {
         _menu.show();
     };
 
-    
+
+    const changTable = () => {
+        props.outputIsChangeTable()
+        // let params = { ServeChangeTableEntities: [{ FromRoomId: 552046, FromPos: "A", ToRoomId: 156173, ToPos: "A" }] }
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -75,7 +81,7 @@ export default (props) => {
             </View >
             <TouchableOpacity
                 onPress={() => { setExpand(!expand) }}
-                style={{ borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3 }}>
+                style={{ borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3, backgroundColor: "white" }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                     <Text style={{ fontWeight: "bold" }}>{I18n.t('tong_thanh_tien')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
@@ -118,28 +124,28 @@ export default (props) => {
                         button={<Icon style={{ paddingHorizontal: 10 }} name="menu" size={30} color="white" />}
                     >
                         <View style={{
-                            padding: 5,
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                         }}>
-                            <Text style={{ margin: 15, fontSize: 16 }}>Giờ vào: 27/04/2020 08:00</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={hideMenu}>
+                            <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ margin: 15, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
+                                <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center" }} onPress={hideMenu}>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ margin: 15, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
+                                <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
                             </TouchableOpacity>
                         </View>
                     </Menu>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { }} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
+                <TouchableOpacity onPress={changTable} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('chuyen_ban')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { }} style={{ flex: 1, justifyContent: "center", alignItems: "center",  borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
+                <TouchableOpacity onPress={() => { }} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('tam_tinh')}</Text>
                 </TouchableOpacity>
             </View>
+
         </View>
     )
 

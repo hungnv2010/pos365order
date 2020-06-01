@@ -7,31 +7,46 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
-    findNodeHandle
+    findNodeHandle,
+    Modal,
+    TouchableWithoutFeedback
 } from 'react-native';
-import Images from '../../../theme/Images';
 import I18n from '../../../common/language/i18n';
 import realmStore from '../../../data/realm/RealmStore'
 import { useSelector, useDispatch } from 'react-redux';
 import { currencyToString, dateUTCToMoment, momentToDateUTC } from '../../../common/Utils'
 import moment from "moment";
-import { Constant } from '../../../common/Constant'
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { Constant } from '../../../common/Constant';
+import { Images, Metrics } from '../../../theme';
 import colors from '../../../theme/Colors';
 import TextTicker from 'react-native-text-ticker';
+import { Checkbox } from 'react-native-paper';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+
 
 const _nodes = new Map();
 
 export default (props) => {
 
+    const [showModal, setShowModal] = useState(false)
+    const [listPosition, setListPosition] = useState([
+        { position: "A", checked: true },
+        { position: "B", checked: false },
+        { position: "C", checked: false },
+        { position: "D", checked: false },
+    ])
 
     useEffect(() => {
         // _nodes = new Map();
     }, [])
 
     const onItemPress = (item) => {
-        console.log(item, 'item', props);
-        props.navigation.navigate('Served', { room: { Id: item.Id, Name: item.Name, Position: 'A' } })
+        if (props.changeTable) {
+            setShowModal(!showModal)
+        } else {
+            console.log(item, 'item', props);
+            props.navigation.navigate('Served', { room: { Id: item.Id, Name: item.Name, Position: 'A' } })
+        }
     }
 
     const renderRoom = (item, widthRoom) => {
@@ -40,7 +55,7 @@ export default (props) => {
             (<View style={{ width: widthRoom - 4 }}></View>)
             :
             (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
-                style={[styles.room, { width: widthRoom - 4.3, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
+                style={[styles.room, { width: widthRoom - 5, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
                     <View style={{ alignItems: "center", padding: 0, flex: 1 }}>
                         {/* <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text> */}
@@ -273,6 +288,66 @@ export default (props) => {
                     </View>
                 </ScrollView>
             </View>
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={showModal}
+                supportedOrientations={['portrait', 'landscape']}
+                onRequestClose={() => {
+                }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                    <TouchableWithoutFeedback
+                        onPress={() => { setShowModal(false) }}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0
+                        }}>
+                        <View style={[{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0
+                        }, { backgroundColor: 'rgba(0,0,0,0.5)' }]}></View>
+
+                    </TouchableWithoutFeedback>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+                        <View style={{
+                            padding: 0,
+                            backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
+                            width: Metrics.screenWidth * 0.8,
+                        }}>
+                            {listPosition.map((item, index) => {
+                                return (
+                                    <View key={index} style={{ flexDirection: "row", alignItems: "center", }}>
+                                        <Checkbox
+                                            color="orange"
+                                            status={item.checked ? 'checked' : 'unchecked'}
+                                            onPress={() => {
+                                                listPosition.forEach(lp => { lp.checked = false })
+                                                listPosition[index].checked = !listPosition[index].checked;
+                                                setListPosition([...listPosition])
+                                            }}   
+                                        />
+                                        <Text style={{ marginLeft: 20, fontSize: 20 }}>[{item.position}]</Text>
+                                    </View>
+                                )
+                            })}
+                            <View style={{ flexDirection: "row", justifyContent: "space-around", paddingVertical: 10 }}>
+                                <TouchableOpacity onPress={() => { setShowModal(!showModal) }}>
+                                    <Text>Hủy</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <Text>Đồng ý</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View>
+                    </View>
+                </View>
+            </Modal>
         </View>
     );
 }

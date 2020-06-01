@@ -45,6 +45,7 @@ export default {
   ghi_chu: "Ghi chú",
   gioi_tinh: "Giới tính",
   gui_tin_nhan_thanh_cong: "Gửi tin nhắn thành công !",
+  gui_thong_bao_toi_thu_ngan:"Gửi thông báo tới thu ngân",
 
   // TODO: H
   huy: 'Hủy',
@@ -207,5 +208,6 @@ export default {
   hom_qua: "Hôm qua",
   hom_nay: "Hôm nay",
   tuy_chon: "Tuỳ chọn",
+  yeu_cau_thanh_toan:"Yêu cầu thanh toán",
 
 };

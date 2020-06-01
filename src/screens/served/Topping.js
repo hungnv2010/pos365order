@@ -165,10 +165,10 @@ export default (props) => {
         <View style={{ flex: 1 }}>
             <View style={{ height: 45, backgroundColor: Colors.colorchinh, flexDirection: "row" }}>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                    <Text style={{ color: "white", textAlign: "center" }}>{itemOrder ? itemOrder.Name : ''}</Text>
+                    <Text numberOfLines={1} style={{ color: "white", textAlign: "center" }}>{itemOrder ? itemOrder.Name : ''}</Text>
                 </View>
                 <View style={{ flex: 5, justifyContent: "center", alignItems: "center" }}>
-                    <Text style={{ color: "white" }}>Topping</Text>
+                    <Text style={{ color: "white", fontWeight: "bold" , fontSize: 15}}>Topping</Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}>
                     <TouchableOpacity style={{}} onPress={() => { onclose() }}>
