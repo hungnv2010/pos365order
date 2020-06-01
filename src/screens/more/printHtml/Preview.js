@@ -13,7 +13,7 @@ import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
 import { useSelector } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
-const { Print } = NativeModules;;
+const { Print } = NativeModules;
 const eventSwicthScreen = new NativeEventEmitter(Print);
 
 const typeHeader1 = "HOÁ ĐƠN TEST PRINT"
