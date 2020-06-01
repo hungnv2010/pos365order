@@ -84,13 +84,13 @@ export default function ToolBarPrintHtml(props) {
                         :
                         <View style={{ flex: 1, flexDirection: "row", justifyContent: "space-around" }}>
                             <View style={{ alignItems: "center" }}>
-                                <TouchableOpacity onPress={props.clickPrint} >
+                                <TouchableOpacity onPress={props.clickPrint} style={{height: "100%", justifyContent: "center", paddingHorizontal: 10}} >
                                     <Text style={{ color: 'white' }}>IN</Text>
                                 </TouchableOpacity>
                             </View>
                             <View style={{ alignItems: "center" }}>
-                                <TouchableOpacity onPress={props.clickCheck} >
-                                    <Icon delayPressIn={0} name="check" size={24} />
+                                <TouchableOpacity onPress={props.clickCheck} style={{height: "100%", justifyContent: "center", paddingHorizontal: 10}} >
+                                    <Icon delayPressIn={0} name="check" color="#fff" size={24} />
                                 </TouchableOpacity>
                             </View>
                         </View>}
