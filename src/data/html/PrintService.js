@@ -29,7 +29,6 @@ class PrintService {
         console.log('data', JSON.parse(vendorSession));
         vendorSession = JSON.parse(vendorSession);
         return new Promise((resolve, reject) => {
-            // Note: resolve chỉ cho phép truyền đúng 1 param
             let HTMLBase = html;
             let listHtml = HTMLBase.split("<!--Body Table-->");
             let listTable = ""
@@ -108,6 +107,7 @@ class PrintService {
                 Print.printImage(res)
         })
     }
+    
 }
 const printService = new PrintService();
 export default printService;

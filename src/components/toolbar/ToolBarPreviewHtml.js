@@ -34,11 +34,11 @@ export default function ToolBarPreviewHtml(props) {
                 >
 
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.clickRightIcon}>
+                        <TouchableOpacity onPress={props.clickRightIcon} style={{height: "100%", justifyContent: "center", paddingHorizontal: 10}}>
                             {props.rightIcon && props.clickRightIcon ?
                                 <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
                                 :
-                                <Icon delayPressIn={0} name="keyboard-backspace" onPress={onClickBack} size={24} />
+                                <Icon delayPressIn={0} color="#fff" name="keyboard-backspace" onPress={onClickBack} size={30} />
                             }
                         </TouchableOpacity>
                     </View>
@@ -53,13 +53,13 @@ export default function ToolBarPreviewHtml(props) {
                         </Subheading>
                     </View>
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.clickPrint} >
+                        <TouchableOpacity onPress={props.clickPrint} style={{ height: "100%", width: 50, justifyContent: "center", alignItems: "center"}}>
                             <Text style={{ color: 'white' }}>IN</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.clickCheck} >
-                            <Icon delayPressIn={0} name="check" size={24} />
+                        <TouchableOpacity onPress={props.clickCheck} style={{ height: "100%", width: 50, justifyContent: "center", alignItems: "center"}}>
+                            <Icon delayPressIn={0} name="check" size={24} color="#fff" />
                         </TouchableOpacity>
                     </View>
                 </View>

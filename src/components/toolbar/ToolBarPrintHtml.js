@@ -47,7 +47,7 @@ export default function ToolBarPrintHtml(props) {
                 >
 
                     <View style={{ flex: 0.6, alignItems: "center" }}>
-                        <TouchableOpacity onPress={props.clickRightIcon}>
+                        <TouchableOpacity onPress={props.clickRightIcon} style={{height: "100%", justifyContent: "center", paddingHorizontal: 10}}>
                             {props.rightIcon && props.clickRightIcon ?
                                 <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
                                 :

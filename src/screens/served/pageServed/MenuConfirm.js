@@ -49,8 +49,8 @@ export default (props) => {
 
     const onClickProvisional = () => {
         console.log("onClickProvisional ", jsonContent);
-        printService.PrintHtmlService(HtmlDefault, jsonContent)
-        // props.navigation.navigate("Preview", { data: HtmlDefault, JsonContent:  jsonContent, type: "Menu"})
+        if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
+            printService.PrintHtmlService(HtmlDefault, jsonContent)
     }
 
     return (
