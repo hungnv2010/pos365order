@@ -31,6 +31,7 @@ export default {
   dang_dung: "Đang dùng",
   dang_trong: "Đang trống",
   dong_y: "Đồng ý",
+  don_hang: "Đơn Hàng",
   // TODO: E
 
 

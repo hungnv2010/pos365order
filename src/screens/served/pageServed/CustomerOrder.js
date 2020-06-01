@@ -103,6 +103,8 @@ export default (props) => {
     useEffect(() => {
         console.log(props.listTopping, 'props.listTopping');
         console.log(props.itemOrder, 'props.itemOrder');
+        console.log(itemOrder, 'itemOrder');
+
         const getInfoTopping = (listTopping) => {
             let description = '';
             let totalPrice = 0;
