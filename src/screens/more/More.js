@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View, StyleSheet, TouchableWithoutFeedback, Text, TouchableOpacity, NativeModules, Modal, TextInput } from 'react-native';
+import { Image, View, StyleSheet, TouchableWithoutFeedback, Text, TouchableOpacity, NativeModules, Modal, TextInput, Linking } from 'react-native';
 import { Images, Colors, Metrics } from '../../theme';
 import { setFileLuuDuLieu, getFileDuLieuString } from '../../data/fileStore/FileStorage';
 import { Constant } from '../../common/Constant';
@@ -11,6 +11,7 @@ import { HTTPService } from '../../data/services/HttpService';
 import { ApiPath } from '../../data/services/ApiPath';
 import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import colors from '../../theme/Colors';
 const { Print } = NativeModules;
 const IP_DEFAULT = "192.168.99.";
 
@@ -213,7 +214,6 @@ const ContentComponent = (props) => {
     const [ipInput, setIpInput] = useState(IP_DEFAULT);
     const [ip, setIp] = useState(IP_DEFAULT);
     const [isSwitchOn, setSwitchOn] = useState(false);
-    const [isSwitchOnNoticeProcess, setSwitchOnNoticeProcess] = useState(false);
     const [paperSize, setPaperSize] = useState("");
 
     useEffect(() => {
@@ -251,6 +251,11 @@ const ContentComponent = (props) => {
         setShowModal(false)
     }
 
+    const onClickHotLine = () => {
+        let phone_number = "tel:" + Constant.HOTLINE;
+        Linking.openURL(phone_number);
+    }
+
     return (
         <View>
             <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
@@ -277,17 +282,11 @@ const ContentComponent = (props) => {
                         }
                     />
                 </View>
-                <View style={{ flexDirection: "row", marginTop: 5, alignItems: "center" }}>
-                    <View style={{ flex: 1, flexDirection: "column", height: 40, justifyContent: "center" }}>
-                        <Text style={{ textAlign: "left", }}>{I18n.t('bao_che_bien_sau_thanh_toan')}</Text>
-                    </View>
-                    <Switch
-                        color={Colors.colorchinh}
-                        value={isSwitchOnNoticeProcess}
-                        onValueChange={() => { setSwitchOnNoticeProcess(!isSwitchOnNoticeProcess) }
-                        }
-                    />
-                </View>
+            </View>
+            <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
+                <TouchableOpacity onPress={() => onClickHotLine()}>
+                    <Text style={{ marginTop: 0 }}>{I18n.t('ho_tro')} <Text style={{color: colors.colorLightBlue}}>{Constant.HOTLINE}</Text></Text>
+                </TouchableOpacity>
             </View>
             <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
                 <TouchableOpacity onPress={() => onClickLogOut()}>

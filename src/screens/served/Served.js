@@ -164,6 +164,7 @@ export default (props) => {
                 {!(isTopping || isSelectProduct) ?
                     <View style={{ flex: 1 }}>
                         <ToolBarDefault
+                        {...props}
                             leftIcon="keyboard-backspace"
                             title={I18n.t('don_hang')}
                             clickLeftIcon={() => { props.navigation.goBack() }}

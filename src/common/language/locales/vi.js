@@ -49,6 +49,7 @@ export default {
   // TODO: H
   huy: 'Hủy',
   hang_muc: "Hạng mục",
+  ho_tro: "Hỗ trợ",
 
   // TODO: I
   in_tam_tinh: "In tạm tính",
