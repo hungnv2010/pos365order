@@ -52,7 +52,7 @@ export default (props) => {
     const renderRoom = (item, widthRoom) => {
         widthRoom = parseInt(widthRoom)
         return item.isEmpty ?
-            (<View style={{ width: widthRoom - 4 }}></View>)
+            (<View style={{ width: widthRoom - 5 }}></View>)
             :
             (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
                 style={[styles.room, { width: widthRoom - 5, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
@@ -261,7 +261,7 @@ export default (props) => {
                     <Text>{I18n.t('dang_trong')}</Text>
                 </View>
             </View>
-            <View style={{ flex: 1, padding: 2 }}>
+            <View style={{ flex: 1, padding: 3}}>
                 <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
                     <View style={styles.containerRoom}>
                         {datas ?

@@ -10,6 +10,9 @@ import { currencyToString } from '../../../common/Utils'
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 
+import FadeInView from '../../../components/animate/FadeInView';
+import HtmlDefault from '../../../data/html/htmlDefault';
+import printService from '../../../data/html/PrintService';
 
 export default (props) => {
 
@@ -50,7 +53,13 @@ export default (props) => {
 
     const changTable = () => {
         props.outputIsChangeTable()
-        // let params = { ServeChangeTableEntities: [{ FromRoomId: 552046, FromPos: "A", ToRoomId: 156173, ToPos: "A" }] }
+        // let params = { ServeChangeTableEntities: [{ FromRoomId: 552046, FromPos: "A", ToRoomId: 156173, ToPos: "A" }]
+     }
+     
+    const onClickProvisional = () => {
+        console.log("onClickProvisional ", jsonContent);
+        if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
+            printService.PrintHtmlService(HtmlDefault, jsonContent)
     }
 
     return (
@@ -141,7 +150,7 @@ export default (props) => {
                 <TouchableOpacity onPress={changTable} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('chuyen_ban')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { }} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
+                <TouchableOpacity onPress={() => { onClickProvisional() }} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('tam_tinh')}</Text>
                 </TouchableOpacity>
             </View>
