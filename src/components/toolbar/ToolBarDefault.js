@@ -17,70 +17,64 @@ export default function ToolBarDefault(props) {
     let blockClick = false;
 
     return (
+        <View style={styles.toolbarContainer}>
 
-                    <View style={{ flex: 1, alignItems: "center" }}>
-                        {/* {props.clickLeftIcon && props.leftIcon ? */}
-                        <TouchableOpacity onPress={() => {
-                            if (blockClick == false) {
-                                blockClick = true;
-                                props.navigation.pop()
-                                setTimeout(() => {
-                                    blockClick = false;
-                                }, 1000);
-                            }
-                        }}>
-                            <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
-                        </TouchableOpacity>
-                        {/* :
-                    null */}
-                        {/* } */}
-                    </View>
-                    <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
-                        <Subheading
-                            numberOfLines={1}
-                            style={{
-                                color: 'white'
-                            }}
-                        >
-                            {props.title}
-                        </Subheading>
-                    </View>
-
-                <View style={{ flex: 1, alignItems: "center" }}>
-                    {props.clickLeftIcon && props.leftIcon ?
-                        <TouchableOpacity onPress={props.clickLeftIcon}>
-                            <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
-                        </TouchableOpacity>
-                        :
-                        null
+            <View style={{ flex: 1, alignItems: "center" }}>
+                <TouchableOpacity onPress={() => {
+                    if (blockClick == false) {
+                        blockClick = true;
+                        props.navigation.pop()
+                        setTimeout(() => {
+                            blockClick = false;
+                        }, 1000);
                     }
-                </View>
-                <View style={{ flex: 5, paddingLeft: 10, alignItems: 'center', flexDirection: 'row' }}>
-                    <Subheading
-                        numberOfLines={1}
-                        style={{
-                            color: 'white', fontWeight: "bold"
-                        }}
-                    >
-                        {props.title}
-                    </Subheading>
-                </View>
-
-                <View style={{ flex: 1, alignItems: "center" }}>
-                    {props.clickRightIcon && props.rightIcon ?
-                        <TouchableOpacity onPress={props.clickRightIcon}>
-                            <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
-                        </TouchableOpacity>
-                        :
-                        null
-                    }
-                </View>
+                }}>
+                    <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
+                </TouchableOpacity>
             </View>
-<<<<<<< HEAD
+            {/* <View style={{ flex: 5, justifyContent: 'center', alignItems: 'center', flexDirection: 'row' }}>
+                <Subheading
+                    numberOfLines={1}
+                    style={{
+                        color: 'white'
+                    }}
+                >
+                    {props.title}
+                </Subheading>
+            </View> */}
+
+            {/* <View style={{ flex: 1, alignItems: "center" }}>
+                {props.clickLeftIcon && props.leftIcon ?
+                    <TouchableOpacity onPress={props.clickLeftIcon}>
+                        <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
+                    </TouchableOpacity>
+                    :
+                    null
+                }
+            </View> */}
+            <View style={{ flex: 5, paddingLeft: 10, alignItems: 'center', flexDirection: 'row' }}>
+                <Subheading
+                    numberOfLines={1}
+                    style={{
+                        color: 'white', fontWeight: "bold"
+                    }}
+                >
+                    {props.title}
+                </Subheading>
+            </View>
+
+            <View style={{ flex: 1, alignItems: "center" }}>
+                {props.clickRightIcon && props.rightIcon ?
+                    <TouchableOpacity onPress={props.clickRightIcon}>
+                        <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
+                    </TouchableOpacity>
+                    :
+                    null
+                }
+            </View>
         </View>
-=======
-        </LinearGradient >
->>>>>>> 290330b70fa7fd0c19a6ece633d3ca340c9fc079
+
+
     )
 
 }
@@ -88,15 +82,9 @@ export default function ToolBarDefault(props) {
 const styles = StyleSheet.create({
 
     toolbarContainer: {
+        flexDirection: "row",
+        height: 40,
         backgroundColor: Colors.colorchinh,
-        height: 45,
-        shadowColor: Colors.black,
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.24,
-        shadowRadius: 0.3,
     },
 })
 
