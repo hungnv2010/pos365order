@@ -14,7 +14,7 @@ import {
     View,
     Text,
     NativeModules,
-    Dimensions, ToastAndroid
+    Dimensions, ToastAndroid, NativeEventEmitter
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import StackNavigation from './navigator/stack/StackNavigation';
@@ -25,14 +25,19 @@ import RNExitApp from "react-native-exit-app";
 import I18n from './common/language/i18n'
 import signalRManager from './common/SignalR';
 import { getFileDuLieuString } from './data/fileStore/FileStorage';
+import printService from './data/html/PrintService';
+import { Snackbar } from 'react-native-paper';
 const { Print } = NativeModules;
 let time = 0;
+const eventSwicthScreen = new NativeEventEmitter(Print);
 
 export default () => {
 
     const [forceUpdate, setForceUpdate] = useState(false);
     const [deviceType, setDeviceType] = useState("");
     const [orientaition, setOrientaition] = useState("");
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
     const dispatch = useDispatch();
 
     const isPortrait = () => {
@@ -60,10 +65,26 @@ export default () => {
             let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
             console.log('getCurrentIP ', getCurrentIP);
             if (getCurrentIP && getCurrentIP != "") {
-                Print.registerPrint(getCurrentIP) 
+                Print.registerPrint(getCurrentIP)
             }
         }
+        let check = false;
+        const printListenner = () => {
+            eventSwicthScreen.addListener('sendSwicthScreen', (text) => {
+                console.log("eventSwicthScreen ", text);
+                if (check == false) {
+                    check = true;
+                    setToastDescription("Kiểm tra kết nối máy in. Địa chỉ IP " + text)
+                    setShowToast(true)
+                }
+                setTimeout(() => {
+                    check = false;
+                }, 1000);
+            });
+        }
         getCurrentIP()
+        printListenner()
+        
     }, [])
 
 
@@ -114,6 +135,15 @@ export default () => {
 
         <NavigationContainer ref={navigationRef}>
             <StackNavigation />
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </NavigationContainer>
     );
 };

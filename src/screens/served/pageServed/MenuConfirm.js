@@ -8,6 +8,8 @@ import I18n from '../../../common/language/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { currencyToString } from '../../../common/Utils'
 import FadeInView from '../../../components/animate/FadeInView';
+import HtmlDefault from '../../../data/html/htmlDefault';
+import printService from '../../../data/html/PrintService';
 
 export default (props) => {
 
@@ -45,7 +47,11 @@ export default (props) => {
         _menu.show();
     };
 
-    
+    const onClickProvisional = () => {
+        console.log("onClickProvisional ", jsonContent);
+        printService.PrintHtmlService(HtmlDefault, jsonContent)
+        // props.navigation.navigate("Preview", { data: HtmlDefault, JsonContent:  jsonContent, type: "Menu"})
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -136,7 +142,7 @@ export default (props) => {
                 <TouchableOpacity onPress={() => { }} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('chuyen_ban')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => { }} style={{ flex: 1, justifyContent: "center", alignItems: "center",  borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
+                <TouchableOpacity onPress={() => { onClickProvisional() }} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('tam_tinh')}</Text>
                 </TouchableOpacity>
             </View>
