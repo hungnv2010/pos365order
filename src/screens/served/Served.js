@@ -11,6 +11,7 @@ import { Constant } from '../../common/Constant';
 import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
 import Main from '../../screens/main/Main';
+import ToolBarPhoneServed from '../../components/toolbar/ToolBarPhoneServed';
 
 export default (props) => {
 
@@ -134,6 +135,10 @@ export default (props) => {
 
     }
 
+    const outputClickNoteBook = () => {
+        props.navigation.navigate('NoteBook')
+    }
+
     const renderForPhone = () => {
         return (
             <>
@@ -171,11 +176,12 @@ export default (props) => {
                 }
                 {!(isTopping || isSelectProduct || isChangeTable) ?
                     <View style={{ flex: 1 }}>
-                        <ToolBarDefault
+                        <ToolBarPhoneServed
                             {...props}
                             leftIcon="keyboard-backspace"
                             title={I18n.t('don_hang')}
                             clickLeftIcon={() => { props.navigation.goBack() }}
+                            clickNoteBook={outputClickNoteBook}
                             rightIcon="plus"
                             clickRightIcon={outputIsSelectProduct} />
                         <PageServed
