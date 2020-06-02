@@ -135,6 +135,7 @@ export default {
   SL: "SL",
   SL_kiem_ke: "SL Kiểm kê",
   so_no: "Sổ nợ",
+  so_tay_ban_hang_nhanh: "Sổ tay bán hàng nhanh",
 
   // TODO: T
   thong_bao_quet_van_tay: "Quý khách vui lòng quét dấu vân tay đã đăng ký trên thiết bị.",

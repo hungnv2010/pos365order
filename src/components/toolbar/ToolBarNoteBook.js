@@ -1,9 +1,9 @@
 
 
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import {
     View, Text, TouchableOpacity, Image, StyleSheet,
-    StatusBar, Keyboard, Linking, Platform, SafeAreaView
+    TextInput, Keyboard, Linking, Platform, SafeAreaView
 } from 'react-native';
 import { Colors, Metrics, Images } from '../../theme'
 import { IconButton, Subheading } from "react-native-paper";
@@ -16,6 +16,23 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 export default function ToolBarNoteBook(props) {
 
     let blockClick = false;
+
+    const [showInput, setShowInput] = useState(false);
+    const [textSearch, setTextSearch] = useState("");
+
+    const onClickSearch = () => {
+        setTextSearch("")
+        setShowInput(true)
+    }
+
+    const onSubmitEditing = (text) => {
+        setShowInput(false)
+        console.log("onSubmitEditing " + JSON.stringify(text.nativeEvent.text));
+
+        props.clickRightIcon(text.nativeEvent.text)
+    }
+
+
 
     return (
         <View style={styles.toolbarContainer}>
@@ -40,24 +57,38 @@ export default function ToolBarNoteBook(props) {
                 }
             </View>
             <View style={{ flex: 5, paddingLeft: 10, alignItems: 'center', flexDirection: 'row' }}>
-                <Subheading
-                    numberOfLines={1}
-                    style={{
-                        color: 'white', fontWeight: "bold"
-                    }}
-                >
-                    {props.title}
-                </Subheading>
+                {showInput == false ?
+                    <Subheading
+                        numberOfLines={1}
+                        style={{
+                            color: 'white', fontWeight: "bold"
+                        }}
+                    >
+                        {props.title}
+                    </Subheading>
+                    :
+                    <View style={{ padding: 6, flex: 1, borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2 }}>
+                        <TextInput value={textSearch} style={{ flex: 1 }}
+                            autoFocus={true}
+                            onSubmitEditing={(text) => onSubmitEditing(text)}
+                            onChangeText={(text) => setTextSearch(text)}
+                        />
+                    </View>
+                }
             </View>
 
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                {props.clickRightIcon && props.rightIcon ?
-                    <TouchableOpacity onPress={props.clickRightIcon}>
+                {/* {props.clickRightIcon && props.rightIcon ? props.clickRightIcon */}
+                {showInput == false ?
+                    <TouchableOpacity onPress={() => onClickSearch()}>
                         <Ionicons name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
                     </TouchableOpacity>
                     :
-                    null
+                    <TouchableOpacity onPress={() => setShowInput(false)}>
+                        <Icon name="close" size={props.size ? props.size : 30} color="white" />
+                    </TouchableOpacity>
                 }
+                {/* } */}
             </View>
         </View>
 

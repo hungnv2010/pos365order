@@ -22,19 +22,26 @@ export default (props) => {
 
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
+    // const [textSearch, setTextSearch] = useState("")
     const [dataList, setDataList] = useState([]);
     const [listRefreshing, setListRefreshing] = useState(false)
-
+    let textSearch = "";
     useEffect(() => {
         // https://oke.pos365.vn/api/notebooks?format=json&%24inlinecount=allpages&%24top=20
+        // https://oke.pos365.vn/api/notebooks?format=json&%24inlinecount=allpages&ProductCode=a&%24top=20&%24filter=substringof(%27h%C3%A0ng%27%2CName)
+        // https://oke.pos365.vn/api/notebooks?format=json&%24inlinecount=allpages&%24top=20&%24filter=substringof(%27h%C3%A0ng%27%2CName)
         const getDataNoteBook = async () => {
             getData()
         };
         getDataNoteBook();
     }, [])
 
-    const getData = () => {
+    const getData = (textSearch = "") => {
         let params = { inlinecount: "allpages", top: 20 };
+        // let textSearch = "";
+        if (textSearch != "") {
+            params["filter"] = "substringof('" + textSearch + "',Name)";
+        }
         dialogManager.showLoading();
         new HTTPService().setPath(ApiPath.NOTE_BOOK).GET(params).then((res) => {
             console.log("getNoteBook res ", res);
@@ -53,8 +60,11 @@ export default (props) => {
     }
 
 
-    const outputIsSelectProduct = () => {
-
+    const outputIsSelectProduct = (textSearch) => {
+        console.log("textSearch ", textSearch);
+        
+        // setTextSearch(textSearch)
+        getData(textSearch)
     }
 
     const refreshList = () => {
@@ -67,10 +77,11 @@ export default (props) => {
             <ToolBarNoteBook
                 {...props}
                 leftIcon="keyboard-backspace"
-                title={I18n.t('don_hang')}
+                title={I18n.t('so_tay_ban_hang_nhanh')}
                 clickLeftIcon={() => { props.navigation.goBack() }}
                 rightIcon="md-search"
-                clickRightIcon={outputIsSelectProduct} />
+                clickRightIcon={(textSearch) => outputIsSelectProduct(textSearch)}
+            />
             <ScrollView style={{ flex: 1 }}
                 refreshControl={
                     <RefreshControl
@@ -83,9 +94,9 @@ export default (props) => {
                 {
                     dataList.length > 0 ?
                         dataList.map(item => (
-                            <View style={{ height: 60, marginHorizontal: 10 ,flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 }}>
+                            <View style={{ height: 60, marginHorizontal: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 }}>
                                 <TouchableOpacity style={{ flex: 1, height: "100%", justifyContent: "center" }}>
-                                    <Text style={{ }}>{item.Name}</Text>
+                                    <Text style={{}}>{item.Name}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={{ backgroundColor: Colors.colorLightBlue, justifyContent: "center", borderRadius: 25, width: 50, height: 50, alignItems: "center" }}>
                                     <Icon name="plus" size={30} color="white" />
