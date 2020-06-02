@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import Images from '../../../theme/Images';
 import realmStore from '../../../data/realm/RealmStore'
 import Colors from '../../../theme/Colors';
@@ -9,12 +9,17 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { currencyToString } from '../../../common/Utils';
 import HtmlDefault from '../../../data/html/htmlDefault';
 import printService from '../../../data/html/PrintService';
+import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
+import { Constant } from '../../../common/Constant';
 
 export default (props) => {
 
     const row_key = `${props.route.params.room.Id}_${props.route.params.room.Position}`
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
+
+    let provisional = "";
+
     useEffect(() => {
         init()
         return () => {
@@ -30,6 +35,9 @@ export default (props) => {
         serverEvent.addListener((collection, changes) => {
             setJsonContent(JSON.parse(serverEvent[0].JsonContent))
         })
+
+        provisional = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
+        console.log('provisional ', provisional);
     }
 
     let _menu = null;
@@ -58,14 +66,18 @@ export default (props) => {
     }
 
     const onClickProvisional = () => {
-        console.log("onClickProvisional ", jsonContent);
-        if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
-            printService.PrintHtmlService(HtmlDefault, jsonContent)
+        if (provisional && provisional == Constant.PROVISIONAL_PRINT) {
+            console.log("onClickProvisional ", jsonContent);
+            if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
+                printService.PrintHtmlService(HtmlDefault, jsonContent)
+        } else {
+            dialogManager.showPopupOneButton("Bạn không có quyền sử dụng chức năng này.")
+        }
     }
 
     return (
         <View style={{ flex: 1 }}>
-            <View style={{ flex: 1 }}>
+            <ScrollView style={{ flex: 1 }}>
                 {
                     !jsonContent.OrderDetails ? null
                         : jsonContent.OrderDetails.map((item, index) => {
@@ -88,7 +100,7 @@ export default (props) => {
                             )
                         })
                 }
-            </View >
+            </ScrollView >
             <TouchableOpacity
                 onPress={() => { setExpand(!expand) }}
                 style={{ borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3, backgroundColor: "white" }}>
