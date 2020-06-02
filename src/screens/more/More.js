@@ -223,6 +223,11 @@ const ContentComponent = (props) => {
             if (getCurrentIP && getCurrentIP != "") {
                 setIp(getCurrentIP)
             }
+            let provisional = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
+            console.log('provisional ', provisional);
+            if (provisional && provisional != "" && provisional == Constant.PROVISIONAL_PRINT) {
+                setSwitchOn(true);
+            }
         }
         getCurrentIP()
     }, [])
@@ -278,14 +283,20 @@ const ContentComponent = (props) => {
                     <Switch
                         color={Colors.colorchinh}
                         value={isSwitchOn}
-                        onValueChange={() => { setSwitchOn(!isSwitchOn) }
+                        onValueChange={() => {
+                            if (isSwitchOn == false)
+                                setFileLuuDuLieu(Constant.PROVISIONAL_PRINT, Constant.PROVISIONAL_PRINT)
+                            else
+                                setFileLuuDuLieu(Constant.PROVISIONAL_PRINT, "")
+                            setSwitchOn(!isSwitchOn)
+                        }
                         }
                     />
                 </View>
             </View>
             <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
                 <TouchableOpacity onPress={() => onClickHotLine()}>
-                    <Text style={{ marginTop: 0 }}>{I18n.t('ho_tro')} <Text style={{color: colors.colorLightBlue}}>{Constant.HOTLINE}</Text></Text>
+                    <Text style={{ marginTop: 0 }}>{I18n.t('ho_tro')} <Text style={{ color: colors.colorLightBlue }}>{Constant.HOTLINE}</Text></Text>
                 </TouchableOpacity>
             </View>
             <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
