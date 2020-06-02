@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
     StyleSheet,
     ScrollView,
@@ -21,7 +21,10 @@ import { Images, Metrics } from '../../../theme';
 import colors from '../../../theme/Colors';
 import TextTicker from 'react-native-text-ticker';
 import { Checkbox } from 'react-native-paper';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { HTTPService } from '../../../data/services/HttpService';
+import dialogManager from '../../../components/dialog/DialogManager';
+import { ApiPath } from '../../../data/services/ApiPath';
+import { Snackbar } from 'react-native-paper';
 
 
 const _nodes = new Map();
@@ -29,23 +32,27 @@ const _nodes = new Map();
 export default (props) => {
 
     const [showModal, setShowModal] = useState(false)
+    const [showToast, setShowToast] = useState(false)
     const [listPosition, setListPosition] = useState([
         { position: "A", checked: true },
         { position: "B", checked: false },
         { position: "C", checked: false },
         { position: "D", checked: false },
     ])
+    const toRoomId = useRef()
+    const Message = useRef('')
 
     useEffect(() => {
         // _nodes = new Map();
     }, [])
 
-    const onItemPress = (item) => {
-        if (props.changeTable) {
+    const onItemPress = ({ Id, Name }) => {
+        const { changeTable, fromTable } = props
+        if (changeTable && fromTable) {
+            toRoomId.current = Id
             setShowModal(!showModal)
         } else {
-            console.log(item, 'item', props);
-            props.navigation.navigate('Served', { room: { Id: item.Id, Name: item.Name, Position: 'A' } })
+            props.navigation.navigate('Served', { room: { Id: Id, Name: Name, Position: 'A' } })
         }
     }
 
@@ -213,6 +220,26 @@ export default (props) => {
         return newDatas
     }
 
+
+    const onChangeTable = () => {
+        const { FromRoomId, FromPos } = props.fromTable
+        let params = { ServeChangeTableEntities: [] }
+        let toPos = listPosition.filter(item => item.checked === true)[0].position
+        console.log('params', { FromRoomId: FromRoomId, FromPos: FromPos, ToRoomId: toRoomId.current, toPos: toPos });
+        params.ServeChangeTableEntities.push({ FromRoomId: FromRoomId, FromPos: FromPos, ToRoomId: toRoomId.current, toPos: toPos })
+        dialogManager.showLoading();
+        new HTTPService().setPath(ApiPath.CHANGE_TABLE).POST(params).then((res) => {
+            console.log("onChangeTable res ", res);
+            // Message.current = res.Message
+            setShowToast(!showToast)
+            dialogManager.hiddenLoading()
+        }).catch((e) => {
+            console.log("onChangeTable err ", e);
+            dialogManager.hiddenLoading()
+        })
+        props.outputIsChangeTable()
+    }
+
     let refScroll = null;
 
     const scrollToInitialPosition = () => {
@@ -261,7 +288,7 @@ export default (props) => {
                     <Text>{I18n.t('dang_trong')}</Text>
                 </View>
             </View>
-            <View style={{ flex: 1, padding: 3}}>
+            <View style={{ flex: 1, padding: 3 }}>
                 <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
                     <View style={styles.containerRoom}>
                         {datas ?
@@ -330,7 +357,7 @@ export default (props) => {
                                                 listPosition.forEach(lp => { lp.checked = false })
                                                 listPosition[index].checked = !listPosition[index].checked;
                                                 setListPosition([...listPosition])
-                                            }}   
+                                            }}
                                         />
                                         <Text style={{ marginLeft: 20, fontSize: 20 }}>[{item.position}]</Text>
                                     </View>
@@ -340,7 +367,7 @@ export default (props) => {
                                 <TouchableOpacity onPress={() => { setShowModal(!showModal) }}>
                                     <Text>Hủy</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity>
+                                <TouchableOpacity onPress={onChangeTable}>
                                     <Text>Đồng ý</Text>
                                 </TouchableOpacity>
                             </View>
@@ -348,6 +375,15 @@ export default (props) => {
                     </View>
                 </View>
             </Modal>
+            {/* <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {Message.current}
+            </Snackbar> */}
         </View>
     );
 }
