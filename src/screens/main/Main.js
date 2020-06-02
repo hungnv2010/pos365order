@@ -11,15 +11,15 @@ export default (props) => {
 
   const [forceUpdate, setForceUpdate] = useState(false)
 
-  // useEffect(() => {
-  //   const syncAllDatas = async () => {
-  //     dialogManager.showLoading()
-  //     await dataManager.syncAllDatas()
-  //     setForceUpdate(!forceUpdate)
-  //     dialogManager.hiddenLoading()
-  //   }
-  //   syncAllDatas()
-  // }, [])
+  useEffect(() => {
+    const syncAllDatas = async () => {
+      dialogManager.showLoading()
+      await dataManager.syncServerEvent()
+      setForceUpdate(!forceUpdate)
+      dialogManager.hiddenLoading()
+    }
+    syncAllDatas()
+  }, [])
 
 
   const clickRightIcon = async () => {
@@ -31,10 +31,10 @@ export default (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {props.changeTable ?
+      {props.changeTable && props.fromTable ?
         <ToolBarDefault
           navigation={props.navigation}
-          title={I18n.t('chuyen_ban')}
+          title={`${I18n.t('chuyen_ban')} from ${props.fromTable.Name} to ...`}
           leftIcon="keyboard-backspace"
           clickLeftIcon={() => { props.outputIsChangeTable() }} />
         :

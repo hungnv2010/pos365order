@@ -57,8 +57,8 @@ export default (props) => {
 
     const changTable = () => {
         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
-            console.log('props.route.params.room.Id', { FromRoomId: props.route.params.room.Id, FromPos: props.position });
-            props.outputIsChangeTable({ FromRoomId: props.route.params.room.Id, FromPos: props.position })
+            console.log('props.route.params.room.Id', props);
+            props.outputIsChangeTable({ FromRoomId: props.route.params.room.Id, FromPos: props.position, Name: props.route.params.room.Name })
         } else {
             console.log('aa');
         }

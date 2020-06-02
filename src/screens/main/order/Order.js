@@ -347,6 +347,7 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                             width: Metrics.screenWidth * 0.8,
                         }}>
+                            <Text style={{ textAlign: "center", fontWeight: 20, fontWeight:"bold" }}>VI TRI</Text>
                             {listPosition.map((item, index) => {
                                 return (
                                     <View key={index} style={{ flexDirection: "row", alignItems: "center", }}>
@@ -365,10 +366,10 @@ export default (props) => {
                             })}
                             <View style={{ flexDirection: "row", justifyContent: "space-around", paddingVertical: 10 }}>
                                 <TouchableOpacity onPress={() => { setShowModal(!showModal) }}>
-                                    <Text>Hủy</Text>
+                                    <Text style={{ padding: 10 }}>Hủy</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={onChangeTable}>
-                                    <Text>Đồng ý</Text>
+                                    <Text style={{ paddingVertical: 10, backgroundColor: "#008CBA", borderRadius: 5, paddingHorizontal: 20 }}>Đồng ý</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
