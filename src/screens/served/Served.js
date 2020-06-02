@@ -17,6 +17,7 @@ export default (props) => {
     const [listProducts, setListProducts] = useState([])
     const [value, setValue] = useState('');
     const [itemOrder, setItemOrder] = useState({})
+    const [fromTable, setFromTable] = useState({})
     const [listTopping, setListTopping] = useState([])
     const [position, setPosition] = useState("")
     const [isSelectProduct, setIsSelectProduct] = useState(false)
@@ -64,7 +65,8 @@ export default (props) => {
         setIsTopping(!isTopping)
     }
 
-    const outputIsChangeTable = () => {
+    const outputIsChangeTable = (fromTable) => {
+        if (fromTable) setFromTable(fromTable)
         setIsChangeTable(!isChangeTable)
     }
 
@@ -195,6 +197,7 @@ export default (props) => {
                     <View style={{ flex: 1 }}>
                         <Main
                             {...props}
+                            fromTable={fromTable}
                             outputIsChangeTable={outputIsChangeTable}
                             changeTable={true} />
                     </View>

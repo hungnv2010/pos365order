@@ -17,6 +17,6 @@ export const ApiPath = {
     PRINT_TEMPLATES: "api/printtemplates",
     SYNC_EXTRAEXT: "api/products/sync/extraext",
     SAVE_ORDER: "api/rooms/task/saveorder",
-
+    CHANGE_TABLE: "api/rooms/task/changetable",
     CHANGE_BRANCH: "Home/ChangeBranch",
 }

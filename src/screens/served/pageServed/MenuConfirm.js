@@ -6,11 +6,7 @@ import Colors from '../../../theme/Colors';
 import Menu from 'react-native-material-menu';
 import I18n from '../../../common/language/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { currencyToString } from '../../../common/Utils'
-import { HTTPService } from '../../../data/services/HttpService';
-import dialogManager from '../../../components/dialog/DialogManager';
-
-import FadeInView from '../../../components/animate/FadeInView';
+import { currencyToString } from '../../../common/Utils';
 import HtmlDefault from '../../../data/html/htmlDefault';
 import printService from '../../../data/html/PrintService';
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
@@ -60,7 +56,12 @@ export default (props) => {
 
 
     const changTable = () => {
-        props.outputIsChangeTable()
+        if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
+            console.log('props.route.params.room.Id', { FromRoomId: props.route.params.room.Id, FromPos: props.position });
+            props.outputIsChangeTable({ FromRoomId: props.route.params.room.Id, FromPos: props.position })
+        } else {
+            console.log('aa');
+        }
         // let params = { ServeChangeTableEntities: [{ FromRoomId: 552046, FromPos: "A", ToRoomId: 156173, ToPos: "A" }]
     }
 
