@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import Images from '../../../theme/Images';
 import realmStore from '../../../data/realm/RealmStore'
 import Colors from '../../../theme/Colors';
@@ -77,30 +77,33 @@ export default (props) => {
 
     return (
         <View style={{ flex: 1 }}>
-            <ScrollView style={{ flex: 1 }}>
-                {
-                    !jsonContent.OrderDetails ? null
-                        : jsonContent.OrderDetails.map((item, index) => {
-                            return (
-                                <View style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
-                                    <Image style={{ width: 20, height: 20, margin: 10 }} source={Images.icon_return} />
-                                    <View style={{ flexDirection: "column", flex: 1 }}>
-                                        <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
-                                        <View style={{ flexDirection: "row" }}>
-                                            <Text style={{ fontStyle: "italic" }}>{currencyToString(item.Price)} x</Text>
-                                            <Text style={{ color: Colors.colorPhu }}> {item.Quantity} {}</Text>
-                                        </View>
-                                    </View>
-                                    <View style={{ alignItems: "center", flexDirection: "row" }}>
-
-                                        <Text style={{ padding: 10 }}>{item.Quantity}</Text>
-
+            {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
+                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 10 }}>
+                </ImageBackground>
+                :
+                <ScrollView style={{ flex: 1 }}>
+                    {jsonContent.OrderDetails.map((item, index) => {
+                        return (
+                            <View style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
+                                <Image style={{ width: 20, height: 20, margin: 10 }} source={Images.icon_return} />
+                                <View style={{ flexDirection: "column", flex: 1 }}>
+                                    <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <Text style={{ fontStyle: "italic" }}>{currencyToString(item.Price)} x</Text>
+                                        <Text style={{ color: Colors.colorPhu }}> {item.Quantity} {}</Text>
                                     </View>
                                 </View>
-                            )
-                        })
-                }
-            </ScrollView >
+                                <View style={{ alignItems: "center", flexDirection: "row" }}>
+
+                                    <Text style={{ padding: 10 }}>{item.Quantity}</Text>
+
+                                </View>
+                            </View>
+                        )
+                    })
+                    }
+                </ScrollView >
+            }
             <TouchableOpacity
                 onPress={() => { setExpand(!expand) }}
                 style={{ borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3, backgroundColor: "white" }}>

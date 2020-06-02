@@ -349,7 +349,7 @@ export default (props) => {
                         }
                     </ScrollView>
                     :
-                    <ImageBackground source={Images.logo_365} style={{ flex: 1, opacity: .2 }}>
+                    <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 10 }}>
                     </ImageBackground>
                 }
             </View>
