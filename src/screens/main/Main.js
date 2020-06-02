@@ -13,8 +13,9 @@ export default (props) => {
 
   useEffect(() => {
     const syncAllDatas = async () => {
+      if(props.changeTable && props.fromTable) return
       dialogManager.showLoading()
-      await dataManager.syncServerEvent()
+      await dataManager.syncAllDatas()
       setForceUpdate(!forceUpdate)
       dialogManager.hiddenLoading()
     }

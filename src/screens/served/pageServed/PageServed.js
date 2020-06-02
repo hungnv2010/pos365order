@@ -53,11 +53,11 @@ export default (props) => {
                     <Icon style={{}} name="chevron-down" size={20} color="white" />
                 </TouchableOpacity>
             </View>
-            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 2 }}>
-                <TouchableOpacity onPress={() => setTab(1)} style={{ paddingVertical: 5, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 1 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
+            <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 2, borderColor: Colors.colorchinh, borderWidth: 0.5 }}>
+                <TouchableOpacity onPress={() => setTab(1)} style={{ paddingVertical: 8, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 1 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
                     <Text style={{ color: tab == 1 ? "white" : Colors.colorchinh, fontWeight: "bold" }}>Thực đơn đã gọi</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setTab(2)} style={{ paddingVertical: 5, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 2 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
+                <TouchableOpacity onPress={() => setTab(2)} style={{ paddingVertical: 8, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 2 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
                     <Text style={{ color: tab == 2 ? "white" : Colors.colorchinh, fontWeight: "bold" }}>Món đã xác nhận</Text>
                 </TouchableOpacity>
             </View>
