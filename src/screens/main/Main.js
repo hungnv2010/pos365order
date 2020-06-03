@@ -12,7 +12,6 @@ export default (props) => {
   const [forceUpdate, setForceUpdate] = useState(false)
 
   useEffect(() => {
-<<<<<<< HEAD
     if (props.changeTable && props.fromTable) return
     let isSubscribed = true;
     if (isSubscribed) {
@@ -26,14 +25,6 @@ export default (props) => {
     }
     return () => {
       isSubscribed = false
-=======
-    const syncAllDatas = async () => {
-      if(props.changeTable && props.fromTable) return
-      dialogManager.showLoading()
-      await dataManager.syncAllDatas()
-      setForceUpdate(!forceUpdate)
-      dialogManager.hiddenLoading()
->>>>>>> ae00e5503073eaee4bce4d74990471cd13077def
     }
   }, [])
 

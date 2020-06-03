@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
 import { ActivityIndicator, View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
 import realmStore from '../../data/realm/RealmStore';
-import dialogManager from '../../components/dialog/DialogManager';
 import ProductsItem from './ProductsItem';
 import ProductsItemForPhone from './ProductsItemForPhone';
 import { Constant } from '../../common/Constant';
@@ -9,7 +8,7 @@ import I18n from '../../common/language/i18n';
 import { change_alias } from '../../common/Utils';
 import { useSelector } from 'react-redux';
 import useDebounce from '../../customHook/useDebounce';
-
+import { Colors, Metrics, Images } from '../../theme'
 
 export default forwardRef((props, ref) => {
   const [isLoadMore, setIsLoadMore] = useState(false)
@@ -31,12 +30,14 @@ export default forwardRef((props, ref) => {
   useEffect(() => {
     const getSearchResult = async () => {
       if (debouncedVal) {
+        setHasProducts(false)
         setIsSearching(true)
         count.current = 0
         let valueSearchLatin = change_alias(debouncedVal)
         let results = await realmStore.queryProducts()
         let searchResult = results.filtered(`NameLatin CONTAINS "${valueSearchLatin}" OR Code CONTAINS "${valueSearchLatin}"`)
         setProduct(searchResult)
+        setHasProducts(true)
       } else {
         onClickCate({ Id: -1, Name: I18n.t('tat_ca') })
         setIsSearching(false)
@@ -68,7 +69,6 @@ export default forwardRef((props, ref) => {
   }, [])
 
   const getProducts = useCallback(async () => {
-    dialogManager.showLoading();
     console.log('getProducts');
     let results = await realmStore.queryProducts()
     if (listCateId[0] != -1) {
@@ -79,7 +79,6 @@ export default forwardRef((props, ref) => {
     setProduct([...product, ...productsRes])
     setHasProducts(true)
     setIsLoadMore(false)
-    dialogManager.hiddenLoading();
     return () => {
       count.current = 0
     }
@@ -196,8 +195,8 @@ export default forwardRef((props, ref) => {
 
   const renderCateItem = (item, index) => {
     return (
-      <TouchableOpacity onPress={() => onClickCate(item, index)} key={index} style={[styles.renderCateItem, { backgroundColor: item.Id == listCateId[0] ? "orange" : "white" }]}>
-        <Text numberOfLines={2} style={[styles.textRenderCateItem, { color: item.Id == listCateId[0] ? "white" : "orange" }]}>{item.Name}</Text>
+      <TouchableOpacity onPress={() => onClickCate(item, index)} key={index} style={[styles.renderCateItem, { backgroundColor: item.Id == listCateId[0] ? Colors.colorchinh : "white" }]}>
+        <Text numberOfLines={2} style={[styles.textRenderCateItem, { color: item.Id == listCateId[0] ? "white" : Colors.colorchinh }]}>{item.Name}</Text>
       </TouchableOpacity>
     );
   }
@@ -208,7 +207,7 @@ export default forwardRef((props, ref) => {
       <View style={{ flex: 0.5, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
         <View style={{ flex: 1 }}>
           {isSearching ?
-            <TouchableOpacity style={[styles.renderCateItem, { backgroundColor: "orange", flex: 1 }]}>
+            <TouchableOpacity style={[styles.renderCateItem, { backgroundColor: Colors.colorchinh, flex: 1 }]}>
               <Text style={[styles.textRenderCateItem, { color: "white" }]}>Searching</Text>
             </TouchableOpacity>
             :
@@ -255,10 +254,10 @@ export default forwardRef((props, ref) => {
               onEndReached={(info) => { loadMore(info) }}
             />
             :
-            <ActivityIndicator size="large" style={{}} color="orange" />}
+            <ActivityIndicator size="large" style={{}} color={Colors.colorchinh} />}
         </View>
       </View>
-      {isLoadMore ? <ActivityIndicator style={{ position: "absolute", right: 5, bottom: 5 }} color="orange" /> : null}
+      {isLoadMore ? <ActivityIndicator style={{ position: "absolute", right: 5, bottom: 5 }} color={Colors.colorchinh} /> : null}
     </View>
   );
 })

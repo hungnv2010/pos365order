@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import Images from '../../../theme/Images';
 import realmStore from '../../../data/realm/RealmStore'
@@ -21,8 +21,7 @@ export default (props) => {
 
     let provisional = "";
 
-    useEffect(() => {
-        // getTotalPrice()
+    useLayoutEffect(() => {
         init()
         return () => {
             realmStore.removeAllListener()
@@ -62,7 +61,7 @@ export default (props) => {
         console.log('getTotalPrice', jsonContent.OrderDetails);
         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
             jsonContent.OrderDetails.forEach(element => {
-                totalPrice += element.BasePrice * element.Quantity
+                totalPrice += element.Price * element.Quantity
             });
         }
         return [totalPrice, disCount]

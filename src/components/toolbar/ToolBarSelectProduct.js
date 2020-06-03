@@ -70,7 +70,10 @@ export default function ToolBarDefault(props) {
                 </View>
 
                 <View style={{ flex: 1, alignItems: "center" }}>
-                    <TouchableOpacity onPress={() => { setIsSearch(!isSearch) }}>
+                    <TouchableOpacity onPress={() => {
+                        if (value != '') onChangeText('')
+                        else setIsSearch(!isSearch)
+                    }}>
                         <Ionicons name={!isSearch ? "md-search" : "md-close"} size={30} color="white" style={{}} />
                     </TouchableOpacity>
                 </View>

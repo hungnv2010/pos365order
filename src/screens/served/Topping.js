@@ -131,7 +131,7 @@ export default (props) => {
     }
 
     const renderCateItem = (item, index) => {
-        let isSelected = item.Name == listCateId[0] ? "orange" : "black";
+        let isSelected = item.Name == listCateId[0] ? Colors.colorchinh : "black";
         return (
             <TouchableOpacity onPress={() => { setlistCateId([item.Name]) }}
                 key={index} style={[styles.cateItem, { borderColor: isSelected }]}>
@@ -168,7 +168,7 @@ export default (props) => {
                     <Text numberOfLines={1} style={{ color: "white", textAlign: "center" }}>{itemOrder ? itemOrder.Name : ''}</Text>
                 </View>
                 <View style={{ flex: 5, justifyContent: "center", alignItems: "center" }}>
-                    <Text style={{ color: "white", fontWeight: "bold" , fontSize: 15}}>Topping</Text>
+                    <Text style={{ color: "white", fontWeight: "bold", fontSize: 15 }}>Topping</Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}>
                     <TouchableOpacity style={{}} onPress={() => { onclose() }}>
@@ -176,7 +176,7 @@ export default (props) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{}}>
+            <View style={{flex: 1}}>
                 <View style={{ backgroundColor: "white", marginBottom: 3 }}>
                     <FlatList
                         horizontal={true}
@@ -197,6 +197,7 @@ export default (props) => {
                         numColumns={props.numColumns} />
                 </View>
             </View>
+            <View style={{ height: 40 , backgroundColor:"red", }}></View>
         </View>
     )
 
