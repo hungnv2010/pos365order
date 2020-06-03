@@ -10,6 +10,7 @@ import Topping from '../../screens/served/Topping';
 
 import NoteBook from '../../screens/served/NoteBook';
 import DetailNoteBook from '../../screens/served/DetailNoteBook';
+import QRCode from '../../screens/served/QRCode';
 
 const MainStack = createStackNavigator();
 export const navigationRef = createRef();
@@ -29,6 +30,7 @@ export default (props) => {
                 <MainStack.Screen name="Topping">{props => <Topping {...props} />}</MainStack.Screen>
                 <MainStack.Screen name="NoteBook">{props => <NoteBook {...props} />}</MainStack.Screen>
                 <MainStack.Screen name="DetailNoteBook">{props => <DetailNoteBook {...props} />}</MainStack.Screen>
+                <MainStack.Screen name="QRCode">{props => <QRCode {...props} />}</MainStack.Screen>
             </MainStack.Navigator>
         </Animated.View>
     );

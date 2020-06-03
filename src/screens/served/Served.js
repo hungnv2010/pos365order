@@ -151,6 +151,10 @@ const Served = (props) => {
         props.navigation.navigate('NoteBook', { _onSelect: onCallBackNoteBook })
     }
 
+    const outputClickQRCode = () => {
+        props.navigation.navigate('QRCode')
+    }
+
     const renderForPhone = () => {
         return (
             <>
@@ -205,6 +209,7 @@ const Served = (props) => {
                             title={I18n.t('don_hang')}
                             clickLeftIcon={() => { props.navigation.goBack() }}
                             clickNoteBook={outputClickNoteBook}
+                            clickQRCode={outputClickQRCode}
                             rightIcon="plus"
                             clickRightIcon={outputIsSelectProduct} />
                         <PageServed
