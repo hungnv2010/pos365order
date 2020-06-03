@@ -22,12 +22,13 @@ import ToolBarDefault from '../../components/toolbar/ToolBarDefault';
 export default (props) => {
 
     const [dataList, setDataList] = useState([]);
-    const [listRefreshing, setListRefreshing] = useState(false)
+    const [title, setTitle] = useState("")
     const [TotalPrice, setTotalPrice] = useState(0)
 
     useEffect(() => {
         console.log("props ", props);
-        getData(props.route.params)
+        setTitle(props.route.params.Name)
+        getData(props.route.params.Id)
     }, [])
 
     const getData = (Id = "") => {
@@ -35,7 +36,6 @@ export default (props) => {
         dialogManager.showLoading();
         new HTTPService().setPath(ApiPath.DETAIL_NOTE_BOOK).GET(params).then((res) => {
             console.log("getDetailNoteBook res ", res);
-            setListRefreshing(false);
             if (res.results && res.results.length > 0) {
                 setDataList(res.results)
                 let total = 0;
@@ -58,7 +58,7 @@ export default (props) => {
             <ToolBarDefault
                 {...props}
                 leftIcon="keyboard-backspace"
-                title={I18n.t('so_tay_ban_hang_nhanh')}
+                title={title}
                 clickLeftIcon={() => { props.navigation.goBack() }}
             />
             <ScrollView style={styles.container}>

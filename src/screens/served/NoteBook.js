@@ -73,7 +73,7 @@ export default (props) => {
     }
 
     const onClickItem = (item) => {
-        props.navigation.navigate('DetailNoteBook', item.Id )
+        props.navigation.navigate('DetailNoteBook', { Id: item.Id, Name: item.Name })
     }
 
     const onClickNavigateServed = (item) => {
@@ -87,7 +87,7 @@ export default (props) => {
                 console.log("onClickNavigateServed ", props);
                 let array = [];
                 res.results.forEach(element => {
-                    let obj = {...element, ...element.Product}
+                    let obj = { ...element, ...element.Product }
                     array.push(obj)
                 });
                 props.route.params._onSelect(array);
@@ -98,7 +98,7 @@ export default (props) => {
             dialogManager.hiddenLoading()
         })
 
-        
+
     }
 
     return (
