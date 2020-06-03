@@ -78,7 +78,6 @@ export default function ToolBarNoteBook(props) {
             </View>
 
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                {/* {props.clickRightIcon && props.rightIcon ? props.clickRightIcon */}
                 {showInput == false ?
                     <TouchableOpacity onPress={() => onClickSearch()}>
                         <Ionicons name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
@@ -88,7 +87,6 @@ export default function ToolBarNoteBook(props) {
                         <Icon name="close" size={props.size ? props.size : 30} color="white" />
                     </TouchableOpacity>
                 }
-                {/* } */}
             </View>
         </View>
 

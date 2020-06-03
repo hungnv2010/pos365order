@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
@@ -32,12 +32,17 @@ const Served = (props) => {
         return state.Common
     });
 
+    useEffect(() => {
+        console.log("Served props ", props);
+
+    }, [])
+
 
     const outputListProducts = (newList, type) => {
         newList = newList.filter(item => item.Quantity > 0)
         if (type === 0) newList = JSON.parse(JSON.stringify(newList))
         setListProducts(newList)
-        console.log(newList, 'newlist');
+        console.log(newList, 'newList');
     }
 
     const outputTextSearch = (text) => {
@@ -137,8 +142,13 @@ const Served = (props) => {
 
     }
 
+    const onCallBackNoteBook = (data = "") => {
+        console.log("onCallBackNoteBook data ", data);
+        outputListProducts(data, 0)
+    }
+
     const outputClickNoteBook = () => {
-        props.navigation.navigate('NoteBook')
+        props.navigation.navigate('NoteBook', { _onSelect: onCallBackNoteBook })
     }
 
     const renderForPhone = () => {

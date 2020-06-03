@@ -62,7 +62,7 @@ export default (props) => {
 
     const outputIsSelectProduct = (textSearch) => {
         console.log("textSearch ", textSearch);
-        
+
         // setTextSearch(textSearch)
         getData(textSearch)
     }
@@ -70,6 +70,35 @@ export default (props) => {
     const refreshList = () => {
         setListRefreshing(true);
         getData()
+    }
+
+    const onClickItem = (item) => {
+        props.navigation.navigate('DetailNoteBook', item.Id )
+    }
+
+    const onClickNavigateServed = (item) => {
+
+        let params = { inlinecount: "allpages", top: 20, Includes: "Product", NotebookId: item.Id };
+        dialogManager.showLoading();
+        new HTTPService().setPath(ApiPath.DETAIL_NOTE_BOOK).GET(params).then((res) => {
+            console.log("getDetailNoteBook res ", res);
+            if (res.results && res.results.length > 0) {
+                props.navigation.pop();
+                console.log("onClickNavigateServed ", props);
+                let array = [];
+                res.results.forEach(element => {
+                    let obj = {...element, ...element.Product}
+                    array.push(obj)
+                });
+                props.route.params._onSelect(array);
+            }
+            dialogManager.hiddenLoading()
+        }).catch((e) => {
+            console.log("getDetailNoteBook err ", e);
+            dialogManager.hiddenLoading()
+        })
+
+        
     }
 
     return (
@@ -95,10 +124,10 @@ export default (props) => {
                     dataList.length > 0 ?
                         dataList.map(item => (
                             <View style={{ height: 60, marginHorizontal: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 }}>
-                                <TouchableOpacity style={{ flex: 1, height: "100%", justifyContent: "center" }}>
+                                <TouchableOpacity onPress={() => onClickItem(item)} style={{ flex: 1, height: "100%", justifyContent: "center" }}>
                                     <Text style={{}}>{item.Name}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={{ backgroundColor: Colors.colorLightBlue, justifyContent: "center", borderRadius: 25, width: 50, height: 50, alignItems: "center" }}>
+                                <TouchableOpacity onPress={() => onClickNavigateServed(item)} style={{ backgroundColor: Colors.colorLightBlue, justifyContent: "center", borderRadius: 25, width: 50, height: 50, alignItems: "center" }}>
                                     <Icon name="plus" size={30} color="white" />
                                 </TouchableOpacity>
                             </View>))
