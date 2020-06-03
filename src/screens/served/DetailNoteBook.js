@@ -27,13 +27,10 @@ export default (props) => {
 
     useEffect(() => {
         console.log("props ", props);
-
-        // setDataList(props.route.params)
         getData(props.route.params)
     }, [])
 
     const getData = (Id = "") => {
-        // Includes=Product&NotebookId=4497&%24inlinecount=allpages&%24top=10
         let params = { inlinecount: "allpages", top: 20, Includes: "Product", NotebookId: Id };
         dialogManager.showLoading();
         new HTTPService().setPath(ApiPath.DETAIL_NOTE_BOOK).GET(params).then((res) => {
@@ -51,7 +48,6 @@ export default (props) => {
             }
             dialogManager.hiddenLoading()
         }).catch((e) => {
-            // setListRefreshing(false);
             console.log("getDetailNoteBook err ", e);
             dialogManager.hiddenLoading()
         })
@@ -69,26 +65,29 @@ export default (props) => {
                 {
                     dataList.length > 0 ?
                         dataList.map(item => (
-                            <View style={{ height: 60, marginHorizontal: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 }}>
-                                <TouchableOpacity style={{ flex: 1, height: "100%", justifyContent: "center" }}>
-                                    <Text style={{}}>{item.Product.Name}</Text>
-                                    <View style={{ marginTop: 10, flexDirection: "row" }}>
-                                        <Text style={{}}>{item.Price} x </Text>
-                                        <Text style={{}}>{item.Quantity}</Text>
-                                    </View>
-                                </TouchableOpacity>
-                            </View>))
+                            <TouchableOpacity style={styles.viewItem}>
+                                <Text style={{}}>{item.Product.Name}</Text>
+                                <View style={styles.viewPrice}>
+                                    <Text style={{}}>{item.Price} x </Text>
+                                    <Text style={{}}>{item.Quantity}</Text>
+                                </View>
+                            </TouchableOpacity>))
                         : null
                 }
             </ScrollView>
-            <View style={{ margin: 10, flexDirection: "row", justifyContent: "space-between" }}>
-                <Text style={{ fontWeight: "bold" }}>Tổng thành tiền </Text>
-                <Text style={{ color: Colors.colorchinh, fontWeight: "bold" }}>{TotalPrice} đ</Text>
+            <View style={styles.viewTotal}>
+                <Text style={styles.textTotal}>Tổng thành tiền </Text>
+                <Text style={styles.textTotalPrice}>{TotalPrice} đ</Text>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: { flex: 1 }
+    container: { flex: 1 },
+    viewPrice: { marginTop: 10, flexDirection: "row" },
+    textTotal: { fontWeight: "bold" },
+    textTotalPrice: { color: Colors.colorchinh, fontWeight: "bold" },
+    viewTotal: { margin: 10, flexDirection: "row", justifyContent: "space-between" },
+    viewItem: { height: 60, marginHorizontal: 10, flexDirection: "column", justifyContent: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 }
 })
