@@ -21,13 +21,14 @@ export default (props) => {
     let provisional = "";
 
     useEffect(() => {
+        // getTotalPrice()
         init()
         return () => {
             realmStore.removeAllListener()
         }
     }, [])
 
-    init = async () => {
+    const init = async () => {
         let serverEvent = await realmStore.queryServerEvents().then(res => res.filtered(`RowKey == '${row_key}'`))
         console.log("init: ", JSON.stringify(serverEvent));
 
@@ -54,6 +55,17 @@ export default (props) => {
         _menu.show();
     };
 
+    const getTotalPrice = () => {
+        let totalPrice = 0;
+        let disCount = 0;
+        console.log('getTotalPrice', jsonContent.OrderDetails);
+        if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
+            jsonContent.OrderDetails.forEach(element => {
+                totalPrice += element.BasePrice * element.Quantity
+            });
+        }
+        return [totalPrice, disCount]
+    }
 
     const changTable = () => {
         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
@@ -62,7 +74,6 @@ export default (props) => {
         } else {
             console.log('aa');
         }
-        // let params = { ServeChangeTableEntities: [{ FromRoomId: 552046, FromPos: "A", ToRoomId: 156173, ToPos: "A" }]
     }
 
     const onClickProvisional = () => {
@@ -110,7 +121,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                     <Text style={{ fontWeight: "bold" }}>{I18n.t('tong_thanh_tien')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>0đ</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice()[0])}đ</Text>
                         {expand ?
                             <Icon style={{}} name="chevron-down" size={30} color="black" />
                             :
@@ -122,7 +133,7 @@ export default (props) => {
                     <>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text>{I18n.t('tong_chiet_khau')}</Text>
-                            <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>- 0đ</Text>
+                            <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>- {currencyToString(getTotalPrice()[1])}đ</Text>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text>VAT (%)</Text>
@@ -133,7 +144,7 @@ export default (props) => {
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_phai_tra')}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc", marginRight: 30 }}>0đ</Text>
+                                <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc", marginRight: 30 }}>{currencyToString(getTotalPrice()[0] - getTotalPrice()[1])}đ</Text>
                             </View>
                         </View>
                     </>

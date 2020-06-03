@@ -122,7 +122,7 @@ const LoginScreen = (props) => {
 
             if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
                 // props.navigation.navigate("Home")
-                let account = {UserName: userName, Link: shop };
+                let account = { UserName: userName, Link: shop };
                 setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
                 props.navigation.dispatch(
                     CommonActions.reset({
@@ -226,10 +226,10 @@ const LoginScreen = (props) => {
                         </View>
                         <View style={{}}>
                             <TouchableOpacity style={{ height: 50, width: Metrics.screenWidth - 50, marginTop: 30, borderColor: "#fff", borderWidth: 1, borderRadius: 5, justifyContent: "center", alignItems: "center" }}
-                                onPress={() => { setLogIn(!logIn) }}>
+                                onPress={() => { }}>
                                 <Text style={{ color: "#fff", fontWeight: 'bold' }}>{I18n.t("man_hinh_thu_ngan").toUpperCase()}</Text>
                             </TouchableOpacity><TouchableOpacity style={{ height: 50, width: Metrics.screenWidth - 50, marginTop: 15, borderColor: "#fff", borderWidth: 1, borderRadius: 5, justifyContent: "center", alignItems: "center" }}
-                                onPress={() => { }}>
+                                onPress={() => { setLogIn(!logIn) }}>
                                 <Text style={{ color: "#fff", fontWeight: 'bold' }}>{I18n.t("nhan_vien_order").toUpperCase()}</Text>
                             </TouchableOpacity>
                         </View>

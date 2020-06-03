@@ -10,7 +10,7 @@ export default (props) => {
 
     const [tab, setTab] = useState(1)
     const [showModal, setShowModal] = useState(false)
-    const [position, setPosition] = useState("A")
+    const [position, setPosition] = useState(props.position)
 
 
     const selectPosition = (position) => {
@@ -62,7 +62,7 @@ export default (props) => {
                 </TouchableOpacity>
             </View>
             {tab == 1 ?
-                <CustomerOrder position={position} {...props} />
+                <CustomerOrder Position={position} {...props} />
                 :
                 <MenuConfirm position={position} {...props} />
             }

@@ -24,8 +24,7 @@ import { Checkbox } from 'react-native-paper';
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
-import { Snackbar } from 'react-native-paper';
-
+import useDidMountEffect from '../../../customHook/useDidMountEffect';
 
 const _nodes = new Map();
 
@@ -40,11 +39,7 @@ export default (props) => {
         { position: "D", checked: false },
     ])
     const toRoomId = useRef()
-    const Message = useRef('')
 
-    useEffect(() => {
-        // _nodes = new Map();
-    }, [])
 
     const onItemPress = ({ Id, Name }) => {
         const { changeTable, fromTable } = props
@@ -119,12 +114,18 @@ export default (props) => {
     const RoomAll = { Name: "Tất cả", Id: "All" }
     const [listRoom, setListRoom] = useState([])
 
-    useEffect(() => {
-        init()
+    useDidMountEffect(() => {
+        let isSubscribed = true;
+        if (isSubscribed) {
+            init()
+        }
         return () => {
+            isSubscribed = false
             realmStore.removeAllListener()
         }
     }, [props.forceUpdate])
+
+
 
 
 
@@ -347,7 +348,7 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                             width: Metrics.screenWidth * 0.8,
                         }}>
-                            <Text style={{ textAlign: "center", fontWeight: 20, fontWeight:"bold" }}>VI TRI</Text>
+                            <Text style={{ textAlign: "center", fontWeight: 20, fontWeight: "bold" }}>VI TRI</Text>
                             {listPosition.map((item, index) => {
                                 return (
                                     <View key={index} style={{ flexDirection: "row", alignItems: "center", }}>

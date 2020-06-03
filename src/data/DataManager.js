@@ -41,16 +41,23 @@ class DataManager {
             await realmStore.insertDatas(schemaName, res.Data)
     }
 
-    syncAllDatas = async () => {
+    syncRooms = async () => {
         console.log("syncAllDatas");
         await this.syncServerEvent(),
-            await this.syncProduct(),
-            await this.syncTopping(),
             await this.syncData(ApiPath.SYNC_ROOMS, SchemaName.ROOM),
-            await this.syncData(ApiPath.SYNC_ROOM_GROUPS, SchemaName.ROOM_GROUP),
+            await this.syncData(ApiPath.SYNC_ROOM_GROUPS, SchemaName.ROOM_GROUP)
+    }
+
+    syncForFirstTime = async () => {
+        await this.syncProduct(),
+            await this.syncTopping(),
             await this.syncData(ApiPath.SYNC_CATEGORIES, SchemaName.CATEGORIES)
     }
 
+    syncAllDatas = async () => {
+        await this.syncForFirstTime(),
+            await this.syncRooms()
+    }
 }
 
 const dataManager = new DataManager();

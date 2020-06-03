@@ -12,14 +12,14 @@ import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
 import Main from '../../screens/main/Main';
 
-export default (props) => {
+const Served = (props) => {
 
     const [listProducts, setListProducts] = useState([])
     const [value, setValue] = useState('');
     const [itemOrder, setItemOrder] = useState({})
     const [fromTable, setFromTable] = useState({})
     const [listTopping, setListTopping] = useState([])
-    const [position, setPosition] = useState("")
+    const [position, setPosition] = useState("A")
     const [isSelectProduct, setIsSelectProduct] = useState(false)
     const [isTopping, setIsTopping] = useState(false)
     const [isChangeTable, setIsChangeTable] = useState(false)
@@ -48,6 +48,8 @@ export default (props) => {
     }
 
     const outputPosition = (position) => {
+        console.log('outputPosition', position);
+
         setPosition(position)
     }
 
@@ -144,7 +146,7 @@ export default (props) => {
                             clickLeftIcon={clickLeftIcon}
                             onClickDone={onClickDone}
                             title="Select Product"
-                            onClickSearch={onClickSearch} />
+                            outputTextSearch={outputTextSearch} />
                         <SelectProduct
                             ref={SelectProductRef}
                             valueSearch={value}
@@ -169,6 +171,17 @@ export default (props) => {
                     </View> :
                     null
                 }
+                {isChangeTable ?
+                    <View style={{ flex: 1 }}>
+                        <Main
+                            {...props}
+                            fromTable={fromTable}
+                            outputIsChangeTable={outputIsChangeTable}
+                            changeTable={true} />
+                    </View>
+                    :
+                    null
+                }
                 {!(isTopping || isSelectProduct || isChangeTable) ?
                     <View style={{ flex: 1 }}>
                         <ToolBarDefault
@@ -180,6 +193,7 @@ export default (props) => {
                             clickRightIcon={outputIsSelectProduct} />
                         <PageServed
                             {...props}
+                            position={position}
                             itemOrder={meMoItemOrder}
                             listProducts={[...listProducts]}
                             outputListProducts={outputListProducts}
@@ -193,16 +207,6 @@ export default (props) => {
                     </View> :
                     null
                 }
-                {isChangeTable ?
-                    <View style={{ flex: 1 }}>
-                        <Main
-                            {...props}
-                            fromTable={fromTable}
-                            outputIsChangeTable={outputIsChangeTable}
-                            changeTable={true} />
-                    </View>
-                    :
-                    null}
             </>
         )
     }
@@ -217,3 +221,5 @@ export default (props) => {
         </View>
     );
 }
+
+export default React.memo(Served)

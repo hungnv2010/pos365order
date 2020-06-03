@@ -34,45 +34,42 @@ export default (props) => {
             console.log('data', JSON.parse(data));
             setVendorSession(JSON.parse(data));
         }
-        getVendorSession()
 
+        const init = () => {
+            let tempListPosition = dataManager.dataChoosing.filter(item => item.Id == props.route.params.room.Id)
+            if (tempListPosition && tempListPosition.length > 0) {
+                console.log('from tempListPosition');
+                setListPosition(tempListPosition[0].data)
+            }
+        }
+        getVendorSession()
         init()
         return () => {
             console.log(dataManager.dataChoosing, 'dataManager.dataChoosing');
         }
     }, [])
 
-    const init = () => {
-        let tempListPosition = dataManager.dataChoosing.filter(item => item.Id == props.route.params.room.Id)
-        if (tempListPosition && tempListPosition.length > 0) {
-            console.log('from tempListPosition');
-            setListPosition(tempListPosition[0].data)
-        }
-    }
 
 
-    const syncListProducts = (listProducts) => {
-        console.log('syncListProducts');
-        setListOrder(listProducts)
-        props.outputListProducts(listProducts)
-    }
 
     useEffect(() => {
-        props.outputPosition(props.position)
-    }, [props.position])
+        console.log('aaaaaaaaaaaaaaaaaaaaa');
+        
+        props.outputPosition(props.Position)
+    }, [props.Position])
 
     useEffect(() => {
         if (props.listProducts.length > 0) {
             console.log('useEffect props.listProducts', props.listProducts);
             let exist = false
             listPosition.forEach(element => {
-                if (element.key == props.position) {
+                if (element.key == props.Position) {
                     exist = true
                     element.list = props.listProducts
                 }
             })
             if (!exist) {
-                listPosition.push({ key: props.position, list: props.listProducts })
+                listPosition.push({ key: props.Position, list: props.listProducts })
             }
             console.log(listPosition, 'listPosition');
 
@@ -82,19 +79,19 @@ export default (props) => {
     }, [props.listProducts])
 
     useEffect(() => {
-        console.log('useEffect props.position', props.position);
+        console.log('useEffect props.Position', props.Position);
         let exist = false
         listPosition.forEach(element => {
-            if (element.key == props.position) {
+            if (element.key == props.Position) {
                 exist = true
                 syncListProducts([...element.list])
             }
         })
         if (!exist) {
-            listPosition.push({ key: props.position, list: [] })
+            listPosition.push({ key: props.Position, list: [] })
             syncListProducts([])
         }
-    }, [props.position, listPosition])
+    }, [props.Position, listPosition])
 
     useEffect(() => {
         setItemOrder(props.itemOrder)
@@ -128,7 +125,11 @@ export default (props) => {
     }, [props.listTopping])
 
 
-
+    const syncListProducts = (listProducts) => {
+        console.log('syncListProducts');
+        setListOrder(listProducts)
+        props.outputListProducts(listProducts)
+    }
 
     const savePosition = () => {
         let exist = false
@@ -158,7 +159,7 @@ export default (props) => {
                     Code: element.Code,
                     Name: element.Name,
                     OrderQuickNotes: [],
-                    Position: props.position,
+                    Position: props.Position,
                     Price: element.Price,
                     Printer: element.Printer,
                     Printer3: null,
@@ -191,7 +192,7 @@ export default (props) => {
         syncListProducts([])
         dataManager.dataChoosing.forEach(item => {
             if (item.Id == props.route.params.room.Id) {
-                item.data = item.data.filter(it => it.key != props.position)
+                item.data = item.data.filter(it => it.key != props.Position)
             }
         })
     }
@@ -349,7 +350,7 @@ export default (props) => {
                         }
                     </ScrollView>
                     :
-                    <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 10 }}>
+                    <ImageBackground source={Images.logo_365} style={{ flex: 1, opacity: .2 }}>
                     </ImageBackground>
                 }
             </View>

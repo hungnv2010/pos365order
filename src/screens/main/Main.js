@@ -12,20 +12,26 @@ export default (props) => {
   const [forceUpdate, setForceUpdate] = useState(false)
 
   useEffect(() => {
-    const syncAllDatas = async () => {
-      dialogManager.showLoading()
-      await dataManager.syncServerEvent()
-      setForceUpdate(!forceUpdate)
-      dialogManager.hiddenLoading()
+    if (props.changeTable && props.fromTable) return
+    let isSubscribed = true;
+    if (isSubscribed) {
+      const syncAllDatas = async () => {
+        dialogManager.showLoading()
+        await dataManager.syncAllDatas()
+        setForceUpdate(!forceUpdate)
+        dialogManager.hiddenLoading()
+      }
+      syncAllDatas()
     }
-    syncAllDatas()
+    return () => {
+      isSubscribed = false
+    }
   }, [])
 
 
   const clickRightIcon = async () => {
     dialogManager.showLoading()
-    await dataManager.syncAllDatas()
-    setForceUpdate(!forceUpdate)
+    await dataManager.syncRooms()
     dialogManager.hiddenLoading()
   }
 
