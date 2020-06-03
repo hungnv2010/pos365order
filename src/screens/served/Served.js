@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
@@ -31,6 +31,11 @@ export default (props) => {
         console.log("useSelector state ", state);
         return state.Common
     });
+
+    useEffect(() => {
+        console.log("Served props ", props);
+
+    }, [])
 
 
     const outputListProducts = (newList, type) => {
@@ -135,8 +140,13 @@ export default (props) => {
 
     }
 
+    const onCallBackNoteBook = (data = "") => {
+        console.log("onCallBackNoteBook data ", data);
+
+    }
+
     const outputClickNoteBook = () => {
-        props.navigation.navigate('NoteBook')
+        props.navigation.navigate('NoteBook', { _onSelect: onCallBackNoteBook })
     }
 
     const renderForPhone = () => {
