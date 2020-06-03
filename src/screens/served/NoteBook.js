@@ -85,7 +85,12 @@ export default (props) => {
             if (res.results && res.results.length > 0) {
                 props.navigation.pop();
                 console.log("onClickNavigateServed ", props);
-                props.route.params._onSelect(res.results);
+                let array = [];
+                res.results.forEach(element => {
+                    let obj = {...element, ...element.Product}
+                    array.push(obj)
+                });
+                props.route.params._onSelect(array);
             }
             dialogManager.hiddenLoading()
         }).catch((e) => {

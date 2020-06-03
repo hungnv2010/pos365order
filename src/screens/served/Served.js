@@ -42,7 +42,7 @@ export default (props) => {
         newList = newList.filter(item => item.Quantity > 0)
         if (type === 0) newList = JSON.parse(JSON.stringify(newList))
         setListProducts(newList)
-        console.log(newList, 'newlist');
+        console.log(newList, 'newList');
     }
 
     const outputTextSearch = (text) => {
@@ -142,7 +142,7 @@ export default (props) => {
 
     const onCallBackNoteBook = (data = "") => {
         console.log("onCallBackNoteBook data ", data);
-
+        outputListProducts(data, 0)
     }
 
     const outputClickNoteBook = () => {
