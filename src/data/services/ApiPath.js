@@ -19,4 +19,5 @@ export const ApiPath = {
     SAVE_ORDER: "api/rooms/task/saveorder",
     CHANGE_TABLE: "api/rooms/task/changetable",
     CHANGE_BRANCH: "Home/ChangeBranch",
+    NOTE_BOOK: "api/notebooks"
 }

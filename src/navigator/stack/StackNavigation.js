@@ -8,6 +8,8 @@ import PrintHtml from '../../screens/more/printHtml/PrintHtml'
 import Preview from '../../screens/more/printHtml/Preview'
 import Topping from '../../screens/served/Topping';
 
+import NoteBook from '../../screens/served/NoteBook';
+
 const MainStack = createStackNavigator();
 export const navigationRef = createRef();
 export default (props) => {
@@ -24,6 +26,7 @@ export default (props) => {
                 <MainStack.Screen name="PrintHtml">{props => <PrintHtml {...props} />}</MainStack.Screen>
                 <MainStack.Screen name="Preview">{props => <Preview {...props} />}</MainStack.Screen>
                 <MainStack.Screen name="Topping">{props => <Topping {...props} />}</MainStack.Screen>
+                <MainStack.Screen name="NoteBook">{props => <NoteBook {...props} />}</MainStack.Screen>
             </MainStack.Navigator>
         </Animated.View>
     );

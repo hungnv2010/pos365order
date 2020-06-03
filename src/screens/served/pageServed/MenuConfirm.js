@@ -11,6 +11,7 @@ import HtmlDefault from '../../../data/html/htmlDefault';
 import printService from '../../../data/html/PrintService';
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
+import dialogManager from '../../../components/dialog/DialogManager';
 
 export default (props) => {
 
@@ -72,7 +73,7 @@ export default (props) => {
             console.log('props.route.params.room.Id', props);
             props.outputIsChangeTable({ FromRoomId: props.route.params.room.Id, FromPos: props.position, Name: props.route.params.room.Name })
         } else {
-            console.log('aa');
+            dialogManager.showPopupOneButton("Bạn hãy chọn món ăn trước.")
         }
     }
 
