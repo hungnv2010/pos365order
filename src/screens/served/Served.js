@@ -32,15 +32,11 @@ const Served = (props) => {
         return state.Common
     });
 
-    useEffect(() => {
-        console.log("Served props ", props);
-
-    }, [])
-
 
     const outputListProducts = (newList, type) => {
         newList = newList.filter(item => item.Quantity > 0)
         if (type === 0) newList = JSON.parse(JSON.stringify(newList))
+        if (type === 2) newList = [...newList, ...listProducts]
         setListProducts(newList)
         console.log(newList, 'newList');
     }
@@ -138,13 +134,10 @@ const Served = (props) => {
         }
     }
 
-    const onClickSearch = () => {
-
-    }
 
     const onCallBackNoteBook = (data = "") => {
         console.log("onCallBackNoteBook data ", data);
-        outputListProducts(data, 0)
+        outputListProducts(data, 2)
     }
 
     const outputClickNoteBook = () => {

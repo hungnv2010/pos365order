@@ -1,19 +1,11 @@
 import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { Image, View, StyleSheet, Button, Text, TouchableOpacity, RefreshControl, ScrollView, NativeEventEmitter, NativeModules } from 'react-native';
 import { Images, Colors, Metrics } from '../../theme';
-import { WebView } from 'react-native-webview';
-import useDidMountEffect from '../../customHook/useDidMountEffect';
 import dialogManager from '../../components/dialog/DialogManager';
 import { HTTPService } from '../../data/services/HttpService';
 import { ApiPath } from '../../data/services/ApiPath';
-import ToolBarPreviewHtml from '../../components/toolbar/ToolBarPreviewHtml';
-import JsonContent1 from '../../data/json/data_print_demo'
-import { dateToDate, DATE_FORMAT, currencyToString } from '../../common/Utils';
-import { getFileDuLieuString } from '../../data/fileStore/FileStorage';
-import { Constant } from '../../common/Constant';
 import { useSelector } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
-import printService from '../../data/html/PrintService';
 import ToolBarNoteBook from '../../components/toolbar/ToolBarNoteBook';
 import I18n from '../../common/language/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -86,8 +78,8 @@ export default (props) => {
                 props.navigation.pop();
                 console.log("onClickNavigateServed ", props);
                 let array = [];
-                res.results.forEach(element => {
-                    let obj = { ...element, ...element.Product }
+                res.results.forEach((element, index) => {
+                    let obj = { Price: element.Price, Quantity: element.Quantity, ...element.Product, Sid: Date.now() + index }
                     array.push(obj)
                 });
                 props.route.params._onSelect(array);
@@ -122,8 +114,8 @@ export default (props) => {
             >
                 {
                     dataList.length > 0 ?
-                        dataList.map(item => (
-                            <View style={{ height: 60, marginHorizontal: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 }}>
+                        dataList.map((item, index) => (
+                            <View key={index} style={{ height: 60, marginHorizontal: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 }}>
                                 <TouchableOpacity onPress={() => onClickItem(item)} style={{ flex: 1, height: "100%", justifyContent: "center" }}>
                                     <Text style={{}}>{item.Name}</Text>
                                 </TouchableOpacity>
