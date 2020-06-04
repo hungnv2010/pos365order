@@ -52,9 +52,7 @@ export default (props) => {
 
 
 
-    useEffect(() => {
-        console.log('aaaaaaaaaaaaaaaaaaaaa');
-        
+    useEffect(() => {        
         props.outputPosition(props.Position)
     }, [props.Position])
 

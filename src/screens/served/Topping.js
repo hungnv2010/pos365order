@@ -176,7 +176,7 @@ export default (props) => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <View style={{flex: 1}}>
+            <View style={{ flex: 1 }}>
                 <View style={{ backgroundColor: "white", marginBottom: 3 }}>
                     <FlatList
                         horizontal={true}
@@ -197,7 +197,10 @@ export default (props) => {
                         numColumns={props.numColumns} />
                 </View>
             </View>
-            <View style={{ height: 40 , backgroundColor:"red", }}></View>
+            <View style={{ height: 40, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 5 }}>
+                <Text style={{ fontWeight: "bold" }}>Tong thanh tien</Text>
+                <Text style={{ fontWeight: "bold" }}>0d</Text>
+            </View>
         </View>
     )
 
