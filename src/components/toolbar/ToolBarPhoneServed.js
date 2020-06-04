@@ -1,6 +1,6 @@
 
 
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import {
     View, Text, TouchableOpacity, Image, StyleSheet,
     StatusBar, Keyboard, Linking, Platform, SafeAreaView
@@ -11,11 +11,33 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../theme/Fonts';
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
+import realmStore from '../../data/realm/RealmStore';
 
 
 export default function ToolBarPhoneServed(props) {
 
     let blockClick = false;
+
+    const [showProductService, setShowProductService] = useState(false);
+
+    useEffect(() => {
+        const getData = async () => {
+            let results = await realmStore.queryRooms()
+            console.log("results ", results, props);
+
+
+            if (results) {
+                results = results.filtered(`ProductId = "${props.route.params.room.ProductId}"`)
+                console.log("results == ", results);
+                if (results && results.length > 0) {
+                    results = JSON.parse(JSON.stringify(results))
+                    console.log("results == ", results);
+                    setShowProductService(true)
+                }
+            }
+        }
+        getData()
+    }, [])
 
     return (
         <View style={styles.toolbarContainer}>
@@ -49,6 +71,11 @@ export default function ToolBarPhoneServed(props) {
                     {props.title}
                 </Subheading>
             </View>
+            {showProductService && showProductService == true ? <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                <TouchableOpacity onPress={props.clickProductService}>
+                    <Icon name="clock-outline" size={props.size ? props.size : 30} color="white" />
+                </TouchableOpacity>
+            </View> : null}
             <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 <TouchableOpacity onPress={props.clickQRCode}>
                     <Icon name="qrcode-scan" size={props.size ? props.size : 23} color="white" />
