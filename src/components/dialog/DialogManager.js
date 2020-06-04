@@ -70,7 +70,7 @@ class DialogManager {
     }
 
     showPopupTwoButton(txtContent, title = "", callback, dismissOnTouchOutside, label1, label2) {
-        console.log("showPopupTwoButton");
+        console.log("showPopupTwoButton callback ", callback);
         this.show(
             {
                 title: title,
@@ -88,7 +88,7 @@ class DialogManager {
 
 
     showPopupOneButton(txtContent, title = "", callback, dismissOnTouchOutside, label1, label2) {
-        console.log("showPopupOneButton");
+        console.log("showPopupOneButton callback ", callback);
         this.show({
             title: title,
             one: true,

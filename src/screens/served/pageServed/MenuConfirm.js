@@ -18,8 +18,8 @@ export default (props) => {
     const row_key = `${props.route.params.room.Id}_${props.route.params.room.Position}`
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
-
-    let provisional = "";
+    const [provisional, setProvisional] = useState({})
+    // let provisional = "";
 
     useLayoutEffect(() => {
         init()
@@ -37,8 +37,9 @@ export default (props) => {
             setJsonContent(JSON.parse(serverEvent[0].JsonContent))
         })
 
-        provisional = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
-        console.log('provisional ', provisional);
+        let provisionalPrint = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
+        setProvisional(provisionalPrint)
+        console.log('provisional ', provisionalPrint);
     }
 
     let _menu = null;
@@ -77,6 +78,7 @@ export default (props) => {
     }
 
     const onClickProvisional = () => {
+        console.log("onClickProvisional provisional ", provisional);
         if (provisional && provisional == Constant.PROVISIONAL_PRINT) {
             console.log("onClickProvisional ", jsonContent);
             if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)

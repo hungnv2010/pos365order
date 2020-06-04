@@ -1,20 +1,9 @@
 import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { Image, View, StyleSheet, Button, Text, TouchableOpacity, RefreshControl, ScrollView, NativeEventEmitter, NativeModules } from 'react-native';
 import { Images, Colors, Metrics } from '../../theme';
-import { WebView } from 'react-native-webview';
-import useDidMountEffect from '../../customHook/useDidMountEffect';
 import dialogManager from '../../components/dialog/DialogManager';
 import { HTTPService } from '../../data/services/HttpService';
 import { ApiPath } from '../../data/services/ApiPath';
-import ToolBarPreviewHtml from '../../components/toolbar/ToolBarPreviewHtml';
-import JsonContent1 from '../../data/json/data_print_demo'
-import { dateToDate, DATE_FORMAT, currencyToString } from '../../common/Utils';
-import { getFileDuLieuString } from '../../data/fileStore/FileStorage';
-import { Constant } from '../../common/Constant';
-import { useSelector } from 'react-redux';
-import { Snackbar } from 'react-native-paper';
-import printService from '../../data/html/PrintService';
-import ToolBarNoteBook from '../../components/toolbar/ToolBarNoteBook';
 import I18n from '../../common/language/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault';
@@ -76,8 +65,8 @@ export default (props) => {
                 }
             </ScrollView>
             <View style={styles.viewTotal}>
-                <Text style={styles.textTotal}>Tổng thành tiền </Text>
-                <Text style={styles.textTotalPrice}>{TotalPrice} đ</Text>
+                <Text style={styles.textTotal}>{I18n.t('tong_thanh_tien')} </Text>
+            <Text style={styles.textTotalPrice}>{TotalPrice} {I18n.t('d')}</Text>
             </View>
         </View>
     );
