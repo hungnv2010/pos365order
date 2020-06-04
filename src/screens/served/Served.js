@@ -152,7 +152,7 @@ const Served = (props) => {
     }
 
     const outputClickQRCode = () => {
-        props.navigation.navigate('QRCode')
+        props.navigation.navigate('QRCode', { _onSelect: onCallBackNoteBook })
     }
 
     const renderForPhone = () => {

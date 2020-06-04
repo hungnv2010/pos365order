@@ -289,7 +289,7 @@ export default (props) => {
                     <Text>{I18n.t('dang_trong')}</Text>
                 </View>
             </View>
-            <View style={{ flex: 1, padding: 3 }}>
+            <View style={{ flex: 1, padding: 2 }}>
                 <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
                     <View style={styles.containerRoom}>
                         {datas ?

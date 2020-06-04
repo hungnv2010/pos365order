@@ -20,7 +20,7 @@ export default function ToolBarDefault(props) {
     return (
         <View style={styles.toolbarContainer}>
 
-            <View style={{ flex: 1, alignItems: "center" }}>
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 {props.clickLeftIcon ?
                     <TouchableOpacity onPress={props.clickLeftIcon}>
                         <Icon name={props.leftIcon} size={props.size ? props.size : 30} color="white" />
@@ -50,9 +50,9 @@ export default function ToolBarDefault(props) {
                 </Subheading>
             </View>
 
-            <View style={{ flex: 1, alignItems: "center" }}>
+            <View style={{ flex: 1, alignItems: "center", justifyContent: "center"}}>
                 {props.clickRightIcon && props.rightIcon ?
-                    <TouchableOpacity onPress={props.clickRightIcon}>
+                    <TouchableOpacity style={{paddingHorizontal: 10}} onPress={props.clickRightIcon}>
                         <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
                     </TouchableOpacity>
                     :
