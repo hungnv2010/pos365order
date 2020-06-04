@@ -17,8 +17,7 @@ export default (props) => {
 
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
-    const [provisional, setProvisional] = useState({})
-    // let provisional = "";
+    let provisional;
 
     useLayoutEffect(() => {
         const init = async () => {
@@ -99,7 +98,7 @@ export default (props) => {
                 <ScrollView style={{ flex: 1 }}>
                     {jsonContent.OrderDetails.map((item, index) => {
                         return (
-                            <View style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
+                            <View key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
                                 <Image style={{ width: 20, height: 20, margin: 10 }} source={Images.icon_return} />
                                 <View style={{ flexDirection: "column", flex: 1 }}>
                                     <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
