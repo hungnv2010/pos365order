@@ -17,8 +17,8 @@ export default (props) => {
 
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
-
-    let provisional = "";
+    const [provisional, setProvisional] = useState({})
+    // let provisional = "";
 
     useLayoutEffect(() => {
         const init = async () => {
@@ -80,6 +80,7 @@ export default (props) => {
     }
 
     const onClickProvisional = () => {
+        console.log("onClickProvisional provisional ", provisional);
         if (provisional && provisional == Constant.PROVISIONAL_PRINT) {
             console.log("onClickProvisional ", jsonContent);
             if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)

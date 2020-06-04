@@ -159,6 +159,7 @@ const RoomSchema = {
         Description: { type: 'string', default: "" },
         RoomGroupId: { type: 'int', default: 0 },
         Printer: { type: 'string', default: "" },
+        ProductId: { type: 'int', default: 0 },
     }
 }
 
@@ -256,7 +257,7 @@ const ToppingsSchema = {
 const databaseOption = {
     path: 'Pos365Boss.realm',
     schema: [ServerEventSchema, RoomSchema, RoomGroupSchema, ProductSchema, CategoriesSchema, ToppingsSchema],
-    schemaVersion: 19
+    schemaVersion: 20
 }
 
 const realm = new Realm(databaseOption);

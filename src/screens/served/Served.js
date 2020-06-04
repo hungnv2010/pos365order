@@ -12,6 +12,7 @@ import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
 import Main from '../../screens/main/Main';
 import ToolBarPhoneServed from '../../components/toolbar/ToolBarPhoneServed';
+import realmStore from '../../data/realm/RealmStore';
 
 const Served = (props) => {
 
@@ -32,8 +33,12 @@ const Served = (props) => {
         return state.Common
     });
 
+    useEffect(() => {
+        console.log("Served props ", props);
+    }, [])
 
     const outputListProducts = (newList, type) => {
+        console.log(newList, 'newList start');
         newList = newList.filter(item => item.Quantity > 0)
         if (type === 0) newList = JSON.parse(JSON.stringify(newList))
         if (type === 2) {
@@ -158,6 +163,20 @@ const Served = (props) => {
         props.navigation.navigate('QRCode', { _onSelect: onCallBackNoteBook })
     }
 
+    const outputClickProductService = async () => {
+        // alert("ProductService")
+        let results = await realmStore.queryProducts()
+        if (results) {
+            results = results.filtered(`Id = "${props.route.params.room.ProductId}"`)
+            if (results && results.length > 0) {
+                results = JSON.parse(JSON.stringify(results))
+                console.log("outputClickProductService results ", [results["0"]]);
+                results["0"]["Quantity"] = 1;
+                outputListProducts([results["0"]])
+            }
+        }
+    }
+
     const renderForPhone = () => {
         return (
             <>
@@ -214,6 +233,7 @@ const Served = (props) => {
                             clickNoteBook={outputClickNoteBook}
                             clickQRCode={outputClickQRCode}
                             rightIcon="plus"
+                            clickProductService={outputClickProductService}
                             clickRightIcon={outputIsSelectProduct} />
                         <PageServed
                             {...props}

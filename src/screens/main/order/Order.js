@@ -41,13 +41,15 @@ export default (props) => {
     const toRoomId = useRef()
 
 
-    const onItemPress = ({ Id, Name }) => {
+    const onItemPress = ({ Id, Name, ProductId }) => {
         const { changeTable, fromTable } = props
         if (changeTable && fromTable) {
             toRoomId.current = Id
             setShowModal(!showModal)
         } else {
-            props.navigation.navigate('Served', { room: { Id: Id, Name: Name, Position: 'A' } })
+            console.log("onItemPress ProductId ", ProductId);
+
+            props.navigation.navigate('Served', { room: { Id: Id, Name: Name, Position: 'A', ProductId: ProductId } })
         }
     }
 

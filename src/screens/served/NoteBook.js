@@ -4,7 +4,6 @@ import { Images, Colors, Metrics } from '../../theme';
 import dialogManager from '../../components/dialog/DialogManager';
 import { HTTPService } from '../../data/services/HttpService';
 import { ApiPath } from '../../data/services/ApiPath';
-import { useSelector } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
 import ToolBarNoteBook from '../../components/toolbar/ToolBarNoteBook';
 import I18n from '../../common/language/i18n';
@@ -14,14 +13,10 @@ export default (props) => {
 
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
-    // const [textSearch, setTextSearch] = useState("")
     const [dataList, setDataList] = useState([]);
     const [listRefreshing, setListRefreshing] = useState(false)
     let textSearch = "";
     useEffect(() => {
-        // https://oke.pos365.vn/api/notebooks?format=json&%24inlinecount=allpages&%24top=20
-        // https://oke.pos365.vn/api/notebooks?format=json&%24inlinecount=allpages&ProductCode=a&%24top=20&%24filter=substringof(%27h%C3%A0ng%27%2CName)
-        // https://oke.pos365.vn/api/notebooks?format=json&%24inlinecount=allpages&%24top=20&%24filter=substringof(%27h%C3%A0ng%27%2CName)
         const getDataNoteBook = async () => {
             getData()
         };
@@ -30,7 +25,6 @@ export default (props) => {
 
     const getData = (textSearch = "") => {
         let params = { inlinecount: "allpages", top: 20 };
-        // let textSearch = "";
         if (textSearch != "") {
             params["filter"] = "substringof('" + textSearch + "',Name)";
         }
@@ -51,11 +45,8 @@ export default (props) => {
         })
     }
 
-
     const outputIsSelectProduct = (textSearch) => {
         console.log("textSearch ", textSearch);
-
-        // setTextSearch(textSearch)
         getData(textSearch)
     }
 
@@ -69,7 +60,6 @@ export default (props) => {
     }
 
     const onClickNavigateServed = (item) => {
-
         let params = { inlinecount: "allpages", top: 20, Includes: "Product", NotebookId: item.Id };
         dialogManager.showLoading();
         new HTTPService().setPath(ApiPath.DETAIL_NOTE_BOOK).GET(params).then((res) => {
@@ -89,8 +79,6 @@ export default (props) => {
             console.log("getDetailNoteBook err ", e);
             dialogManager.hiddenLoading()
         })
-
-
     }
 
     return (
@@ -115,11 +103,11 @@ export default (props) => {
                 {
                     dataList.length > 0 ?
                         dataList.map((item, index) => (
-                            <View key={index} style={{ height: 60, marginHorizontal: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 }}>
-                                <TouchableOpacity onPress={() => onClickItem(item)} style={{ flex: 1, height: "100%", justifyContent: "center" }}>
+                            <View key={index} style={styles.viewItem}>
+                                <TouchableOpacity onPress={() => onClickItem(item)} style={styles.name}>
                                     <Text style={{}}>{item.Name}</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => onClickNavigateServed(item)} style={{ backgroundColor: Colors.colorLightBlue, justifyContent: "center", borderRadius: 25, width: 50, height: 50, alignItems: "center" }}>
+                                <TouchableOpacity onPress={() => onClickNavigateServed(item)} style={styles.viewPlus}>
                                     <Icon name="plus" size={30} color="white" />
                                 </TouchableOpacity>
                             </View>))
@@ -138,3 +126,10 @@ export default (props) => {
         </View>
     );
 };
+
+
+const styles = StyleSheet.create({
+    viewPlus: { backgroundColor: Colors.colorLightBlue, justifyContent: "center", borderRadius: 25, width: 50, height: 50, alignItems: "center" },
+    name: { flex: 1, height: "100%", justifyContent: "center" },
+    viewItem: { height: 60, marginHorizontal: 10, flexDirection: "row", justifyContent: "space-between", alignItems: "center", borderBottomColor: "#ddd", borderBottomWidth: 0.5 },
+})

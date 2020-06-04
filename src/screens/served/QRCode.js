@@ -1,20 +1,7 @@
 import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
 import { Image, View, StyleSheet, Button, Text, TouchableOpacity, Linking, ScrollView, NativeEventEmitter, NativeModules } from 'react-native';
 import { Images, Colors, Metrics } from '../../theme';
-import { WebView } from 'react-native-webview';
-import useDidMountEffect from '../../customHook/useDidMountEffect';
 import dialogManager from '../../components/dialog/DialogManager';
-import { HTTPService } from '../../data/services/HttpService';
-import { ApiPath } from '../../data/services/ApiPath';
-import ToolBarPreviewHtml from '../../components/toolbar/ToolBarPreviewHtml';
-import JsonContent1 from '../../data/json/data_print_demo'
-import { dateToDate, DATE_FORMAT, currencyToString } from '../../common/Utils';
-import { getFileDuLieuString } from '../../data/fileStore/FileStorage';
-import { Constant } from '../../common/Constant';
-import { useSelector } from 'react-redux';
-import { Snackbar } from 'react-native-paper';
-import printService from '../../data/html/PrintService';
-import ToolBarNoteBook from '../../components/toolbar/ToolBarNoteBook';
 import I18n from '../../common/language/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault';
@@ -22,12 +9,12 @@ import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import realmStore from '../../data/realm/RealmStore';
 
+const FLASH_ON = "flash"
+const FLASH_OFF = "flash-off"
+
 export default (props) => {
 
-    const [dataList, setDataList] = useState([]);
-    const [title, setTitle] = useState("")
-    const [flash, setFlash] = useState("flash")
-    const [TotalPrice, setTotalPrice] = useState(0)
+    const [flash, setFlash] = useState(FLASH_ON)
     let refQRCodeScanner = null;
 
     useEffect(() => {
@@ -37,15 +24,32 @@ export default (props) => {
     const onSuccess = async e => {
         console.log("e ", e);
         if (e.data) {
-            let results = await realmStore.queryProducts()
-            results = results.filtered(`Code = "${e.data}"`)
-            results = JSON.parse(JSON.stringify(results))
-            console.log("onSuccess results ", results, [results["0"]]);
-            props.navigation.pop();
-            props.route.params._onSelect([results["0"]]);
+            try {
+                let results = await realmStore.queryProducts()
+                if (results) {
+                    results = results.filtered(`Code = "${e.data}"`)
+                    if (results && results.length > 0) {
+                        results = JSON.parse(JSON.stringify(results))
+                        props.navigation.pop();
+                        props.route.params._onSelect([results["0"]]);
+                    } else {
+                        notifyErr()
+                    }
+                } else {
+                    notifyErr()
+                }
+            } catch (e) {
+                notifyErr()
+            }
         }
     };
 
+    const notifyErr = () => {
+        dialogManager.showPopupOneButton(I18n.t('ma_khong_hop_le'), I18n.t('thong_bao'), (res) => {
+            console.log("notifyErr res ", res);
+            refQRCodeScanner.reactivate();
+        })
+    }
 
     return (
         <View style={styles.container}>
@@ -55,10 +59,10 @@ export default (props) => {
                 title="QRCode"
                 clickLeftIcon={() => { props.navigation.goBack() }}
                 clickRightIcon={() => {
-                    if (flash == "flash") {
-                        setFlash("flash-off")
+                    if (flash == FLASH_ON) {
+                        setFlash(FLASH_OFF)
                     } else {
-                        setFlash("flash")
+                        setFlash(FLASH_ON)
                     }
                 }}
                 rightIcon={flash}
@@ -67,38 +71,22 @@ export default (props) => {
                 ref={(ref) => refQRCodeScanner = ref}
                 reactivate={false}
                 onRead={(e) => onSuccess(e)}
-                cameraStyle={{
-                    width: '100%',
-                    height: '100%'
-                }}
                 showMarker={true}
                 customMarker={
-                    <View style={{ backgroundColor: 'transparent' }}>
-
-                        <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', flex: 2, width: Metrics.screenWidth }}></View>
-
-                        <View style={{ flex: 4.4, flexDirection: 'row' }}>
-                            <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenWidth / 10 }}></View>
-                            <View style={[{ backgroundColor: 'transparent', height: "100%", width: 8 * (Metrics.screenWidth / 10) }, styles.rectangle]}>
+                    <View style={styles.viewCustom}>
+                        <View style={styles.viewTopCustom}></View>
+                        <View style={styles.viewCenterCustom}>
+                            <View style={styles.viewCenterLeft}></View>
+                            <View style={[styles.viewCenterContent, styles.rectangle]}>
                             </View>
-                            <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenWidth / 10 }}></View>
+                            <View style={styles.viewCenterRight}></View>
                         </View>
-                        <View style={{ flex: 4, backgroundColor: 'rgba(1,1,1,0.5)', height: Metrics.screenHeight / 3, width: Metrics.screenWidth }}></View>
+                        <View style={styles.viewBottomCustom}></View>
                     </View>
                 }
-                flashMode={flash != "flash" ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
-            // topContent={
-            //     <Text style={styles.centerText}>
-            //         <Text style={styles.textBold}>Di chuyển camerqa đến hình ảnh mã QR</Text>
-            //     </Text>
-            // }
-            // bottomContent={
-            //     <TouchableOpacity style={styles.buttonTouchable}>
-            //         <Text style={styles.buttonText}>OK. Got it!</Text>
-            //     </TouchableOpacity>
-            // }
+                flashMode={flash != FLASH_ON ? RNCamera.Constants.FlashMode.torch : RNCamera.Constants.FlashMode.off}
             />
-            <Text style={{ position: "absolute", bottom: 20, color: "#fff", textAlign: "center", width: "100%" }}>Quét BarCode hoặc QRCode</Text>
+            <Text style={styles.textQRCode}>{I18n.t('quet_barcode_hoac_qrcode')}</Text>
         </View>
 
     );
@@ -112,4 +100,12 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "flex-start"
     },
+    viewCustom: { backgroundColor: 'transparent' },
+    viewCenterCustom: { flex: 4.4, flexDirection: 'row' },
+    viewCenterContent: { backgroundColor: 'transparent', height: "100%", width: 8 * (Metrics.screenWidth / 10) },
+    viewCenterLeft: { backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenWidth / 10 },
+    viewCenterRight: { backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenWidth / 10 },
+    viewBottomCustom: { flex: 3.5, backgroundColor: 'rgba(1,1,1,0.5)', height: Metrics.screenHeight / 3, width: Metrics.screenWidth },
+    viewTopCustom: { backgroundColor: 'rgba(1,1,1,0.5)', flex: 2, width: Metrics.screenWidth },
+    textQRCode: { position: "absolute", bottom: 20, color: "#fff", textAlign: "center", width: "100%" }
 })

@@ -32,6 +32,7 @@ export default {
   dang_trong: "Đang trống",
   dong_y: "Đồng ý",
   don_hang: "Đơn Hàng",
+  d: "đ",
   // TODO: E
 
 
@@ -89,6 +90,7 @@ export default {
   moi_ban_nhap_tin_nhan: "Mời bạn nhập tin nhắn",
   man_hinh_thu_ngan: "Màn hình thu ngân",
   may_in_tam_tinh: "Máy in tạm tính",
+  ma_khong_hop_le: "Mã không hợp lệ vui lòng kiểm tra lại.",
 
   // TODO: N
   no: "Nợ",
@@ -126,6 +128,7 @@ export default {
   quy_khach_vui_long_nhap_ten_tai_khoan: "Quý khách vui lòng nhập tên tài khoản",
   quy_khach_vui_long_nhap_ten_cua_hang: "Quý khách vui lòng nhập tên cửa hàng",
   qua_mang_lan: "qua mạng LAN",
+  quet_barcode_hoac_qrcode: "Quét BarCode hoặc QRCode",
 
   // TODO: R
 
