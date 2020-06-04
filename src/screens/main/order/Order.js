@@ -114,7 +114,7 @@ export default (props) => {
     const RoomAll = { Name: "Tất cả", Id: "All" }
     const [listRoom, setListRoom] = useState([])
 
-    useDidMountEffect(() => {
+    useEffect(() => {
         let isSubscribed = true;
         if (isSubscribed) {
             init()

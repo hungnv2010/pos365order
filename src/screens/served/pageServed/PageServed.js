@@ -64,7 +64,7 @@ export default (props) => {
             {tab == 1 ?
                 <CustomerOrder Position={position} {...props} />
                 :
-                <MenuConfirm position={position} {...props} />
+                <MenuConfirm Position={position} {...props} />
             }
             <Modal
                 animationType="fade"

@@ -39,7 +39,7 @@ export default (props) => {
             let newCategories = [{ Id: -1, Name: I18n.t('tat_ca') }]
             let newTopping = []
             let exist = false
-            let results = await realmStore.queryTopping().then(res => res.slice(0.5))
+            let results = await realmStore.queryTopping()
             results.forEach(item => {
                 if (item.ExtraGroup !== '' && newCategories.filter(cate => cate.Name == item.ExtraGroup).length == 0) {
                     newCategories.push({ Id: item.Id, Name: item.ExtraGroup })
@@ -63,6 +63,7 @@ export default (props) => {
             setTopping(newTopping)
         }
         getTopping()
+        props.outputListTopping([])
     }, [listTopping, itemOrder])
 
     useEffect(() => {

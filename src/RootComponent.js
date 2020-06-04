@@ -26,8 +26,6 @@ const eventSwicthScreen = new NativeEventEmitter(Print);
 export default () => {
 
     const [forceUpdate, setForceUpdate] = useState(false);
-    const [deviceType, setDeviceType] = useState("");
-    const [orientaition, setOrientaition] = useState("");
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
     const dispatch = useDispatch();
@@ -47,7 +45,7 @@ export default () => {
     }
 
     useEffect(() => {
-        signalRManager.init()
+        // signalRManager.init()
         I18n.locale = "vi";
         setForceUpdate(!forceUpdate);
         dispatch({ type: 'TYPE_DEVICE', deviceType: isTablet() })
@@ -109,9 +107,6 @@ export default () => {
     // }, [backButtonHandler]);
 
     const handleChange = () => {
-        setDeviceType(isTablet)
-        setOrientaition(isPortrait)
-        console.log("isTablet ", isTablet());
         dispatch({ type: 'TYPE_DEVICE', deviceType: isTablet() })
         dispatch({ type: 'ORIENTAITION', orientaition: isPortrait() })
     }
