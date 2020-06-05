@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
 import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import Images from '../../../theme/Images';
 import realmStore from '../../../data/realm/RealmStore'
@@ -17,7 +17,8 @@ export default (props) => {
 
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
-    let provisional;
+    let provisional = useRef();
+
 
     useLayoutEffect(() => {
         const init = async () => {
@@ -32,8 +33,8 @@ export default (props) => {
                     setJsonContent(JSON.parse(serverEvent[0].JsonContent))
                 })
             }
-            provisional = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
-            console.log('provisional ', provisional);
+            provisional.current = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
+            console.log('provisional ', provisional.current);
         }
         init()
         return () => {
@@ -79,11 +80,13 @@ export default (props) => {
     }
 
     const onClickProvisional = () => {
-        console.log("onClickProvisional provisional ", provisional);
-        if (provisional && provisional == Constant.PROVISIONAL_PRINT) {
+        console.log("onClickProvisional provisional ", provisional.current);
+        if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
             console.log("onClickProvisional ", jsonContent);
             if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
                 printService.PrintHtmlService(HtmlDefault, jsonContent)
+            else
+                dialogManager.showPopupOneButton("Vui lòng chọn món để sử dụng chức năng này.")
         } else {
             dialogManager.showPopupOneButton("Bạn không có quyền sử dụng chức năng này.")
         }
@@ -92,7 +95,7 @@ export default (props) => {
     return (
         <View style={{ flex: 1 }}>
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
-                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, }}>
+                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
                 </ImageBackground>
                 :
                 <ScrollView style={{ flex: 1 }}>

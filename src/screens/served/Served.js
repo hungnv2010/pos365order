@@ -265,7 +265,6 @@ const Served = (props) => {
                             outputIsSelectProduct={outputIsSelectProduct}
                             outputIsChangeTable={outputIsChangeTable}
                             listTopping={listTopping}
-                            // outputCheckProductId={() => toolBarPhoneServedRef.current.clickCheckInRef(true)}
                         />
                     </View> :
                     null

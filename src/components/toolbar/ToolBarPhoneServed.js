@@ -35,18 +35,8 @@ export default forwardRef((props, ref) => {
 
     useEffect(() => {
         const getData = async () => {
-            let results = await realmStore.queryRooms()
-            console.log("results ", results, props);
-
-
-            if (results) {
-                results = results.filtered(`ProductId = "${props.route.params.room.ProductId}"`)
-                console.log("results == ", results);
-                if (results && results.length > 0) {
-                    results = JSON.parse(JSON.stringify(results))
-                    console.log("results == ", results);
-                    setShowProductService(true)
-                }
+            if (props.route.params.room.ProductId > 0) {
+                setShowProductService(true)
             }
         }
         getData()
