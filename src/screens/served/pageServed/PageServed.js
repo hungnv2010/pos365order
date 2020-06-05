@@ -62,7 +62,7 @@ export default (props) => {
                 </TouchableOpacity>
             </View>
             {tab == 1 ?
-                <CustomerOrder Position={position} {...props} />
+                <CustomerOrder Position={position} {...props}/>
                 :
                 <MenuConfirm position={position} {...props} />
             }

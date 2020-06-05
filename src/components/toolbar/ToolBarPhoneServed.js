@@ -1,6 +1,6 @@
 
 
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component, useEffect, useState, useImperativeHandle, forwardRef } from 'react';
 import {
     View, Text, TouchableOpacity, Image, StyleSheet,
     StatusBar, Keyboard, Linking, Platform, SafeAreaView
@@ -14,11 +14,24 @@ import PropTypes from 'prop-types';
 import realmStore from '../../data/realm/RealmStore';
 
 
-export default function ToolBarPhoneServed(props) {
+export default forwardRef((props, ref) => {
 
     let blockClick = false;
 
     const [showProductService, setShowProductService] = useState(false);
+
+    // useEffect(() => {
+    //         console.log("useEffect ", props);
+
+    // }, props.checkService)
+
+    useImperativeHandle(ref, () => ({
+        clickCheckInRef(status) {
+            console.log("clickCheckInRef status ", status);
+
+            setShowProductService(status)
+        }
+    }));
 
     useEffect(() => {
         const getData = async () => {
@@ -102,7 +115,7 @@ export default function ToolBarPhoneServed(props) {
     )
 
 }
-
+)
 const styles = StyleSheet.create({
 
     toolbarContainer: {
@@ -112,14 +125,15 @@ const styles = StyleSheet.create({
     },
 })
 
-ToolBarPhoneServed.propTypes = {
-    title: PropTypes.string,
-    rightIcon: PropTypes.string,
-    leftIcon: PropTypes.string,
-    clickRightIcon: PropTypes.func,
-    clickLeftIcon: PropTypes.func
-}
+// ToolBarPhoneServed.propTypes = {
+//     title: PropTypes.string,
+//     rightIcon: PropTypes.string,
+//     leftIcon: PropTypes.string,
+//     clickRightIcon: PropTypes.func,
+//     clickLeftIcon: PropTypes.func
+// }
 
-ToolBarPhoneServed.defaultProps = {
-    leftIcon: "keyboard-backspace"
-}
+// ToolBarPhoneServed.defaultProps = {
+//     leftIcon: "keyboard-backspace"
+// }
+

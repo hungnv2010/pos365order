@@ -52,7 +52,7 @@ export default (props) => {
 
 
 
-    useEffect(() => {        
+    useEffect(() => {
         props.outputPosition(props.Position)
     }, [props.Position])
 
@@ -299,9 +299,19 @@ export default (props) => {
             }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingVertical: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : null }}>
                     <TouchableOpacity onPress={() => {
-                        console.log('delete');
+                        console.log('delete ', props, item);
+                        // let check = false;
+                        // list.forEach(element => {
+                        //     console.log('element  ', element);
+                        //     if (element.Id == props.route.params.room.ProductId) {
+                        //         console.log('element  true');
+                        //         check = true;
+                        //     }
+                        // });
+                        // if(check) props.outputCheckProductId();
                         list.splice(index, 1)
                         syncListProducts([...list])
+
 
                     }}>
                         <Icon name="trash-can-outline" size={40} color="gray" />

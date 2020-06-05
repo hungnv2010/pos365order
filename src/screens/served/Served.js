@@ -44,6 +44,7 @@ const Served = (props) => {
         if (type === 2) newList = [...newList, ...listProducts]
         setListProducts(newList)
         console.log(newList, 'newList');
+        checkProductId(newList, props.route.params.room.ProductId)
     }
 
     const outputTextSearch = (text) => {
@@ -163,9 +164,25 @@ const Served = (props) => {
                 console.log("outputClickProductService results ", [results["0"]]);
                 results["0"]["Quantity"] = 1;
                 outputListProducts([results["0"]])
+                toolBarPhoneServedRef.current.clickCheckInRef()
             }
         }
     }
+
+    const checkProductId = (listProduct, Id) => {
+        console.log("checkProductId id ", Id);
+
+        if (Id != 0) {
+            let list = listProduct.filter(item => { return item.Id == Id })
+            console.log("checkProductId listProduct ", list);
+            setTimeout(() => {
+                list.length > 0 ? toolBarPhoneServedRef.current.clickCheckInRef(false) : toolBarPhoneServedRef.current.clickCheckInRef(true)
+            }, 500);
+            // listProduct.length > 0 ? toolBarPhoneServedRef.current.clickCheckInRef(false) : toolBarPhoneServedRef.current.clickCheckInRef(true)
+        }
+    }
+
+    const toolBarPhoneServedRef = useRef();
 
     const renderForPhone = () => {
         return (
@@ -216,6 +233,7 @@ const Served = (props) => {
                 {!(isTopping || isSelectProduct || isChangeTable) ?
                     <View style={{ flex: 1 }}>
                         <ToolBarPhoneServed
+                            ref={toolBarPhoneServedRef}
                             {...props}
                             leftIcon="keyboard-backspace"
                             title={I18n.t('don_hang')}
@@ -237,6 +255,7 @@ const Served = (props) => {
                             outputIsSelectProduct={outputIsSelectProduct}
                             outputIsChangeTable={outputIsChangeTable}
                             listTopping={listTopping}
+                            // outputCheckProductId={() => toolBarPhoneServedRef.current.clickCheckInRef(true)}
                         />
                     </View> :
                     null
