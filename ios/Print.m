@@ -94,7 +94,7 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     //                           self.imageView.contentMode = UIViewContentModeScaleAspectFit;
     //                           [self imageWithImage:imagePrint scaledToWidth:5000 ];
     
-    float i_width = 5000;
+    float i_width = 800;
     float oldWidth = imagePrint.size.width;
     float oldHeight = imagePrint.size.height;
     
