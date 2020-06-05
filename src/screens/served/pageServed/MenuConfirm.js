@@ -15,32 +15,34 @@ import dialogManager from '../../../components/dialog/DialogManager';
 
 export default (props) => {
 
-    const row_key = `${props.route.params.room.Id}_${props.route.params.room.Position}`
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
-    const [provisional, setProvisional] = useState({})
-    // let provisional = "";
+    let provisional;
 
     useLayoutEffect(() => {
+        const init = async () => {
+            const row_key = `${props.route.params.room.Id}_${props.Position}`
+            let serverEvent = await realmStore.queryServerEvents().then(res => res.filtered(`RowKey == '${row_key}'`))
+            console.log('serverEvent', JSON.stringify(serverEvent) == "{}");
+
+            if (JSON.stringify(serverEvent) != "{}") {
+                console.log("init: ", JSON.stringify(serverEvent));
+                setJsonContent(JSON.parse(serverEvent[0].JsonContent))
+                serverEvent.addListener((collection, changes) => {
+                    setJsonContent(JSON.parse(serverEvent[0].JsonContent))
+                })
+            }
+            provisional = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
+            console.log('provisional ', provisional);
+        }
         init()
         return () => {
             realmStore.removeAllListener()
+            setJsonContent({})
         }
-    }, [])
+    }, [props.Position])
 
-    const init = async () => {
-        let serverEvent = await realmStore.queryServerEvents().then(res => res.filtered(`RowKey == '${row_key}'`))
-        console.log("init: ", JSON.stringify(serverEvent));
 
-        setJsonContent(JSON.parse(serverEvent[0].JsonContent))
-        serverEvent.addListener((collection, changes) => {
-            setJsonContent(JSON.parse(serverEvent[0].JsonContent))
-        })
-
-        let provisionalPrint = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
-        setProvisional(provisionalPrint)
-        console.log('provisional ', provisionalPrint);
-    }
 
     let _menu = null;
 
@@ -70,7 +72,6 @@ export default (props) => {
 
     const changTable = () => {
         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
-            console.log('props.route.params.room.Id', props);
             props.outputIsChangeTable({ FromRoomId: props.route.params.room.Id, FromPos: props.position, Name: props.route.params.room.Name })
         } else {
             dialogManager.showPopupOneButton("Bạn hãy chọn món ăn trước.")
@@ -91,13 +92,13 @@ export default (props) => {
     return (
         <View style={{ flex: 1 }}>
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
-                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 10 }}>
+                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, }}>
                 </ImageBackground>
                 :
                 <ScrollView style={{ flex: 1 }}>
                     {jsonContent.OrderDetails.map((item, index) => {
                         return (
-                            <View style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
+                            <View key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
                                 <Image style={{ width: 20, height: 20, margin: 10 }} source={Images.icon_return} />
                                 <View style={{ flexDirection: "column", flex: 1 }}>
                                     <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>

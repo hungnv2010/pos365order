@@ -41,7 +41,17 @@ const Served = (props) => {
         console.log(newList, 'newList start');
         newList = newList.filter(item => item.Quantity > 0)
         if (type === 0) newList = JSON.parse(JSON.stringify(newList))
-        if (type === 2) newList = [...newList, ...listProducts]
+        if (type === 2) {
+            newList.forEach((element, index) => {
+                listProducts.forEach(item => {
+                    if (element.Id == item.Id) {
+                        item.Quantity++
+                        newList.splice(index, 1)
+                    }
+                })
+            }); 
+            newList = [...newList, ...listProducts]
+        }
         setListProducts(newList)
         console.log(newList, 'newList');
         checkProductId(newList, props.route.params.room.ProductId)
