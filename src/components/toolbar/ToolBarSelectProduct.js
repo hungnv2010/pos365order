@@ -49,7 +49,6 @@ export default function ToolBarDefault(props) {
                         <View style={{ margin: 5, padding: 6, flex: 1, borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2 }}>
                             <TextInput
                                 ref={inputRef}
-                                // placeholder="Từ khoá"
                                 style={{ backgroundColor: "transparent", flex: 1 }}
                                 onChangeText={(text) => onChangeText(text)}
                                 value={value}

@@ -14,12 +14,16 @@ const URL_DEBUG = "https://kt365cafe.pos365.vn/";
 
 export var URL = { link: "https://oke.pos365.vn/" };
 
+export var index401 = 0;
+
 export class HTTPService {
 
     _api = URL.link;
     _path = ''
 
     HTTP_OK = 200 | 204;
+
+
 
 
     constructor() {
@@ -56,7 +60,10 @@ export class HTTPService {
             method: 'GET',
             headers: headers,
             credentials: "omit",
-        }).then(extractData);
+        }).then(extractData).catch((e) => {
+            dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'))
+            console.log("GET err ", e);
+        })
 
     }
 
@@ -68,7 +75,10 @@ export class HTTPService {
             credentials: "omit",
             headers: headers,
             body: JSON.stringify(jsonParam),
-        }).then(extractData);
+        }).then(extractData).catch((e) => {
+            dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'))
+            console.log("POST err ", e);
+        })
     }
 
     PUT(jsonParam, headers = getHeaders()) {
@@ -92,15 +102,19 @@ export class HTTPService {
 
 }
 const extractData = (response) => {
-    console.log("extractData Responses", response)
+    console.log("extractData Responses", index401, response)
     if (response.status == 200) {
         return response.json();
     }
     else {
         if (response.status == 401) {
+            index401++;
             // if (!(response.url.includes(ApiPath.RETAILER_INFO) || response.url.includes(ApiPath.LOGIN))) {
-            setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
-            NavigationService.navigate("Login", {}, true);
+            if (index401 == 10) {
+                setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
+                NavigationService.navigate("Login", {}, true);
+                index401 = 0
+            }
             // }
         } else
             dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'), () => {
