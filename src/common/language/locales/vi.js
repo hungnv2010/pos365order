@@ -12,7 +12,7 @@ export default {
   bao_che_bien_sau_thanh_toan: "Báo chế biến sau khi thanh toán",
   ban_dang_co_it_hon_hai_chi_nhanh: "Bạn đang có ít hơn 2 chi nhánh.",
   ban_khong_co_quyen_su_dung_chuc_nang_nay: "Bạn không có quyền sử dụng chức năng này.",
-  
+
   // TODO: C
   chuyen_thiet_bi_cai_dat_otp: 'Chuyển thiết bị cài đặt Smart OTP',
   cai_dat: "Cài đặt",
@@ -35,6 +35,7 @@ export default {
   dong_y: "Đồng ý",
   don_hang: "Đơn Hàng",
   d: "đ",
+  don_gia: "Đơn giá",
   // TODO: E
 
 
@@ -49,6 +50,9 @@ export default {
   gioi_tinh: "Giới tính",
   gui_tin_nhan_thanh_cong: "Gửi tin nhắn thành công !",
   gui_thong_bao_toi_thu_ngan:"Gửi thông báo tới thu ngân",
+  gui_thuc_don: "Gửi thực đơn",
+  gui_tin_nhan_thanh_cong: "Gửi tin nhắn thành công !",
+  gui_tin_nhan_that_bai: "Gửi tin nhắn thất bại!",
 
   // TODO: H
   huy: 'Hủy',
@@ -141,6 +145,7 @@ export default {
   SL_kiem_ke: "SL Kiểm kê",
   so_no: "Sổ nợ",
   so_tay_ban_hang_nhanh: "Sổ tay bán hàng nhanh",
+  so_luong: "Số lượng",
 
   // TODO: T
   thong_bao_quet_van_tay: "Quý khách vui lòng quét dấu vân tay đã đăng ký trên thiết bị.",

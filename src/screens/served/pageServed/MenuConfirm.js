@@ -79,7 +79,7 @@ export default (props) => {
         }
     }
 
-    const onClickProvisional = () => {
+    const onClickProvisional = async () => {
         console.log("onClickProvisional provisional ", provisional.current);
         let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
         console.log('getCurrentIP ', getCurrentIP);
@@ -97,6 +97,12 @@ export default (props) => {
             dialogManager.showPopupOneButton(I18n.t('vui_long_kiem_tra_ket_noi_may_in'), I18n.t('thong_bao'))
         }
 
+    }
+
+    const sendNotidy = (type) => {
+        console.log("sendNotidy type ", type);
+        hideMenu();
+        props.outputSendNotify(type);
     }
 
     return (
@@ -176,11 +182,11 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                         }}>
                             <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
+                            <TouchableOpacity onPress={() => sendNotidy(1)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
                                 <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
+                            <TouchableOpacity onPress={() => sendNotidy(2)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
                                 <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
                             </TouchableOpacity>
