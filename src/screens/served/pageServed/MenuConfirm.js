@@ -81,15 +81,22 @@ export default (props) => {
 
     const onClickProvisional = () => {
         console.log("onClickProvisional provisional ", provisional.current);
-        if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
-            console.log("onClickProvisional ", jsonContent);
-            if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
-                printService.PrintHtmlService(HtmlDefault, jsonContent)
-            else
-                dialogManager.showPopupOneButton("Vui lòng chọn món để sử dụng chức năng này.")
+        let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
+        console.log('getCurrentIP ', getCurrentIP);
+        if (getCurrentIP && getCurrentIP != "") {
+            if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
+                console.log("onClickProvisional ", jsonContent);
+                if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
+                    printService.PrintHtmlService(HtmlDefault, jsonContent)
+                else
+                    dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
+            } else {
+                dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
+            }
         } else {
-            dialogManager.showPopupOneButton("Bạn không có quyền sử dụng chức năng này.")
+            dialogManager.showPopupOneButton(I18n.t('vui_long_kiem_tra_ket_noi_may_in'), I18n.t('thong_bao'))
         }
+
     }
 
     return (
