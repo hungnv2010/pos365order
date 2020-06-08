@@ -10,6 +10,7 @@ import I18n from "../../../common/language/i18n"
 import signalRManager from '../../../common/SignalR';
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
+import { Snackbar } from 'react-native-paper';
 
 export default (props) => {
 
@@ -18,7 +19,8 @@ export default (props) => {
     const [vendor, setVendor] = useState({})
     const [showModal, setShowModal] = useState(false)
     const [position, setPosition] = useState(props.position)
-
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
 
     const selectPosition = (position) => {
         setPosition(position)
@@ -64,6 +66,15 @@ export default (props) => {
 
     return (
         <View style={{ flex: 1 }}>
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
             <View style={{ backgroundColor: Colors.colorchinh, alignItems: "center", flexDirection: "row", justifyContent: "space-between", paddingBottom: 5 }}>
                 <View style={{ flex: 1, justifyContent: "center" }}>
                     <Text style={{ paddingLeft: 20, textTransform: "uppercase", color: "white", fontWeight: "bold" }}>{props.route && props.route.params && props.route.params.room && props.route.params.room.Name ? props.route.params.room.Name : ""}</Text>

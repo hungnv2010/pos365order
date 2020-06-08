@@ -13,7 +13,7 @@ import TextTicker from 'react-native-text-ticker';
 import { useSelector } from 'react-redux';
 import { currencyToString } from '../../../common/Utils'
 import I18n from "../../../common/language/i18n"
-
+import { Snackbar } from 'react-native-paper';
 
 export default (props) => {
 
@@ -22,6 +22,8 @@ export default (props) => {
     const [list, setListOrder] = useState(() => props.listProducts)
     const [vendorSession, setVendorSession] = useState({})
     const [itemOrder, setItemOrder] = useState({})
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
     const { deviceType } = useSelector(state => {
         console.log("useSelector state ", state);
         return state.Common
@@ -216,7 +218,11 @@ export default (props) => {
     const sendNotidy = (type) => {
         console.log("sendNotidy type ", type);
         hideMenu();
-        props.outputSendNotify(type);
+        if (type == 1 && !(list.length > 0)) {
+            setToastDescription(I18n.t("ban_hay_chon_mon_an_truoc"))
+            setShowToast(true)
+        } else
+            props.outputSendNotify(type);
     }
 
 
@@ -340,6 +346,7 @@ export default (props) => {
 
     return (
         <View style={{ flex: 1 }}>
+            
             <View style={{ flex: 1 }}>
                 {list.length > 0 ?
                     <ScrollView style={{ flex: 1 }}>
@@ -437,6 +444,15 @@ export default (props) => {
                     </View>
                 </View>
             </Modal>
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </View>
     )
 }

@@ -12,11 +12,13 @@ import printService from '../../../data/html/PrintService';
 import { getFileDuLieuString } from '../../../data/fileStore/FileStorage';
 import { Constant } from '../../../common/Constant';
 import dialogManager from '../../../components/dialog/DialogManager';
-
+import { Snackbar } from 'react-native-paper';
 export default (props) => {
 
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
     let provisional = useRef();
 
 
@@ -102,7 +104,11 @@ export default (props) => {
     const sendNotidy = (type) => {
         console.log("sendNotidy type ", type);
         hideMenu();
-        props.outputSendNotify(type);
+        if (type == 1 && !(jsonContent.OrderDetails.length > 0)) {
+            setToastDescription(I18n.t("ban_hay_chon_mon_an_truoc"))
+            setShowToast(true)
+        } else
+            props.outputSendNotify(type);
     }
 
     return (
@@ -200,7 +206,15 @@ export default (props) => {
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('tam_tinh')}</Text>
                 </TouchableOpacity>
             </View>
-
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </View>
     )
 

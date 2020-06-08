@@ -14,8 +14,6 @@
 {
   PrinterManager * _printerManager;
   UIImage *imagePrint;
-  UIImage *imagePrint1;
-  UIImage *imagePrint2;
   
 }
 @end
@@ -26,6 +24,7 @@
   NSString *html;
   NSString *IP;
   bool hasListeners;
+  NSMutableArray *imageArray;
 }
 
 RCT_EXPORT_MODULE();
@@ -48,11 +47,11 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
 
 - (void)loadWebview{
   NSLog(@"loadWebview ");
+  imageArray = [[NSMutableArray alloc] init];
   
   CGRect frame = CGRectMake(0,0,200,600);
   webView =[[UIWebView alloc] initWithFrame:frame];
   webView.delegate = self;
-  
   webView.userInteractionEnabled = NO;
   webView.opaque = NO;
   webView.backgroundColor = [UIColor whiteColor];
@@ -61,11 +60,7 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
   
   double delayInSeconds = 1;
   dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC)); // 1
-  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){ // 2
-    
-    //    });
-    //
-    
+  dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
     CGRect originalFrame = webView.frame;
     
     //get the width and height of webpage using js (you might need to use another call, this doesn't work always)
@@ -85,14 +80,10 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     
     //set the webview's frame to the original size
     [webView setFrame:originalFrame];
-    
-    //and VOILA :)
+
     imagePrint = image;
-    //                           self.imageView.image = imagePrint;
     NSLog(@".width=%d",image.size.width);
     NSLog(@".height=%d",image.size.height);
-    //                           self.imageView.contentMode = UIViewContentModeScaleAspectFit;
-    //                           [self imageWithImage:imagePrint scaledToWidth:5000 ];
     
     float i_width = 800;
     float oldWidth = imagePrint.size.width;
@@ -114,54 +105,46 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     imagePrint = newImage;
     
     CGImageRef tmpImgRef = newImage.CGImage;
-    CGImageRef topImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, 0, newImage.size.width, newImage.size.height / 2.0));
-    imagePrint1 = [UIImage imageWithCGImage:topImgRef];
-    CGImageRelease(topImgRef);
     
-    CGImageRef bottomImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, newImage.size.height / 2.0,  newImage.size.width, newImage.size.height / 2.0));
-    imagePrint2 = [UIImage imageWithCGImage:bottomImgRef];
-    CGImageRelease(bottomImgRef);
+    int numberArrayImage = 1;
+    if(newHeight > newWidth){
+      if(fmod(newHeight,newWidth) > 0){
+        numberArrayImage = newHeight / newWidth + 1;
+      }else{
+        numberArrayImage = newHeight / newWidth;
+      }
+    }
     
-    for (int i=0; i<2; i++) {
+    for (int i=0; i<numberArrayImage; i++) {
+      CGImageRef topImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, i * newImage.size.height / numberArrayImage, newImage.size.width, newImage.size.height / numberArrayImage));
+      UIImage *img = [UIImage imageWithCGImage:topImgRef];
+      [imageArray addObject:img];
+      CGImageRelease(topImgRef);
+    }
+    
+    NSLog(@"numberArrayImage == %d",numberArrayImage);
+    for (int i=0, count = [imageArray count]; i < count; i++) {
+      NSLog(@"numberArrayImage %@",[imageArray objectAtIndex:i]);
+      
       Cmd *cmd = [_printerManager CreateCmdClass:_printerManager.CurrentPrinterCmdType];
       [cmd Clear];
       cmd.encodingType =Encoding_UTF8;
       NSData *headercmd = [_printerManager GetHeaderCmd:cmd cmdtype:_printerManager.CurrentPrinterCmdType];
       [cmd Append:headercmd];
       
-      NSLog(@"imageFromWebview 4");
       Printer *currentprinter = _printerManager.CurrentPrinter;
       BitmapSetting *bitmapSetting  = currentprinter.BitmapSetts;
       //                                       bitmapSetting.Alignmode = Align_Right;
       bitmapSetting.Alignmode = Align_Center;
       bitmapSetting.limitWidth = 60*9;//ESC
       
-      
-      NSLog(@"imageFromWebview 5");
-      
       NSData *data;
-      if(i == 0){
-        data = [cmd GetBitMapCmd:bitmapSetting image:imagePrint1];
-      }else {
-        data = [cmd GetBitMapCmd:bitmapSetting image:imagePrint2];
-      }
+      data = [cmd GetBitMapCmd:bitmapSetting image:[imageArray objectAtIndex:i]];
       [cmd Append:data];
       [cmd Append:[cmd GetCutPaperCmd:CutterMode_half]];
       if ([_printerManager.CurrentPrinter IsOpen]){
         NSData *data=[cmd GetCmd];
         NSLog(@"data bytes=%@",data);
-        //        NSLog(@"===========================");
-        //        Byte *b =[data bytes];
-        //        NSMutableString * s = [NSMutableString new];
-        //        for (int i=0; i<data.length; i++) {
-        //            [s appendFormat:@"%02x ",b[i]];
-        //            if ((i+1) % 16==0)
-        //              [s appendString:@"\r"];
-        //        }
-        //        NSLog(@"s=%@",s);
-        // NSString *aString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        //aString = [aString stringByReplacingOccurrencesOfString:@"\r" withString:@""];
-        //NSLog(@"data string=%@",aString);
         [currentprinter Write:data];
       }
       data = nil;
@@ -169,40 +152,6 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
       
     }
   });
-}
-
-- (UIImage*)imageWithImage: (UIImage*) sourceImage scaledToWidth: (float) i_width
-{
-  NSLog(@"sourceImage.size.width=%f",sourceImage.size.width);
-  NSLog(@"sourceImage.size.height=%f",sourceImage.size.height);
-  float oldWidth = sourceImage.size.width;
-  float oldHeight = sourceImage.size.height;
-  
-  float scaleFactor = i_width / oldWidth;
-  NSLog(@"i_width=%f",i_width);
-  NSLog(@"oldWidth=%f",oldWidth);
-  NSLog(@"scaleFactor=%f",scaleFactor);
-  
-  float newHeight = oldHeight * scaleFactor;
-  float newWidth = oldWidth * scaleFactor;
-  
-  NSLog(@"newWidth=%f",newWidth);
-  NSLog(@"newHeight=%f",newHeight);
-  UIGraphicsBeginImageContext(CGSizeMake(newWidth, newHeight));
-  [sourceImage drawInRect:CGRectMake(0, 0, newWidth, newHeight)];
-  UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
-  imagePrint = newImage;
-  
-  CGImageRef tmpImgRef = newImage.CGImage;
-  CGImageRef topImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, 0, newImage.size.width, newImage.size.height / 2.0));
-  imagePrint1 = [UIImage imageWithCGImage:topImgRef];
-  CGImageRelease(topImgRef);
-  
-  CGImageRef bottomImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, newImage.size.height / 2.0,  newImage.size.width, newImage.size.height / 2.0));
-  imagePrint2 = [UIImage imageWithCGImage:bottomImgRef];
-  CGImageRelease(bottomImgRef);
-  UIGraphicsEndImageContext();
-  return newImage;
 }
 
 #pragma handleNotification
@@ -229,26 +178,26 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
 }
 
 + (id)allocWithZone:(NSZone *)zone {
-    static Print *sharedInstance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedInstance = [super allocWithZone:zone];
-    });
-    return sharedInstance;
+  static Print *sharedInstance = nil;
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    sharedInstance = [super allocWithZone:zone];
+  });
+  return sharedInstance;
 }
 
 // Will be called when this module's first listener is added.
 -(void)startObserving {
-    hasListeners = YES;
-    // Set up any upstream listeners or background tasks as necessary
+  hasListeners = YES;
+  // Set up any upstream listeners or background tasks as necessary
 }
 
 // Will be called when this module's last listener is removed, or on dealloc.
 -(void)stopObserving {
-    hasListeners = NO;
-    // Remove upstream listeners, stop unnecessary background tasks
+  hasListeners = NO;
+  // Remove upstream listeners, stop unnecessary background tasks
 }
-  
+
 - (NSArray<NSString *> *)supportedEvents
 {
   return @[@"sendSwicthScreen"];
@@ -258,7 +207,7 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
   if (hasListeners) {
     [self sendEventWithName:@"sendSwicthScreen" body:IP];
   } else {
-   
+    
   }
 }
 

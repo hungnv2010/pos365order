@@ -12,6 +12,7 @@ export default {
   bao_che_bien_sau_thanh_toan: "Báo chế biến sau khi thanh toán",
   ban_dang_co_it_hon_hai_chi_nhanh: "Bạn đang có ít hơn 2 chi nhánh.",
   ban_khong_co_quyen_su_dung_chuc_nang_nay: "Bạn không có quyền sử dụng chức năng này.",
+  ban_hay_chon_mon_an_truoc: "Bạn hãy chọn món ăn trước",
 
   // TODO: C
   chuyen_thiet_bi_cai_dat_otp: 'Chuyển thiết bị cài đặt Smart OTP',
