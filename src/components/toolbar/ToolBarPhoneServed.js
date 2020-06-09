@@ -74,7 +74,7 @@ export default forwardRef((props, ref) => {
                     {props.title}
                 </Subheading>
             </View>
-            {showProductService && showProductService == true ? <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+            {showProductService  ? <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
                 <TouchableOpacity onPress={props.clickProductService}>
                     <Icon name="clock-outline" size={props.size ? props.size : 30} color="white" />
                 </TouchableOpacity>

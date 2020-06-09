@@ -13,10 +13,11 @@ import { ApiPath } from "../../data/services/ApiPath";
 import { HTTPService, getHeaders, URL } from "../../data/services/HttpService";
 import { useSelector, useDispatch } from 'react-redux';
 import { saveDeviceInfoToStore, updateStatusLogin, saveCurrentBranch, saveNotificationCount } from "../../actions/Common";
-import useDidMountEffect from '../../customHook/useDidMountEffect';
 import { getFileDuLieuString, setFileLuuDuLieu } from "../../data/fileStore/FileStorage";
 import dialogManager from '../../components/dialog/DialogManager';
 import { CommonActions } from '@react-navigation/native';
+import dataManager from '../../data/DataManager'
+
 
 let error = "";
 
@@ -60,44 +61,35 @@ const LoginScreen = (props) => {
         if (props.route.params && props.route.params.param == "logout") {
             console.log("LOGOUT");
             setHasLogin(false)
-            // let currentAccount = await getFileDuLieuString(Constant.CURRENT_ACCOUNT, true);
-            // console.log('currentAccount', typeof currentAccount);
-            // if (currentAccount && currentAccount != "") {
-            //     currentAccount = JSON.parse(currentAccount);
-            // }
         }
-    }, [(props) => props.route.params])
+    }, [props.route.params])
 
     const onClickLogin = useCallback(() => {
-        if (logIn) {
-            if (!checkDataLogin()) {
-                return
-            } else {
-                dialogManager.showLoading();
-                URL.link = "https://" + shop + ".pos365.vn/";
-                console.log("onClickLogin URL ", URL, shop);
-                let params = { UserName: userName, Password: password };
-                new HTTPService().setPath(ApiPath.LOGIN).POST(params, getHeaders({}, true)).then((res) => {
-                    console.log("onClickLogin res ", res);
-                    if (res.SessionId && res.SessionId != "") {
-                        dispatch(saveDeviceInfoToStore({ SessionId: res.SessionId }))
-                        handlerLoginSuccess(params, res);
-                    }
-                    if (res.status == 401) {
-                        dialogManager.hiddenLoading();
-                        error = I18n.t('loi_dang_nhap');
-                        setShowToast(true)
-                    }
-                }).catch((e) => {
-                    dialogManager.hiddenLoading();
-                    error = I18n.t('loi_server');
-                    setShowToast(true);
-                    console.log("onClickLogin err ", e);
-                })
-            }
-        }
-        else {
+        if (!logIn) return
+        if (!checkDataLogin()) {
             return
+        } else {
+            dialogManager.showLoading();
+            URL.link = "https://" + shop + ".pos365.vn/";
+            console.log("onClickLogin URL ", URL, shop);
+            let params = { UserName: userName, Password: password };
+            new HTTPService().setPath(ApiPath.LOGIN).POST(params, getHeaders({}, true)).then((res) => {
+                console.log("onClickLogin res ", res);
+                if (res.SessionId && res.SessionId != "") {
+                    dispatch(saveDeviceInfoToStore({ SessionId: res.SessionId }))
+                    handlerLoginSuccess(params, res);
+                }
+                if (res.status == 401) {
+                    dialogManager.hiddenLoading();
+                    error = I18n.t('loi_dang_nhap');
+                    setShowToast(true)
+                }
+            }).catch((e) => {
+                dialogManager.hiddenLoading();
+                error = I18n.t('loi_server');
+                setShowToast(true);
+                console.log("onClickLogin err ", e);
+            })
         }
     }, [logIn])
 
@@ -121,17 +113,18 @@ const LoginScreen = (props) => {
             setFileLuuDuLieu(Constant.VENDOR_SESSION, JSON.stringify(res))
 
             if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
-                // props.navigation.navigate("Home")
                 let account = { UserName: userName, Link: shop };
                 setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
-                props.navigation.dispatch(
-                    CommonActions.reset({
-                        index: 0,
-                        routes: [
-                            { name: 'Home' },
-                        ],
-                    })
-                )
+                insertData().then(() => {
+                    props.navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [
+                                { name: 'Home' },
+                            ],
+                        })
+                    )
+                })
 
             } else {
                 error = I18n.t('ban_khong_co_quyen_truy_cap');
@@ -142,6 +135,11 @@ const LoginScreen = (props) => {
             dialogManager.hiddenLoading();
             console.log("getDataRetailerInfo err ", e);
         })
+    }
+
+    const insertData = async () => {
+        await dataManager.syncForFirstTime()
+        dialogManager.hiddenLoading();
     }
 
 
