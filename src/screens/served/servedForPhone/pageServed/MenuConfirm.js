@@ -13,12 +13,16 @@ import { getFileDuLieuString } from '../../../../data/fileStore/FileStorage';
 import { Constant } from '../../../../common/Constant';
 import dialogManager from '../../../../components/dialog/DialogManager';
 import { StackActions } from '@react-navigation/native';
+import { Snackbar } from 'react-native-paper';
+
 
 
 export default (props) => {
 
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
     let provisional = useRef();
 
 
@@ -87,17 +91,34 @@ export default (props) => {
         }
     }
 
-    const onClickProvisional = () => {
+    const onClickProvisional = async () => {
         console.log("onClickProvisional provisional ", provisional.current);
-        if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
-            console.log("onClickProvisional ", jsonContent);
-            if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
-                printService.PrintHtmlService(HtmlDefault, jsonContent)
-            else
-                dialogManager.showPopupOneButton("Vui lòng chọn món để sử dụng chức năng này.")
+        let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
+        console.log('getCurrentIP ', getCurrentIP);
+        if (getCurrentIP && getCurrentIP != "") {
+            if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
+                console.log("onClickProvisional ", jsonContent);
+                if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
+                    printService.PrintHtmlService(HtmlDefault, jsonContent)
+                else
+                    dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
+            } else {
+                dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
+            }
         } else {
-            dialogManager.showPopupOneButton("Bạn không có quyền sử dụng chức năng này.")
+            dialogManager.showPopupOneButton(I18n.t('vui_long_kiem_tra_ket_noi_may_in'), I18n.t('thong_bao'))
         }
+
+    }
+
+    const sendNotidy = (type) => {
+        console.log("sendNotidy type ", type);
+        hideMenu();
+        if (type == 1 && !(jsonContent.OrderDetails.length > 0)) {
+            setToastDescription(I18n.t("ban_hay_chon_mon_an_truoc"))
+            setShowToast(true)
+        } else
+            props.outputSendNotify(type);
     }
 
     return (
@@ -174,16 +195,16 @@ export default (props) => {
                         button={<Icon style={{ paddingHorizontal: 10 }} name="menu" size={30} color="white" />}
                     >
                         <View style={{
-                            backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
+                            backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 5,
                         }}>
-                            <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
+                            {/* <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text> */}
+                            <TouchableOpacity onPress={() => sendNotidy(1)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
+                                <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
+                            <TouchableOpacity onPress={() => sendNotidy(2)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
+                                <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
                             </TouchableOpacity>
                         </View>
                     </Menu>
@@ -195,7 +216,15 @@ export default (props) => {
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('tam_tinh')}</Text>
                 </TouchableOpacity>
             </View>
-
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </View>
     )
 

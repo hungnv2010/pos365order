@@ -7,13 +7,22 @@ import CustomerOrder from './CustomerOrder';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ToolBarPhoneServed from '../../../../components/toolbar/ToolBarPhoneServed';
 import I18n from '../../../../common/language/i18n';
+import signalRManager from '../../../../common/SignalR';
+import { getFileDuLieuString } from '../../../../data/fileStore/FileStorage';
+import { Constant } from '../../../../common/Constant';
+import { Snackbar } from 'react-native-paper';
+
 
 export default (props) => {
 
     const [tab, setTab] = useState(1)
+    const [textNotify, setTextNotify] = useState("")
+    const [vendor, setVendor] = useState({})
     const [showModal, setShowModal] = useState(false)
     const [position, setPosition] = useState(() => props.route.params.Position ? props.route.params.Position : 'A')
     const [listProducts, setListProducts] = useState([])
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
 
 
     useEffect(() => {
@@ -80,11 +89,34 @@ export default (props) => {
     const hideMenu = (position) => {
         _menu.hide();
         selectPosition(position)
+        setShowModal(true)
     };
 
     const showMenu = () => {
         _menu.show();
     };
+
+    const outputSendNotify = async (type) => {
+        if (type == 1) {
+            setTimeout(() => {
+                signalRManager.sendMessageOrder(props.route.params.room.Name + ": " + I18n.t('yeu_cau_thanh_toan'))
+            }, 100);
+        } else {
+            let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
+            console.log('data', JSON.parse(data));
+            setVendor(JSON.parse(data))
+            setTimeout(() => {
+                setTextNotify(props.route.params.room.Name + " <Từ: " + vendor.CurrentUser.Name + "> ")
+                setShowModal(true)
+            }, 100);
+        }
+    }
+
+    const onClickSendNotify = () => {
+        setShowModal(false)
+        signalRManager.sendMessageOrder(textNotify)
+    }
+
 
     return (
         <View style={{ flex: 1 }}>
@@ -129,11 +161,13 @@ export default (props) => {
                     {...props}
                     Position={position}
                     listProducts={listProducts}
-                    outputListProducts={outputListProducts} />
+                    outputListProducts={outputListProducts}
+                    outputSendNotify={(type) => outputSendNotify(type)} />
                 :
                 <MenuConfirm
                     {...props}
-                    Position={position} />
+                    Position={position}
+                    outputSendNotify={(type) => outputSendNotify(type)} />
             }
             <Modal
                 animationType="fade"
@@ -168,21 +202,35 @@ export default (props) => {
                             width: Metrics.screenWidth * 0.8
                         }}>
                             <TouchableOpacity onPress={() => selectPosition("A")}>
-                                <Text style={{ margin: 10, fontSize: 16 }}>A</Text>
+                    <Text style={{ margin: 10, fontSize: 16, fontWeight: "bold" }}>{I18n.t('gui_tin_nhan')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectPosition("B")}>
-                                <Text style={{ margin: 10, fontSize: 16 }}>B</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectPosition("C")}>
-                                <Text style={{ margin: 10, fontSize: 16 }}>C</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => selectPosition("D")}>
-                                <Text style={{ margin: 10, fontSize: 16 }}>D</Text>
-                            </TouchableOpacity>
+                            <View style={{ padding: 5, height: 40, borderRadius: 3, borderColor: Colors.colorchinh, borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", margin: 10 }}>
+                                <TextInput value={textNotify} style={{ width: "100%", height: "100%" }}
+                                    autoFocus={true}
+                                    onChangeText={(text) => setTextNotify(text)}
+                                />
+                            </View>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end" }}>
+                                <TouchableOpacity onPress={() => setShowModal(false)}>
+                                    <Text style={{ margin: 10, fontSize: 16 }}>{I18n.t('huy')}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => onClickSendNotify()}>
+                                    <Text style={{ margin: 10, fontSize: 16 }}>{I18n.t('dong_y')}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                 </View>
             </Modal>
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </View >
     );
 }

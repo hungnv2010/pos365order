@@ -80,9 +80,16 @@ export default forwardRef((props, ref) => {
         })
     }
 
-    function clickPrint() {
+    async function clickPrint() {
         console.log("clickPrint data ", data)
-        Print.printImage(data)
+        let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
+        console.log('getCurrentIP ', getCurrentIP);
+        if (getCurrentIP && getCurrentIP != "") {
+            Print.printImage(data)
+        } else {
+            dialogManager.showPopupOneButton(I18n.t('vui_long_kiem_tra_ket_noi_may_in'), I18n.t('thong_bao'))
+        }
+        // Print.printImage(data)
     }
 
     useImperativeHandle(ref, () => ({

@@ -10,8 +10,9 @@ import { HTTPService } from '../../../../data/services/HttpService';
 import { getFileDuLieuString } from '../../../../data/fileStore/FileStorage';
 import { Constant } from '../../../../common/Constant';
 import TextTicker from 'react-native-text-ticker';
-import { useSelector } from 'react-redux';
 import { currencyToString } from '../../../../common/Utils'
+import I18n from "../../../common/language/i18n"
+import { Snackbar } from 'react-native-paper';
 
 
 export default (props) => {
@@ -20,6 +21,8 @@ export default (props) => {
     const [showModal, setShowModal] = useState(false)
     const [list, setListOrder] = useState(() => props.listProducts)
     const [vendorSession, setVendorSession] = useState({})
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
     const [itemOrder, setItemOrder] = useState({})
     const [listTopping, setListTopping] = useState([])
 
@@ -117,6 +120,16 @@ export default (props) => {
         });
         setListOrder([...list])
     }, [listTopping])
+
+    const sendNotidy = (type) => {
+        console.log("sendNotidy type ", type);
+        hideMenu();
+        if (type == 1 && !(list.length > 0)) {
+            setToastDescription(I18n.t("ban_hay_chon_mon_an_truoc"))
+            setShowToast(true)
+        } else
+            props.outputSendNotify(type);
+    }
 
 
     const syncListProducts = (listProducts) => {
@@ -310,13 +323,13 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                         }}>
                             <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
+                            <TouchableOpacity onPress={() => sendNotidy(1)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 10, fontSize: 16 }}>Yêu cầu thanh toán</Text>
+                                <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
+                            <TouchableOpacity onPress={() => sendNotidy(2)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 10, fontSize: 16 }}>Gửi thông báo tới thu ngân</Text>
+                                <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
                             </TouchableOpacity>
                         </View>
                     </Menu>
@@ -376,6 +389,15 @@ export default (props) => {
                     </View>
                 </View>
             </Modal>
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </View>
     )
 }
@@ -403,14 +425,14 @@ const PopupDetail = (props) => {
             </View>
             <View style={{ padding: 10 }}>
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} onPress={() => setShowModal(false)}>
-                    <Text style={{ fontSize: 16, flex: 3 }}>Đơn giá</Text>
+                    <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('don_gia')}}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <Text style={{ paddingHorizontal: 20, paddingVertical: 20, flex: 1, fontSize: 16, borderWidth: 0.5, borderRadius: 4 }}>{itemOrder.Price}</Text>
                     </View>
 
                 </View>
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} >
-                    <Text style={{ fontSize: 16, flex: 3 }}>Số lượng</Text>
+                    <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
                             itemOrder.Quantity++
@@ -430,7 +452,7 @@ const PopupDetail = (props) => {
                     </View>
                 </View>
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} onPress={() => setShowModal(false)}>
-                    <Text style={{ fontSize: 16, flex: 3 }}>Ghi chú</Text>
+                    <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('ghi_chu')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TextInput onChangeText={text => {
                             itemOrder.Description = text
@@ -440,13 +462,13 @@ const PopupDetail = (props) => {
                 </View>
                 <View style={{ alignItems: "center", justifyContent: "space-between", flexDirection: "row", marginTop: 10 }}>
                     <TouchableOpacity onPress={() => props.setShowModal(false)} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, paddingHorizontal: 10, paddingVertical: 15, borderRadius: 4, backgroundColor: "#fff" }} >
-                        <Text style={{ color: Colors.colorchinh, textTransform: "uppercase" }}>Huỷ</Text>
+                        <Text style={{ color: Colors.colorchinh, textTransform: "uppercase" }}>{I18n.t('huy')}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => onClickTopping()} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, paddingHorizontal: 10, paddingVertical: 15, borderRadius: 4, backgroundColor: "#fff" }} >
                         <Text style={{ color: Colors.colorchinh, textTransform: "uppercase" }}>Topping</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => onClickOk()} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, paddingHorizontal: 10, paddingVertical: 15, borderRadius: 4, backgroundColor: Colors.colorchinh }} >
-                        <Text style={{ color: "#fff", textTransform: "uppercase", }}>Xong</Text>
+                        <Text style={{ color: "#fff", textTransform: "uppercase", }}>{I18n.t('dong_y')}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
