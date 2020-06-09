@@ -11,22 +11,23 @@ export default (props) => {
 
   const [forceUpdate, setForceUpdate] = useState(false)
 
-  useEffect(() => {
-    if (props.changeTable && props.fromTable) return
-    let isSubscribed = true;
-    if (isSubscribed) {
-      const syncAllDatas = async () => {
-        dialogManager.showLoading()
-        await dataManager.syncAllDatas()
-        setForceUpdate(!forceUpdate)
-        dialogManager.hiddenLoading()
-      }
-      syncAllDatas()
-    }
-    return () => {
-      isSubscribed = false
-    }
-  }, [])
+
+  // useEffect(() => {
+  //   if (props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name) return
+  //   let isSubscribed = true;
+  //   if (isSubscribed) {
+  //     const syncAllDatas = async () => {
+  //       dialogManager.showLoading()
+  //       await dataManager.syncAllDatas()
+  //       setForceUpdate(!forceUpdate)
+  //       dialogManager.hiddenLoading()
+  //     }
+  //     syncAllDatas()
+  //   }
+  //   return () => {
+  //     isSubscribed = false
+  //   }
+  // }, [])
 
 
   const clickRightIcon = async () => {
@@ -37,12 +38,12 @@ export default (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      {props.changeTable && props.fromTable ?
+      {props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name ?
         <ToolBarDefault
           navigation={props.navigation}
-          title={`${I18n.t('chuyen_ban')} from ${props.fromTable.Name} to ...`}
+          title={`${I18n.t('chuyen_ban')} from ${props.route.params.Name} to ...`}
           leftIcon="keyboard-backspace"
-          clickLeftIcon={() => { props.outputIsChangeTable() }} />
+          clickLeftIcon={() => { props.navigation.goBack() }} />
         :
         <MainToolBar
           navigation={props.navigation}

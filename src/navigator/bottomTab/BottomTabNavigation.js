@@ -4,9 +4,6 @@ import { createMaterialBottomTabNavigator } from '@react-navigation/material-bot
 import { Images, Colors } from '../../theme';
 const Tab = createMaterialBottomTabNavigator();
 import Main from '../../screens/main/Main';
-import WrapSelectFood from '../../screens/served/Served';
-import { IconButton } from 'react-native-paper';
-import colors from '../../theme/Colors';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import More from '../../screens/more/More'

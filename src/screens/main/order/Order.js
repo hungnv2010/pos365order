@@ -24,7 +24,6 @@ import { Checkbox } from 'react-native-paper';
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
-import useDidMountEffect from '../../../customHook/useDidMountEffect';
 
 const _nodes = new Map();
 
@@ -40,16 +39,20 @@ export default (props) => {
     ])
     const toRoomId = useRef()
 
+    const { deviceType } = useSelector(state => {
+        console.log("useSelector state ", state);
+        return state.Common
+    });
 
     const onItemPress = ({ Id, Name, ProductId }) => {
-        const { changeTable, fromTable } = props
-        if (changeTable && fromTable) {
-            toRoomId.current = Id
+        if (props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name) {
+            toRoomId.current = { Id: Id, Name: Name, ProductId: ProductId }
             setShowModal(!showModal)
         } else {
-            console.log("onItemPress ProductId ", ProductId);
-
-            props.navigation.navigate('Served', { room: { Id: Id, Name: Name, Position: 'A', ProductId: ProductId } })
+            deviceType == Constant.TABLET ?
+                props.navigation.navigate('ServedForTablet', { room: { Id: Id, Name: Name, ProductId: ProductId } })
+                :
+                props.navigation.navigate('PageServed', { room: { Id: Id, Name: Name, ProductId: ProductId } })
         }
     }
 
@@ -62,7 +65,6 @@ export default (props) => {
                 style={[styles.room, { width: widthRoom - 5, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
                     <View style={{ alignItems: "center", padding: 0, flex: 1 }}>
-                        {/* <Text style={{ fontSize: 13, textAlign: "center", textTransform: "uppercase", margin: 10, marginTop: 18, color: item.IsActive ? 'white' : 'black' }}>{item.Name}</Text> */}
                         <View style={{ justifyContent: "center", alignItems: "center", flex: 1, height: "90%" }}>
                             <TextTicker
                                 style={{
@@ -225,22 +227,21 @@ export default (props) => {
 
 
     const onChangeTable = () => {
-        const { FromRoomId, FromPos } = props.fromTable
+        const { FromRoomId, FromPos } = props.route.params
         let params = { ServeChangeTableEntities: [] }
         let toPos = listPosition.filter(item => item.checked === true)[0].position
-        console.log('params', { FromRoomId: FromRoomId, FromPos: FromPos, ToRoomId: toRoomId.current, toPos: toPos });
-        params.ServeChangeTableEntities.push({ FromRoomId: FromRoomId, FromPos: FromPos, ToRoomId: toRoomId.current, toPos: toPos })
+        console.log('params', { FromRoomId: FromRoomId, FromPos: FromPos, ToRoomId: toRoomId.current.Id, toPos: toPos });
+        params.ServeChangeTableEntities.push({ FromRoomId: FromRoomId, FromPos: FromPos, ToRoomId: toRoomId.current.Id, toPos: toPos })
         dialogManager.showLoading();
         new HTTPService().setPath(ApiPath.CHANGE_TABLE).POST(params).then((res) => {
             console.log("onChangeTable res ", res);
-            // Message.current = res.Message
             setShowToast(!showToast)
             dialogManager.hiddenLoading()
         }).catch((e) => {
             console.log("onChangeTable err ", e);
             dialogManager.hiddenLoading()
         })
-        props.outputIsChangeTable()
+        props.navigation.navigate('PageServed', { room: toRoomId.current, Position: toPos })
     }
 
     let refScroll = null;
