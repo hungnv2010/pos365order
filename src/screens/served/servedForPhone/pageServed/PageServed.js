@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, View, StyleSheet, Picker, Text, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal } from 'react-native';
+import { ActivityIndicator, Image, View, StyleSheet, Picker, Text, TextInput, TouchableWithoutFeedback, TouchableOpacity, Modal } from 'react-native';
 import { Colors, Images, Metrics } from '../../../../theme';
 import MenuConfirm from './MenuConfirm';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
@@ -103,10 +103,10 @@ export default (props) => {
             }, 100);
         } else {
             let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
-            console.log('data', JSON.parse(data));
-            setVendor(JSON.parse(data))
+            data = JSON.parse(data)
+            setVendor(data)
             setTimeout(() => {
-                setTextNotify(props.route.params.room.Name + " <Từ: " + vendor.CurrentUser.Name + "> ")
+                setTextNotify(props.route.params.room.Name + " <Từ: " + data.CurrentUser.Name + "> ")
                 setShowModal(true)
             }, 100);
         }
@@ -202,9 +202,9 @@ export default (props) => {
                             width: Metrics.screenWidth * 0.8
                         }}>
                             <TouchableOpacity onPress={() => selectPosition("A")}>
-                    <Text style={{ margin: 10, fontSize: 16, fontWeight: "bold" }}>{I18n.t('gui_tin_nhan')}</Text>
+                                <Text style={{ margin: 10, fontSize: 16, fontWeight: "bold" }}>{I18n.t('gui_tin_nhan')}</Text>
                             </TouchableOpacity>
-                            <View style={{ padding: 5, height: 40, borderRadius: 3, borderColor: Colors.colorchinh, borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", margin: 10 }}>
+                            <View style={{ padding: 0, height: 40, borderRadius: 3, borderColor: Colors.colorchinh, borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", margin: 10 }}>
                                 <TextInput value={textNotify} style={{ width: "100%", height: "100%" }}
                                     autoFocus={true}
                                     onChangeText={(text) => setTextNotify(text)}

@@ -193,7 +193,7 @@ export default (props) => {
                         keyExtractor={(item, index) => '' + index}
                         extraData={listCateId} />
                 </View>
-                <View style={{}}>
+                <View style={{ flex: 1 }}>
                     <FlatList
                         data={topping}
                         showsVerticalScrollIndicator={false}
@@ -204,7 +204,7 @@ export default (props) => {
                         numColumns={props.numColumns} />
                 </View>
             </View>
-            <View style={{ height: 40, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 5 }}>
+            <View style={{ height: 40, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 5, backgroundColor: "white" }}>
                 <Text style={{ fontWeight: "bold", fontSize: 15 }}>{I18n.t('tong_thanh_tien')}</Text>
                 <Text style={{ fontWeight: "bold", fontSize: 15 }}>{currencyToString(getTotalPrice())}đ</Text>
             </View>

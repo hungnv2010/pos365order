@@ -12,22 +12,22 @@ export default (props) => {
   const [forceUpdate, setForceUpdate] = useState(false)
 
 
-  useEffect(() => {
-    if (props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name) return
-    let isSubscribed = true;
-    if (isSubscribed) {
-      const syncAllDatas = async () => {
-        dialogManager.showLoading()
-        await dataManager.syncAllDatas()
-        setForceUpdate(!forceUpdate)
-        dialogManager.hiddenLoading()
-      }
-      syncAllDatas()
-    }
-    return () => {
-      isSubscribed = false
-    }
-  }, [])
+  // useEffect(() => {
+  //   if (props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name) return
+  //   let isSubscribed = true;
+  //   if (isSubscribed) {
+  //     const syncAllDatas = async () => {
+  //       dialogManager.showLoading()
+  //       await dataManager.syncAllDatas()
+  //       setForceUpdate(!forceUpdate)
+  //       dialogManager.hiddenLoading()
+  //     }
+  //     syncAllDatas()
+  //   }
+  //   return () => {
+  //     isSubscribed = false
+  //   }
+  // }, [])
 
 
   const clickRightIcon = async () => {
