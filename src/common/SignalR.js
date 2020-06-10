@@ -45,11 +45,12 @@ class SignalRManager {
     }
 
     sendMessageOrder = (message) => {
+        console.log('sendMessageOrder message ', message);
         // this.initSignalR();
         if (this.isStartSignalR) {
             this.proxy.invoke("notify", message)
                 .done((response) => {
-                    console.log('', response);
+                    console.log('sendMessageOrder response ', response);
                     // this.alert = I18n.t('gui_tin_nhan_thanh_cong');
                     dialogManager.showPopupOneButton(I18n.t('gui_tin_nhan_thanh_cong'), I18n.t('thong_bao'))
                 })

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react';
+import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef, useRef } from 'react';
 import { Image, View, StyleSheet, Button, Text, TouchableOpacity, ScrollView, NativeEventEmitter, NativeModules } from 'react-native';
 import { Images, Colors, Metrics } from '../../../theme';
 import { WebView } from 'react-native-webview';
@@ -24,6 +24,8 @@ export default forwardRef((props, ref) => {
     const [data, setData] = useState("");
     const [vendorSession, setVendorSession] = useState({});
 
+    let isClick = useRef();
+
     const deviceType = useSelector(state => {
         console.log("useSelector state ", state);
         return state.Common.deviceType
@@ -36,13 +38,10 @@ export default forwardRef((props, ref) => {
     useEffect(() => {
         console.log("Preview props", props);
         const getVendorSession = async () => {
+            isClick.current = false;
             let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
             console.log('data', JSON.parse(data));
             setVendorSession(JSON.parse(data))
-
-            // if (props.route.params.type && props.route.params.type == "Menu") {
-            //     handlerDataHtml(props.route.params.data, typeHeader1, code1, number1, props.route.params.JsonContent, JSON.parse(data))
-            // } else {
             let html = ""
             if (deviceType == Constant.PHONE) {
                 html = props.route.params.data;
@@ -54,7 +53,6 @@ export default forwardRef((props, ref) => {
                 if (res && res != "")
                     setData(res)
             })
-            // }
         }
         getVendorSession()
     }, [props.data])
@@ -85,11 +83,17 @@ export default forwardRef((props, ref) => {
         let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
         console.log('getCurrentIP ', getCurrentIP);
         if (getCurrentIP && getCurrentIP != "") {
-            Print.printImage(data)
+            if (isClick.current == false) {
+                let html = data.replace("width: 76mm", "")
+                Print.printImage(html)
+            }
+            isClick.current = true;
+            setTimeout(() => {
+                isClick.current = false;
+            }, 2000);
         } else {
             dialogManager.showPopupOneButton(I18n.t('vui_long_kiem_tra_ket_noi_may_in'), I18n.t('thong_bao'))
         }
-        // Print.printImage(data)
     }
 
     useImperativeHandle(ref, () => ({

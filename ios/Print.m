@@ -31,6 +31,7 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(registerPrint:(NSString *)param) {
   NSLog(@"registerPrint param %@", param);
+//  imageArray = [[NSMutableArray alloc] init];
   IP = param;
   isConnectAndPrint = NO;
   _printerManager = [PrinterManager sharedInstance];
@@ -47,8 +48,8 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
 
 - (void)loadWebview{
   NSLog(@"loadWebview ");
-  imageArray = [[NSMutableArray alloc] init];
-  
+//  imageArray = [[NSMutableArray alloc] init];
+  imageArray  = [NSMutableArray new];
   CGRect frame = CGRectMake(0,0,200,600);
   webView =[[UIWebView alloc] initWithFrame:frame];
   webView.delegate = self;
@@ -85,7 +86,7 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     NSLog(@".width=%d",image.size.width);
     NSLog(@".height=%d",image.size.height);
     
-    float i_width = 800;
+    float i_width = 1000;
     float oldWidth = imagePrint.size.width;
     float oldHeight = imagePrint.size.height;
     
@@ -105,7 +106,7 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     imagePrint = newImage;
     
     CGImageRef tmpImgRef = newImage.CGImage;
-    
+    NSLog(@"newHeight abc");
     int numberArrayImage = 1;
     if(newHeight > newWidth){
       if(fmod(newHeight,newWidth) > 0){
@@ -118,7 +119,9 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     for (int i=0; i<numberArrayImage; i++) {
       CGImageRef topImgRef = CGImageCreateWithImageInRect(tmpImgRef, CGRectMake(0, i * newImage.size.height / numberArrayImage, newImage.size.width, newImage.size.height / numberArrayImage));
       UIImage *img = [UIImage imageWithCGImage:topImgRef];
-      [imageArray addObject:img];
+      NSLog(@"numberArrayImage 1== %@",img);
+      [self->imageArray addObject:img];
+      NSLog(@"numberArrayImage 2== %d",numberArrayImage);
       CGImageRelease(topImgRef);
     }
     
@@ -147,10 +150,12 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
         NSLog(@"data bytes=%@",data);
         [currentprinter Write:data];
       }
+      
       data = nil;
       cmd=nil;
-      
     }
+    imageArray = @[];
+//    [self->imageArray release];
   });
 }
 

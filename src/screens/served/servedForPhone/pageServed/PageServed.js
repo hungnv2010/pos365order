@@ -121,7 +121,7 @@ export default (props) => {
             setTimeout(() => {
                 setTextNotify(props.route.params.room.Name + " <Từ: " + data.CurrentUser.Name + "> ")
                 setShowModal(true)
-            }, 100);
+            }, 500);
         }
     }
 
