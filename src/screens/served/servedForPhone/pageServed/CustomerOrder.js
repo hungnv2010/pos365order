@@ -104,7 +104,7 @@ export default (props) => {
             let totalPrice = 0;
             lt.forEach(item => {
                 if (item.Quantity > 0) {
-                    description += ` -- ${item.Name} x ${item.Quantity} = ${currencyToString(item.Quantity * item.Price)} ; `
+                    description += ` -- ${item.Name} x ${item.Quantity} = ${currencyToString(item.Quantity * item.Price)} ; \n`
                     totalPrice += item.Quantity * item.Price
                 }
             })
@@ -425,9 +425,9 @@ const PopupDetail = (props) => {
             </View>
             <View style={{ padding: 10 }}>
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} onPress={() => setShowModal(false)}>
-                    <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('don_gia')}}</Text>
+                    <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('don_gia')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
-                        <Text style={{ paddingHorizontal: 20, paddingVertical: 20, flex: 1, fontSize: 16, borderWidth: 0.5, borderRadius: 4 }}>{itemOrder.Price}</Text>
+                        <Text style={{ paddingHorizontal: 20, paddingVertical: 20, flex: 1, fontSize: 16, borderWidth: 0.5, borderRadius: 4 }}>{currencyToString(itemOrder.Price)}</Text>
                     </View>
 
                 </View>
@@ -454,10 +454,16 @@ const PopupDetail = (props) => {
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} onPress={() => setShowModal(false)}>
                     <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('ghi_chu')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
-                        <TextInput onChangeText={text => {
-                            itemOrder.Description = text
-                            setItemOrder({ ...itemOrder })
-                        }} numberOfLines={4} multiline={true} value={itemOrder.Description} style={{ height: 100, paddingHorizontal: 20, paddingVertical: 5, flex: 7, fontSize: 16, borderWidth: 0.5, borderRadius: 4 }} placeholder="Nhập ghi chú" />
+                        <TextInput
+                            onChangeText={text => {
+                                itemOrder.Description = text
+                                setItemOrder({ ...itemOrder })
+                            }}
+                            numberOfLines={4}
+                            multiline={true}
+                            value={itemOrder.Description}
+                            style={{ height: 100, paddingHorizontal: 20, paddingVertical: 5, flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4 }}
+                            placeholder="Nhập ghi chú" />
                     </View>
                 </View>
                 <View style={{ alignItems: "center", justifyContent: "space-between", flexDirection: "row", marginTop: 10 }}>

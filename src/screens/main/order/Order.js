@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
-    findNodeHandle,
+    ActivityIndicator,
     Modal,
     TouchableWithoutFeedback
 } from 'react-native';
@@ -30,6 +30,7 @@ const _nodes = new Map();
 export default (props) => {
 
     const [showModal, setShowModal] = useState(false)
+    const [loadDone, setLoadDone] = useState(false)
     const [showToast, setShowToast] = useState(false)
     const [listPosition, setListPosition] = useState([
         { position: "A", checked: true },
@@ -45,7 +46,7 @@ export default (props) => {
     });
 
     const onItemPress = ({ Id, Name, ProductId }) => {
-        if (props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name) {
+        if (props.route.params && props.route.params.Name) {
             toRoomId.current = { Id: Id, Name: Name, ProductId: ProductId }
             setShowModal(!showModal)
         } else {
@@ -119,16 +120,13 @@ export default (props) => {
     const [listRoom, setListRoom] = useState([])
 
     useEffect(() => {
-        let isSubscribed = true;
-        if (isSubscribed) {
+        if (props.already || (props.route.params && props.route.params.Name)) {
             init()
         }
         return () => {
-            isSubscribed = false
             realmStore.removeAllListener()
         }
-    }, [])
-
+    }, [props.already])
 
 
 
@@ -157,7 +155,7 @@ export default (props) => {
             }
         })
 
-
+        setLoadDone(true)
     }
 
     const getDatas = (rooms, roomGroups) => {
@@ -241,7 +239,8 @@ export default (props) => {
             console.log("onChangeTable err ", e);
             dialogManager.hiddenLoading()
         })
-        props.navigation.navigate('PageServed', { room: toRoomId.current, Position: toPos })
+        // props.navigation.navigate('PageServed', { room: toRoomId.current, Position: toPos })
+        props.navigation.goBack()
     }
 
     let refScroll = null;
@@ -293,31 +292,42 @@ export default (props) => {
                 </View>
             </View>
             <View style={{ flex: 1, padding: 2 }}>
-                <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
-                    <View style={styles.containerRoom}>
-                        {datas ?
-                            datas.map((data, idx) =>
-                                <View
-                                    key={idx}
-                                    onLayout={(e) => {
-                                        footerY = e.nativeEvent.layout.y;
-                                        if (data.isGroup) {
-                                            console.log("footerY ", footerY);
-                                            _nodes.set(data.Id, footerY)
-                                            listNode.push({ Id: data.Id, footerY: footerY })
-                                        }
-                                    }}
-                                    // ref={ref => {
-                                    //     if (data.isGroup)
-                                    //         _nodes.set(idx, ref)
-                                    // }} 
-                                    style={{ flexDirection: "row" }}>
-                                    {data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)}
-                                </View>
-                            ) : null
-                        }
-                    </View>
-                </ScrollView>
+                {
+                    loadDone ?
+                        <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
+                            <View style={styles.containerRoom}>
+                                {datas ?
+                                    datas.map((data, idx) =>
+                                        <View
+                                            key={idx}
+                                            onLayout={(e) => {
+                                                let footerY = e.nativeEvent.layout.y;
+                                                if (data.isGroup) {
+                                                    console.log("footerY ", footerY);
+                                                    _nodes.set(data.Id, footerY)
+                                                    listNode.push({ Id: data.Id, footerY: footerY })
+                                                }
+                                            }}
+                                            // ref={ref => {
+                                            //     if (data.isGroup)
+                                            //         _nodes.set(idx, ref)
+                                            // }} 
+                                            style={{ flexDirection: "row" }}>
+                                            {data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)}
+                                        </View>
+                                    ) : null
+                                }
+                            </View>
+                        </ScrollView>
+                        :
+                        props.route.params && props.route.params.Name ?
+
+                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                <ActivityIndicator size="large" style={{}} color={colors.colorchinh} />
+                            </View>
+                            :
+                            null
+                }
             </View>
             <Modal
                 animationType="fade"

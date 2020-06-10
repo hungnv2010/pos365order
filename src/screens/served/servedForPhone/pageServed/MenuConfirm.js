@@ -141,7 +141,7 @@ export default (props) => {
                                 </View>
                                 <View style={{ alignItems: "center", flexDirection: "row" }}>
 
-                                    <Text style={{ padding: 10 }}>{item.Quantity}</Text>
+                                    <Text style={{ padding: 10, color: Colors.colorPhu  }}>{item.Quantity}</Text>
 
                                 </View>
                             </View>

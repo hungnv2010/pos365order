@@ -114,25 +114,9 @@ const Served = (props) => {
         )
     }
 
-    // const onClickDone = () => {
-    //     SelectProductRef.current.onClickDoneInRef()
-    //     outputIsSelectProduct()
-    // }
 
-    // const clickLeftIcon = () => {
-    //     console.log(SelectProductRef.current.listProductsRef());
-    //     if (SelectProductRef.current.listProductsRef().length > 0) {
-    //         dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
-    //             if (value == 1) {
-    //                 onClickDone()
-    //             } else {
-    //                 outputIsSelectProduct()
-    //             }
-    //         })
-    //     } else {
-    //         outputIsSelectProduct()
-    //     }
-    // }
+
+
 
 
     // const onCallBackNoteBook = (data = "") => {
@@ -178,93 +162,11 @@ const Served = (props) => {
 
     // const toolBarPhoneServedRef = useRef();
 
-    // const renderForPhone = () => {
-    //     return (
-    //         <>
-    //             {isSelectProduct ?
-    //                 <View style={{ flex: 1 }}>
-    //                     <ToolBarSelectProduct
-    //                         leftIcon="keyboard-backspace"
-    //                         clickLeftIcon={clickLeftIcon}
-    //                         onClickDone={onClickDone}
-    //                         title="Select Product"
-    //                         outputTextSearch={outputTextSearch} />
-    //                     <SelectProduct
-    //                         ref={SelectProductRef}
-    //                         valueSearch={value}
-    //                         numColumns={1}
-    //                         listProducts={[...listProducts]}
-    //                         outputListProducts={outputListProducts} />
-    //                 </View> :
-    //                 null
-    //             }
-    //             {isTopping ?
-    //                 <View style={{ flex: 1 }}>
-    //                     <Topping
-    //                         {...props}
-    //                         position={position}
-    //                         numColumns={1}
-    //                         itemOrder={meMoItemOrder}
-    //                         onClose={() => {
-    //                             outputIsTopping();
-    //                         }}
-    //                         outputListTopping={outputListTopping}
-    //                     />
-    //                 </View> :
-    //                 null
-    //             }
-    //             {isChangeTable ?
-    //                 <View style={{ flex: 1 }}>
-    //                     <Main
-    //                         {...props}
-    //                         fromTable={fromTable}
-    //                         outputIsChangeTable={outputIsChangeTable}
-    //                         changeTable={true} />
-    //                 </View>
-    //                 :
-    //                 null
-    //             }
-    //             {!(isTopping || isSelectProduct || isChangeTable) ?
-    //                 <View style={{ flex: 1 }}>
-    //                     <ToolBarPhoneServed
-    //                         ref={toolBarPhoneServedRef}
-    //                         {...props}
-    //                         leftIcon="keyboard-backspace"
-    //                         title={I18n.t('don_hang')}
-    //                         clickLeftIcon={() => { props.navigation.goBack() }}
-    //                         clickNoteBook={outputClickNoteBook}
-    //                         clickQRCode={outputClickQRCode}
-    //                         rightIcon="plus"
-    //                         clickProductService={outputClickProductService}
-    //                         clickRightIcon={outputIsSelectProduct} />
-    //                     <PageServed
-    //                         {...props}
-    //                         position={position}
-    //                         itemOrder={meMoItemOrder}
-    //                         listProducts={[...listProducts]}
-    //                         outputListProducts={outputListProducts}
-    //                         outputItemOrder={outputItemOrder}
-    //                         outputPosition={outputPosition}
-    //                         outputIsTopping={outputIsTopping}
-    //                         outputIsSelectProduct={outputIsSelectProduct}
-    //                         outputIsChangeTable={outputIsChangeTable}
-    //                         listTopping={listTopping}
-    //                     />
-    //                 </View> :
-    //                 null
-    //             }
-    //         </>
-    //     )
-    // }
 
     return (
         <View style={{ flex: 1 }}>
             {
                 renderForTablet()
-                // deviceType == Constant.TABLET ?
-                //     renderForTablet()
-                //     :
-                //     renderForPhone()
             }
         </View>
     );

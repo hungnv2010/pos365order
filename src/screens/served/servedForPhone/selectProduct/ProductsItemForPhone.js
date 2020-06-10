@@ -20,7 +20,7 @@ const ProductsItemForPhone = (props) => {
             />
             <View style={{ flexDirection: "column", flex: 2, marginLeft: 10, justifyContent: "center" }}>
                 <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold" }}>{props.item.Name}</Text>
-                <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(props.item.Price)}</Text>
+                <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(props.item.Price)}<Text style={{ color: Colors.colorchinh }}>{props.item.LargeUnit != '' ? `/${props.item.LargeUnit}` : props.item.Unit != '' ? `/${props.item.Unit}` : ''}</Text></Text>
             </View>
             <View style={{ flex: 1.5, flexDirection: "row", alignItems: "center", marginRight: 25 }}>
 

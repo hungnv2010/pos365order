@@ -37,6 +37,7 @@ export default {
   don_hang: "Đơn Hàng",
   d: "đ",
   don_gia: "Đơn giá",
+  den:"đến",
   // TODO: E
 
 
@@ -201,6 +202,7 @@ export default {
   TGD: "TGD",
   tong_thanh_tien: "Tổng thành tiền",
   tong_chiet_khau: "Tổng chiết khấu",
+  tu:"từ",
   // TODO: U
 
   // TODO: V

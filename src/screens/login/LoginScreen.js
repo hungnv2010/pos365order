@@ -115,16 +115,14 @@ const LoginScreen = (props) => {
             if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
                 let account = { UserName: userName, Link: shop };
                 setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
-                insertData().then(() => {
-                    props.navigation.dispatch(
-                        CommonActions.reset({
-                            index: 0,
-                            routes: [
-                                { name: 'Home' },
-                            ],
-                        })
-                    )
-                })
+                props.navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [
+                            { name: 'Home' },
+                        ],
+                    })
+                )
 
             } else {
                 error = I18n.t('ban_khong_co_quyen_truy_cap');
@@ -137,10 +135,6 @@ const LoginScreen = (props) => {
         })
     }
 
-    const insertData = async () => {
-        await dataManager.syncForFirstTime()
-        dialogManager.hiddenLoading();
-    }
 
 
     const onChangeText = (text, type) => {

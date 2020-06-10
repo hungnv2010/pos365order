@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { ActivityIndicator, Image, View, StyleSheet, Picker, Text, TextInput, TouchableWithoutFeedback, TouchableOpacity, Modal } from 'react-native';
 import { Colors, Images, Metrics } from '../../../../theme';
 import MenuConfirm from './MenuConfirm';
@@ -11,6 +11,7 @@ import signalRManager from '../../../../common/SignalR';
 import { getFileDuLieuString } from '../../../../data/fileStore/FileStorage';
 import { Constant } from '../../../../common/Constant';
 import { Snackbar } from 'react-native-paper';
+import realmStore from '../../../../data/realm/RealmStore';
 
 
 export default (props) => {
@@ -23,7 +24,7 @@ export default (props) => {
     const [listProducts, setListProducts] = useState([])
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
-
+    const toolBarPhoneServedRef = useRef();
 
     useEffect(() => {
         console.log(props, 'page served');
@@ -42,7 +43,18 @@ export default (props) => {
         props.navigation.navigate('QRCode', { _onSelect: onCallBack })
     }
 
-    const onClickProductService = () => {
+    const onClickProductService = async () => {
+        let results = await realmStore.queryProducts()
+        if (results) {
+            results = results.filtered(`Id = "${props.route.params.room.ProductId}"`)
+            if (results && results.length > 0) {
+                results = JSON.parse(JSON.stringify(results))
+                console.log("outputClickProductService results ", [results["0"]]);
+                results["0"]["Quantity"] = 1;
+                outputListProducts([results["0"]])
+                toolBarPhoneServedRef.current.clickCheckInRef()
+            }
+        }
     }
 
     const onClickSelectProduct = () => {
@@ -73,6 +85,7 @@ export default (props) => {
                 break;
         }
         setListProducts([...data, ...listProducts])
+        checkProductId(data, props.route.params.room.ProductId)
     }
 
     const selectPosition = (position) => {
@@ -117,10 +130,23 @@ export default (props) => {
         signalRManager.sendMessageOrder(textNotify)
     }
 
+    const checkProductId = (listProduct, Id) => {
+        console.log("checkProductId id ", Id);
+
+        if (Id != 0) {
+            let list = listProduct.filter(item => { return item.Id == Id })
+            console.log("checkProductId listProduct ", list);
+            setTimeout(() => {
+                list.length > 0 ? toolBarPhoneServedRef.current.clickCheckInRef(false) : toolBarPhoneServedRef.current.clickCheckInRef(true)
+            }, 500);
+        }
+    }
+
 
     return (
         <View style={{ flex: 1 }}>
             <ToolBarPhoneServed
+                ref={toolBarPhoneServedRef}
                 {...props}
                 leftIcon="keyboard-backspace"
                 title={I18n.t('don_hang')}
