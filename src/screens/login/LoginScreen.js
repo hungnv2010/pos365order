@@ -122,8 +122,10 @@ const LoginScreen = (props) => {
 
             if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
                 // props.navigation.navigate("Home")
-                let account = { UserName: userName, Link: shop };
-                setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
+                if (userName != "") {
+                    let account = { UserName: userName, Link: shop };
+                    setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
+                }
                 props.navigation.dispatch(
                     CommonActions.reset({
                         index: 0,
