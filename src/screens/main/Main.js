@@ -9,25 +9,22 @@ import I18n from '../../common/language/i18n';
 
 export default (props) => {
 
-  const [forceUpdate, setForceUpdate] = useState(false)
 
-
-  // useEffect(() => {
-  //   if (props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name) return
-  //   let isSubscribed = true;
-  //   if (isSubscribed) {
-  //     const syncAllDatas = async () => {
-  //       dialogManager.showLoading()
-  //       await dataManager.syncAllDatas()
-  //       setForceUpdate(!forceUpdate)
-  //       dialogManager.hiddenLoading()
-  //     }
-  //     syncAllDatas()
-  //   }
-  //   return () => {
-  //     isSubscribed = false
-  //   }
-  // }, [])
+  useEffect(() => {
+    if (props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name) return
+    let isSubscribed = true;
+    if (isSubscribed) {
+      const syncAllDatas = async () => {
+        dialogManager.showLoading()
+        await dataManager.syncRooms()
+        dialogManager.hiddenLoading()
+      }
+      syncAllDatas()
+    }
+    return () => {
+      isSubscribed = false
+    }
+  }, [])
 
 
   const clickRightIcon = async () => {
@@ -52,7 +49,7 @@ export default (props) => {
           clickRightIcon={clickRightIcon}
         />
       }
-      <Order {...props} forceUpdate={forceUpdate}></Order>
+      <Order {...props} ></Order>
     </View>
   );
 };

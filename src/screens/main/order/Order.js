@@ -127,7 +127,7 @@ export default (props) => {
             isSubscribed = false
             realmStore.removeAllListener()
         }
-    }, [props.forceUpdate])
+    }, [])
 
 
 
