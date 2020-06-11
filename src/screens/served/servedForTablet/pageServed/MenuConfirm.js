@@ -11,12 +11,16 @@ import HtmlDefault from '../../../../data/html/htmlDefault';
 import printService from '../../../../data/html/PrintService';
 import { getFileDuLieuString } from '../../../../data/fileStore/FileStorage';
 import { Constant } from '../../../../common/Constant';
+import { Snackbar } from 'react-native-paper';
 import dialogManager from '../../../../components/dialog/DialogManager';
+import { StackActions } from '@react-navigation/native';
 
 export default (props) => {
 
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
+    const [showToast, setShowToast] = useState(false);
+    const [toastDescription, setToastDescription] = useState("")
     let provisional = useRef();
 
 
@@ -73,7 +77,13 @@ export default (props) => {
 
     const changTable = () => {
         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
-            props.outputIsChangeTable({ FromRoomId: props.route.params.room.Id, FromPos: props.position, Name: props.route.params.room.Name })
+            const pushAction = StackActions.push('Main', {
+                FromRoomId: props.route.params.room.Id,
+                FromPos: props.Position,
+                Name: props.route.params.room.Name
+            });
+
+            props.navigation.dispatch(pushAction);
         } else {
             dialogManager.showPopupOneButton("Bạn hãy chọn món ăn trước.")
         }
@@ -90,6 +100,17 @@ export default (props) => {
         } else {
             dialogManager.showPopupOneButton("Bạn không có quyền sử dụng chức năng này.")
         }
+    }
+
+
+    const sendNotidy = (type) => {
+        console.log("sendNotidy type ", type);
+        hideMenu();
+        if (type == 1 && !(jsonContent.OrderDetails.length > 0)) {
+            setToastDescription(I18n.t("ban_hay_chon_mon_an_truoc"))
+            setShowToast(true)
+        } else
+            props.outputSendNotify(type);
     }
 
     return (
@@ -169,11 +190,11 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                         }}>
                             <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={() => sendNotidy(1)}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
                                 <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={hideMenu}>
+                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={() => sendNotidy(2)}>
                                 <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
                                 <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
                             </TouchableOpacity>
@@ -187,7 +208,15 @@ export default (props) => {
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('tam_tinh')}</Text>
                 </TouchableOpacity>
             </View>
-
+            <Snackbar
+                duration={5000}
+                visible={showToast}
+                onDismiss={() =>
+                    setShowToast(false)
+                }
+            >
+                {toastDescription}
+            </Snackbar>
         </View>
     )
 

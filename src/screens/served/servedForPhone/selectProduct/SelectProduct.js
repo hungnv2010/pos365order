@@ -20,7 +20,7 @@ export default (props) => {
   const [isSearching, setIsSearching] = useState(false)
   const [listCateId, setListCateId] = useState([-1])
   const [listProducts, setListProducts] = useState(() => props.route.params.listProducts)
-  const newProducts = useRef([])
+  const newProducts = useRef(props.route.params.listProducts)
 
   const [valueSearch, setValueSearch] = useState('')
   const count = useRef(0)
@@ -50,7 +50,14 @@ export default (props) => {
     }
     let productsRes = results.slice(skip, skip + Constant.LOAD_LIMIT)
     console.log('productsRes', productsRes);
-
+    productsRes.forEach((item, index) => {
+      item.Quantity = 0
+      listProducts.forEach(elm => {
+        if (item.Id == elm.Id) {
+          item.Quantity += elm.Quantity
+        }
+      })
+    })
     count.current = productsRes.length
     setProduct([...product, ...productsRes])
     setHasProducts(true)
@@ -98,35 +105,45 @@ export default (props) => {
   }
 
   const onClickProduct = (item, index) => {
+    console.log('listProducts', listProducts);
+
     let exist = false;
     item.Sid = Date.now()
-    newProducts.current.forEach(listProduct => {
-      if (listProduct.Id === item.Id) {
-        listProduct.Quantity++
-        exist = true;
+    listProducts.forEach((elm, idx) => {
+      if (item.Id == elm.Id) {
+        exist = true
+        item.Quantity = 0
+        listProducts.splice(idx, 1)
       }
     })
     if (!exist) {
       item.Quantity = 1
-      newProducts.current.unshift(item)
+      listProducts.unshift(item)
     }
     setProduct([...product])
   }
 
   const handleButtonIncrease = (item, index) => {
     console.log('handleButtonIncrease', item, index);
-    newProducts.current.forEach(listProduct => {
-      if (listProduct.Id === item.Id) {
-        listProduct.Quantity++
-      }
-    })
+    item.Quantity++
+    if (item.SplitForSalesOrder) {
+      listProducts.unshift({ ...item, Quantity: 1, Sid: Date.now() })
+    }
+    else {
+      listProducts.forEach(elm => {
+        if (elm.Id == item.Id) {
+          elm.Quantity++
+        }
+      })
+    }
     setProduct([...product])
   }
 
   const handleButtonDecrease = (item, index) => {
-    newProducts.current.forEach(listProduct => {
+    listProducts.forEach(listProduct => {
       if (listProduct.Id === item.Id) {
         listProduct.Quantity--
+        item.Quantity--
       }
     })
     setProduct([...product])
@@ -134,7 +151,7 @@ export default (props) => {
 
   const getQuantityProduct = (arrItem) => {
     let Quantity = 0
-    listProducts.concat(newProducts.current).forEach(item => {
+    listProducts.forEach(item => {
       if (item.Id == arrItem.Id) {
         Quantity = item.Quantity
       }
@@ -144,22 +161,23 @@ export default (props) => {
 
   const onClickDone = () => {
     props.navigation.pop();
-    props.route.params._onSelect(newProducts.current, 1);
+    props.route.params._onSelect(listProducts, 1);
   }
 
   const clickLeftIcon = () => {
     console.log('newProducts.current', newProducts.current);
-    if (newProducts.current.length > 0) {
-      dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
-        if (value == 1) {
-          onClickDone()
-        } else {
-          props.navigation.goBack();
-        }
-      })
-    } else {
-      props.navigation.goBack();
-    }
+    console.log('listProducts', listProducts);
+    // if (JSON.stringify(newProducts.current != JSON.stringify(listProducts))) {
+    //   dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
+    //     if (value == 1) {
+    //       onClickDone()
+    //     } else {
+    //       props.navigation.goBack();
+    //     }
+    //   })
+    // } else {
+    //   props.navigation.goBack();
+    // }
   }
 
   const loadMore = (info) => {

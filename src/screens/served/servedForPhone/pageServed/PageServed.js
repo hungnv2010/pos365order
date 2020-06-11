@@ -70,21 +70,23 @@ export default (props) => {
         switch (type) {
             case 1:
                 data = JSON.parse(JSON.stringify(data))
+                data = data.filter(item => item.Quantity > 0)
+                setListProducts([...data])
                 break;
             case 2:
-                data.forEach((element, index) => {
+                data.forEach((element, index) => { 
                     listProducts.forEach(item => {
-                        if (element.Id == item.Id) {
-                            item.Quantity++
+                        if (element.Id == item.Id && !item.SplitForSalesOrder) {
+                            item.Quantity += element.Quantity
                             data.splice(index, 1)
                         }
                     })
                 });
+                setListProducts([...data, ...listProducts])
                 break;
             default:
                 break;
         }
-        setListProducts([...data, ...listProducts])
         checkProductId(data, props.route.params.room.ProductId)
     }
 

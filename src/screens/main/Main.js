@@ -18,26 +18,23 @@ export default (props) => {
 
   useEffect(() => {
     if (props.route.params && props.route.params.Name) return
-    let isSubcribe = true
-    if (isSubcribe) {
-      const syncAllDatas = async () => {
-        dialogManager.showLoading()
-        let already_insert = await getFileDuLieuString(Constant.ALREADY_INSERT_PRODUCT, true)
-        console.log('already_insert', already_insert);
-        if (already_insert) {
-          await dataManager.syncRooms()
-        } else {
-          console.log('syncAllDatas');
-          await dataManager.syncAllDatas()
-          setFileLuuDuLieu(Constant.ALREADY_INSERT_PRODUCT, true)
-        }
-        setAlready(true)
-        dialogManager.hiddenLoading()
+    const syncAllDatas = async () => {
+      dialogManager.showLoading()
+      let already_insert = await getFileDuLieuString(Constant.ALREADY_INSERT_PRODUCT, true)
+      console.log('already_insert', already_insert);
+      if (already_insert) {
+        await dataManager.syncRooms()
+      } else {
+        console.log('syncAllDatas');
+        await dataManager.syncAllDatas()
+        setFileLuuDuLieu(Constant.ALREADY_INSERT_PRODUCT, true)
       }
-      syncAllDatas()
+      setAlready(true)
+      dialogManager.hiddenLoading()
     }
+    syncAllDatas()
     return () => {
-      isSubcribe = false
+      syncAllDatas && syncAllDatas()
       setAlready(false)
     }
   }, [])

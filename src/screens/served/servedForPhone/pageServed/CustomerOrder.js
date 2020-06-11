@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import { Image, View, Text, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground } from 'react-native';
+import { Image, View, Text, FlatList, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground } from 'react-native';
 import { Colors, Images, Metrics } from '../../../../theme';
 import Menu from 'react-native-material-menu';
 import dataManager from '../../../../data/DataManager';
@@ -297,16 +297,22 @@ export default (props) => {
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
                 {list.length > 0 ?
-                    <ScrollView style={{ flex: 1 }}>
-                        {
-                            list.map((item, index) => {
-                                return (
-                                    renderForPhone(item, index)
-                                )
+                    // <ScrollView style={{ flex: 1 }}>
+                    //     {
+                    //         list.map((item, index) => {
+                    //             return (
+                    //                 renderForPhone(item, index)
+                    //             )
 
-                            })
-                        }
-                    </ScrollView>
+                    //         })
+                    //     }
+                    // </ScrollView>
+                    <FlatList
+                        data={list}
+                        extraData={list}
+                        renderItem={({ item, index }) => renderForPhone(item, index)}
+                        keyExtractor={(item, index) => '' + index}
+                    />
                     :
                     <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
                     </ImageBackground>
@@ -335,7 +341,7 @@ export default (props) => {
                     </Menu>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={sendOrder} style={{ flex: 1, justifyContent: "center", alignItems: "center", borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
-                    <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>Gửi thực đơn</Text>
+                    <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('gui_thuc_don')}</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={dellAll} style={{ justifyContent: "center", alignItems: "center", paddingHorizontal: 10, borderLeftColor: "#fff", borderLeftWidth: 2, height: "100%" }}>
                     <Icon name="delete-forever" size={30} color="white" />

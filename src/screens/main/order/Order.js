@@ -24,6 +24,7 @@ import { Checkbox } from 'react-native-paper';
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const _nodes = new Map();
 
@@ -308,10 +309,6 @@ export default (props) => {
                                                     listNode.push({ Id: data.Id, footerY: footerY })
                                                 }
                                             }}
-                                            // ref={ref => {
-                                            //     if (data.isGroup)
-                                            //         _nodes.set(idx, ref)
-                                            // }} 
                                             style={{ flexDirection: "row" }}>
                                             {data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)}
                                         </View>
@@ -361,7 +358,7 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                             width: Metrics.screenWidth * 0.8,
                         }}>
-                            <Text style={{ textAlign: "center", fontWeight: 20, fontWeight: "bold" }}>VI TRI</Text>
+                            <Text style={{ fontWeight: 20, fontWeight: "bold", padding: 10, color: Colors.colorchinh, textTransform: "uppercase" }}>{I18n.t('chon_vi_tri')}</Text>
                             {listPosition.map((item, index) => {
                                 return (
                                     <View key={index} style={{ flexDirection: "row", alignItems: "center", }}>
@@ -378,12 +375,12 @@ export default (props) => {
                                     </View>
                                 )
                             })}
-                            <View style={{ flexDirection: "row", justifyContent: "space-around", paddingVertical: 10 }}>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end", paddingVertical: 10 }}>
                                 <TouchableOpacity onPress={() => { setShowModal(!showModal) }}>
-                                    <Text style={{ padding: 10 }}>Hủy</Text>
+                                    <Text style={{ padding: 10 }}>{I18n.t('huy')}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={onChangeTable}>
-                                    <Text style={{ paddingVertical: 10, backgroundColor: "#008CBA", borderRadius: 5, paddingHorizontal: 20 }}>Đồng ý</Text>
+                                    <Text style={{ paddingVertical: 10, backgroundColor: "#008CBA", borderRadius: 5, paddingHorizontal: 20 }}>{I18n.t('dong_y')}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

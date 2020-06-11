@@ -29,6 +29,7 @@ export default {
   chi_nhanh: "Chi nhánh",
   cai_dat_may_in: "Cài đặt máy in",
   chuyen_ban: "Chuyển bàn",
+  chon_vi_tri: "Chọn vị trí",
 
   // TODO: D
   dang_dung: "Đang dùng",
@@ -37,7 +38,7 @@ export default {
   don_hang: "Đơn Hàng",
   d: "đ",
   don_gia: "Đơn giá",
-  den:"đến",
+  den: "đến",
   // TODO: E
 
 
@@ -56,6 +57,7 @@ export default {
   gui_tin_nhan_thanh_cong: "Gửi tin nhắn thành công !",
   gui_tin_nhan_that_bai: "Gửi tin nhắn thất bại!",
   gui_tin_nhan: "Gửi tin nhắn",
+  gui_thuc_don: "Gửi thực đơn",
 
   // TODO: H
   huy: 'Hủy',
@@ -202,7 +204,7 @@ export default {
   TGD: "TGD",
   tong_thanh_tien: "Tổng thành tiền",
   tong_chiet_khau: "Tổng chiết khấu",
-  tu:"từ",
+  tu: "từ",
   // TODO: U
 
   // TODO: V

@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef, useCallback, forwardRef, useImperat
 import { ActivityIndicator, View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
 import realmStore from '../../../../data/realm/RealmStore';
 import ProductsItem from './ProductsItem';
-import ProductsItemForPhone from './ProductsItemForPhone';
 import { Constant } from '../../../../common/Constant';
 import I18n from '../../../../common/language/i18n';
 import { change_alias } from '../../../../common/Utils';

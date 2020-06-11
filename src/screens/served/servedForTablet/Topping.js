@@ -5,6 +5,7 @@ import realmStore from '../../../data/realm/RealmStore';
 import I18n from '../../../common/language/i18n';
 import dataManager from '../../../data/DataManager';
 import { currencyToString } from '../../../common/Utils'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 export default (props) => {
@@ -176,7 +177,8 @@ export default (props) => {
                 </View>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}>
                     <TouchableOpacity style={{}} onPress={() => { onclose() }}>
-                        <Text style={{ fontStyle: "italic", paddingHorizontal: 5, color: "white" }}>{I18n.t('dong')}</Text>
+                        {/* <Text style={{ fontStyle: "italic", paddingHorizontal: 5, color: "white" }}>{I18n.t('dong')}</Text> */}
+                        <Icon name="check" size={30} color="white" style={{}} />
                     </TouchableOpacity>
                 </View>
             </View>

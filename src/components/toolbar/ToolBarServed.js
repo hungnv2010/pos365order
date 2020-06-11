@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from 'react';
 import {
-    View, Text, TouchableOpacity, Image, StyleSheet,
-    TextInput, Keyboard, Linking, Platform, SafeAreaView
+    View, Text, TouchableOpacity, Image, StyleSheet, TextInput
 } from 'react-native';
 import { Colors, Metrics, Images } from '../../theme'
 import { IconButton, Subheading } from "react-native-paper";
@@ -9,14 +8,35 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import PropTypes from 'prop-types';
 
-export default function ToolBarServed(props) {
+export default forwardRef((props, ref) => {
 
     const [value, onChangeText] = useState('');
     const [isSearch, setIsSearch] = useState(false);
+    const [showProductService, setShowProductService] = useState(false);
+
+
+    useEffect(() => {
+        const getData = async () => {
+            console.log('props.route.params.room.ProductId', props.route.params.room.ProductId);
+            if (props.route.params.room.ProductId > 0) {
+                setShowProductService(true)
+            }
+        }
+        getData()
+    }, [])
+
 
     useEffect(() => {
         props.outputTextSearch(value)
     }, [value])
+
+    useImperativeHandle(ref, () => ({
+        clickCheckInRef(status) {
+            console.log("clickCheckInRef status ", status);
+
+            setShowProductService(status)
+        }
+    }));
 
     const onCallBack = (data, type) => {
         props.outputListProducts(data, type)
@@ -61,6 +81,16 @@ export default function ToolBarServed(props) {
                             <Ionicons name="md-search" size={30} color="white" style={{}} />
                         </View>
                     </TouchableOpacity>
+                    {
+                        showProductService ?
+                            <TouchableOpacity onPress={() => { props.outputClickProductService() }} >
+                                <View style={{}}>
+                                    <Icon name="clock-outline" size={30} color="white" />
+                                </View>
+                            </TouchableOpacity>
+                            :
+                            null
+                    }
                     <TouchableOpacity onPress={() => { props.navigation.navigate('QRCode', { _onSelect: onCallBack }) }} >
                         <View style={{}}>
                             <Icon name="qrcode-scan" size={25} color="white" style={{}} />
@@ -77,7 +107,7 @@ export default function ToolBarServed(props) {
         </View>
     )
 
-}
+})
 
 const styles = StyleSheet.create({
 
@@ -88,14 +118,3 @@ const styles = StyleSheet.create({
     },
 })
 
-ToolBarServed.propTypes = {
-    title: PropTypes.string,
-    rightIcon: PropTypes.string,
-    leftIcon: PropTypes.string,
-    clickRightIcon: PropTypes.func,
-    clickLeftIcon: PropTypes.func
-}
-
-ToolBarServed.defaultProps = {
-
-}
