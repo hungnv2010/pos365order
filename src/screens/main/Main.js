@@ -6,8 +6,6 @@ import Order from './order/Order';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
 import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
-import { getFileDuLieuString, setFileLuuDuLieu } from "../../data/fileStore/FileStorage";
-import { Constant } from '../../common/Constant';
 
 
 export default (props) => {
@@ -20,15 +18,7 @@ export default (props) => {
     if (props.route.params && props.route.params.Name) return
     const syncAllDatas = async () => {
       dialogManager.showLoading()
-      let already_insert = await getFileDuLieuString(Constant.ALREADY_INSERT_PRODUCT, true)
-      console.log('already_insert', already_insert);
-      if (already_insert) {
-        await dataManager.syncRooms()
-      } else {
-        console.log('syncAllDatas');
-        await dataManager.syncAllDatas()
-        setFileLuuDuLieu(Constant.ALREADY_INSERT_PRODUCT, true)
-      }
+      await dataManager.syncAllDatas()
       setAlready(true)
       dialogManager.hiddenLoading()
     }
@@ -42,7 +32,7 @@ export default (props) => {
 
   const clickRightIcon = async () => {
     dialogManager.showLoading()
-    await dataManager.syncRooms()
+    await dataManager.syncAllDatas()
     dialogManager.hiddenLoading()
   }
 

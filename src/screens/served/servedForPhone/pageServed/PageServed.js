@@ -69,7 +69,6 @@ export default (props) => {
         console.log('onCallBack', data, type);
         switch (type) {
             case 1:
-                data = JSON.parse(JSON.stringify(data))
                 data = data.filter(item => item.Quantity > 0)
                 setListProducts([...data])
                 break;

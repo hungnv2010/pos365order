@@ -19,9 +19,7 @@ export default (props) => {
   const [skip, setSkip] = useState(0)
   const [isSearching, setIsSearching] = useState(false)
   const [listCateId, setListCateId] = useState([-1])
-  const [listProducts, setListProducts] = useState(() => props.route.params.listProducts)
-  const newProducts = useRef(props.route.params.listProducts)
-
+  const listProducts = useRef([...props.route.params.listProducts])
   const [valueSearch, setValueSearch] = useState('')
   const count = useRef(0)
   const debouncedVal = useDebounce(valueSearch)
@@ -41,7 +39,7 @@ export default (props) => {
     getCategories()
   }, [])
 
-
+  
   const getProducts = useCallback(async () => {
     console.log('getProducts');
     let results = await realmStore.queryProducts()
@@ -49,10 +47,11 @@ export default (props) => {
       results = results.filtered(`CategoryId == ${listCateId[0]}`)
     }
     let productsRes = results.slice(skip, skip + Constant.LOAD_LIMIT)
+    productsRes = JSON.parse(JSON.stringify(productsRes))
     console.log('productsRes', productsRes);
     productsRes.forEach((item, index) => {
       item.Quantity = 0
-      listProducts.forEach(elm => {
+      listProducts.current.forEach(elm => {
         if (item.Id == elm.Id) {
           item.Quantity += elm.Quantity
         }
@@ -105,20 +104,14 @@ export default (props) => {
   }
 
   const onClickProduct = (item, index) => {
-    console.log('listProducts', listProducts);
-
-    let exist = false;
     item.Sid = Date.now()
-    listProducts.forEach((elm, idx) => {
-      if (item.Id == elm.Id) {
-        exist = true
-        item.Quantity = 0
-        listProducts.splice(idx, 1)
-      }
-    })
-    if (!exist) {
+    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+    if (pos == -1) {
       item.Quantity = 1
-      listProducts.unshift(item)
+      listProducts.current.unshift({ ...item })
+    } else {
+      item.Quantity = 0
+      listProducts.current = listProducts.current.filter(elm => elm.Id != item.Id)
     }
     setProduct([...product])
   }
@@ -127,57 +120,44 @@ export default (props) => {
     console.log('handleButtonIncrease', item, index);
     item.Quantity++
     if (item.SplitForSalesOrder) {
-      listProducts.unshift({ ...item, Quantity: 1, Sid: Date.now() })
-    }
-    else {
-      listProducts.forEach(elm => {
-        if (elm.Id == item.Id) {
-          elm.Quantity++
-        }
-      })
+      listProducts.current.unshift({ ...item, Quantity: 1, Sid: Date.now() })
+    } else {
+      let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+      listProducts.current[pos].Quantity++
     }
     setProduct([...product])
   }
 
   const handleButtonDecrease = (item, index) => {
-    listProducts.forEach(listProduct => {
-      if (listProduct.Id === item.Id) {
-        listProduct.Quantity--
-        item.Quantity--
-      }
-    })
+    item.Quantity--
+    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+    if (item.SplitForSalesOrder) {
+      listProducts.current.splice(pos, 1)
+    } else {
+      listProducts.current[pos].Quantity--
+    }
     setProduct([...product])
   }
 
-  const getQuantityProduct = (arrItem) => {
-    let Quantity = 0
-    listProducts.forEach(item => {
-      if (item.Id == arrItem.Id) {
-        Quantity = item.Quantity
-      }
-    })
-    return Quantity
-  }
 
   const onClickDone = () => {
     props.navigation.pop();
-    props.route.params._onSelect(listProducts, 1);
+    console.log('listProducts', listProducts.current);
+    props.route.params._onSelect(listProducts.current, 1);
   }
 
   const clickLeftIcon = () => {
-    console.log('newProducts.current', newProducts.current);
-    console.log('listProducts', listProducts);
-    // if (JSON.stringify(newProducts.current != JSON.stringify(listProducts))) {
-    //   dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
-    //     if (value == 1) {
-    //       onClickDone()
-    //     } else {
-    //       props.navigation.goBack();
-    //     }
-    //   })
-    // } else {
-    //   props.navigation.goBack();
-    // }
+    if (JSON.stringify(props.route.params.listProducts) != JSON.stringify(listProducts.current)) {
+      dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
+        if (value == 1) {
+          onClickDone()
+        } else {
+          props.navigation.goBack();
+        }
+      })
+    } else {
+      props.navigation.goBack();
+    }
   }
 
   const loadMore = (info) => {
@@ -237,7 +217,6 @@ export default (props) => {
               data={product}
               renderItem={({ item, index }) =>
                 <ProductsItemForPhone
-                  getQuantityProduct={getQuantityProduct(item)}
                   item={item}
                   index={index}
                   onClickProduct={onClickProduct}

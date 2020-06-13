@@ -41,7 +41,7 @@ class PrintService {
                 itemTable = itemTable.replace("{Ten_Hang_Hoa}", "" + el.Name)
                 itemTable = itemTable.replace("{Ghi_Chu_Hang_Hoa}", description)
                 itemTable = itemTable.replace("{So_Luong}", el.Quantity)
-                itemTable = itemTable.replace("{Thanh_Tien_Hang_Hoa}", "fix giá")
+                itemTable = itemTable.replace("{Thanh_Tien_Hang_Hoa}", this.getPriceIsTimeBlock(el))
                 itemTable = itemTable.replace("{Don_Gia}", currencyToString(el.Price))
                 itemTable = itemTable.replace("{Don_Gia_Goc_Hien_Thi_Check}", priceBaseShow > 0 ? "style='display: block'" : "style='display: none'")
                 itemTable = itemTable.replace("{Don_Gia_Goc_Hien_Thi}", currencyToString(priceBaseShow))
@@ -107,7 +107,13 @@ class PrintService {
                 Print.printImage(res)
         })
     }
-    
+
+    getPriceIsTimeBlock = (item) => {
+        console.log('getPriceIsTimeBlock', item);
+
+        return currencyToString(item.BasePrice)
+    }
+
 }
 const printService = new PrintService();
 export default printService;

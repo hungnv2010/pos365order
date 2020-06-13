@@ -125,7 +125,6 @@ const HeaderComponent = (props) => {
         realmStore.deleteAll()
         setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
         setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
-        setFileLuuDuLieu(Constant.ALREADY_INSERT_PRODUCT, false)
         // props.navigation.navigate('Login', { param: "logout" })
         let rememberAccount = await getFileDuLieuString(Constant.REMEMBER_ACCOUNT, true);
         console.log('rememberAccount = ', rememberAccount);
