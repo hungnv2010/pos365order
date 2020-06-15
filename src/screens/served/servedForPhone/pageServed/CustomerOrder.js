@@ -179,6 +179,9 @@ export default (props) => {
                     SecondPrinter: null,
                     Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : ""
                 }
+                if (element.Description != '') {
+                    obj.Description = element.Description
+                }
                 params.ServeEntities.push(obj)
             });
             dialogManager.showLoading();

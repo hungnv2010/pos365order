@@ -39,7 +39,7 @@ export default (props) => {
     getCategories()
   }, [])
 
-  
+
   const getProducts = useCallback(async () => {
     console.log('getProducts');
     let results = await realmStore.queryProducts()
@@ -113,13 +113,16 @@ export default (props) => {
       item.Quantity = 0
       listProducts.current = listProducts.current.filter(elm => elm.Id != item.Id)
     }
+    if (item.ProductType == 2) {
+
+    }
     setProduct([...product])
   }
 
   const handleButtonIncrease = (item, index) => {
     console.log('handleButtonIncrease', item, index);
     item.Quantity++
-    if (item.SplitForSalesOrder) {
+    if (item.SplitForSalesOrder || item.ProductType == 2) {
       listProducts.current.unshift({ ...item, Quantity: 1, Sid: Date.now() })
     } else {
       let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
@@ -131,7 +134,7 @@ export default (props) => {
   const handleButtonDecrease = (item, index) => {
     item.Quantity--
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-    if (item.SplitForSalesOrder) {
+    if (item.SplitForSalesOrder || item.ProductType == 2) {
       listProducts.current.splice(pos, 1)
     } else {
       listProducts.current[pos].Quantity--
