@@ -73,13 +73,18 @@ export default (props) => {
 
   useEffect(() => {
     const getSearchResult = async () => {
-      if (debouncedVal) {
+      if (debouncedVal != '') {
         setHasProducts(false)
         setIsSearching(true)
         count.current = 0
         let valueSearchLatin = change_alias(debouncedVal)
         let results = await realmStore.queryProducts()
         let searchResult = results.filtered(`NameLatin CONTAINS "${valueSearchLatin}" OR Code CONTAINS "${valueSearchLatin}"`)
+        searchResult = JSON.parse(JSON.stringify(searchResult))
+        searchResult = Object.values(searchResult)
+        searchResult.forEach(item => {
+          item.Quantity = 0
+        })
         setProduct(searchResult)
         setHasProducts(true)
       } else {
@@ -105,39 +110,59 @@ export default (props) => {
 
   const onClickProduct = (item, index) => {
     item.Sid = Date.now()
+    item.Description = getDescription(item)
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
     if (pos == -1) {
-      item.Quantity = 1
+      item.Quantity = getQuantity(item)
       listProducts.current.unshift({ ...item })
     } else {
       item.Quantity = 0
       listProducts.current = listProducts.current.filter(elm => elm.Id != item.Id)
     }
-    if (item.ProductType == 2) {
-
-    }
     setProduct([...product])
+  }
+
+  const getQuantity = (item) => {
+    let Quantity = 0
+    if (item.IsPriceForBlock) {
+      Quantity = item.BlockOfTimeToUseService / 60
+    } else {
+      Quantity = 1
+    }
+    return Quantity
+  }
+
+  const getDescription = (item) => {
+    let Description = ''
+    if (item.ProductType == 2) {
+      let date = new Date()
+      let [day, month, hour, minute] = [date.getDate(), date.getMonth(), date.getHours(), date.getMinutes()]
+      Description = `${day}/${month} ${hour}:${minute}=>${day}/${month} ${hour}:${minute} (0 ${I18n.t('phut')})`
+    }
+    return Description
   }
 
   const handleButtonIncrease = (item, index) => {
     console.log('handleButtonIncrease', item, index);
-    item.Quantity++
+    let qtt = getQuantity(item)
+    item.Quantity += qtt
     if (item.SplitForSalesOrder || item.ProductType == 2) {
-      listProducts.current.unshift({ ...item, Quantity: 1, Sid: Date.now() })
+      listProducts.current.unshift({ ...item, Quantity: qtt, Sid: Date.now() })
     } else {
       let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-      listProducts.current[pos].Quantity++
+      listProducts.current[pos].Quantity += qtt
     }
     setProduct([...product])
   }
 
   const handleButtonDecrease = (item, index) => {
-    item.Quantity--
+    let qtt = getQuantity(item)
+    item.Quantity -= qtt
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
     if (item.SplitForSalesOrder || item.ProductType == 2) {
       listProducts.current.splice(pos, 1)
     } else {
-      listProducts.current[pos].Quantity--
+      listProducts.current[pos].Quantity -= qtt
     }
     setProduct([...product])
   }

@@ -29,7 +29,7 @@ const ProductsItemForPhone = (props) => {
                         <TouchableOpacity onPress={() => { props.handleButtonDecrease(props.item, props.index) }}>
                             <Icon name="minus-circle" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>
-                        <TextInput keyboardType="numeric" textAlign="center" style={{ width: 50, borderBottomWidth: .5 }}>{props.item.Quantity}</TextInput>
+                        <TextInput keyboardType="numeric" textAlign="center" style={{ width: 50, borderBottomWidth: .5 }}>{Math.round(props.item.Quantity * 1000) / 1000}</TextInput>
                         <TouchableOpacity onPress={() => { props.handleButtonIncrease(props.item, props.index) }}>
                             <Icon name="plus-circle" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>

@@ -73,7 +73,7 @@ export default (props) => {
                 setListProducts([...data])
                 break;
             case 2:
-                data.forEach((element, index) => { 
+                data.forEach((element, index) => {
                     listProducts.forEach(item => {
                         if (element.Id == item.Id && !item.SplitForSalesOrder) {
                             item.Quantity += element.Quantity
@@ -103,7 +103,7 @@ export default (props) => {
     const hideMenu = (position) => {
         _menu.hide();
         selectPosition(position)
-        setShowModal(true)
+        // setShowModal(true)
     };
 
     const showMenu = () => {
@@ -156,7 +156,8 @@ export default (props) => {
                 clickQRCode={onClickQRCode}
                 rightIcon="plus"
                 clickProductService={onClickProductService}
-                clickRightIcon={onClickSelectProduct} />
+                clickRightIcon={onClickSelectProduct}
+                tab={tab} />
             <View style={{ backgroundColor: Colors.colorchinh, alignItems: "center", flexDirection: "row", justifyContent: "space-between", paddingBottom: 5 }}>
                 <View style={{ flex: 1, justifyContent: "center" }}>
                     <Text style={{ paddingLeft: 20, textTransform: "uppercase", color: "white", fontWeight: "bold" }}>{props.route && props.route.params && props.route.params.room && props.route.params.room.Name ? props.route.params.room.Name : ""}</Text>

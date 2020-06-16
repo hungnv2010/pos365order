@@ -16,7 +16,7 @@ const Served = (props) => {
     const [listTopping, setListTopping] = useState([])
     const [position, setPosition] = useState("")
     const meMoItemOrder = useMemo(() => itemOrder, [itemOrder])
-    const toolBarPhoneServedRef = useRef();
+    const toolBarTabletServedRef = useRef();
 
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const Served = (props) => {
                 console.log("outputClickProductService results ", [results["0"]]);
                 results["0"]["Quantity"] = 1;
                 outputListProducts([results["0"]])
-                toolBarPhoneServedRef.current.clickCheckInRef()
+                toolBarTabletServedRef.current.clickCheckInRef()
             }
         }
     }
@@ -85,9 +85,9 @@ const Served = (props) => {
             let list = listProduct.filter(item => { return item.Id == Id })
             console.log("checkProductId listProduct ", list);
             setTimeout(() => {
-                list.length > 0 ? toolBarPhoneServedRef.current.clickCheckInRef(false) : toolBarPhoneServedRef.current.clickCheckInRef(true)
+                list.length > 0 ? toolBarTabletServedRef.current.clickCheckInRef(false) : toolBarTabletServedRef.current.clickCheckInRef(true)
             }, 500);
-            // listProduct.length > 0 ? toolBarPhoneServedRef.current.clickCheckInRef(false) : toolBarPhoneServedRef.current.clickCheckInRef(true)
+            // listProduct.length > 0 ? toolBarTabletServedRef.current.clickCheckInRef(false) : toolBarTabletServedRef.current.clickCheckInRef(true)
         }
     }
 
@@ -98,7 +98,7 @@ const Served = (props) => {
             <>
                 <ToolBarServed
                     {...props}
-                    ref={toolBarPhoneServedRef}
+                    ref={toolBarTabletServedRef}
                     outputClickProductService={outputClickProductService}
                     navigation={props.navigation}
                     outputListProducts={outputListProducts}
