@@ -192,7 +192,7 @@ export default (props) => {
 
     const dellAll = () => {
         if (list.length > 0) {
-            dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
+            dialogManager.showPopupTwoButton('Bạn có chắc muốn xóa toàn bộ sản phẩm không?', 'Thông báo', (value) => {
                 if (value == 1) {
                     syncListProducts([])
                     dataManager.dataChoosing.forEach(item => {
