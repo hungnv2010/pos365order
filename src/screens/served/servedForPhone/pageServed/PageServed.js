@@ -67,6 +67,7 @@ export default (props) => {
     //type: 2 => from noteBook
     const onCallBack = (data, type) => {
         console.log('onCallBack', data, type);
+        setTab(1)
         switch (type) {
             case 1:
                 data = data.filter(item => item.Quantity > 0)
@@ -103,7 +104,6 @@ export default (props) => {
     const hideMenu = (position) => {
         _menu.hide();
         selectPosition(position)
-        // setShowModal(true)
     };
 
     const showMenu = () => {
@@ -156,8 +156,7 @@ export default (props) => {
                 clickQRCode={onClickQRCode}
                 rightIcon="plus"
                 clickProductService={onClickProductService}
-                clickRightIcon={onClickSelectProduct}
-                tab={tab} />
+                clickRightIcon={onClickSelectProduct} />
             <View style={{ backgroundColor: Colors.colorchinh, alignItems: "center", flexDirection: "row", justifyContent: "space-between", paddingBottom: 5 }}>
                 <View style={{ flex: 1, justifyContent: "center" }}>
                     <Text style={{ paddingLeft: 20, textTransform: "uppercase", color: "white", fontWeight: "bold" }}>{props.route && props.route.params && props.route.params.room && props.route.params.room.Name ? props.route.params.room.Name : ""}</Text>
