@@ -32,13 +32,15 @@ export default (props) => {
     })
 
     const outputListProducts = (list) => {
-        let ischeck = false;
-        list.forEach(element => {
-            if(element.Id == props.route.params.room.ProductId){
-                ischeck = true;
-            }
-        });
-        toolBarPhoneServedRef.current.clickCheckInRef(!ischeck)
+        if (props.route.params.room.ProductId) {
+            let ischeck = false;
+            list.forEach(element => {
+                if (element.Id == props.route.params.room.ProductId) {
+                    ischeck = true;
+                }
+            });
+            toolBarPhoneServedRef.current.clickCheckInRef(!ischeck)
+        }
         setListProducts(list)
     }
 
@@ -60,7 +62,7 @@ export default (props) => {
                 results["0"]["Quantity"] = 1;
                 results["0"]["Sid"] = Date.now();
                 // outputListProducts([results["0"]])
-                toolBarPhoneServedRef.current.clickCheckInRef() 
+                toolBarPhoneServedRef.current.clickCheckInRef()
                 onCallBack([results["0"]], 2)
             }
         }
