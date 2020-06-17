@@ -121,16 +121,16 @@ const HeaderComponent = (props) => {
         })
     }
 
-    const onClickLogOut = async () => {
+    const onClickLogOut = () => {
         realmStore.deleteAll()
         setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
         setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
         // props.navigation.navigate('Login', { param: "logout" })
-        let rememberAccount = await getFileDuLieuString(Constant.REMEMBER_ACCOUNT, true);
-        console.log('rememberAccount = ', rememberAccount);
+        // let rememberAccount = await getFileDuLieuString(Constant.REMEMBER_ACCOUNT, true);
+        // console.log('rememberAccount = ', rememberAccount);
         props.navigation.dispatch(
             CommonActions.reset({
-                index: 1,
+                index: 0,
                 routes: [
                     { name: 'Login', params: { param: "logout" } },
                 ],
@@ -241,7 +241,7 @@ const ContentComponent = (props) => {
         // props.navigation.navigate('Login', { param: "logout" })
         props.navigation.dispatch(
             CommonActions.reset({
-                index: 1,
+                index: 0,
                 routes: [
                     { name: 'Login', params: { param: "logout" } },
                 ],

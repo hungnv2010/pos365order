@@ -26,6 +26,7 @@ export default (props) => {
     syncAllDatas()
     return () => {
       realmStore.removeAllListener()
+      // syncAllDatas && syncAllDatas()
       setAlready(false)
     }
   }, [])

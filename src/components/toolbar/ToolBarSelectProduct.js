@@ -46,10 +46,10 @@ export default function ToolBarDefault(props) {
 
                 <View style={{ flex: 3 }}>
                     {isSearch ?
-                        <View style={{ flex: 1, borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2 }}>
+                        <View style={{ borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2 }}>
                             <TextInput
                                 ref={inputRef}
-                                style={{ backgroundColor: "transparent", flex: 1 }}
+                                style={{ backgroundColor: "transparent", flex: 1 , margin: 6}}
                                 onChangeText={(text) => onChangeText(text)}
                                 value={value}
                             />
