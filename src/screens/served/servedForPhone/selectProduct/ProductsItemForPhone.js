@@ -20,16 +20,16 @@ const ProductsItemForPhone = (props) => {
             />
             <View style={{ flexDirection: "column", flex: 2, marginLeft: 10, justifyContent: "center" }}>
                 <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold" }}>{props.item.Name}</Text>
-                <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(props.item.Price)}</Text>
+                <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(props.item.Price)}<Text style={{ color: Colors.colorchinh }}>{props.item.LargeUnit != '' ? `/${props.item.LargeUnit}` : props.item.Unit != '' ? `/${props.item.Unit}` : ''}</Text></Text>
             </View>
             <View style={{ flex: 1.5, flexDirection: "row", alignItems: "center", marginRight: 25 }}>
 
-                {props.getQuantityProduct > 0 ?
+                {props.item.Quantity > 0 ?
                     <>
                         <TouchableOpacity onPress={() => { props.handleButtonDecrease(props.item, props.index) }}>
                             <Icon name="minus-circle" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>
-                        <TextInput keyboardType="numeric" textAlign="center" style={{ width: 50, borderBottomWidth: .5 }}>{props.getQuantityProduct}</TextInput>
+                        <TextInput keyboardType="numeric" textAlign="center" style={{ width: 50, borderBottomWidth: .5 }}>{Math.round(props.item.Quantity * 1000) / 1000}</TextInput>
                         <TouchableOpacity onPress={() => { props.handleButtonIncrease(props.item, props.index) }}>
                             <Icon name="plus-circle" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>

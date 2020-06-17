@@ -7,7 +7,7 @@ import {
     TouchableOpacity,
     Image,
     Dimensions,
-    findNodeHandle,
+    ActivityIndicator,
     Modal,
     TouchableWithoutFeedback
 } from 'react-native';
@@ -24,12 +24,14 @@ import { Checkbox } from 'react-native-paper';
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const _nodes = new Map();
 
 export default (props) => {
 
     const [showModal, setShowModal] = useState(false)
+    const [loadDone, setLoadDone] = useState(false)
     const [showToast, setShowToast] = useState(false)
     const [listPosition, setListPosition] = useState([
         { position: "A", checked: true },
@@ -45,7 +47,7 @@ export default (props) => {
     });
 
     const onItemPress = ({ Id, Name, ProductId }) => {
-        if (props.route.params && props.route.params.FromPos && props.route.params.FromRoomId && props.route.params.Name) {
+        if (props.route.params && props.route.params.Name) {
             toRoomId.current = { Id: Id, Name: Name, ProductId: ProductId }
             setShowModal(!showModal)
         } else {
@@ -119,16 +121,13 @@ export default (props) => {
     const [listRoom, setListRoom] = useState([])
 
     useEffect(() => {
-        let isSubscribed = true;
-        if (isSubscribed) {
+        if (props.already || (props.route.params && props.route.params.Name)) {
             init()
         }
         return () => {
-            isSubscribed = false
             realmStore.removeAllListener()
         }
-    }, [])
-
+    }, [props.already])
 
 
 
@@ -157,7 +156,7 @@ export default (props) => {
             }
         })
 
-
+        setLoadDone(true)
     }
 
     const getDatas = (rooms, roomGroups) => {
@@ -241,7 +240,8 @@ export default (props) => {
             console.log("onChangeTable err ", e);
             dialogManager.hiddenLoading()
         })
-        props.navigation.navigate('PageServed', { room: toRoomId.current, Position: toPos })
+        // props.navigation.navigate('PageServed', { room: toRoomId.current, Position: toPos })
+        props.navigation.goBack()
     }
 
     let refScroll = null;
@@ -293,31 +293,38 @@ export default (props) => {
                 </View>
             </View>
             <View style={{ flex: 1, padding: 2 }}>
-                <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
-                    <View style={styles.containerRoom}>
-                        {datas ?
-                            datas.map((data, idx) =>
-                                <View
-                                    key={idx}
-                                    onLayout={(e) => {
-                                        footerY = e.nativeEvent.layout.y;
-                                        if (data.isGroup) {
-                                            console.log("footerY ", footerY);
-                                            _nodes.set(data.Id, footerY)
-                                            listNode.push({ Id: data.Id, footerY: footerY })
-                                        }
-                                    }}
-                                    // ref={ref => {
-                                    //     if (data.isGroup)
-                                    //         _nodes.set(idx, ref)
-                                    // }} 
-                                    style={{ flexDirection: "row" }}>
-                                    {data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)}
-                                </View>
-                            ) : null
-                        }
-                    </View>
-                </ScrollView>
+                {
+                    loadDone ?
+                        <ScrollView scrollToOverflowEnabled={true} showsVerticalScrollIndicator={false} ref={(ref) => refScroll = ref} style={{ flex: 1 }}>
+                            <View style={styles.containerRoom}>
+                                {datas ?
+                                    datas.map((data, idx) =>
+                                        <View
+                                            key={idx}
+                                            onLayout={(e) => {
+                                                let footerY = e.nativeEvent.layout.y;
+                                                if (data.isGroup) {
+                                                    console.log("footerY ", footerY);
+                                                    _nodes.set(data.Id, footerY)
+                                                    listNode.push({ Id: data.Id, footerY: footerY })
+                                                }
+                                            }}
+                                            style={{ flexDirection: "row" }}>
+                                            {data.isGroup ? renderRoomGroup(data) : renderRoom(data, widthRoom)}
+                                        </View>
+                                    ) : null
+                                }
+                            </View>
+                        </ScrollView>
+                        :
+                        props.route.params && props.route.params.Name ?
+
+                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                                <ActivityIndicator size="large" style={{}} color={colors.colorchinh} />
+                            </View>
+                            :
+                            null
+                }
             </View>
             <Modal
                 animationType="fade"
@@ -351,7 +358,7 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                             width: Metrics.screenWidth * 0.8,
                         }}>
-                            <Text style={{ textAlign: "center", fontWeight: 20, fontWeight: "bold" }}>VI TRI</Text>
+                            <Text style={{ fontWeight: 20, fontWeight: "bold", padding: 10, color: Colors.colorchinh, textTransform: "uppercase" }}>{I18n.t('chon_vi_tri')}</Text>
                             {listPosition.map((item, index) => {
                                 return (
                                     <View key={index} style={{ flexDirection: "row", alignItems: "center", }}>
@@ -368,12 +375,12 @@ export default (props) => {
                                     </View>
                                 )
                             })}
-                            <View style={{ flexDirection: "row", justifyContent: "space-around", paddingVertical: 10 }}>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end", paddingVertical: 10 }}>
                                 <TouchableOpacity onPress={() => { setShowModal(!showModal) }}>
-                                    <Text style={{ padding: 10 }}>Hủy</Text>
+                                    <Text style={{ padding: 10 }}>{I18n.t('huy')}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={onChangeTable}>
-                                    <Text style={{ paddingVertical: 10, backgroundColor: "#008CBA", borderRadius: 5, paddingHorizontal: 20 }}>Đồng ý</Text>
+                                    <Text style={{ paddingVertical: 10, backgroundColor: "#008CBA", borderRadius: 5, paddingHorizontal: 20 }}>{I18n.t('dong_y')}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

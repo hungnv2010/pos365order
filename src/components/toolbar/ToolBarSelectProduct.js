@@ -46,7 +46,7 @@ export default function ToolBarDefault(props) {
 
                 <View style={{ flex: 3 }}>
                     {isSearch ?
-                        <View style={{ margin: 5, padding: 6, flex: 1, borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2 }}>
+                        <View style={{ flex: 1, borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2 }}>
                             <TextInput
                                 ref={inputRef}
                                 style={{ backgroundColor: "transparent", flex: 1 }}

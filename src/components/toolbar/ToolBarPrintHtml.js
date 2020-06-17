@@ -26,10 +26,6 @@ export default function ToolBarPrintHtml(props) {
         return state.Common.deviceType
     });
 
-    const orientaition = useSelector(state => {
-        console.log("useSelector state ", state);
-        return state.Common.orientaition
-    });
 
     return (
         <LinearGradient

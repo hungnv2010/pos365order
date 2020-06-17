@@ -6,11 +6,6 @@ import ToolBarServed from '../../../components/toolbar/ToolBarServed'
 import SelectProduct from './selectProduct/SelectProduct';
 import PageServed from './pageServed/PageServed';
 import Topping from './Topping';
-import { Constant } from '../../../common/Constant';
-import dialogManager from '../../../components/dialog/DialogManager';
-import I18n from '../../../common/language/i18n';
-import Main from '../../main/Main';
-import ToolBarPhoneServed from '../../../components/toolbar/ToolBarPhoneServed';
 import realmStore from '../../../data/realm/RealmStore';
 
 const Served = (props) => {
@@ -18,14 +13,10 @@ const Served = (props) => {
     const [listProducts, setListProducts] = useState([])
     const [value, setValue] = useState('');
     const [itemOrder, setItemOrder] = useState({})
-    const [fromTable, setFromTable] = useState({})
     const [listTopping, setListTopping] = useState([])
     const [position, setPosition] = useState("")
-    const [isSelectProduct, setIsSelectProduct] = useState(false)
-    const [isTopping, setIsTopping] = useState(false)
-    const [isChangeTable, setIsChangeTable] = useState(false)
     const meMoItemOrder = useMemo(() => itemOrder, [itemOrder])
-    const SelectProductRef = useRef()
+    const toolBarTabletServedRef = useRef();
 
 
     useEffect(() => {
@@ -39,8 +30,8 @@ const Served = (props) => {
         if (type === 2) {
             newList.forEach((element, index) => {
                 listProducts.forEach(item => {
-                    if (element.Id == item.Id) {
-                        item.Quantity++
+                    if (element.Id == item.Id && !item.SplitForSalesOrder) {
+                        item.Quantity += element.Quantity
                         newList.splice(index, 1)
                     }
                 })
@@ -49,7 +40,7 @@ const Served = (props) => {
         }
         setListProducts(newList)
         console.log(newList, 'newList');
-        // checkProductId(newList, props.route.params.room.ProductId)
+        checkProductId(newList, props.route.params.room.ProductId)
     }
 
     const outputTextSearch = (text) => {
@@ -73,10 +64,43 @@ const Served = (props) => {
     }
 
 
+    const outputClickProductService = async () => {
+        let results = await realmStore.queryProducts()
+        if (results) {
+            results = results.filtered(`Id = "${props.route.params.room.ProductId}"`)
+            if (results && results.length > 0) {
+                results = JSON.parse(JSON.stringify(results))
+                console.log("outputClickProductService results ", [results["0"]]);
+                results["0"]["Quantity"] = 1;
+                outputListProducts([results["0"]])
+                toolBarTabletServedRef.current.clickCheckInRef()
+            }
+        }
+    }
+
+    const checkProductId = (listProduct, Id) => {
+        console.log("checkProductId id ", Id);
+
+        if (Id != 0) {
+            let list = listProduct.filter(item => { return item.Id == Id })
+            console.log("checkProductId listProduct ", list);
+            setTimeout(() => {
+                list.length > 0 ? toolBarTabletServedRef.current.clickCheckInRef(false) : toolBarTabletServedRef.current.clickCheckInRef(true)
+            }, 500);
+            // listProduct.length > 0 ? toolBarTabletServedRef.current.clickCheckInRef(false) : toolBarTabletServedRef.current.clickCheckInRef(true)
+        }
+    }
+
+
+
     const renderForTablet = () => {
         return (
             <>
-                <ToolBarServed navigation={props.navigation}
+                <ToolBarServed
+                    {...props}
+                    ref={toolBarTabletServedRef}
+                    outputClickProductService={outputClickProductService}
+                    navigation={props.navigation}
                     outputListProducts={outputListProducts}
                     outputTextSearch={outputTextSearch} />
                 <View style={{ flex: 1, flexDirection: "row" }}>
@@ -114,157 +138,10 @@ const Served = (props) => {
         )
     }
 
-    // const onClickDone = () => {
-    //     SelectProductRef.current.onClickDoneInRef()
-    //     outputIsSelectProduct()
-    // }
-
-    // const clickLeftIcon = () => {
-    //     console.log(SelectProductRef.current.listProductsRef());
-    //     if (SelectProductRef.current.listProductsRef().length > 0) {
-    //         dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
-    //             if (value == 1) {
-    //                 onClickDone()
-    //             } else {
-    //                 outputIsSelectProduct()
-    //             }
-    //         })
-    //     } else {
-    //         outputIsSelectProduct()
-    //     }
-    // }
-
-
-    // const onCallBackNoteBook = (data = "") => {
-    //     console.log("onCallBackNoteBook data ", data);
-    //     outputListProducts(data, 2)
-    // }
-
-    // const outputClickNoteBook = () => {
-    //     props.navigation.navigate('NoteBook', { _onSelect: onCallBackNoteBook })
-    // }
-
-    // const outputClickQRCode = () => {
-    //     props.navigation.navigate('QRCode', { _onSelect: onCallBackNoteBook })
-    // }
-
-    // const outputClickProductService = async () => {
-    //     // alert("ProductService")
-    //     let results = await realmStore.queryProducts()
-    //     if (results) {
-    //         results = results.filtered(`Id = "${props.route.params.room.ProductId}"`)
-    //         if (results && results.length > 0) {
-    //             results = JSON.parse(JSON.stringify(results))
-    //             console.log("outputClickProductService results ", [results["0"]]);
-    //             results["0"]["Quantity"] = 1;
-    //             outputListProducts([results["0"]])
-    //             toolBarPhoneServedRef.current.clickCheckInRef()
-    //         }
-    //     }
-    // }
-
-    // const checkProductId = (listProduct, Id) => {
-    //     console.log("checkProductId id ", Id);
-
-    //     if (Id != 0) {
-    //         let list = listProduct.filter(item => { return item.Id == Id })
-    //         console.log("checkProductId listProduct ", list);
-    //         setTimeout(() => {
-    //             list.length > 0 ? toolBarPhoneServedRef.current.clickCheckInRef(false) : toolBarPhoneServedRef.current.clickCheckInRef(true)
-    //         }, 500);
-    //         // listProduct.length > 0 ? toolBarPhoneServedRef.current.clickCheckInRef(false) : toolBarPhoneServedRef.current.clickCheckInRef(true)
-    //     }
-    // }
-
-    // const toolBarPhoneServedRef = useRef();
-
-    // const renderForPhone = () => {
-    //     return (
-    //         <>
-    //             {isSelectProduct ?
-    //                 <View style={{ flex: 1 }}>
-    //                     <ToolBarSelectProduct
-    //                         leftIcon="keyboard-backspace"
-    //                         clickLeftIcon={clickLeftIcon}
-    //                         onClickDone={onClickDone}
-    //                         title="Select Product"
-    //                         outputTextSearch={outputTextSearch} />
-    //                     <SelectProduct
-    //                         ref={SelectProductRef}
-    //                         valueSearch={value}
-    //                         numColumns={1}
-    //                         listProducts={[...listProducts]}
-    //                         outputListProducts={outputListProducts} />
-    //                 </View> :
-    //                 null
-    //             }
-    //             {isTopping ?
-    //                 <View style={{ flex: 1 }}>
-    //                     <Topping
-    //                         {...props}
-    //                         position={position}
-    //                         numColumns={1}
-    //                         itemOrder={meMoItemOrder}
-    //                         onClose={() => {
-    //                             outputIsTopping();
-    //                         }}
-    //                         outputListTopping={outputListTopping}
-    //                     />
-    //                 </View> :
-    //                 null
-    //             }
-    //             {isChangeTable ?
-    //                 <View style={{ flex: 1 }}>
-    //                     <Main
-    //                         {...props}
-    //                         fromTable={fromTable}
-    //                         outputIsChangeTable={outputIsChangeTable}
-    //                         changeTable={true} />
-    //                 </View>
-    //                 :
-    //                 null
-    //             }
-    //             {!(isTopping || isSelectProduct || isChangeTable) ?
-    //                 <View style={{ flex: 1 }}>
-    //                     <ToolBarPhoneServed
-    //                         ref={toolBarPhoneServedRef}
-    //                         {...props}
-    //                         leftIcon="keyboard-backspace"
-    //                         title={I18n.t('don_hang')}
-    //                         clickLeftIcon={() => { props.navigation.goBack() }}
-    //                         clickNoteBook={outputClickNoteBook}
-    //                         clickQRCode={outputClickQRCode}
-    //                         rightIcon="plus"
-    //                         clickProductService={outputClickProductService}
-    //                         clickRightIcon={outputIsSelectProduct} />
-    //                     <PageServed
-    //                         {...props}
-    //                         position={position}
-    //                         itemOrder={meMoItemOrder}
-    //                         listProducts={[...listProducts]}
-    //                         outputListProducts={outputListProducts}
-    //                         outputItemOrder={outputItemOrder}
-    //                         outputPosition={outputPosition}
-    //                         outputIsTopping={outputIsTopping}
-    //                         outputIsSelectProduct={outputIsSelectProduct}
-    //                         outputIsChangeTable={outputIsChangeTable}
-    //                         listTopping={listTopping}
-    //                     />
-    //                 </View> :
-    //                 null
-    //             }
-    //         </>
-    //     )
-    // }
-
     return (
         <View style={{ flex: 1 }}>
             {
                 renderForTablet()
-                // deviceType == Constant.TABLET ?
-                //     renderForTablet()
-                //     :
-                //     renderForPhone()
             }
         </View>
     );

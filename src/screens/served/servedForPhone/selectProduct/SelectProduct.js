@@ -19,9 +19,7 @@ export default (props) => {
   const [skip, setSkip] = useState(0)
   const [isSearching, setIsSearching] = useState(false)
   const [listCateId, setListCateId] = useState([-1])
-  const [listProducts, setListProducts] = useState(() => props.route.params.listProducts)
-  const newProducts = useRef([])
-
+  const listProducts = useRef([...props.route.params.listProducts])
   const [valueSearch, setValueSearch] = useState('')
   const count = useRef(0)
   const debouncedVal = useDebounce(valueSearch)
@@ -49,8 +47,16 @@ export default (props) => {
       results = results.filtered(`CategoryId == ${listCateId[0]}`)
     }
     let productsRes = results.slice(skip, skip + Constant.LOAD_LIMIT)
+    productsRes = JSON.parse(JSON.stringify(productsRes))
     console.log('productsRes', productsRes);
-
+    productsRes.forEach((item, index) => {
+      item.Quantity = 0
+      listProducts.current.forEach(elm => {
+        if (item.Id == elm.Id) {
+          item.Quantity += elm.Quantity
+        }
+      })
+    })
     count.current = productsRes.length
     setProduct([...product, ...productsRes])
     setHasProducts(true)
@@ -67,13 +73,18 @@ export default (props) => {
 
   useEffect(() => {
     const getSearchResult = async () => {
-      if (debouncedVal) {
+      if (debouncedVal != '') {
         setHasProducts(false)
         setIsSearching(true)
         count.current = 0
         let valueSearchLatin = change_alias(debouncedVal)
         let results = await realmStore.queryProducts()
         let searchResult = results.filtered(`NameLatin CONTAINS "${valueSearchLatin}" OR Code CONTAINS "${valueSearchLatin}"`)
+        searchResult = JSON.parse(JSON.stringify(searchResult))
+        searchResult = Object.values(searchResult)
+        searchResult.forEach(item => {
+          item.Quantity = 0
+        })
         setProduct(searchResult)
         setHasProducts(true)
       } else {
@@ -98,58 +109,73 @@ export default (props) => {
   }
 
   const onClickProduct = (item, index) => {
-    let exist = false;
     item.Sid = Date.now()
-    newProducts.current.forEach(listProduct => {
-      if (listProduct.Id === item.Id) {
-        listProduct.Quantity++
-        exist = true;
-      }
-    })
-    if (!exist) {
-      item.Quantity = 1
-      newProducts.current.unshift(item)
+    item.Description = getDescription(item)
+    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+    if (pos == -1) {
+      item.Quantity = getQuantity(item)
+      listProducts.current.unshift({ ...item })
+    } else {
+      item.Quantity = 0
+      listProducts.current = listProducts.current.filter(elm => elm.Id != item.Id)
     }
     setProduct([...product])
   }
 
+  const getQuantity = (item) => {
+    let Quantity = 0
+    if (item.IsPriceForBlock) {
+      Quantity = item.BlockOfTimeToUseService / 60
+    } else {
+      Quantity = 1
+    }
+    return Quantity
+  }
+
+  const getDescription = (item) => {
+    let Description = ''
+    if (item.ProductType == 2) {
+      let date = new Date()
+      let [day, month, hour, minute] = [date.getDate(), date.getMonth(), date.getHours(), date.getMinutes()]
+      Description = `${day}/${month} ${hour}:${minute}=>${day}/${month} ${hour}:${minute} (0 ${I18n.t('phut')})`
+    }
+    return Description
+  }
+
   const handleButtonIncrease = (item, index) => {
     console.log('handleButtonIncrease', item, index);
-    newProducts.current.forEach(listProduct => {
-      if (listProduct.Id === item.Id) {
-        listProduct.Quantity++
-      }
-    })
+    let qtt = getQuantity(item)
+    item.Quantity += qtt
+    if (item.SplitForSalesOrder || item.ProductType == 2) {
+      listProducts.current.unshift({ ...item, Quantity: qtt, Sid: Date.now() })
+    } else {
+      let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+      listProducts.current[pos].Quantity += qtt
+    }
     setProduct([...product])
   }
 
   const handleButtonDecrease = (item, index) => {
-    newProducts.current.forEach(listProduct => {
-      if (listProduct.Id === item.Id) {
-        listProduct.Quantity--
-      }
-    })
+    let qtt = getQuantity(item)
+    item.Quantity -= qtt
+    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+    if (item.SplitForSalesOrder || item.ProductType == 2) {
+      listProducts.current.splice(pos, 1)
+    } else {
+      listProducts.current[pos].Quantity -= qtt
+    }
     setProduct([...product])
   }
 
-  const getQuantityProduct = (arrItem) => {
-    let Quantity = 0
-    listProducts.concat(newProducts.current).forEach(item => {
-      if (item.Id == arrItem.Id) {
-        Quantity = item.Quantity
-      }
-    })
-    return Quantity
-  }
 
   const onClickDone = () => {
     props.navigation.pop();
-    props.route.params._onSelect(newProducts.current, 1);
+    console.log('listProducts', listProducts.current);
+    props.route.params._onSelect(listProducts.current, 1);
   }
 
   const clickLeftIcon = () => {
-    console.log('newProducts.current', newProducts.current);
-    if (newProducts.current.length > 0) {
+    if (JSON.stringify(props.route.params.listProducts) != JSON.stringify(listProducts.current)) {
       dialogManager.showPopupTwoButton('Bạn có muốn lưu thay đổi không?', 'Thông báo', (value) => {
         if (value == 1) {
           onClickDone()
@@ -219,7 +245,6 @@ export default (props) => {
               data={product}
               renderItem={({ item, index }) =>
                 <ProductsItemForPhone
-                  getQuantityProduct={getQuantityProduct(item)}
                   item={item}
                   index={index}
                   onClickProduct={onClickProduct}

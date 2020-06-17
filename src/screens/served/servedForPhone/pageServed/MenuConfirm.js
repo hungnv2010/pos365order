@@ -6,7 +6,6 @@ import Colors from '../../../../theme/Colors';
 import Menu from 'react-native-material-menu';
 import I18n from '../../../../common/language/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { currencyToString } from '../../../../common/Utils';
 import HtmlDefault from '../../../../data/html/htmlDefault';
 import printService from '../../../../data/html/PrintService';
 import { getFileDuLieuString } from '../../../../data/fileStore/FileStorage';
@@ -16,6 +15,8 @@ import { StackActions } from '@react-navigation/native';
 import { Snackbar } from 'react-native-paper';
 import ViewPrint from '../../../more/ViewPrint';
 const { Print } = NativeModules;
+import { dateToDate, DATE_FORMAT, currencyToString } from '../../../../common/Utils';
+
 
 export default (props) => {
 
@@ -31,10 +32,10 @@ export default (props) => {
         const init = async () => {
             const row_key = `${props.route.params.room.Id}_${props.Position}`
             let serverEvent = await realmStore.queryServerEvents().then(res => res.filtered(`RowKey == '${row_key}'`))
-            console.log('serverEvent', JSON.stringify(serverEvent) == "{}");
+            console.log('serverEvent', JSON.stringify(serverEvent[0].JsonContent));
 
             if (JSON.stringify(serverEvent) != "{}") {
-                console.log("init: ", JSON.stringify(serverEvent));
+                console.log("init: ", JSON.parse(serverEvent[0].JsonContent));
                 setJsonContent(JSON.parse(serverEvent[0].JsonContent))
                 serverEvent.addListener((collection, changes) => {
                     setJsonContent(JSON.parse(serverEvent[0].JsonContent))
@@ -77,8 +78,19 @@ export default (props) => {
                 totalPrice += element.Price * element.Quantity
             });
         }
+        disCount = jsonContent.Discount
         return [totalPrice, disCount]
     }
+
+    const getPriceItem = (item) => {
+        if (item.ProductType == 2) {
+            return item.Quantity * item.Price
+        } else {
+            return item.Price
+        }
+    }
+
+
 
     const changTable = () => {
         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
@@ -136,6 +148,32 @@ export default (props) => {
     }
 
     const viewPrintRef = useRef();
+    const renderItem = (item, index) => {
+        return (
+            <View key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
+                {
+                    item.ProductType == 2 ?
+                        <Icon style={{ margin: 5 }} name="clock-outline" size={30} color={Colors.colorchinh} />
+                        :
+                        <Image style={{ width: 22, height: 22, margin: 5 }} source={Images.icon_return} />
+                }
+                <View style={{ flexDirection: "column", flex: 1 }}>
+                    <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ fontStyle: "italic" }}>{currencyToString(item.BasePrice)} x</Text>
+                        <Text style={{ color: Colors.colorPhu }}> {item.Quantity == parseInt(item.Quantity) ? item.Quantity : item.Quantity.toFixed(3)}</Text>
+                    </View>
+                    {item.Description != "" ?
+                        <Text style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}>
+                            {item.Description}
+                        </Text>
+                        :
+                        null}
+                </View>
+                <Text style={{ fontWeight: "bold", color: Colors.colorchinh }}>{currencyToString(getPriceItem(item))}</Text>
+            </View>
+        )
+    }
 
     return (
         <View style={{ flex: 1 }}>
@@ -156,21 +194,7 @@ export default (props) => {
                 <ScrollView style={{ flex: 1 }}>
                     {jsonContent.OrderDetails.map((item, index) => {
                         return (
-                            <View key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
-                                <Image style={{ width: 20, height: 20, margin: 10 }} source={Images.icon_return} />
-                                <View style={{ flexDirection: "column", flex: 1 }}>
-                                    <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
-                                    <View style={{ flexDirection: "row" }}>
-                                        <Text style={{ fontStyle: "italic" }}>{currencyToString(item.Price)} x</Text>
-                                        <Text style={{ color: Colors.colorPhu }}> {item.Quantity} {}</Text>
-                                    </View>
-                                </View>
-                                <View style={{ alignItems: "center", flexDirection: "row" }}>
-
-                                    <Text style={{ padding: 10 }}>{item.Quantity}</Text>
-
-                                </View>
-                            </View>
+                            renderItem(item, index)
                         )
                     })
                     }
@@ -182,7 +206,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                     <Text style={{ fontWeight: "bold" }}>{I18n.t('tong_thanh_tien')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice()[0])}đ</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 16, color: "#0072bc" }}>{currencyToString(getTotalPrice()[0])}đ</Text>
                         {expand ?
                             <Icon style={{}} name="chevron-down" size={30} color="black" />
                             :
@@ -194,18 +218,18 @@ export default (props) => {
                     <>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text>{I18n.t('tong_chiet_khau')}</Text>
-                            <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>- {currencyToString(getTotalPrice()[1])}đ</Text>
+                            <Text style={{ fontSize: 16, color: "#0072bc", marginRight: 30 }}>- {currencyToString(getTotalPrice()[1])}đ</Text>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                            <Text>VAT (%)</Text>
+                            <Text>VAT ({jsonContent.VATRates} %)</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>0đ</Text>
+                                <Text style={{ fontSize: 16, color: "#0072bc", marginRight: 30 }}>{jsonContent.VAT}</Text>
                             </View>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_phai_tra')}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc", marginRight: 30 }}>{currencyToString(getTotalPrice()[0] - getTotalPrice()[1])}đ</Text>
+                                <Text style={{ fontWeight: "bold", fontSize: 16, color: "#0072bc", marginRight: 30 }}>{currencyToString(getTotalPrice()[0] - getTotalPrice()[1])}đ</Text>
                             </View>
                         </View>
                     </>
@@ -257,5 +281,5 @@ export default (props) => {
 }
 
 const styles = StyleSheet.create({
-    item: { flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 10 },
+    item: { flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 5 },
 })

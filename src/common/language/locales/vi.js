@@ -13,6 +13,7 @@ export default {
   ban_dang_co_it_hon_hai_chi_nhanh: "Bạn đang có ít hơn 2 chi nhánh.",
   ban_khong_co_quyen_su_dung_chuc_nang_nay: "Bạn không có quyền sử dụng chức năng này.",
   ban_hay_chon_mon_an_truoc: "Bạn hãy chọn món ăn trước",
+  ban_khong_co_quyen_dieu_chinh_mat_hang_thoi_gian: "Bạn không có quyền điều chỉnh mặt hàng thời gian",
 
   // TODO: C
   chuyen_thiet_bi_cai_dat_otp: 'Chuyển thiết bị cài đặt Smart OTP',
@@ -29,6 +30,7 @@ export default {
   chi_nhanh: "Chi nhánh",
   cai_dat_may_in: "Cài đặt máy in",
   chuyen_ban: "Chuyển bàn",
+  chon_vi_tri: "Chọn vị trí",
 
   // TODO: D
   dang_dung: "Đang dùng",
@@ -37,6 +39,7 @@ export default {
   don_hang: "Đơn Hàng",
   d: "đ",
   don_gia: "Đơn giá",
+  den: "đến",
   // TODO: E
 
 
@@ -55,6 +58,7 @@ export default {
   gui_tin_nhan_thanh_cong: "Gửi tin nhắn thành công !",
   gui_tin_nhan_that_bai: "Gửi tin nhắn thất bại!",
   gui_tin_nhan: "Gửi tin nhắn",
+  gui_thuc_don: "Gửi thực đơn",
 
   // TODO: H
   huy: 'Hủy',
@@ -119,6 +123,7 @@ export default {
   nam: "Nam",
   nu: "Nữ",
   nhan_vien_order: "Nhân viên Order",
+  nhap_ghi_chu: "Nhập ghi chú",
 
   // TODO: O
 
@@ -129,6 +134,7 @@ export default {
   phieu_chi: "Phiếu chi",
   phieu_thu_chi: "phiếu thu chi",
   phuong_thuc: "Phương thức",
+  phut: "phút",
 
   // TODO: Q
   quy_dau_ky: "Quỹ đầu kỳ",
@@ -201,6 +207,7 @@ export default {
   TGD: "TGD",
   tong_thanh_tien: "Tổng thành tiền",
   tong_chiet_khau: "Tổng chiết khấu",
+  tu: "từ",
   // TODO: U
 
   // TODO: V

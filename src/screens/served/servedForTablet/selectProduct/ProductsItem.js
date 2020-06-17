@@ -22,7 +22,7 @@ const ProductsItem = (props) => {
                 />
                 <View style={{ marginLeft: 10 }}>
                     <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold", paddingVertical: 5 }}>{props.item.Name}</Text>
-                    <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(props.item.Price)}</Text>
+                    <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(props.item.Price)}<Text style={{ color: Colors.colorchinh }}>{props.item.LargeUnit != '' ? `/${props.item.LargeUnit}` : props.item.Unit != '' ? `/${props.item.Unit}` : ''}</Text></Text>
                 </View>
             </View>
             {props.getQuantityProduct > 0 ?

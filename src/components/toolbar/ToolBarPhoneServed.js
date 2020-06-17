@@ -20,10 +20,6 @@ export default forwardRef((props, ref) => {
 
     const [showProductService, setShowProductService] = useState(false);
 
-    // useEffect(() => {
-    //         console.log("useEffect ", props);
-
-    // }, props.checkService)
 
     useImperativeHandle(ref, () => ({
         clickCheckInRef(status) {
@@ -64,7 +60,7 @@ export default forwardRef((props, ref) => {
                     </TouchableOpacity>
                 }
             </View>
-            <View style={{ flex: 5, paddingLeft: 10, alignItems: 'center', flexDirection: 'row' }}>
+            <View style={{ flex: 5, alignItems: 'center', flexDirection: 'row' }}>
                 <Subheading
                     numberOfLines={1}
                     style={{
@@ -74,30 +70,32 @@ export default forwardRef((props, ref) => {
                     {props.title}
                 </Subheading>
             </View>
-            {showProductService  ? <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <TouchableOpacity onPress={props.clickProductService}>
-                    <Icon name="clock-outline" size={props.size ? props.size : 30} color="white" />
-                </TouchableOpacity>
-            </View> : null}
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <TouchableOpacity onPress={props.clickQRCode}>
-                    <Icon name="qrcode-scan" size={props.size ? props.size : 23} color="white" />
-                </TouchableOpacity>
-            </View>
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                <TouchableOpacity onPress={props.clickNoteBook}>
-                    <Icon name="library-books" size={props.size ? props.size : 26} color="white" />
-                </TouchableOpacity>
-            </View>
-
-            <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-                {props.clickRightIcon && props.rightIcon ?
-                    <TouchableOpacity onPress={props.clickRightIcon}>
-                        <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
+            <View style={{ flex: 4, flexDirection: "row" }}>
+                {showProductService ? <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                    <TouchableOpacity onPress={props.clickProductService}>
+                        <Icon name="clock-outline" size={props.size ? props.size : 30} color="white" />
                     </TouchableOpacity>
-                    :
-                    null
-                }
+                </View> : null}
+                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                    <TouchableOpacity onPress={props.clickQRCode}>
+                        <Icon name="qrcode-scan" size={props.size ? props.size : 23} color="white" />
+                    </TouchableOpacity>
+                </View>
+                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                    <TouchableOpacity onPress={props.clickNoteBook}>
+                        <Icon name="library-books" size={props.size ? props.size : 26} color="white" />
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+                    {props.clickRightIcon && props.rightIcon ?
+                        <TouchableOpacity onPress={props.clickRightIcon}>
+                            <Icon name={props.rightIcon} size={props.size ? props.size : 30} color="white" />
+                        </TouchableOpacity>
+                        :
+                        null
+                    }
+                </View>
             </View>
         </View>
 
