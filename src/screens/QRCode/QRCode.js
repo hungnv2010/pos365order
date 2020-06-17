@@ -30,8 +30,11 @@ export default (props) => {
                     results = results.filtered(`Code = "${e.data}"`)
                     if (results && results.length > 0) {
                         results = JSON.parse(JSON.stringify(results))
+                        console.log("onSuccess ", results);
+                        results["0"]["Quantity"] = 1;
+                        results["0"]["Sid"] = Date.now();
                         props.navigation.pop();
-                        props.route.params._onSelect([results["0"]]);
+                        props.route.params._onSelect([results["0"]], 2);
                     } else {
                         notifyErr()
                     }
