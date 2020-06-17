@@ -6,6 +6,7 @@ import Order from './order/Order';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
 import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
+import realmStore from '../../data/realm/RealmStore';
 
 
 export default (props) => {
@@ -24,7 +25,7 @@ export default (props) => {
     }
     syncAllDatas()
     return () => {
-      syncAllDatas && syncAllDatas()
+      realmStore.removeAllListener()
       setAlready(false)
     }
   }, [])

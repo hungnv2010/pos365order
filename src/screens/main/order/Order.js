@@ -375,12 +375,12 @@ export default (props) => {
                                     </View>
                                 )
                             })}
-                            <View style={{ flexDirection: "row", justifyContent: "flex-end", paddingVertical: 10 }}>
-                                <TouchableOpacity onPress={() => { setShowModal(!showModal) }}>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end", padding: 10 }}>
+                                <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => { setShowModal(!showModal) }}>
                                     <Text style={{ padding: 10 }}>{I18n.t('huy')}</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={onChangeTable}>
-                                    <Text style={{ paddingVertical: 10, backgroundColor: "#008CBA", borderRadius: 5, paddingHorizontal: 20 }}>{I18n.t('dong_y')}</Text>
+                                    <Text style={{ paddingVertical: 10, backgroundColor: "#008CBA", borderRadius: 5, paddingHorizontal: 20, color: "white" }}>{I18n.t('dong_y')}</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

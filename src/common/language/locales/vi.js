@@ -14,6 +14,7 @@ export default {
   ban_khong_co_quyen_su_dung_chuc_nang_nay: "Bạn không có quyền sử dụng chức năng này.",
   ban_hay_chon_mon_an_truoc: "Bạn hãy chọn món ăn trước",
   ban_khong_co_quyen_dieu_chinh_mat_hang_thoi_gian: "Bạn không có quyền điều chỉnh mặt hàng thời gian",
+  ban_co_chac_muon_xoa_toan_bo_mat_hang_da_chon: 'Bạn có chắc muốn xóa toàn bộ mặt hàng đã chọn?',
 
   // TODO: C
   chuyen_thiet_bi_cai_dat_otp: 'Chuyển thiết bị cài đặt Smart OTP',
@@ -29,7 +30,7 @@ export default {
   con_lai: "Còn lại",
   chi_nhanh: "Chi nhánh",
   cai_dat_may_in: "Cài đặt máy in",
-  chuyen_ban: "Chuyển bàn",
+  chuyen_ban: "Chuyển",
   chon_vi_tri: "Chọn vị trí",
 
   // TODO: D
