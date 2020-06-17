@@ -44,7 +44,7 @@ export default (props) => {
             provisional.current = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
             console.log('provisional ', provisional.current);
 
-           
+
         }
         init()
         return () => {
@@ -113,18 +113,18 @@ export default (props) => {
         if (getCurrentIP && getCurrentIP != "") {
             if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
                 console.log("onClickProvisional ", jsonContent);
-                if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0){
+                if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
                     // printService.PrintHtmlService(HtmlDefault, jsonContent)
                     printService.GenHtml(HtmlDefault, jsonContent).then(res => {
-                        if (res && res != ""){
+                        if (res && res != "") {
                             setData(res)
                         }
                         setTimeout(() => {
                             viewPrintRef.current.clickCaptureRef();
                         }, 500);
-                       
+
                     })
-                    
+
                 }
                 else
                     dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
@@ -155,7 +155,7 @@ export default (props) => {
                     item.ProductType == 2 ?
                         <Icon style={{ margin: 5 }} name="clock-outline" size={30} color={Colors.colorchinh} />
                         :
-                        <Image style={{ width: 22, height: 22, margin: 5 }} source={Images.icon_return} />
+                        <Image style={{ width: 25, height: 25, margin: 10,  }} source={Images.icon_return} />
                 }
                 <View style={{ flexDirection: "column", flex: 1 }}>
                     <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>

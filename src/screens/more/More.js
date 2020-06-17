@@ -193,8 +193,8 @@ const HeaderComponent = (props) => {
                                 <Text style={{ marginBottom: 15, fontSize: 18, fontWeight: 'bold' }}>{I18n.t('chon_chi_nhanh')}</Text>
                                 {
                                     vendorSession.Branchs && vendorSession.Branchs.length > 0 ?
-                                        vendorSession.Branchs.map(item => (
-                                            <TouchableOpacity onPress={() => onClickItemBranch(item)}>
+                                        vendorSession.Branchs.map((item, index) => (
+                                            <TouchableOpacity key={index} onPress={() => onClickItemBranch(item)}>
                                                 <Text style={{ paddingVertical: 12 }}>{item.Name}</Text>
                                             </TouchableOpacity>
                                         ))

@@ -64,10 +64,9 @@ export default (props) => {
 
 
     //type: 1 => from selectProduct
-    //type: 2 => from noteBook
+    //type: 2 => from noteBook, QRCode
     const onCallBack = (data, type) => {
         console.log('onCallBack', data, type);
-        setTab(1)
         switch (type) {
             case 1:
                 data = data.filter(item => item.Quantity > 0)
@@ -87,6 +86,7 @@ export default (props) => {
             default:
                 break;
         }
+        setTab(1)
         checkProductId(data, props.route.params.room.ProductId)
     }
 
