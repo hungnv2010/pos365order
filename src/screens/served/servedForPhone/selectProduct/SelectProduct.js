@@ -26,7 +26,7 @@ export default (props) => {
 
 
   useEffect(() => {
-    console.log('SelectProduct', props);
+    console.log('props.route.params.listProducts', props.route.params.listProducts);
 
     const getCategories = async () => {
       let newCategories = [{ Id: -1, Name: I18n.t('tat_ca') }];
@@ -85,6 +85,11 @@ export default (props) => {
         searchResult = Object.values(searchResult)
         searchResult.forEach(item => {
           item.Quantity = 0
+          listProducts.current.forEach(elm => {
+            if (item.Id == elm.Id) {
+              item.Quantity += elm.Quantity
+            }
+          })
         })
         setProduct(searchResult)
         setHasProducts(true)
