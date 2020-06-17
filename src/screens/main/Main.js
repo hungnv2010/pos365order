@@ -24,7 +24,7 @@ export default (props) => {
     }
     syncAllDatas()
     return () => {
-      syncAllDatas && syncAllDatas()
+      // syncAllDatas && syncAllDatas()
       setAlready(false)
     }
   }, [])
