@@ -11,6 +11,7 @@ import { ApiPath } from '../../../data/services/ApiPath';
 import { useSelector } from 'react-redux';
 import { Constant } from '../../../common/Constant';
 import Preview from './Preview';
+import PrintWebview from '../PrintWebview';
 
 export default (props) => {
 
@@ -42,7 +43,7 @@ export default (props) => {
                 clickLoadOnline={() => { setTabType(2) }}
                 clickPrint={clickPrint}
                 clickCheck={clickCheck}
-                clickShow={() => { props.navigation.navigate("Preview", { data: tabType == 1 ? dataDefault : dataOnline }) }}
+                clickShow={() => { props.navigation.navigate("PrintWebview", { data: tabType == 1 ? dataDefault : dataOnline }) }}
             />
             {deviceType == Constant.PHONE ?
                 tabType == 1 ?
@@ -58,7 +59,8 @@ export default (props) => {
                         }
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Preview ref={childRef} data={tabType == 1 ? dataDefault : dataOnline} />
+                        {/* <Preview ref={childRef} data={tabType == 1 ? dataDefault : dataOnline} /> */}
+                        <PrintWebview ref={childRef} data={tabType == 1 ? dataDefault : dataOnline} />
                     </View>
                 </View>
             }

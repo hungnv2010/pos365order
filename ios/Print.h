@@ -10,6 +10,7 @@
 #define Print_h
 #import "React/RCTBridgeModule.h"
 #import "React/RCTEventEmitter.h"
+#import "React/RCTConvert.h"
 
 //@interface Print : NSObject <RCTBridgeModule>
 

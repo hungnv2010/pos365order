@@ -60,21 +60,26 @@ export default () => {
         }
         let check = false;
         const printListenner = () => {
+            // let i = 0;
             eventSwicthScreen.addListener('sendSwicthScreen', (text) => {
                 console.log("eventSwicthScreen ", text);
-                if (check == false) {
+                if (text.indexOf("Ok") > -1) {
+                    // i = 1;
                     check = true;
-                    setToastDescription("Kiểm tra kết nối máy in. Địa chỉ IP " + text)
+                    setTimeout(() => {
+                        check = false;
+                    }, 2000);
+                };
+                // if (text.indexOf("Error") > -1) i = 0;
+                if ((text.indexOf("Error") > -1) && check == false){
+                    setToastDescription("Kiểm tra kết nối máy in. Địa chỉ IP " + text.split("::")[0])
                     setShowToast(true)
                 }
-                setTimeout(() => {
-                    check = false;
-                }, 1000);
             });
         }
         getCurrentIP()
         printListenner()
-        
+
     }, [])
 
 

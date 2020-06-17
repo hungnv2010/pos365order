@@ -229,6 +229,8 @@ PODS:
     - React
   - react-native-safe-area-context (0.7.3):
     - React
+  - react-native-view-shot (3.1.2):
+    - React
   - react-native-webview (9.4.0):
     - React
   - React-RCTActionSheet (0.61.5):
@@ -329,6 +331,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
+  - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -427,6 +430,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-camera"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
+  react-native-view-shot:
+    :path: "../node_modules/react-native-view-shot"
   react-native-webview:
     :path: "../node_modules/react-native-webview"
   React-RCTActionSheet:
@@ -512,6 +517,7 @@ SPEC CHECKSUMS:
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-camera: 9e3d60336e221d62e5b72adf551ca31ff74a94b5
   react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
+  react-native-view-shot: 08c46c9e8e92f6681e8f2ffa55ac3d06e7e99070
   react-native-webview: 0e2881d2e3e72ad52a82445c1a116c43205fd471
   React-RCTActionSheet: 600b4d10e3aea0913b5a92256d2719c0cdd26d76
   React-RCTAnimation: 791a87558389c80908ed06cc5dfc5e7920dfa360

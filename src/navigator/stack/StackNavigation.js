@@ -11,6 +11,7 @@ import QRCode from '../../screens/QRCode/QRCode';
 import NoteBook from '../../screens/noteBook/NoteBook';
 import DetailNoteBook from '../../screens/noteBook/DetailNoteBook';
 import { Topping, PageServed, SelectProduct } from '../../screens/served/servedForPhone/index'
+import PrintWebview from '../../screens/more/PrintWebview';
 
 const MainStack = createStackNavigator();
 export const navigationRef = createRef();
@@ -32,6 +33,7 @@ export default (props) => {
                 <MainStack.Screen name="PageServed">{props => <PageServed {...props} />}</MainStack.Screen>
                 <MainStack.Screen name="SelectProduct">{props => <SelectProduct {...props} />}</MainStack.Screen>
                 <MainStack.Screen name="Main">{props => <Main {...props} />}</MainStack.Screen>
+                <MainStack.Screen name="PrintWebview">{props => <PrintWebview {...props} />}</MainStack.Screen>
             </MainStack.Navigator>
         </Animated.View>
     );
