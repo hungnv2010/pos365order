@@ -24,7 +24,6 @@ export default forwardRef((props, ref) => {
     useImperativeHandle(ref, () => ({
         clickCheckInRef(status) {
             console.log("clickCheckInRef status ", status);
-
             setShowProductService(status)
         }
     }));
