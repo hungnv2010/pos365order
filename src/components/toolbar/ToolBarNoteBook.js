@@ -67,8 +67,8 @@ export default function ToolBarNoteBook(props) {
                         {props.title}
                     </Subheading>
                     :
-                    <View style={{ flex: 1, borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2 }}>
-                        <TextInput value={textSearch} style={{ flex: 1,margin: 6 }}
+                    <View style={{ flex: 1, borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2, height: "80%" }}>
+                        <TextInput value={textSearch} style={{ flex: 1, position: "absolute", top: -7 }}
                             autoFocus={true}
                             onSubmitEditing={(text) => onSubmitEditing(text)}
                             onChangeText={(text) => setTextSearch(text)}

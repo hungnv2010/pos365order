@@ -43,7 +43,7 @@ export default (props) => {
       {props.route.params && props.route.params.Name ?
         <ToolBarDefault
           navigation={props.navigation}
-          title={`${I18n.t('chuyen_ban')} ${I18n.t('tu')} ${props.route.params.Name} ${I18n.t('den')} ...`}
+          title={`${I18n.t('chuyen')} ${I18n.t('tu')} ${props.route.params.Name} ${I18n.t('den')} ...`}
           leftIcon="keyboard-backspace"
           clickLeftIcon={() => { props.navigation.goBack() }} />
         :

@@ -14,7 +14,7 @@ const ProductsItem = (props) => {
     }
 
     return (
-        <TouchableOpacity onPress={onClickItem} key={props.index} style={{ backgroundColor: "white", borderRadius: 10, flex: 1 / 3, marginBottom: 7, marginLeft: 2 }}>
+        <TouchableOpacity onPress={onClickItem} key={props.index} style={{ backgroundColor: "white", borderRadius: 10, flex: 1 / 2, marginBottom: 7, marginLeft: 2 }}>
             <View style={{}}>
                 <Image
                     style={{ height: 150, width: "100%", borderTopLeftRadius: 10, borderTopRightRadius: 10 }}

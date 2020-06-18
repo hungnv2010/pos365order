@@ -37,12 +37,12 @@ class PrintService {
                 var description = el.Description && el.Description.trim() != "" ? `<br>${el.Description?.replace(";", "<br>")}` : "";
                 let itemTable = listHtml[1];
                 let priceBase = el.IsLargeUnit ? el.PriceLargeUnit : el.UnitPrice;
-                let priceBaseShow = priceBase + el.TotalTopping;
+                let priceBaseShow = priceBase;
                 itemTable = itemTable.replace("{Ten_Hang_Hoa}", "" + el.Name)
                 itemTable = itemTable.replace("{Ghi_Chu_Hang_Hoa}", description)
                 itemTable = itemTable.replace("{So_Luong}", el.Quantity)
                 itemTable = itemTable.replace("{Thanh_Tien_Hang_Hoa}", currencyToString(this.getPrice(el)))
-                itemTable = itemTable.replace("{Don_Gia}", currencyToString(el.Price))
+                itemTable = itemTable.replace("{Don_Gia}", currencyToString(el.IsLargeUnit ? el.PriceLargeUnit : el.Price))
                 itemTable = itemTable.replace("{Don_Gia_Goc_Hien_Thi_Check}", priceBaseShow > 0 ? "style='display: block'" : "style='display: none'")
                 itemTable = itemTable.replace("{Don_Gia_Goc_Hien_Thi}", currencyToString(el.BasePrice))
                 sum += this.getPrice(el);
@@ -110,11 +110,8 @@ class PrintService {
 
     getPrice = (item) => {
         console.log('getPrice', item);
-        if (item.ProductType == 2) {
-            return item.Quantity * item.Price
-        } else {
-            return item.Price 
-        }
+        let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
+        return item.Quantity * price
     }
 
 }

@@ -30,8 +30,9 @@ export default {
   con_lai: "Còn lại",
   chi_nhanh: "Chi nhánh",
   cai_dat_may_in: "Cài đặt máy in",
-  chuyen_ban: "Chuyển",
+  chuyen: "Chuyển",
   chon_vi_tri: "Chọn vị trí",
+  chuyen_ban:"Chuyển bàn",
 
   // TODO: D
   dang_dung: "Đang dùng",
@@ -76,6 +77,7 @@ export default {
   khac: "Khác",
   ket_noi_may_in: "Kết nối máy in",
   khach_phai_tra: "Khách phải trả",
+  khach_da_tra:"Khách đã trả",
 
   // TODO: H
   hoa_don: "Hoá đơn",

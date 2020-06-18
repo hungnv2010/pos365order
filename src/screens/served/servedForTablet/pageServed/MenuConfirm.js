@@ -79,6 +79,11 @@ export default (props) => {
         return [totalPrice, disCount]
     }
 
+    const getPriceItem = (item) => {
+        let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
+        return item.Quantity * price
+    }
+
     const changTable = () => {
         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
             const pushAction = StackActions.push('Main', {
@@ -168,7 +173,12 @@ export default (props) => {
                     {jsonContent.OrderDetails.map((item, index) => {
                         return (
                             <View key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
-                                <Image style={{ width: 20, height: 20, margin: 10 }} source={Images.icon_return} />
+                                {
+                                    item.ProductType == 2 ?
+                                        <Icon style={{ margin: 5 }} name="clock-outline" size={30} color={Colors.colorchinh} />
+                                        :
+                                        <Image style={{ width: 25, height: 25, margin: 10, }} source={Images.icon_return} />
+                                }
                                 <View style={{ flexDirection: "column", flex: 1 }}>
                                     <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
                                     <View style={{ flexDirection: "row" }}>
@@ -177,9 +187,7 @@ export default (props) => {
                                     </View>
                                 </View>
                                 <View style={{ alignItems: "center", flexDirection: "row" }}>
-
-                                    <Text style={{ padding: 10 }}>{item.Quantity}</Text>
-
+                                    <Text style={{ fontWeight: "bold", color: Colors.colorchinh }}>{currencyToString(getPriceItem(item))}</Text>
                                 </View>
                             </View>
                         )
@@ -193,7 +201,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                     <Text style={{ fontWeight: "bold" }}>{I18n.t('tong_thanh_tien')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice()[0])}đ</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(jsonContent.Total)}đ</Text>
                         {expand ?
                             <Icon style={{}} name="chevron-down" size={30} color="black" />
                             :
@@ -205,7 +213,7 @@ export default (props) => {
                     <>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text>{I18n.t('tong_chiet_khau')}</Text>
-                            <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>- {currencyToString(getTotalPrice()[1])}đ</Text>
+                            <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>- {currencyToString(jsonContent.Discount)}đ</Text>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text>VAT (%)</Text>
@@ -214,9 +222,9 @@ export default (props) => {
                             </View>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                            <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_phai_tra')}</Text>
+                            <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_da_tra')}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc", marginRight: 30 }}>{currencyToString(getTotalPrice()[0] - getTotalPrice()[1])}đ</Text>
+                                <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc", marginRight: 30 }}>{currencyToString(jsonContent.TotalPayment)}đ</Text>
                             </View>
                         </View>
                     </>
