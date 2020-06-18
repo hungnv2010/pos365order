@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, NativeModules } from 'react-native';
 import Images from '../../../../theme/Images';
 import realmStore from '../../../../data/realm/RealmStore'
 import Colors from '../../../../theme/Colors';
@@ -15,8 +15,12 @@ import { Snackbar } from 'react-native-paper';
 import dialogManager from '../../../../components/dialog/DialogManager';
 import { StackActions } from '@react-navigation/native';
 
+import ViewPrint from '../../../more/ViewPrint';
+const { Print } = NativeModules;
+
 export default (props) => {
 
+    const [data, setData] = useState("");
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
     const [showToast, setShowToast] = useState(false);
@@ -89,19 +93,49 @@ export default (props) => {
         }
     }
 
-    const onClickProvisional = () => {
-        console.log("onClickProvisional provisional ", provisional.current);
-        if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
-            console.log("onClickProvisional ", jsonContent);
-            if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
-                printService.PrintHtmlService(HtmlDefault, jsonContent)
-            else
-                dialogManager.showPopupOneButton("Vui lòng chọn món để sử dụng chức năng này.")
-        } else {
-            dialogManager.showPopupOneButton("Bạn không có quyền sử dụng chức năng này.")
-        }
-    }
+    // const onClickProvisional = () => {
+    //     console.log("onClickProvisional provisional ", provisional.current);
+    //     if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
+    //         console.log("onClickProvisional ", jsonContent);
+    //         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0)
+    //             printService.PrintHtmlService(HtmlDefault, jsonContent)
+    //         else
+    //             dialogManager.showPopupOneButton("Vui lòng chọn món để sử dụng chức năng này.")
+    //     } else {
+    //         dialogManager.showPopupOneButton("Bạn không có quyền sử dụng chức năng này.")
+    //     }
+    // }
 
+    const onClickProvisional = async () => {
+        console.log("onClickProvisional provisional ", provisional.current);
+        let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
+        console.log('getCurrentIP ', getCurrentIP);
+        if (getCurrentIP && getCurrentIP != "") {
+            if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
+                console.log("onClickProvisional ", jsonContent);
+                if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0){
+                    // printService.PrintHtmlService(HtmlDefault, jsonContent)
+                    printService.GenHtml(HtmlDefault, jsonContent).then(res => {
+                        if (res && res != ""){
+                            setData(res)
+                        }
+                        setTimeout(() => {
+                            viewPrintRef.current.clickCaptureRef();
+                        }, 500);
+                       
+                    })
+                    
+                }
+                else
+                    dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
+            } else {
+                dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
+            }
+        } else {
+            dialogManager.showPopupOneButton(I18n.t('vui_long_kiem_tra_ket_noi_may_in'), I18n.t('thong_bao'))
+        }
+
+    }
 
     const sendNotidy = (type) => {
         console.log("sendNotidy type ", type);
@@ -113,8 +147,19 @@ export default (props) => {
             props.outputSendNotify(type);
     }
 
+    const viewPrintRef = useRef();
+
     return (
         <View style={{ flex: 1 }}>
+            <ViewPrint
+                ref={viewPrintRef}
+                html={data}
+                callback={(uri) => {
+                    console.log("callback uri ", uri)
+                    Print.printImageFromClient([uri + ""])
+                }
+                }
+            />
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
                 <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
                 </ImageBackground>

@@ -31,6 +31,11 @@ export default forwardRef((props, ref) => {
 
     const [uriImg, setUriImg] = useState("")
 
+    const deviceType = useSelector(state => {
+        console.log("useSelector state ", state);
+        return state.Common.deviceType
+    });
+
     useEffect(() => {
         console.log("ViewPrint props ", props);
 
@@ -60,9 +65,9 @@ export default forwardRef((props, ref) => {
         console.log('clickCapture');
         // props.callback("akb")
         captureRef(childRef, {
-            format: "png",
-            quality: 1.0
-            // width: Metrics.screenWidth,
+            // format: "png",
+            // quality: 1.0
+            width: 100,
             // snapshotContentContainer: true,
         }).then(
             uri => {
@@ -88,7 +93,7 @@ export default forwardRef((props, ref) => {
                         }}>
                         <AutoHeightWebView
                             scrollEnabled={false}
-                            style={{ width: Dimensions.get('window').width }}
+                            style={{ width: deviceType == Constant.PHONE ?  Dimensions.get('window').width : Dimensions.get('window').width/2 }}
                             // customScript={`document.body.style.background = 'red';`}
 
                             // onSizeUpdated={({size => console.log(size.height)})},

@@ -36,7 +36,7 @@ export default (props) => {
     const childRef = useRef();
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <ToolBarPrintHtml
                 navigation={props.navigation} title="Print HTML"
                 clickDefault={() => { setTabType(1) }}
