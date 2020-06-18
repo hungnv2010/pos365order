@@ -33,7 +33,6 @@ export default (props) => {
             const row_key = `${props.route.params.room.Id}_${props.Position}`
             serverEvent = await realmStore.queryServerEvents().then(res => res.filtered(`RowKey == '${row_key}'`))
             console.log('serverEvent', JSON.stringify(serverEvent[0].JsonContent));
-
             if (JSON.stringify(serverEvent) != "{}") {
                 console.log("init: ", JSON.parse(serverEvent[0].JsonContent));
                 setJsonContent(JSON.parse(serverEvent[0].JsonContent))

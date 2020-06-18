@@ -105,7 +105,7 @@ const LoginScreen = (props) => {
             console.log("getDataRetailerInfo res ", res);
             setFileLuuDuLieu(Constant.VENDOR_SESSION, JSON.stringify(res))
 
-            if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
+            if (res.CurrentUser) {
                 if (userName != '') {
                     let account = { UserName: userName, Link: shop };
                     setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));

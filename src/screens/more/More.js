@@ -236,7 +236,7 @@ const ContentComponent = (props) => {
             CommonActions.reset({
                 index: 0,
                 routes: [
-                    { name: 'Login', params: { param: "logout" } },
+                    { name: 'Login' },
                 ],
             })
         )
