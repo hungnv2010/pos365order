@@ -252,6 +252,8 @@ export default forwardRef((props, ref) => {
             }
             printService.GenHtml(html, JsonContent1).then(res => {
                 if (res && res != "") {
+                    if (deviceType == Constant.TABLET)
+                        res = res.replace("font-size:16.0px;", "font-size:22.0px;")
                     setData(res)
                 }
             })
@@ -259,23 +261,14 @@ export default forwardRef((props, ref) => {
         getVendorSession()
     }, [])
 
-    // function clickPrint() {
-    //     console.log("clickCheck vendorSession ", vendorSession)
-    //     // ModulePrint.cl
-    //     captureRef(childRef, {
-    //         // snapshotContentContainer: true,
-    //     }).then(
-    //         uri => {
-    //             console.log('Snapshot uri', uri);
-    //             setUri(uri);
-    //             setTimeout(() => {
-    //                 Print.printImageFromClient([uri + ""])
-    //             }, 100);
-
-    //         },
-    //         error => console.error('Oops, snapshot failed', error)
-    //     );
-    // }
+    useImperativeHandle(ref, () => ({
+        clickCheckInRef() {
+            clickCheck()
+        },
+        clickPrintInRef() {
+            clickPrint()
+        }
+    }));
 
     function clickCheck() {
         console.log("clickCheck vendorSession ", vendorSession)
@@ -306,17 +299,7 @@ export default forwardRef((props, ref) => {
         if (getCurrentIP && getCurrentIP != "") {
             if (isClick.current == false) {
                 let html = data.replace("width: 76mm", "")
-                // Print.printImage(html)
-                captureRef(childRef, {
-                    // snapshotContentContainer: true,
-                }).then(
-                    uri => {
-                        console.log('Snapshot uri', uri);
-                        // setUri(uri);
-                        Print.printImageFromClient([uri + ""])
-                    },
-                    error => console.error('Oops, snapshot failed', error)
-                );
+                viewPrintRef.current.clickCaptureRef();
             }
             isClick.current = true;
             setTimeout(() => {
@@ -347,7 +330,7 @@ export default forwardRef((props, ref) => {
                 html={data}
                 callback={(uri) => {
                     console.log("callback uri ", uri)
-
+                    // setUri(uri);
                     Print.printImageFromClient([uri + ""])
                 }
                 }
@@ -359,7 +342,7 @@ export default forwardRef((props, ref) => {
             /> : null}
             <View style={{ opacity: 1 }}>
                 <ScrollView
-                    style={{ marginBottom: 50 }}
+                    style={{ marginBottom: deviceType == Constant.PHONE ? 50 : 0 }}
                 >
                     <View
                         ref={childRef}
@@ -368,7 +351,7 @@ export default forwardRef((props, ref) => {
                         }}>
                         <AutoHeightWebView
                             scrollEnabled={false}
-                            style={{ width: Dimensions.get('window').width }}
+                            style={{ width: deviceType == Constant.PHONE ? Metrics.screenWidth : Metrics.screenWidth / 2 }}
                             files={[{
                                 href: 'cssfileaddress',
                                 type: 'text/css',
@@ -385,7 +368,7 @@ export default forwardRef((props, ref) => {
             {/* <TouchableOpacity style={{ backgroundColor: "red", padding: 20, }} onPress={handleClick}><Text>Click</Text></TouchableOpacity>
             
             <TouchableOpacity style={{ backgroundColor: "red", padding: 20, }} onPress={handleClick}><Text>Click</Text></TouchableOpacity> */}
-            {/* <Image source={{ uri: uri }} resizeMode="contain" style={{ position: "absolute", top: 50, width: 100, height: 100, flex: 1 }} /> */}
+            <Image source={{ uri: uri }} resizeMode="contain" style={{ position: "absolute", top: 50, width: 200, height: 700, flex: 1 }} />
         </View>
     );
 });
