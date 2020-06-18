@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { useSelector } from 'react-redux';
 import ToolBarSelectProduct from '../../../components/toolbar/ToolBarSelectProduct'
 import ToolBarServed from '../../../components/toolbar/ToolBarServed'
@@ -7,6 +7,7 @@ import SelectProduct from './selectProduct/SelectProduct';
 import PageServed from './pageServed/PageServed';
 import Topping from './Topping';
 import realmStore from '../../../data/realm/RealmStore';
+import { Constant } from '../../../common/Constant';
 
 const Served = (props) => {
 
@@ -18,6 +19,10 @@ const Served = (props) => {
     const meMoItemOrder = useMemo(() => itemOrder, [itemOrder])
     const toolBarTabletServedRef = useRef();
 
+    const orientaition = useSelector(state => {
+        console.log("useSelector state ", state.Common.orientaition);
+        return state.Common.orientaition
+    });
 
     useEffect(() => {
         console.log("Served props ", props);
@@ -72,7 +77,8 @@ const Served = (props) => {
                 results = JSON.parse(JSON.stringify(results))
                 console.log("outputClickProductService results ", [results["0"]]);
                 results["0"]["Quantity"] = 1;
-                outputListProducts([results["0"]])
+                results["0"]["Sid"] = Date.now();
+                outputListProducts([results["0"]], 2)
                 toolBarTabletServedRef.current.clickCheckInRef()
             }
         }
@@ -108,7 +114,7 @@ const Served = (props) => {
                         <View style={!itemOrder.Id ? { flex: 1 } : { width: 0, height: 0 }}>
                             <SelectProduct
                                 valueSearch={value}
-                                numColumns={3}
+                                numColumns={orientaition == Constant.LANDSCAPE ? 3 : 2}
                                 listProducts={[...listProducts]}
                                 outputListProducts={outputListProducts} />
                         </View>
@@ -143,6 +149,7 @@ const Served = (props) => {
             {
                 renderForTablet()
             }
+            <Text>{orientaition}</Text>
         </View>
     );
 }

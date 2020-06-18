@@ -192,12 +192,18 @@ export default (props) => {
     }
 
     const dellAll = () => {
-        syncListProducts([])
-        dataManager.dataChoosing.forEach(item => {
-            if (item.Id == props.route.params.room.Id) {
-                item.data = item.data.filter(it => it.key != props.Position)
-            }
-        })
+        if (list.length > 0) {
+            dialogManager.showPopupTwoButton(I18n.t('ban_co_chac_muon_xoa_toan_bo_mat_hang_da_chon'), 'Thông báo', (value) => {
+                if (value == 1) {
+                    syncListProducts([])
+                    dataManager.dataChoosing.forEach(item => {
+                        if (item.Id == props.route.params.room.Id) {
+                            item.data = item.data.filter(it => it.key != props.Position)
+                        }
+                    })
+                }
+            })
+        }
     }
 
     const onClickTopping = (item) => {
@@ -321,16 +327,6 @@ export default (props) => {
         <View style={{ flex: 1 }}>
             <View style={{ flex: 1 }}>
                 {list.length > 0 ?
-                    // <ScrollView style={{ flex: 1 }}>
-                    //     {
-                    //         list.map((item, index) => {
-                    //             return (
-                    //                 renderForTablet(item, index)
-                    //             )
-
-                    //         })
-                    //     }
-                    // </ScrollView>
                     <FlatList
                         data={list}
                         extraData={list}

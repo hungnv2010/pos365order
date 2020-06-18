@@ -58,45 +58,50 @@ export default forwardRef((props, ref) => {
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 2, justifyContent: 'center', alignItems: 'flex-start', }}>
-                    <Subheading
-                        numberOfLines={1}
-                        style={{ color: 'white' }}
-                    >{props.title}
+                    <Subheading numberOfLines={1} style={{ color: 'white', fontSize: 18, fontWeight: "bold" }} >
+                        Order
                     </Subheading>
                 </View>
                 <View style={{ flex: 3, }}>
                     {isSearch ?
-                        <TextInput
-                            placeholder="what are you searching?"
-                            style={{ backgroundColor: "white" }}
-                            onChangeText={(text) => onChangeText(text)}
-                            value={value}
-                        /> :
+                        <View style={{ borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2, height: "80%" }}>
+                            <TextInput
+                                autoFocus={true}
+                                style={{ position: "absolute", top: -7 }}
+                                onChangeText={(text) => onChangeText(text)}
+                                value={value}
+                            />
+                        </View>
+                        :
                         null}
                 </View>
 
-                <View style={{ flex: 1.5, alignItems: "center", flexDirection: "row", justifyContent: "space-around", }}>
-                    <TouchableOpacity onPress={() => { setIsSearch(!isSearch) }} >
-                        <View style={{}}>
-                            <Ionicons name="md-search" size={30} color="white" style={{}} />
-                        </View>
-                    </TouchableOpacity>
-                    {
-                        showProductService ?
-                            <TouchableOpacity onPress={() => { props.outputClickProductService() }} >
+                <View style={{ flex: 2, alignItems: "center", flexDirection: "row", justifyContent: "space-around", }}>
+                    <TouchableOpacity style={styles.button} onPress={() => { props.outputClickProductService() }} >
+                        {
+                            showProductService ?
                                 <View style={{}}>
                                     <Icon name="clock-outline" size={30} color="white" />
                                 </View>
-                            </TouchableOpacity>
-                            :
-                            null
-                    }
-                    <TouchableOpacity onPress={() => { props.navigation.navigate('QRCode', { _onSelect: onCallBack }) }} >
+                                :
+                                null
+                        }
+                    </TouchableOpacity>
+
+                    <TouchableOpacity style={styles.button} onPress={() => {
+                        if (value != '') onChangeText('')
+                        else setIsSearch(!isSearch)
+                    }} >
+                        <View style={{}}>
+                            <Ionicons name={!isSearch ? "md-search" : "md-close"} size={30} color="white" style={{}} />
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.button} onPress={() => { props.navigation.navigate('QRCode', { _onSelect: onCallBack }) }} >
                         <View style={{}}>
                             <Icon name="qrcode-scan" size={25} color="white" style={{}} />
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { props.navigation.navigate('NoteBook', { _onSelect: onCallBack }) }} >
+                    <TouchableOpacity style={styles.button} onPress={() => { props.navigation.navigate('NoteBook', { _onSelect: onCallBack }) }} >
                         <View style={{}}>
                             <Icon name="library-books" size={28} color="white" style={{}} />
                         </View>
@@ -116,5 +121,8 @@ const styles = StyleSheet.create({
         height: 40,
         backgroundColor: Colors.colorchinh,
     },
+    button: {
+        flex: 1
+    }
 })
 

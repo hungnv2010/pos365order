@@ -56,6 +56,7 @@ export default forwardRef((props, ref) => {
     const getCategories = async () => {
       let newCategories = [{ Id: -1, Name: I18n.t('tat_ca') }];
       let results = await realmStore.queryCategories()
+      results = results.sorted('Name')
       results.forEach(item => {
         newCategories.push(item)
       })
@@ -67,6 +68,7 @@ export default forwardRef((props, ref) => {
   const getProducts = useCallback(async () => {
     console.log('getProducts');
     let results = await realmStore.queryProducts()
+    results = results.sorted('Name')
     if (listCateId[0] != -1) {
       results = results.filtered(`CategoryId == ${listCateId[0]}`)
     }

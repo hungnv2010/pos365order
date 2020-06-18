@@ -183,7 +183,7 @@ export default (props) => {
                 </View>
             </View>
             <View style={{ flex: 1 }}>
-                <View style={{ backgroundColor: "white", marginBottom: 3 }}>
+                <View style={{ backgroundColor: "white", marginBottom: 3, flex: 1 }}>
                     <FlatList
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
@@ -203,7 +203,7 @@ export default (props) => {
                         numColumns={props.numColumns} />
                 </View>
             </View>
-            <View style={{ height: 40, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 5 }}>
+            <View style={{ height: 40, flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingHorizontal: 5, backgroundColor: "white" }}>
                 <Text style={{ fontWeight: "bold", fontSize: 15 }}>{I18n.t('tong_thanh_tien')}</Text>
                 <Text style={{ fontWeight: "bold", fontSize: 15 }}>{currencyToString(getTotalPrice())}đ</Text>
             </View>

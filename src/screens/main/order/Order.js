@@ -24,7 +24,6 @@ import { Checkbox } from 'react-native-paper';
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const _nodes = new Map();
 
@@ -358,7 +357,7 @@ export default (props) => {
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                             width: Metrics.screenWidth * 0.8,
                         }}>
-                            <Text style={{ fontWeight: 20, fontWeight: "bold", padding: 10, color: Colors.colorchinh, textTransform: "uppercase" }}>{I18n.t('chon_vi_tri')}</Text>
+                            <Text style={{ fontSize: 20, paddingHorizontal: 20, paddingVertical: 15, fontWeight: "bold" }}>{I18n.t('chon_vi_tri')}</Text>
                             {listPosition.map((item, index) => {
                                 return (
                                     <View key={index} style={{ flexDirection: "row", alignItems: "center", }}>
@@ -375,7 +374,7 @@ export default (props) => {
                                     </View>
                                 )
                             })}
-                            <View style={{ flexDirection: "row", justifyContent: "flex-end", padding: 10 }}>
+                            <View style={{ flexDirection: "row", justifyContent: "flex-end", padding: 15, alignItems: "center" }}>
                                 <TouchableOpacity style={{ paddingRight: 20 }} onPress={() => { setShowModal(!showModal) }}>
                                     <Text style={{ padding: 10 }}>{I18n.t('huy')}</Text>
                                 </TouchableOpacity>
