@@ -57,12 +57,12 @@ const LoginScreen = (props) => {
         getCurrentAccount()
     }, [])
 
-    useLayoutEffect(() => {
-        if (props.route.params && props.route.params.param == "logout") {
-            console.log("LOGOUT");
-            setHasLogin(false)
-        }
-    }, [props.route.params])
+    // useLayoutEffect(() => {
+    //     if (props.route.params && props.route.params.param == "logout") {
+    //         console.log("LOGOUT");
+    //         setHasLogin(false)
+    //     }
+    // }, [props.route.params])
 
     const onClickLogin = useCallback(() => {
         if (!logIn) return
@@ -112,7 +112,7 @@ const LoginScreen = (props) => {
             console.log("getDataRetailerInfo res ", res);
             setFileLuuDuLieu(Constant.VENDOR_SESSION, JSON.stringify(res))
 
-            if (res.CurrentUser && res.CurrentUser.IsAdmin == true) {
+            if (res.CurrentUser) {
                 if (userName != '') {
                     let account = { UserName: userName, Link: shop };
                     setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));

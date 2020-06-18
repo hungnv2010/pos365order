@@ -32,8 +32,6 @@ export default (props) => {
         const init = async () => {
             const row_key = `${props.route.params.room.Id}_${props.Position}`
             let serverEvent = await realmStore.queryServerEvents().then(res => res.filtered(`RowKey == '${row_key}'`))
-            console.log('serverEvent', JSON.stringify(serverEvent[0].JsonContent));
-
             if (JSON.stringify(serverEvent) != "{}") {
                 console.log("init: ", JSON.parse(serverEvent[0].JsonContent));
                 setJsonContent(JSON.parse(serverEvent[0].JsonContent))
@@ -225,7 +223,7 @@ export default (props) => {
                             </View>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                            <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_da_tra')}</Text>
+                            <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_phai_tra')}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
                                 <Text style={{ fontWeight: "bold", fontSize: 16, color: "#0072bc", marginRight: 30 }}>{currencyToString(jsonContent.TotalPayment)}đ</Text>
                             </View>

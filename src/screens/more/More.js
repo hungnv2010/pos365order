@@ -243,7 +243,7 @@ const ContentComponent = (props) => {
             CommonActions.reset({
                 index: 0,
                 routes: [
-                    { name: 'Login', params: { param: "logout" } },
+                    { name: 'Login' },
                 ],
             })
         )
@@ -275,10 +275,10 @@ const ContentComponent = (props) => {
             </View>
             <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
                 <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>{I18n.t('cai_dat_may_in')}</Text>
-                <TouchableOpacity onPress={() => { 
+                <TouchableOpacity onPress={() => {
                     props.navigation.navigate("PrintHtml")
                     // props.navigation.navigate("PrintWebview")
-                 }}>
+                }}>
                     <Text style={{ marginTop: 20 }}>HTML print</Text>
                 </TouchableOpacity>
                 <View style={{ flexDirection: "row", marginTop: 15, alignItems: "center" }}>
