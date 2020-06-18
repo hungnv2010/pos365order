@@ -57,13 +57,6 @@ const LoginScreen = (props) => {
         getCurrentAccount()
     }, [])
 
-    useLayoutEffect(() => {
-        if (props.route.params && props.route.params.param == "logout") {
-            console.log("LOGOUT");
-            setHasLogin(false)
-        }
-    }, [props.route.params])
-
     const onClickLogin = useCallback(() => {
         if (!logIn) return
         if (!checkDataLogin()) {
