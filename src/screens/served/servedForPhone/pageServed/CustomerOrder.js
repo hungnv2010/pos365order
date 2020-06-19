@@ -188,6 +188,9 @@ export default (props) => {
                 console.log("sendOrder err ", e);
                 dialogManager.hiddenLoading()
             })
+        } else {
+            setToastDescription(I18n.t("ban_hay_chon_mon_an_truoc"))
+            setShowToast(true)
         }
     }
 

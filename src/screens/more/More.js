@@ -257,25 +257,25 @@ const ContentComponent = (props) => {
     }
 
     return (
-        <View style={{flex: 1}}>
-            <ScrollView style={{flexGrow: 1}}>
+        <View style={{ flex: 1 }}>
+            <ScrollView style={{ flexGrow: 1 }}>
                 <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
                     <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>{I18n.t('ket_noi_may_in')}</Text>
-                    <TouchableOpacity onPress={() => {
+                    <TouchableOpacity  style={{ paddingVertical: 10, paddingTop: 20 }} onPress={() => {
                         setShowModal(true)
                     }}>
-                        <Text style={{ marginTop: 20 }}>{I18n.t('may_in_tam_tinh')} ({I18n.t('qua_mang_lan')} {ip})</Text>
+                        <Text style={{}}>{I18n.t('may_in_tam_tinh')} ({I18n.t('qua_mang_lan')} {ip})</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
                     <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>{I18n.t('cai_dat_may_in')}</Text>
-                    <TouchableOpacity onPress={() => {
+                    <TouchableOpacity style={{ paddingVertical: 10, paddingTop: 20 }} onPress={() => {
                         props.navigation.navigate("PrintHtml")
                         // props.navigation.navigate("PrintWebview")
                     }}>
-                        <Text style={{ marginTop: 20 }}>HTML print</Text>
+                        <Text >HTML print</Text>
                     </TouchableOpacity>
-                    <View style={{ flexDirection: "row", marginTop: 15, alignItems: "center" }}>
+                    <View style={{ flexDirection: "row", marginTop: 5, alignItems: "center" }}>
                         <View style={{ flex: 1, flexDirection: "column", height: 40, justifyContent: "center" }}>
                             <Text style={{ textAlign: "left", }}>{I18n.t('in_tam_tinh')}</Text>
                         </View>
@@ -293,13 +293,13 @@ const ContentComponent = (props) => {
                         />
                     </View>
                 </View>
-                <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
-                    <TouchableOpacity onPress={() => onClickHotLine()}>
+                <View style={{ borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
+                    <TouchableOpacity onPress={() => onClickHotLine()} style={{ padding: 20 }}>
                         <Text style={{ marginTop: 0 }}>{I18n.t('ho_tro')} <Text style={{ color: colors.colorLightBlue }}>{Constant.HOTLINE}</Text></Text>
                     </TouchableOpacity>
                 </View>
-                <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
-                    <TouchableOpacity onPress={() => onClickLogOut()}>
+                <View style={{ borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
+                    <TouchableOpacity onPress={() => onClickLogOut()} style={{ padding: 20 }}>
                         <Text style={{ marginTop: 0 }}>{I18n.t('logout')}</Text>
                     </TouchableOpacity>
                 </View>

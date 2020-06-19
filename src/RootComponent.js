@@ -30,18 +30,16 @@ export default () => {
     const [toastDescription, setToastDescription] = useState("")
     const dispatch = useDispatch();
 
+    const { height, width } = Dimensions.get('window');
+    const aspectRatio = height / width;
+
     const isPortrait = () => {
         const dim = Dimensions.get("screen");
         return dim.height >= dim.width ? Constant.PORTRAIT : Constant.LANDSCAPE;
     }
-
-    const msp = (dim, limit) => {
-        return (dim.scale * dim.width) >= limit || (dim.scale * dim.height) >= limit;
-    }
-
+    
     const isTablet = () => {
-        const dim = Dimensions.get("screen");
-        return ((dim.scale < 2 && msp(dim, 1000) || (dim.scale >= 2 && msp(dim, 1900)))) ? Constant.TABLET : Constant.PHONE;
+        return (aspectRatio <= 1.6) ? Constant.TABLET : Constant.PHONE;
     }
 
     useEffect(() => {
