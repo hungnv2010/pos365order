@@ -206,7 +206,7 @@ const { Print } = NativeModules;
 import HtmlDefault from '../../data/html/htmlDefault';
 import ViewShot, { takeSnapshot, captureRef } from "react-native-view-shot";
 import HTML from 'react-native-render-html';
-import AutoHeightWebView from 'react-native-autoheight-webview'
+import AutoHeightWebView from 'react-native-autoheight-webview/autoHeightWebView'
 import ModulePrint from './ModulePrint';
 import printManager from './PrintManager';
 import ViewPrint from './ViewPrint';
@@ -314,17 +314,11 @@ export default forwardRef((props, ref) => {
         console.log("do something with ", uri);
         setUri(uri);
     }
-
-    const childRef = useRef();
-
-    const handleClick = () => {
-        console.log("handleClick ");
-        viewPrintRef.current.clickCaptureRef();
-    }
+    
     const viewPrintRef = useRef();
 
     return (
-        <View style={{ backgroundColor: "#fff" }}>
+        <View style={{ backgroundColor: "#fff", flex: 1 }}>
             <ViewPrint
                 ref={viewPrintRef}
                 html={data}
@@ -340,35 +334,17 @@ export default forwardRef((props, ref) => {
                 clickPrint={() => clickPrint()}
                 clickCheck={() => clickCheck()}
             /> : null}
-            <View style={{ opacity: 1 }}>
-                <ScrollView
-                    style={{ marginBottom: deviceType == Constant.PHONE ? 50 : 0 }}
-                >
-                    <View
-                        ref={childRef}
-                        style={{
-                            flex: 1, alignItems: "center"
-                        }}>
-                        <AutoHeightWebView
-                            scrollEnabled={false}
-                            style={{ width: deviceType == Constant.PHONE ? Metrics.screenWidth : Metrics.screenWidth / 2 }}
-                            files={[{
-                                href: 'cssfileaddress',
-                                type: 'text/css',
-                                rel: 'stylesheet'
-                            }]}
-                            source={{ html: data }}
-                            scalesPageToFit={true}
-                        />
-                    </View>
-                </ScrollView>
-            </View>
-
-
-            {/* <TouchableOpacity style={{ backgroundColor: "red", padding: 20, }} onPress={handleClick}><Text>Click</Text></TouchableOpacity>
-            
-            <TouchableOpacity style={{ backgroundColor: "red", padding: 20, }} onPress={handleClick}><Text>Click</Text></TouchableOpacity> */}
-            <Image source={{ uri: uri }} resizeMode="contain" style={{ position: "absolute", top: 50, width: 200, height: 700, flex: 1 }} />
+            <AutoHeightWebView
+                // scrollEnabled={false}
+                style={{ width: deviceType == Constant.PHONE ? Metrics.screenWidth : Metrics.screenWidth / 2 }}
+                files={[{
+                    href: 'cssfileaddress',
+                    type: 'text/css',
+                    rel: 'stylesheet'
+                }]}
+                source={{ html: data }}
+            // scalesPageToFit={true}
+            />
         </View>
     );
 });

@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
 import printService from '../../../data/html/PrintService';
 const { Print } = NativeModules;
+import AutoHeightWebView from 'react-native-autoheight-webview/autoHeightWebView'
 
 export default forwardRef((props, ref) => {
 
@@ -112,15 +113,15 @@ export default forwardRef((props, ref) => {
                 clickPrint={() => clickPrint()}
                 clickCheck={() => clickCheck()}
             /> : null}
-            <WebView
+            <AutoHeightWebView
                 source={{ html: data }}
-                style={{ marginTop: 0, flex: 1 }}
-                onError={syntheticEvent => {
-                    dialogManager.hiddenLoading();
-                }}
-                onLoadEnd={syntheticEvent => {
-                    dialogManager.hiddenLoading();
-                }}
+                style={{ marginTop: 0, width: Metrics.screenWidth }}
+                // onError={syntheticEvent => {
+                //     dialogManager.hiddenLoading();
+                // }}
+                // onLoadEnd={syntheticEvent => {
+                //     dialogManager.hiddenLoading();
+                // }}
             />
             <Snackbar
                 duration={5000}
