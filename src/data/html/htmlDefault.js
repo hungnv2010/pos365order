@@ -1,13 +1,13 @@
 export default `<!DOCTYPE html>
 <html lang="en">
    <head>
-      
+      <meta name="viewport" content="width=device-width, initial-scale=1">
       <meta charset="UTF-8">
       <title>Document</title>
       <style>
           table, th, td { border-collapse: collapse; font-size:16.0px; }
           td { text-align: right; word-wrap: break-word; max-width: 0px; }
-          body { margin:0 auto; background: white;}
+          body { margin:0 auto; background-color: white;}
       </style>
    </head>
    <body style="padding: 20px;" rules=rows align="center">
