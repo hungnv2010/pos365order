@@ -447,53 +447,59 @@ const PopupDetail = (props) => {
     return (
         <View>
             <View style={{ backgroundColor: Colors.colorchinh, borderTopRightRadius: 4, borderTopLeftRadius: 4, }}>
-                <Text style={{ margin: 10, textTransform: "uppercase", fontSize: 20, marginLeft: 20, color: "#fff" }}>{itemOrder.Name}</Text>
+                <Text style={{ margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, color: "#fff" }}>{itemOrder.Name}</Text>
             </View>
             <View style={{ padding: 10 }}>
-                <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} onPress={() => setShowModal(false)}>
-                    <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('don_gia')}</Text>
-                    <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
-                        <Text style={{ paddingHorizontal: 20, paddingVertical: 20, flex: 1, fontSize: 16, borderWidth: 0.5, borderRadius: 4 }}>{currencyToString(itemOrder.Price)}</Text>
+                <View style={{ flexDirection: "row", justifyContent: "center", }} onPress={() => setShowModal(false)}>
+                    <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('don_gia')}</Text>
+                    <View style={{ alignItems: "center", flexDirection: "row", flex: 7, backgroundColor: "#D5D8DC" }}>
+                        <Text style={{ padding: 7, flex: 1, fontSize: 14, borderWidth: 0.5, borderRadius: 4 }}>{currencyToString(itemOrder.Price)}</Text>
                     </View>
 
                 </View>
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} >
-                    <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('so_luong')}</Text>
+                    <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
                             itemOrder.Quantity++
                             setItemOrder({ ...itemOrder })
                         }}>
-                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>+</Text>
+                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>+</Text>
                         </TouchableOpacity>
-                        <TextInput style={{ padding: 20, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5 }} value={"" + itemOrder.Quantity} />
+                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
                         <TouchableOpacity onPress={() => {
                             if (itemOrder.Quantity > 0) {
                                 itemOrder.Quantity--
                                 setItemOrder({ ...itemOrder })
                             }
                         }}>
-                            <Text style={{ borderWidth: 1, padding: 20, borderRadius: 10 }}>-</Text>
+                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>-</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} onPress={() => setShowModal(false)}>
-                    <Text style={{ fontSize: 16, flex: 3 }}>{I18n.t('ghi_chu')}</Text>
-                    <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
-                        <TextInput onChangeText={text => {
-                            itemOrder.Description = text
-                            setItemOrder({ ...itemOrder })
-                        }} numberOfLines={4} multiline={true} value={itemOrder.Description} style={{ height: 100, paddingHorizontal: 20, paddingVertical: 5, flex: 7, fontSize: 16, borderWidth: 0.5, borderRadius: 4 }} placeholder="Nhập ghi chú" />
+                    <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('ghi_chu')}</Text>
+                    <View style={{ flexDirection: "row", flex: 7 }}>
+                        <TextInput
+                            onChangeText={text => {
+                                itemOrder.Description = text
+                                setItemOrder({ ...itemOrder })
+                            }}
+                            numberOfLines={3}
+                            multiline={true}
+                            value={itemOrder.Description}
+                            style={{ flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC" }}
+                            placeholder={I18n.t('nhap_ghi_chu')} />
                     </View>
                 </View>
                 <View style={{ alignItems: "center", justifyContent: "space-between", flexDirection: "row", marginTop: 10 }}>
-                    <TouchableOpacity onPress={() => props.setShowModal(false)} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, paddingHorizontal: 10, paddingVertical: 15, borderRadius: 4, backgroundColor: "#fff" }} >
+                    <TouchableOpacity onPress={() => props.setShowModal(false)} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, padding: 5, borderRadius: 4, backgroundColor: "#fff" }} >
                         <Text style={{ color: Colors.colorchinh, textTransform: "uppercase" }}>{I18n.t('huy')}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => onClickTopping()} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, paddingHorizontal: 10, paddingVertical: 15, borderRadius: 4, backgroundColor: "#fff" }} >
+                    <TouchableOpacity onPress={() => onClickTopping()} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, padding: 5, borderRadius: 4, backgroundColor: "#fff" }} >
                         <Text style={{ color: Colors.colorchinh, textTransform: "uppercase" }}>Topping</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => onClickOk()} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, paddingHorizontal: 10, paddingVertical: 15, borderRadius: 4, backgroundColor: Colors.colorchinh }} >
+                    <TouchableOpacity onPress={() => onClickOk()} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, padding: 5, borderRadius: 4, backgroundColor: Colors.colorchinh }} >
                         <Text style={{ color: "#fff", textTransform: "uppercase", }}>{I18n.t('dong_y')}</Text>
                     </TouchableOpacity>
                 </View>

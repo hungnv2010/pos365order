@@ -196,6 +196,7 @@ export default forwardRef((props, ref) => {
               numColumns={props.numColumns}
               renderItem={({ item, index }) => {
                 return (<ProductsItem
+                  numColumns={props.numColumns}
                   getQuantityProduct={getQuantityProduct(item)}
                   item={item}
                   index={index}
