@@ -32,7 +32,6 @@ export default (props) => {
         const init = async () => {
             const row_key = `${props.route.params.room.Id}_${props.Position}`
             serverEvent = await realmStore.queryServerEvents().then(res => res.filtered(`RowKey == '${row_key}'`))
-            console.log('serverEvent', JSON.stringify(serverEvent[0].JsonContent));
             if (JSON.stringify(serverEvent) != "{}") {
                 console.log("init: ", JSON.parse(serverEvent[0].JsonContent));
                 setJsonContent(JSON.parse(serverEvent[0].JsonContent))
@@ -43,12 +42,11 @@ export default (props) => {
             provisional.current = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
             console.log('provisional ', provisional.current);
 
-           
+
         }
         init()
         return () => {
             if (serverEvent) serverEvent.removeAllListeners()
-            realmStore.removeAllListener()
             setJsonContent({})
         }
     }, [props.Position])
@@ -113,18 +111,18 @@ export default (props) => {
         if (getCurrentIP && getCurrentIP != "") {
             if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
                 console.log("onClickProvisional ", jsonContent);
-                if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0){
+                if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
                     // printService.PrintHtmlService(HtmlDefault, jsonContent)
                     printService.GenHtml(HtmlDefault, jsonContent).then(res => {
-                        if (res && res != ""){
+                        if (res && res != "") {
                             setData(res)
                         }
                         setTimeout(() => {
                             viewPrintRef.current.clickCaptureRef();
                         }, 500);
-                       
+
                     })
-                    
+
                 }
                 else
                     dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))

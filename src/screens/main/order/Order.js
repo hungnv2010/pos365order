@@ -38,67 +38,13 @@ export default (props) => {
         { position: "C", checked: false },
         { position: "D", checked: false },
     ])
+    const [indexRoom, setIndexRoom] = useState(0)
     const toRoomId = useRef()
 
     const { deviceType } = useSelector(state => {
         console.log("useSelector state ", state);
         return state.Common
     });
-
-    const onItemPress = ({ Id, Name, ProductId }) => {
-        if (props.route.params && props.route.params.Name) {
-            toRoomId.current = { Id: Id, Name: Name, ProductId: ProductId }
-            setShowModal(!showModal)
-        } else {
-            deviceType == Constant.TABLET ?
-                props.navigation.navigate('ServedForTablet', { room: { Id: Id, Name: Name, ProductId: ProductId } })
-                :
-                props.navigation.navigate('PageServed', { room: { Id: Id, Name: Name, ProductId: ProductId } })
-        }
-    }
-
-    const renderRoom = (item, widthRoom) => {
-        widthRoom = parseInt(widthRoom)
-        return item.isEmpty ?
-            (<View style={{ width: widthRoom - 5 }}></View>)
-            :
-            (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
-                style={[styles.room, { width: widthRoom - 5, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
-                <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
-                    <View style={{ alignItems: "center", padding: 0, flex: 1 }}>
-                        <View style={{ justifyContent: "center", alignItems: "center", flex: 1, height: "90%" }}>
-                            <TextTicker
-                                style={{
-                                    fontSize: 13, textAlign: "center", textAlignVertical: "center", textTransform: "uppercase", padding: 4, marginTop: 0, color: item.IsActive ? 'white' : 'black'
-                                }}
-                                duration={6000}
-                                bounce={false}
-                                marqueeDelay={1000}
-                            >
-                                {item.Name}
-                            </TextTicker>
-                        </View>
-
-                    </View>
-                    <View style={{ height: 0.5, width: "90%", backgroundColor: "#ddd", justifyContent: "center", alignItems: "center" }}></View>
-                    <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 2 }}>
-                        {item.IsActive ?
-                            <Text style={{ paddingTop: 0, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
-                            : null}
-                        <Text style={{ paddingTop: item.IsActive ? 10 : 0, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
-                    </View>
-                </View>
-            </TouchableOpacity>
-            );
-    }
-
-    const renderRoomGroup = (item) => {
-        return (
-            <View key={item.Id} style={styles.roomGroup}>
-                <Text style={{ padding: 0, fontSize: 16, textTransform: "uppercase", color: colors.colorLightBlue, paddingLeft: 3 }}>{item.Name}</Text>
-            </View>
-        )
-    }
 
     const numberColumn = useSelector(state => {
         console.log("useSelector state ", state);
@@ -107,28 +53,26 @@ export default (props) => {
         return numberColumn
     });
 
-    let rooms = []
-    let roomGroups = []
-    let serverEvents = []
+    let rooms = null
+    let roomGroups = null
+    let serverEvents = null
     const [datas, setData] = useState([])
     const [valueAll, setValueAll] = useState({})
     const widthRoom = Dimensions.get('screen').width / numberColumn;
-
-    const [indexRoom, setIndexRoom] = useState(0)
-
     const RoomAll = { Name: "Tất cả", Id: "All" }
     const [listRoom, setListRoom] = useState([])
+
+    useEffect(() => {
+        return () => {
+            if (serverEvents) serverEvents.removeAllListeners()
+        }
+    }, [])
 
     useEffect(() => {
         if (props.already || (props.route.params && props.route.params.Name)) {
             init()
         }
-        return () => {
-            realmStore.removeAllListener()
-        }
     }, [props.already])
-
-
 
 
     const init = async () => {
@@ -251,6 +195,61 @@ export default (props) => {
 
     let indexGroup = 0;
     let listNode = [];
+
+    const onItemPress = ({ Id, Name, ProductId }) => {
+        if (props.route.params && props.route.params.Name) {
+            toRoomId.current = { Id: Id, Name: Name, ProductId: ProductId }
+            setShowModal(!showModal)
+        } else {
+            deviceType == Constant.TABLET ?
+                props.navigation.navigate('ServedForTablet', { room: { Id: Id, Name: Name, ProductId: ProductId } })
+                :
+                props.navigation.navigate('PageServed', { room: { Id: Id, Name: Name, ProductId: ProductId } })
+        }
+    }
+
+    const renderRoom = (item, widthRoom) => {
+        widthRoom = parseInt(widthRoom)
+        return item.isEmpty ?
+            (<View style={{ width: widthRoom - 5 }}></View>)
+            :
+            (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
+                style={[styles.room, { width: widthRoom - 5, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
+                <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
+                    <View style={{ alignItems: "center", padding: 0, flex: 1 }}>
+                        <View style={{ justifyContent: "center", alignItems: "center", flex: 1, height: "90%" }}>
+                            <TextTicker
+                                style={{
+                                    fontSize: 13, textAlign: "center", textAlignVertical: "center", textTransform: "uppercase", padding: 4, marginTop: 0, color: item.IsActive ? 'white' : 'black'
+                                }}
+                                duration={6000}
+                                bounce={false}
+                                marqueeDelay={1000}
+                            >
+                                {item.Name}
+                            </TextTicker>
+                        </View>
+
+                    </View>
+                    <View style={{ height: 0.5, width: "90%", backgroundColor: "#ddd", justifyContent: "center", alignItems: "center" }}></View>
+                    <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 2 }}>
+                        {item.IsActive ?
+                            <Text style={{ paddingTop: 0, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
+                            : null}
+                        <Text style={{ paddingTop: item.IsActive ? 10 : 0, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
+                    </View>
+                </View>
+            </TouchableOpacity>
+            );
+    }
+
+    const renderRoomGroup = (item) => {
+        return (
+            <View key={item.Id} style={styles.roomGroup}>
+                <Text style={{ padding: 0, fontSize: 16, textTransform: "uppercase", color: colors.colorLightBlue, paddingLeft: 3 }}>{item.Name}</Text>
+            </View>
+        )
+    }
 
 
     return (
