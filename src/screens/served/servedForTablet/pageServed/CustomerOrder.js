@@ -261,12 +261,14 @@ export default (props) => {
                 <View style={{
                     flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", padding: 5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : null, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5,
                 }}>
-                    <TouchableOpacity onPress={() => {
-                        console.log('delete');
-                        list.splice(index, 1)
-                        syncListProducts([...list])
-                    }}>
-                        <Icon name="trash-can-outline" size={50} color="gray" />
+                    <TouchableOpacity
+                        style={{ marginRight: 5 }}
+                        onPress={() => {
+                            console.log('delete');
+                            list.splice(index, 1)
+                            syncListProducts([...list])
+                        }}>
+                        <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flexDirection: "column", flex: 1 }}>
                         <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
