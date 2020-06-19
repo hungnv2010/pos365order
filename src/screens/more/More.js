@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import { Image, View, StyleSheet, TouchableWithoutFeedback, Text, TouchableOpacity, NativeModules, Modal, TextInput, Linking, ScrollView } from 'react-native';
 import { Images, Colors, Metrics } from '../../theme';
 import { setFileLuuDuLieu, getFileDuLieuString } from '../../data/fileStore/FileStorage';
@@ -51,7 +51,7 @@ const HeaderComponent = (props) => {
     const [showModal, setShowModal] = useState(false);
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const getVendorSession = async () => {
             let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
             console.log('HeaderComponent data', JSON.parse(data));
