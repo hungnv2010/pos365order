@@ -259,7 +259,7 @@ export default forwardRef((props, ref) => {
             })
         }
         getVendorSession()
-    }, [])
+    }, [props.data])
 
     useImperativeHandle(ref, () => ({
         clickCheckInRef() {
