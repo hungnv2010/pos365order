@@ -183,7 +183,7 @@ export default (props) => {
                 </View>
             </View>
             <View style={{ flex: 1 }}>
-                <View style={{ backgroundColor: "white", marginBottom: 3, flex: 1 }}>
+                <View style={{ backgroundColor: "white", marginBottom: 3, }}>
                     <FlatList
                         horizontal={true}
                         showsHorizontalScrollIndicator={false}
@@ -192,7 +192,7 @@ export default (props) => {
                         keyExtractor={(item, index) => '' + index}
                         extraData={listCateId} />
                 </View>
-                <View style={{}}>
+                <View style={{ flex: 1 }}>
                     <FlatList
                         data={topping}
                         showsVerticalScrollIndicator={false}

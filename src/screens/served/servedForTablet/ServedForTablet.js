@@ -149,7 +149,6 @@ const Served = (props) => {
             {
                 renderForTablet()
             }
-            <Text>{orientaition}</Text>
         </View>
     );
 }

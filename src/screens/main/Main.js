@@ -14,19 +14,17 @@ export default (props) => {
 
   const [already, setAlready] = useState(false)
 
-
   useEffect(() => {
     if (props.route.params && props.route.params.Name) return
     const syncAllDatas = async () => {
       dialogManager.showLoading()
-      await dataManager.syncAllDatas()
-      setAlready(true)
+      await dataManager.syncAllDatas().then(() => {
+        setAlready(true)
+      })
       dialogManager.hiddenLoading()
     }
     syncAllDatas()
     return () => {
-      realmStore.removeAllListener()
-      // syncAllDatas && syncAllDatas()
       setAlready(false)
     }
   }, [])
