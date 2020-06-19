@@ -149,7 +149,7 @@ export default (props) => {
 
     const renderTopping = (item, index) => {
         return (
-            <View key={item.Id} style={[styles.toppingItem, { backgroundColor: item.Quantity > 0 ? "#6EA2D6" : "white" }]}>
+            <View key={item.Id} style={[styles.toppingItem, { backgroundColor: item.Quantity > 0 ? "#EED6A7" : "white" }]}>
                 <View style={{ flex: 3, paddingRight: 10 }}>
                     <Text numberOfLines={2} style={{}}>{item.Name}</Text>
                     <Text numberOfLines={2} style={{ fontStyle: "italic", fontSize: 13, color: "gray" }}>{currencyToString(item.Price)}</Text>

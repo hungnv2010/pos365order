@@ -279,15 +279,16 @@ export default (props) => {
                             <Text>{item.Quantity}</Text>
                             :
                             <View style={{ alignItems: "center", flexDirection: "row" }}>
-                                <TouchableOpacity onPress={() => {
-                                    if (item.Quantity == 1) {
-                                        list.splice(index, 1)
-                                    } else {
-                                        item.Quantity--
-                                    }
-                                    syncListProducts([...list])
-                                }}>
-                                    <Icon name="minus-circle" size={40} color={Colors.colorchinh} />
+                                <TouchableOpacity
+                                    onPress={() => {
+                                        if (item.Quantity == 1) {
+                                            list.splice(index, 1)
+                                        } else {
+                                            item.Quantity--
+                                        }
+                                        syncListProducts([...list])
+                                    }}>
+                                    <Icon name="minus-box" size={40} color={Colors.colorchinh} />
                                 </TouchableOpacity>
                                 <TextInput
                                     placeholder="1"
@@ -300,21 +301,21 @@ export default (props) => {
                                     }}
                                     keyboardType="numeric"
                                     textAlign="center"
-                                    style={{ width: 50, fontSize: 16, fontWeight: "bold" }}>{item.Quantity}</TextInput>
+                                    style={{ width: 30, fontSize: 16, fontWeight: "bold" }}>{item.Quantity}</TextInput>
                                 <TouchableOpacity onPress={() => {
                                     item.Quantity++
                                     syncListProducts([...list])
                                 }}>
-                                    <Icon name="plus-circle" size={40} color={Colors.colorchinh} />
+                                    <Icon name="plus-box" size={40} color={Colors.colorchinh} />
                                 </TouchableOpacity>
                             </View>
                     }
                     <TouchableOpacity
-                        style={{ marginLeft: 10 }}
+                        style={{ borderWidth: 1, borderRadius: 50, borderColor: Colors.colorchinh, marginLeft: 20 }}
                         onPress={() => {
                             props.outputItemOrder(item)
                         }}>
-                        <Icon name="access-point" size={50} color="orange" />
+                        <Icon name="puzzle" size={25} color={Colors.colorchinh} style={{ padding: 5 }} />
                     </TouchableOpacity>
                 </View>
             </TouchableOpacity>

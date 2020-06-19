@@ -121,7 +121,7 @@ const Served = (props) => {
                         <View style={itemOrder.Id ? { flex: 1 } : { width: 0, height: 0 }}>
                             <Topping
                                 {...props}
-                                numColumns={2}
+                                numColumns={orientaition == Constant.LANDSCAPE ? 2 : 1}
                                 position={position}
                                 itemOrder={meMoItemOrder}
                                 onClose={() => { setItemOrder({}) }}

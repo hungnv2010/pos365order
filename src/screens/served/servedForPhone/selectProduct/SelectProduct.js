@@ -174,6 +174,11 @@ export default (props) => {
     setProduct([...product])
   }
 
+  const onChangeText = (numb, item) => {
+    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+      listProducts.current[pos].Quantity = numb
+  }
+
 
   const onClickDone = () => {
     props.navigation.pop();
@@ -252,6 +257,7 @@ export default (props) => {
               data={product}
               renderItem={({ item, index }) =>
                 <ProductsItemForPhone
+                  onChangeText={onChangeText}
                   item={item}
                   index={index}
                   onClickProduct={onClickProduct}
