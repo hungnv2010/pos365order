@@ -6,6 +6,7 @@ import Colors from '../../../../theme/Colors';
 import Menu from 'react-native-material-menu';
 import I18n from '../../../../common/language/i18n';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import HtmlDefault from '../../../../data/html/htmlDefault';
 import printService from '../../../../data/html/PrintService';
 import { getFileDuLieuString } from '../../../../data/fileStore/FileStorage';
@@ -246,13 +247,12 @@ export default (props) => {
                         <View style={{
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 5,
                         }}>
-                            {/* <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text> */}
                             <TouchableOpacity onPress={() => sendNotidy(1)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
-                                <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
+                                <MaterialIcons style={{ paddingHorizontal: 7 }} name="notifications" size={26} color={Colors.colorchinh} />
                                 <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => sendNotidy(2)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
-                                <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
+                                <Icon style={{ paddingHorizontal: 10 }} name="message" size={22} color={Colors.colorchinh} />
                                 <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
                             </TouchableOpacity>
                         </View>
