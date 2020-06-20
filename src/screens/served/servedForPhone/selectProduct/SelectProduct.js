@@ -130,12 +130,10 @@ export default (props) => {
   }
 
   const getQuantity = (item) => {
-    let Quantity = 0
+    let Quantity = 1
     if (item.IsPriceForBlock) {
       Quantity = item.BlockOfTimeToUseService / 60
-    } else {
-      Quantity = 1
-    }
+    } 
     return Quantity
   }
 
