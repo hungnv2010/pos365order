@@ -7,8 +7,17 @@ import Main from '../../screens/main/Main';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import More from '../../screens/more/More'
+import OrderNow from '../../screens/ordernow/OrderNow';
+import { useSelector } from 'react-redux';
+import dataManager from '../../data/DataManager';
 
 export default () => {
+
+    const numberOrder = useSelector(state => {
+        console.log("useSelector numberOrder state ", state);
+        return state.Common.numberOrder > 0 ? state.Common.numberOrder : 0;
+    });
+
     return (
         <Tab.Navigator
             initialRouteName="Home"
@@ -35,12 +44,21 @@ export default () => {
                     </View>
                 ),
             }} />
-            {/* <Tab.Screen name="Settings" component={()=>{return(<View><Text>Setting</Text></View>)}} options={{
-                tabBarLabel: 'Settings',
+            <Tab.Screen name="OrderNow" component={OrderNow} options={{
+                tabBarLabel: 'Order',
                 tabBarIcon: ({ color }) => (
-                    <Image style={{ width: 20, height: 20, padding: 5 }} source={Images.icon_transfer_money} />
+                    <View>
+                        <Icon name="restaurant-menu" size={22} color={color} />
+                        {numberOrder > 0 ?
+                            <View style={{ top: -5, right: -10, position: "absolute" }}>
+                                <View style={{ backgroundColor: Colors.colorchinh, width: 18, height: 18, borderRadius: 9, borderColor: "#ffffff", borderWidth: 1, justifyContent: "center", alignItems: "center" }}>
+                                    <Text style={{ color: "#fff" }}>{numberOrder}</Text>
+                                </View>
+                            </View>
+                            : null}
+                    </View>
                 ),
-            }} /> */}
+            }} />
             <Tab.Screen name="More" component={More} options={{
                 tabBarLabel: 'More',
                 tabBarIcon: ({ color }) => (

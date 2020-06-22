@@ -140,7 +140,7 @@ export default (props) => {
             }
         })
         if (!exist) {
-            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, data: listPosition })
+            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, Name: props.route.params.room.Name, data: listPosition })
         }
         console.log(dataManager.dataChoosing, 'savePosition');
     }

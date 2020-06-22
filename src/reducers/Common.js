@@ -17,6 +17,7 @@ const initState = {
 	currentBranch: "",
 	deviceType: "",
 	orientaition: "",
+	numberOrder: 0,
 }
 
 const commonReducer = (state = initState, action = {}) => {
@@ -74,8 +75,13 @@ const commonReducer = (state = initState, action = {}) => {
 				...state,
 				orientaition: action.orientaition
 			}
+		case "NUMBER_ORDER":
+			return {
+				...state,
+				numberOrder: action.numberOrder
+			}
 		default:
-			return state 
+			return state
 	}
 }
 
@@ -87,7 +93,7 @@ const commonReducer = (state = initState, action = {}) => {
 // };
 
 // const Common = persistReducer(persistConfig, commonReducer)
-const Common =  commonReducer;
+const Common = commonReducer;
 
 
 export default Common;
