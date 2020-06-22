@@ -43,7 +43,7 @@ export default () => {
     }
 
     useEffect(() => {
-        signalRManager.init()
+        // signalRManager.init()
         I18n.locale = "vi";
         setForceUpdate(!forceUpdate);
         dispatch({ type: 'TYPE_DEVICE', deviceType: isTablet() })

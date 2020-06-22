@@ -6,16 +6,13 @@ import Order from './order/Order';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
 import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
-import realmStore from '../../data/realm/RealmStore';
-import { useFocusEffect } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+
 
 
 export default (props) => {
 
 
   const [already, setAlready] = useState(false)
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (props.route.params && props.route.params.Name) return
@@ -32,12 +29,6 @@ export default (props) => {
     }
   }, [])
 
-  useFocusEffect(
-    React.useCallback(() => {
-      console.log("useFocusEffect Main ", dataManager.dataChoosing);
-      dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
-    }, [])
-  );
 
   const clickRightIcon = async () => {
     dialogManager.showLoading()
@@ -61,7 +52,7 @@ export default (props) => {
           clickRightIcon={clickRightIcon}
         />
       }
-      <Order {...props} already={already}></Order>
+      <Order {...props} already={already} ></Order>
     </View>
   );
 };

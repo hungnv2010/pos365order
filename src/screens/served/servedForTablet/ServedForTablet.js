@@ -51,6 +51,7 @@ const Served = (props) => {
         }
         setListProducts(newList)
         console.log(newList, 'newList');
+        checkHasItemOrder(newList)
         checkProductId(newList, props.route.params.room.ProductId)
     }
 
@@ -102,7 +103,17 @@ const Served = (props) => {
         }
     }
 
-
+    const checkHasItemOrder = (newList) => {
+        let exist = false
+        newList.forEach(item => {
+            if (item.Sid == itemOrder.Sid) {
+                exist = true
+            }
+        })
+        if (!exist) {
+            setItemOrder({})
+        }
+    }
 
     const renderForTablet = () => {
         return (
@@ -116,14 +127,14 @@ const Served = (props) => {
                     outputTextSearch={outputTextSearch} />
                 <View style={{ flex: 1, flexDirection: "row" }}>
                     <View style={{ flex: 6, }}>
-                        <View style={!itemOrder.Id ? { flex: 1 } : { width: 0, height: 0 }}>
+                        <View style={!itemOrder.Sid ? { flex: 1 } : { width: 0, height: 0 }}>
                             <SelectProduct
                                 valueSearch={value}
                                 numColumns={orientaition == Constant.LANDSCAPE ? 3 : 2}
                                 listProducts={[...listProducts]}
                                 outputListProducts={outputListProducts} />
                         </View>
-                        <View style={itemOrder.Id ? { flex: 1 } : { width: 0, height: 0 }}>
+                        <View style={itemOrder.Sid ? { flex: 1 } : { width: 0, height: 0 }}>
                             <Topping
                                 {...props}
                                 numColumns={orientaition == Constant.LANDSCAPE ? 2 : 1}

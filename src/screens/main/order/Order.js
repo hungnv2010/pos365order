@@ -24,6 +24,9 @@ import { Checkbox } from 'react-native-paper';
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import dataManager from '../../../data/DataManager';
+import { useFocusEffect } from '@react-navigation/native';
 
 const _nodes = new Map();
 
@@ -38,8 +41,10 @@ export default (props) => {
         { position: "C", checked: false },
         { position: "D", checked: false },
     ])
+    const [listOrder, setListOrder] = useState([])
     const [indexRoom, setIndexRoom] = useState(0)
     const toRoomId = useRef()
+    const dispatch = useDispatch();
 
     const { deviceType } = useSelector(state => {
         console.log("useSelector state ", state);
@@ -63,7 +68,7 @@ export default (props) => {
     const [listRoom, setListRoom] = useState([])
 
     useEffect(() => {
-        return () => {            
+        return () => {
             if (serverEvents) serverEvents.removeAllListeners()
         }
     }, [])
@@ -73,6 +78,14 @@ export default (props) => {
             init()
         }
     }, [props.already])
+
+    useFocusEffect(
+        React.useCallback(() => {
+            console.log("useFocusEffect Main ", dataManager.dataChoosing);
+            setListOrder(() => dataManager.dataChoosing.map(item => item.Id))
+            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+        }, [])
+    );
 
 
     const init = async () => {
@@ -238,6 +251,12 @@ export default (props) => {
                             : null}
                         <Text style={{ paddingTop: item.IsActive ? 10 : 0, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
                     </View>
+                    {
+                        listOrder.includes(item.Id) ?
+                            <Icon style={{ position: "absolute", right: 3, top: 3 }} name="pencil" size={10} color="black" />
+                            :
+                            null
+                    }
                 </View>
             </TouchableOpacity>
             );
@@ -385,15 +404,6 @@ export default (props) => {
                     </View>
                 </View>
             </Modal>
-            {/* <Snackbar
-                duration={5000}
-                visible={showToast}
-                onDismiss={() =>
-                    setShowToast(false)
-                }
-            >
-                {Message.current}
-            </Snackbar> */}
         </View>
     );
 }

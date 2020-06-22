@@ -144,7 +144,7 @@ export default (props) => {
             }
         })
         if (!exist) {
-            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, data: listPosition })
+            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, Name: props.route.params.room.Name, data: listPosition })
         }
         console.log(dataManager.dataChoosing, 'savePosition');
     }
@@ -275,9 +275,9 @@ export default (props) => {
                         }}>
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
-                    <View style={{ flexDirection: "column", flex: 3, }}>
+                    <View style={{ flexDirection: "column", flex: 1, }}>
                         <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
-                        <Text>{currencyToString(item.Price)} x </Text>
+                        <Text>{currencyToString(item.Price)} x {orientaition == Constant.PORTRAIT ? <Text style={{ color: Colors.colorchinh, fontWeight: "bold" }}>{Math.round(item.Quantity * 1000) / 1000}</Text> : null}</Text>
                         <TextTicker
                             style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}
                             duration={6000}
@@ -285,55 +285,87 @@ export default (props) => {
                             {item.Description}
                         </TextTicker>
                     </View>
-                    <View style={{ flex: 2.5, flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                        {
-                            orientaition == Constant.PORTRAIT || item.ProductType == 2 ?
-                                <Text>{Math.round(item.Quantity * 1000) / 1000}</Text>
-                                :
-                                <View style={{ alignItems: "center", flexDirection: "row", }}>
-                                    <TouchableOpacity
-                                        onPress={() => {
-                                            if (item.Quantity == 1) {
-                                                list.splice(index, 1)
-                                            } else {
-                                                item.Quantity--
-                                            }
-                                            syncListProducts([...list])
+                    {
+                        orientaition == Constant.PORTRAIT ?
+                            null
+                            :
+                            <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
+                                {
+                                    item.ProductType == 2 ?
+                                        <View style={{
+                                            flex: 1 / 2, alignItems: "center", paddingVertical: 10,
+                                            shadowColor: "#000",
+                                            shadowOffset: {
+                                                width: 0,
+                                                height: 1,
+                                            },
+                                            shadowOpacity: 0.18,
+                                            shadowRadius: 1.00,
+                                            elevation: 2,
+                                            borderRadius: 2
                                         }}>
-                                        <Icon name="minus-box" size={40} color={Colors.colorchinh} />
-                                    </TouchableOpacity>
-                                    <TextInput
-                                        placeholder="1"
-                                        onChangeText={numb => {
-                                            if (numb == '') item.Quantity = 1
-                                            else {
-                                                item.Quantity = numb;
+                                            <Text style={{}}>{Math.round(item.Quantity * 1000) / 1000}</Text>
+                                        </View>
+                                        :
+                                        <View style={{ alignItems: "center", flexDirection: "row", }}>
+                                            <TouchableOpacity
+                                                onPress={() => {
+                                                    if (item.Quantity == 1) {
+                                                        list.splice(index, 1)
+                                                    } else {
+                                                        item.Quantity--
+                                                    }
+                                                    syncListProducts([...list])
+                                                }}>
+                                                <Icon name="minus-box" size={40} color={Colors.colorchinh} />
+                                            </TouchableOpacity>
+                                            <TextInput
+                                                placeholder="1"
+                                                onChangeText={numb => {
+                                                    if (numb == '') item.Quantity = 1
+                                                    else {
+                                                        item.Quantity = numb;
+                                                        syncListProducts([...list])
+                                                    }
+                                                }}
+                                                keyboardType="numeric"
+                                                textAlign="center"
+                                                style={{
+                                                    width: 40, fontSize: 16,
+                                                    fontWeight: "bold",
+                                                    shadowColor: "#000",
+                                                    shadowOffset: {
+                                                        width: 0,
+                                                        height: 1,
+                                                    },
+                                                    shadowOpacity: 0.18,
+                                                    shadowRadius: 1.00,
+                                                    elevation: 2,
+                                                    borderRadius: 2,
+                                                    height: 35
+                                                }}>{item.Quantity}</TextInput>
+                                            <TouchableOpacity onPress={() => {
+                                                item.Quantity++
                                                 syncListProducts([...list])
-                                            }
-                                        }}
-                                        keyboardType="numeric"
-                                        textAlign="center"
-                                        style={{ width: 30, fontSize: 16, fontWeight: "bold" }}>{item.Quantity}</TextInput>
-                                    <TouchableOpacity onPress={() => {
-                                        item.Quantity++
-                                        syncListProducts([...list])
-                                    }}>
-                                        <Icon name="plus-box" size={40} color={Colors.colorchinh} />
-                                    </TouchableOpacity>
-                                </View>
-                        }
-                        <TouchableOpacity
-                            style={{ borderWidth: 1, borderRadius: 50, borderColor: Colors.colorchinh, }}
-                            onPress={() => {
-                                props.outputItemOrder(item)
-                            }}>
-                            {
-                                item.ProductType == 2 ?
-                                    null :
-                                    <Icon name="puzzle" size={25} color={Colors.colorchinh} style={{ padding: 5 }} />
-                            }
-                        </TouchableOpacity>
-                    </View>
+                                            }}>
+                                                <Icon name="plus-box" size={40} color={Colors.colorchinh} />
+                                            </TouchableOpacity>
+                                        </View>
+                                }
+                            </View>
+                    }
+                    {
+                        item.ProductType == 2 ?
+                            null
+                            :
+                            <TouchableOpacity
+                                style={{ borderWidth: 1, borderRadius: 50, borderColor: Colors.colorchinh, }}
+                                onPress={() => {
+                                    props.outputItemOrder(item)
+                                }}>
+                                <Icon name="puzzle" size={25} color={Colors.colorchinh} style={{ padding: 5 }} />
+                            </TouchableOpacity>
+                    }
                 </View>
             </TouchableOpacity>
         )
