@@ -130,12 +130,10 @@ export default (props) => {
   }
 
   const getQuantity = (item) => {
-    let Quantity = 0
+    let Quantity = 1
     if (item.IsPriceForBlock) {
       Quantity = item.BlockOfTimeToUseService / 60
-    } else {
-      Quantity = 1
-    }
+    } 
     return Quantity
   }
 
@@ -172,6 +170,11 @@ export default (props) => {
       listProducts.current[pos].Quantity -= qtt
     }
     setProduct([...product])
+  }
+
+  const onChangeText = (numb, item) => {
+    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+      listProducts.current[pos].Quantity = numb
   }
 
 
@@ -252,6 +255,7 @@ export default (props) => {
               data={product}
               renderItem={({ item, index }) =>
                 <ProductsItemForPhone
+                  onChangeText={onChangeText}
                   item={item}
                   index={index}
                   onClickProduct={onClickProduct}

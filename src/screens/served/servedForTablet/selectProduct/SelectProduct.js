@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback, forwardRef, useImperativeHandle } from 'react';
+import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { ActivityIndicator, View, StyleSheet, Text, TouchableOpacity, FlatList } from 'react-native';
 import realmStore from '../../../../data/realm/RealmStore';
 import ProductsItem from './ProductsItem';
@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import useDebounce from '../../../../customHook/useDebounce';
 import { Colors, Metrics, Images } from '../../../../theme'
 
-export default forwardRef((props, ref) => {
+export default (props) => {
   const [isLoadMore, setIsLoadMore] = useState(false)
   const [hasProducts, setHasProducts] = useState(false)
   const [category, setCategory] = useState([])
@@ -73,6 +73,7 @@ export default forwardRef((props, ref) => {
       results = results.filtered(`CategoryId == ${listCateId[0]}`)
     }
     let productsRes = results.slice(skip, skip + Constant.LOAD_LIMIT)
+    productsRes = JSON.parse(JSON.stringify(productsRes))
     count.current = productsRes.length
     setProduct([...product, ...productsRes])
     setHasProducts(true)
@@ -89,6 +90,7 @@ export default forwardRef((props, ref) => {
 
 
   const onClickCate = async (item, index) => {
+    if (item.Id == listCateId[0]) return
     setHasProducts(false)
     resetState()
     setListCateId([item.Id])
@@ -101,22 +103,24 @@ export default forwardRef((props, ref) => {
   }
 
   const onClickProduct = (item, index) => {
+    let qtt = getQuantity(item)
     item.Sid = Date.now()
+    item.Description = getDescription(item)
     console.log(item, 'onClickProduct');
     if (item.SplitForSalesOrder) {
-      item.Quantity = 1
-      listProducts.unshift(item)
+      item.Quantity = qtt
+      listProducts.unshift({ ...item })
     }
     else {
       let exist = false;
       listProducts.forEach(listProduct => {
         if (listProduct.Id === item.Id) {
-          listProduct.Quantity++
+          listProduct.Quantity += qtt
           exist = true;
         }
       })
       if (!exist) {
-        item.Quantity = 1
+        item.Quantity = qtt
         listProducts.unshift(item)
       }
     }
@@ -134,8 +138,22 @@ export default forwardRef((props, ref) => {
     return Quantity
   }
 
-  const onClickDone = () => {
-    props.outputListProducts([...listProducts], 0)
+  const getDescription = (item) => {
+    let Description = ''
+    if (item.ProductType == 2) {
+      let date = new Date()
+      let [day, month, hour, minute] = [date.getDate(), date.getMonth(), date.getHours(), date.getMinutes()]
+      Description = `${day}/${month} ${hour}:${minute}=>${day}/${month} ${hour}:${minute} (0 ${I18n.t('phut')})`
+    }
+    return Description
+  }
+
+  const getQuantity = (item) => {
+    let Quantity = 1
+    if (item.IsPriceForBlock) {
+      Quantity = item.BlockOfTimeToUseService / 60
+    }
+    return Quantity
   }
 
   const loadMore = (info) => {
@@ -145,15 +163,6 @@ export default forwardRef((props, ref) => {
       setSkip((prevSkip) => prevSkip + Constant.LOAD_LIMIT);
     }
   }
-
-  useImperativeHandle(ref, () => ({
-    onClickDoneInRef() {
-      onClickDone()
-    },
-    listProductsRef() {
-      return listProducts
-    }
-  }));
 
 
   const renderCateItem = (item, index) => {
@@ -215,7 +224,7 @@ export default forwardRef((props, ref) => {
       {isLoadMore ? <ActivityIndicator style={{ position: "absolute", right: 5, bottom: 5 }} color={Colors.colorchinh} /> : null}
     </View>
   );
-})
+}
 
 const styles = StyleSheet.create({
   renderCateItem: { justifyContent: "center", alignItems: "center", paddingHorizontal: 5, marginLeft: 5, width: 150 },

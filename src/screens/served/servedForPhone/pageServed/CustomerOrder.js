@@ -260,18 +260,18 @@ export default (props) => {
                 setItemOrder(item)
                 setShowModal(!showModal)
             }}>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingVertical: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, backgroundColor: item.Sid == itemOrder.Sid ? "#EED6A7" : null }}>
-                    <TouchableOpacity onPress={() => {
-                        console.log('delete ', props, item);
-                        list.splice(index, 1)
-                        syncListProducts([...list])
-
-
-                    }}>
-                        <Icon name="trash-can-outline" size={40} color="gray" />
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingVertical: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, }}>
+                    <TouchableOpacity
+                        style={{ paddingHorizontal: 5 }}
+                        onPress={() => {
+                            console.log('delete ', props, item);
+                            list.splice(index, 1)
+                            syncListProducts([...list])
+                        }}>
+                        <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flex: 1, }}>
-                        <Text style={{ fontWeight: "bold" }}>{item.Name}</Text>
+                        <Text style={{ fontWeight: "bold", }}>{item.Name}</Text>
                         <Text style={{ fontSize: 12 }}>{currencyToString(item.Price)} x <Text style={{ color: "red", fontWeight: "bold" }}>{Math.round(item.Quantity * 1000) / 1000}</Text></Text>
                         {item.Description != "" ?
                             <TextTicker
@@ -288,9 +288,9 @@ export default (props) => {
                         null
                         :
                         <TouchableOpacity
-                            style={{ marginLeft: 10 }}
+                            style={{ marginRight: 5, borderWidth: 1, borderRadius: 50, padding: 3, borderColor: Colors.colorchinh }}
                             onPress={() => onClickTopping(item)}>
-                            <Icon name="access-point" size={40} color="orange" />
+                            <Icon name="puzzle" size={25} color={Colors.colorchinh} />
                         </TouchableOpacity>
                     }
                 </View>

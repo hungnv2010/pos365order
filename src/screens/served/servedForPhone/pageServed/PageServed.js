@@ -25,6 +25,12 @@ export default (props) => {
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
     const toolBarPhoneServedRef = useRef();
+    const [listPosition, setListPosition] = useState([
+        { name: "A", status: false },
+        { name: "B", status: false },
+        { name: "C", status: false },
+        { name: "D", status: false },
+    ])
 
     useEffect(() => {
         console.log(props, 'page served');
@@ -61,7 +67,6 @@ export default (props) => {
                 console.log("outputClickProductService results ", [results["0"]]);
                 results["0"]["Quantity"] = 1;
                 results["0"]["Sid"] = Date.now();
-                // outputListProducts([results["0"]])
                 toolBarPhoneServedRef.current.clickCheckInRef()
                 onCallBack([results["0"]], 2)
             }
@@ -137,6 +142,10 @@ export default (props) => {
         }
     }
 
+    const outputListPos = (listPos) => {
+        setListPosition(listPos)
+    }
+
     const onClickSendNotify = () => {
         setShowModal(false)
         signalRManager.sendMessageOrder(textNotify)
@@ -178,10 +187,13 @@ export default (props) => {
                         ref={setMenuRef}
                         button={<Text style={{ color: "white", fontWeight: "bold" }} onPress={showMenu}>{position}</Text>}
                     >
-                        <MenuItem onPress={() => hideMenu("A")}>A</MenuItem>
+                        {
+                            listPosition.map(item => <MenuItem key={item.name} onPress={() => hideMenu(item.name)}>{item.name} {item.status ? <Text style={{ color: Colors.colorchinh }}>*</Text> : null}</MenuItem>)
+                        }
+                        {/* <MenuItem onPress={() => hideMenu("A")}>A *</MenuItem>
                         <MenuItem onPress={() => hideMenu("B")}>B</MenuItem>
                         <MenuItem onPress={() => hideMenu("C")}>C</MenuItem>
-                        <MenuItem onPress={() => hideMenu("D")}>D</MenuItem>
+                        <MenuItem onPress={() => hideMenu("D")}>D</MenuItem> */}
                     </Menu>
                     <Icon style={{}} name="chevron-down" size={20} color="white" />
                 </TouchableOpacity>
@@ -205,7 +217,8 @@ export default (props) => {
                 <MenuConfirm
                     {...props}
                     Position={position}
-                    outputSendNotify={(type) => outputSendNotify(type)} />
+                    outputSendNotify={(type) => outputSendNotify(type)}
+                    outputListPos={outputListPos} />
             }
             <Modal
                 animationType="fade"

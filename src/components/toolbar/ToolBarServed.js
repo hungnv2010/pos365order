@@ -62,7 +62,7 @@ export default forwardRef((props, ref) => {
                         Order
                     </Subheading>
                 </View>
-                <View style={{ flex: 3, }}>
+                <View style={{ flex: 3, marginRight: 10 }}>
                     {isSearch ?
                         <View style={{ borderRadius: 3, borderColor: "#fff", borderWidth: 1, backgroundColor: "#fff", flexDirection: "row", marginRight: 2, height: "80%" }}>
                             <TextInput
@@ -77,17 +77,6 @@ export default forwardRef((props, ref) => {
                 </View>
 
                 <View style={{ flex: 2, alignItems: "center", flexDirection: "row", justifyContent: "space-around", }}>
-                    <TouchableOpacity style={styles.button} onPress={() => { props.outputClickProductService() }} >
-                        {
-                            showProductService ?
-                                <View style={{}}>
-                                    <Icon name="clock-outline" size={30} color="white" />
-                                </View>
-                                :
-                                null
-                        }
-                    </TouchableOpacity>
-
                     <TouchableOpacity style={styles.button} onPress={() => {
                         if (value != '') onChangeText('')
                         else setIsSearch(!isSearch)
@@ -96,6 +85,18 @@ export default forwardRef((props, ref) => {
                             <Ionicons name={!isSearch ? "md-search" : "md-close"} size={30} color="white" style={{}} />
                         </View>
                     </TouchableOpacity>
+                    {
+                        showProductService ?
+                            <TouchableOpacity style={styles.button} onPress={() => { props.outputClickProductService() }} >
+
+                                <View style={{}}>
+                                    <Icon name="clock-outline" size={30} color="white" />
+                                </View>
+
+                            </TouchableOpacity>
+                            :
+                            null
+                    }
                     <TouchableOpacity style={styles.button} onPress={() => { props.navigation.navigate('QRCode', { _onSelect: onCallBack }) }} >
                         <View style={{}}>
                             <Icon name="qrcode-scan" size={25} color="white" style={{}} />

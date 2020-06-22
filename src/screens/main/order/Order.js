@@ -63,9 +63,7 @@ export default (props) => {
     const [listRoom, setListRoom] = useState([])
 
     useEffect(() => {
-        console.log('props.already', props.already);
-
-        return () => {
+        return () => {            
             if (serverEvents) serverEvents.removeAllListeners()
         }
     }, [])

@@ -6,32 +6,39 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 
-const ProductsItemForPhone = (props) => {
+const ProductsItemForPhone = ({ item, index, onClickProduct, handleButtonDecrease, handleButtonIncrease, onChangeText }) => {
 
     const onClickItem = () => {
-        props.onClickProduct(props.item, props.index)
+        onClickProduct(item, index)
     }
 
     return (
-        <TouchableOpacity key={props.index} onPress={onClickItem} style={{ flex: 1, flexDirection: "row", backgroundColor: "white", paddingVertical: 5, marginBottom: 3, marginHorizontal: 5, borderRadius: 10 }}>
+        <TouchableOpacity key={index} onPress={onClickItem} style={{ flex: 1, flexDirection: "row", backgroundColor: item.Quantity > 0 ? "#EED6A7" : "white", paddingVertical: 5, marginBottom: 3, marginHorizontal: 5, borderRadius: 10 }}>
             <Image
                 style={{ height: 70, width: 70, borderRadius: 50 }}
-                source={JSON.parse(props.item.ProductImages).length > 0 ? { uri: JSON.parse(props.item.ProductImages)[0].ImageURL } : Images.default_food_image}
+                source={JSON.parse(item.ProductImages).length > 0 ? { uri: JSON.parse(item.ProductImages)[0].ImageURL } : Images.default_food_image}
             />
             <View style={{ flexDirection: "column", flex: 2, marginLeft: 10, justifyContent: "center" }}>
-                <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold" }}>{props.item.Name}</Text>
-                <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(props.item.Price)}<Text style={{ color: Colors.colorchinh }}>{props.item.LargeUnit != '' ? `/${props.item.LargeUnit}` : props.item.Unit != '' ? `/${props.item.Unit}` : ''}</Text></Text>
+                <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold" }}>{item.Name}</Text>
+                <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(item.Price)}<Text style={{ color: Colors.colorchinh }}>{item.LargeUnit != '' ? `/${item.LargeUnit}` : item.Unit != '' ? `/${item.Unit}` : ''}</Text></Text>
             </View>
             <View style={{ flex: 1.5, flexDirection: "row", alignItems: "center", marginRight: 25 }}>
 
-                {props.item.Quantity > 0 ?
+                {item.Quantity > 0 ?
                     <>
-                        <TouchableOpacity onPress={() => { props.handleButtonDecrease(props.item, props.index) }}>
-                            <Icon name="minus-circle" size={40} color={Colors.colorchinh} />
+                        <TouchableOpacity onPress={() => { handleButtonDecrease(item, index) }}>
+                            <Icon name="minus-box" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>
-                        <TextInput keyboardType="numeric" textAlign="center" style={{ width: 50, borderBottomWidth: .5 }}>{Math.round(props.item.Quantity * 1000) / 1000}</TextInput>
-                        <TouchableOpacity onPress={() => { props.handleButtonIncrease(props.item, props.index) }}>
-                            <Icon name="plus-circle" size={40} color={Colors.colorchinh} />
+                        <TextInput
+                            keyboardType="numeric"
+                            textAlign="center"
+                            onChangeText={(numb) => {
+                                onChangeText(numb, item)
+                            }}
+                            style={{ width: 50, borderBottomWidth: .5 }}>{Math.round(item.Quantity * 1000) / 1000}
+                        </TextInput>
+                        <TouchableOpacity onPress={() => { handleButtonIncrease(item, index) }}>
+                            <Icon name="plus-box" size={40} color={Colors.colorchinh} />
                         </TouchableOpacity>
                     </> :
                     null

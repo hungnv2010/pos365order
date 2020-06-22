@@ -2,9 +2,7 @@ import React from 'react';
 import { Image, View, StyleSheet, Text, TouchableOpacity, TextInput } from 'react-native';
 import { currencyToString } from '../../../../common/Utils';
 import { Colors, Images, Metrics } from '../../../../theme';
-import { useSelector } from 'react-redux';
-
-
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const ProductsItem = ({ item, index, getQuantityProduct, numColumns, onClickProduct }) => {
@@ -26,8 +24,9 @@ const ProductsItem = ({ item, index, getQuantityProduct, numColumns, onClickProd
                 </View>
             </View>
             {getQuantityProduct > 0 ?
-                <Image style={{ height: 30, width: 30, position: "absolute", top: 10, right: 10 }}
-                    source={Images.icon_checked} />
+                <Icon
+                    style={{ height: 30, width: 30, position: "absolute", top: 10, right: 10 }}
+                    name="check-circle" size={30} color={Colors.colorchinh} />
                 :
                 null}
         </TouchableOpacity>

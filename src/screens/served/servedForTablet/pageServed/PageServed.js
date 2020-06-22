@@ -22,6 +22,12 @@ export default (props) => {
     const [textNotify, setTextNotify] = useState("")
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
+    const [listPosition, setListPosition] = useState([
+        { name: "A", status: false },
+        { name: "B", status: false },
+        { name: "C", status: false },
+        { name: "D", status: false },
+    ])
 
 
 
@@ -66,6 +72,11 @@ export default (props) => {
         }
     }
 
+    const outputListPos = (listPos) => {
+        setListPosition(listPos)
+    }
+
+
     const onClickSendNotify = () => {
         setShowModal(false)
         signalRManager.sendMessageOrder(textNotify)
@@ -84,10 +95,9 @@ export default (props) => {
                         ref={setMenuRef}
                         button={<Text style={{ color: "white", fontWeight: "bold" }} onPress={showMenu}>{position}</Text>}
                     >
-                        <MenuItem onPress={() => hideMenu("A")}>A</MenuItem>
-                        <MenuItem onPress={() => hideMenu("B")}>B</MenuItem>
-                        <MenuItem onPress={() => hideMenu("C")}>C</MenuItem>
-                        <MenuItem onPress={() => hideMenu("D")}>D</MenuItem>
+                        {
+                            listPosition.map(item => <MenuItem key={item.name} onPress={() => hideMenu(item.name)}>{item.name} {item.status ? <Text style={{ color: Colors.colorchinh }}>*</Text> : null}</MenuItem>)
+                        }
                     </Menu>
                     <Icon style={{}} name="chevron-down" size={20} color="white" />
                 </TouchableOpacity>
@@ -101,9 +111,13 @@ export default (props) => {
                 </TouchableOpacity>
             </View>
             {tab == 1 ?
-                <CustomerOrder Position={position} {...props} outputSendNotify={outputSendNotify} />
+                <CustomerOrder
+                    Position={position} {...props}
+                    outputSendNotify={outputSendNotify} />
                 :
-                <MenuConfirm Position={position} {...props} outputSendNotify={outputSendNotify} />
+                <MenuConfirm Position={position} {...props}
+                    outputSendNotify={outputSendNotify}
+                    outputListPos={outputListPos} />
             }
             <Modal
                 animationType="fade"

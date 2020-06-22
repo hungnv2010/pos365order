@@ -28,20 +28,31 @@ export default (props) => {
     const [toastDescription, setToastDescription] = useState("")
     let provisional = useRef();
     let serverEvent = null;
+    let listPos = [
+        { name: "A", status: false },
+        { name: "B", status: false },
+        { name: "C", status: false },
+        { name: "D", status: false },
+    ]
 
     useLayoutEffect(() => {
         const init = async () => {
-            const row_key = `${props.route.params.room.Id}_${props.Position}`
-            serverEvent = await realmStore.queryServerEvents().then(res => res.filtered(`RowKey == '${row_key}'`))
-            console.log('serverEvent', JSON.stringify(serverEvent) == "{}");
-
-            if (JSON.stringify(serverEvent) != "{}") {
-                console.log("init: ", JSON.stringify(serverEvent));
-                setJsonContent(JSON.parse(serverEvent[0].JsonContent))
-                serverEvent.addListener((collection, changes) => {
-                    setJsonContent(JSON.parse(serverEvent[0].JsonContent))
-                })
-            }
+            serverEvent = await realmStore.queryServerEvents()
+            listPos.forEach((item, index) => {
+                const row_key = `${props.route.params.room.Id}_${item.name}`
+                let serverEventPos = serverEvent.filtered(`RowKey == '${row_key}'`)
+                if (JSON.stringify(serverEventPos) != "{}" && JSON.parse(serverEventPos[0].JsonContent).OrderDetails.length > 0) {
+                    item.status = true
+                    if (item.name == props.Position) {
+                        serverEvent = serverEventPos
+                        setJsonContent(JSON.parse(serverEvent[0].JsonContent))
+                        serverEvent.addListener((collection, changes) => {
+                            setJsonContent(JSON.parse(serverEvent[0].JsonContent))
+                        })
+                    }
+                }
+            })
+            props.outputListPos(listPos)
             provisional.current = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
             console.log('provisional ', provisional.current);
         }
@@ -68,17 +79,6 @@ export default (props) => {
         _menu.show();
     };
 
-    const getTotalPrice = () => {
-        let totalPrice = 0;
-        let disCount = 0;
-        console.log('getTotalPrice', jsonContent.OrderDetails);
-        if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
-            jsonContent.OrderDetails.forEach(element => {
-                totalPrice += element.Price * element.Quantity
-            });
-        }
-        return [totalPrice, disCount]
-    }
 
     const changTable = () => {
         if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
@@ -194,7 +194,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                     <Text style={{ fontWeight: "bold" }}>{I18n.t('tong_thanh_tien')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice()[0])}đ</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(jsonContent.Total)}đ</Text>
                         {expand ?
                             <Icon style={{}} name="chevron-down" size={30} color="black" />
                             :
@@ -206,18 +206,18 @@ export default (props) => {
                     <>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text>{I18n.t('tong_chiet_khau')}</Text>
-                            <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>- {currencyToString(getTotalPrice()[1])}đ</Text>
+                            <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>- {currencyToString(jsonContent)}đ</Text>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                            <Text>VAT (%)</Text>
+                            <Text>VAT ({jsonContent.VATRates} %)</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>0đ</Text>
+                                <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>{jsonContent.VAT ? jsonContent.VAT : 0}đ</Text>
                             </View>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_phai_tra')}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc", marginRight: 30 }}>{currencyToString(getTotalPrice()[0] - getTotalPrice()[1])}đ</Text>
+                                <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc", marginRight: 30 }}>{currencyToString(jsonContent.TotalPayment)}đ</Text>
                             </View>
                         </View>
                     </>

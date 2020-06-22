@@ -31,17 +31,23 @@ const Served = (props) => {
     const outputListProducts = (newList, type) => {
         console.log(newList, 'newList start');
         newList = newList.filter(item => item.Quantity > 0)
-        if (type === 0) newList = JSON.parse(JSON.stringify(newList))
-        if (type === 2) {
-            newList.forEach((element, index) => {
-                listProducts.forEach(item => {
-                    if (element.Id == item.Id && !item.SplitForSalesOrder) {
-                        item.Quantity += element.Quantity
-                        newList.splice(index, 1)
-                    }
-                })
-            });
-            newList = [...newList, ...listProducts]
+        switch (type) {
+            case 0:
+                break;
+            case 2:
+                newList.forEach((element, index) => {
+                    listProducts.forEach(item => {
+                        if (element.Id == item.Id && !item.SplitForSalesOrder) {
+                            item.Quantity += element.Quantity
+                            newList.splice(index, 1)
+                        }
+                    })
+                });
+                newList = [...newList, ...listProducts]
+                break;
+
+            default:
+                break;
         }
         setListProducts(newList)
         console.log(newList, 'newList');
@@ -64,7 +70,6 @@ const Served = (props) => {
 
     const outputListTopping = (listTopping) => {
         console.log('outputListTopping', listTopping);
-
         setListTopping(listTopping)
     }
 
@@ -121,7 +126,7 @@ const Served = (props) => {
                         <View style={itemOrder.Id ? { flex: 1 } : { width: 0, height: 0 }}>
                             <Topping
                                 {...props}
-                                numColumns={2}
+                                numColumns={orientaition == Constant.LANDSCAPE ? 2 : 1}
                                 position={position}
                                 itemOrder={meMoItemOrder}
                                 onClose={() => { setItemOrder({}) }}
