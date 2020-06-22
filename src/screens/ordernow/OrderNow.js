@@ -103,9 +103,7 @@ export default (props) => {
 
 
     const clickRightIcon = async () => {
-        dialogManager.showLoading()
-        await dataManager.syncAllDatas()
-        dialogManager.hiddenLoading()
+        dialogManager.showPopupOneButton("Chức năng đang được phát triển.", I18n.t('thong_bao'))
     }
 
     const removeItem = (item) => {
@@ -136,9 +134,9 @@ export default (props) => {
                 <TouchableOpacity
                     onPress={() => onClickOrder(item)}
                     key={item.Id}
-                    style={{ borderRadius: 5, margin: numberColumn == 3 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, backgroundColor: colors.colorLightBlue, justifyContent: "center", alignItems: "center" }}>
+                    style={{ borderRadius: 5, margin: numberColumn == 3 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, backgroundColor: "gray", justifyContent: "center", alignItems: "center" }}>
                     <Icon onPress={() => removeItem(item)} name="close-circle-outline" style={{ position: "absolute", top: 0, right: 0, paddingLeft: 5, paddingBottom: 5 }} size={30} color={"#fff"} />
-                    <Text style={{ textAlign: "center", color: "#fff" }}>{item.Name}</Text>
+                    <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#fff" }}>{item.Name}</Text>
                 </TouchableOpacity>
             )}
             numColumns={numberColumn}
@@ -152,9 +150,9 @@ export default (props) => {
             <MainToolBar
                 navigation={props.navigation}
                 title={I18n.t('nhan_vien_order')}
-                rightIcon="refresh"
-                clickRightIcon={clickRightIcon} />
-            {/* <Order {...props} already={already}></Order> */}
+                rightIcon="plus"
+                clickRightIcon={clickRightIcon}
+            />
             {renderList()}
         </View>
     );
