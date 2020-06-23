@@ -14,64 +14,8 @@ import { NavigationEvents } from 'react-navigation';
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-// const numberColumn = 3;
-
-// const listOrder = [
-// //     {
-// //     Id: 1,
-// //     Name: "Bàn An"
-// // },
-// // {
-// //     Id: 2,
-// //     Name: "Bàn Huy"
-// // },
-// // {
-// //     Id: 3,
-// //     Name: "Bàn Hùng"
-// // },
-// // {
-// //     Id: 4,
-// //     Name: "Bàn Bắc"
-// // },
-// // {
-// //     Id: 5,
-// //     Name: "Bàn Tùng"
-// // },
-// // {
-// //     Id: 6,
-// //     Name: "Bàn Anh"
-// // },
-// // {
-// //     Id: 7,
-// //     Name: "Bàn An"
-// // },
-// // {
-// //     Id: 8,
-// //     Name: "Bàn Huy"
-// // },
-// // {
-// //     Id: 9,
-// //     Name: "Bàn Hùng"
-// // },
-// // {
-// //     Id: 10,
-// //     Name: "Bàn Bắc"
-// // },
-// // {
-// //     Id: 11,
-// //     Name: "Bàn Tùng"
-// // },
-// // {
-// //     Id: 12,
-// //     Name: "Bàn Anh"
-// // }
-// ]
-
-
 export default (props) => {
 
-
-    const [already, setAlready] = useState(false)
     const [listOrder, setListOrder] = useState([])
     const { deviceType } = useSelector(state => {
         console.log("useSelector state ", state);
@@ -83,7 +27,7 @@ export default (props) => {
 
         console.log("dataManager.dataChoosing ", dataManager.dataChoosing);
         let numberColumn = (state.Common.orientaition == Constant.LANDSCAPE) ? 5 : 3
-        // if (state.Common.deviceType == Constant.TABLET) numberColumn++
+        if (state.Common.deviceType == Constant.TABLET) numberColumn++
         return numberColumn
     });
 
@@ -101,14 +45,13 @@ export default (props) => {
         }, [])
     );
 
-
     const clickRightIcon = async () => {
-        dialogManager.showPopupOneButton("Chức năng đang được phát triển.", I18n.t('thong_bao'))
+        dialogManager.showPopupOneButton(I18n.t("chuc_nang_dang_duoc_phat_trien"), I18n.t('thong_bao'))
     }
 
     const removeItem = (item) => {
         console.log("removeItem ", item.Id);
-        dialogManager.showPopupTwoButton("Bạn có chắc chắn muốn xoá bàn này?", I18n.t('thong_bao'), res => {
+        dialogManager.showPopupTwoButton(I18n.t("ban_co_chac_chan_muon_xoa_ban_nay"), I18n.t('thong_bao'), res => {
             if (res == 1) {
                 let tempListPosition = dataManager.dataChoosing.filter(el => el.Id != item.Id)
                 dataManager.dataChoosing = tempListPosition;
@@ -134,9 +77,9 @@ export default (props) => {
                 <TouchableOpacity
                     onPress={() => onClickOrder(item)}
                     key={item.Id}
-                    style={{ borderRadius: 5, margin: numberColumn == 3 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, backgroundColor: "gray", justifyContent: "center", alignItems: "center" }}>
-                    <Icon onPress={() => removeItem(item)} name="close-circle-outline" style={{ position: "absolute", top: 0, right: 0, paddingLeft: 5, paddingBottom: 5 }} size={30} color={"#fff"} />
-                    <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#fff" }}>{item.Name}</Text>
+                    style={{ borderRadius: 5, margin: numberColumn == 3 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center" }}>
+                    <Icon onPress={() => removeItem(item)} name="close-circle-outline" style={{ position: "absolute", top: 0, right: 0, paddingLeft: 5, paddingBottom: 5 }} size={30} color={"#808080"} />
+                    <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000" }}>{item.Name}</Text>
                 </TouchableOpacity>
             )}
             numColumns={numberColumn}

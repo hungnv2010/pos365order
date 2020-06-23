@@ -15,6 +15,7 @@ export default {
   ban_hay_chon_mon_an_truoc: "Bạn hãy chọn món ăn trước",
   ban_khong_co_quyen_dieu_chinh_mat_hang_thoi_gian: "Bạn không có quyền điều chỉnh mặt hàng thời gian",
   ban_co_chac_muon_xoa_toan_bo_mat_hang_da_chon: 'Bạn có chắc muốn xóa toàn bộ mặt hàng đã chọn?',
+  ban_co_chac_chan_muon_xoa_ban_nay: "Bạn có chắc chắn muốn xoá bàn này?",
 
   // TODO: C
   chuyen_thiet_bi_cai_dat_otp: 'Chuyển thiết bị cài đặt Smart OTP',
@@ -33,6 +34,7 @@ export default {
   chuyen: "Chuyển",
   chon_vi_tri: "Chọn vị trí",
   chuyen_ban:"Chuyển bàn",
+  chuc_nang_dang_duoc_phat_trien: "Chức năng đang được phát triển.",
 
   // TODO: D
   dang_dung: "Đang dùng",
