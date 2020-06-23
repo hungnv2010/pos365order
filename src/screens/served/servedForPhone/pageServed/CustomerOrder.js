@@ -84,7 +84,7 @@ export default (props) => {
             }
         })
         if (!exist) {
-            listPosition.push({ key: props.Position, list: [] })
+            // listPosition.push({ key: props.Position, list: [] })
             syncListProducts([])
         }
     }, [props.Position, listPosition])
@@ -213,12 +213,8 @@ export default (props) => {
                         }
 
                     })
-                    console.log("dellAll hasData ", hasData);
-                    console.log("dellAll dataManager.dataChoosing " + JSON.stringify(dataManager.dataChoosing));
                     if (!hasData) {
                         dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
-                        console.log("dellAll dataManager.dataChoosing ", dataManager.dataChoosing);
-
                         dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
                     }
                 }
