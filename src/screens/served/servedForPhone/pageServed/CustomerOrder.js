@@ -14,6 +14,7 @@ import TextTicker from 'react-native-text-ticker';
 import { currencyToString } from '../../../../common/Utils'
 import I18n from "../../../../common/language/i18n"
 import { Snackbar } from 'react-native-paper';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 export default (props) => {
@@ -27,6 +28,7 @@ export default (props) => {
     const [itemOrder, setItemOrder] = useState({})
     const [listTopping, setListTopping] = useState([])
 
+    const dispatch = useDispatch();
 
 
     useEffect(() => {
@@ -199,25 +201,41 @@ export default (props) => {
             dialogManager.showPopupTwoButton(I18n.t('ban_co_chac_muon_xoa_toan_bo_mat_hang_da_chon'), 'Thông báo', (value) => {
                 if (value == 1) {
                     syncListProducts([])
+                    let hasData = true
                     dataManager.dataChoosing.forEach(item => {
                         if (item.Id == props.route.params.room.Id) {
                             item.data = item.data.filter(it => it.key != props.Position)
+                        }
+                        if (item.data.length == 0) {
+                            hasData = false
                         }
                     })
                 }
             })
         }
+        if (!hasData) {
+            dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
+            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+        }
     }
 
     const removeItem = (item, index) => {
         console.log('delete');
+        let hasData = true
         list.splice(index, 1)
-        if (list.length == 0) {
-            dataManager.dataChoosing.forEach(item => {
-                if (item.Id == props.route.params.room.Id) {
+        dataManager.dataChoosing.forEach(item => {
+            if (item.Id == props.route.params.room.Id) {
+                if (list.length == 0) {
                     item.data = item.data.filter(it => it.key != props.Position)
                 }
-            })
+            }
+            if (item.data.length == 0) {
+                hasData = false
+            }
+        })
+        if (!hasData) {
+            dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
+            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
         }
         syncListProducts([...list])
     }
@@ -480,7 +498,7 @@ const PopupDetail = (props) => {
                             numberOfLines={3}
                             multiline={true}
                             value={itemOrder.Description}
-                            style={{ height: 50, flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC" , padding: 5}}
+                            style={{ height: 50, flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC", padding: 5 }}
                             placeholder={I18n.t('nhap_ghi_chu')} />
                     </View>
                 </View>

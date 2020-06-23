@@ -82,9 +82,8 @@ export default (props) => {
     useFocusEffect(
         React.useCallback(() => {
             console.log("useFocusEffect Main ", dataManager.dataChoosing);
-            let dataTable = dataManager.dataChoosing.filter(item => item.data.length > 0)
-            setListOrder(() => dataTable.map(item => item.Id))
-            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataTable.length })
+            setListOrder(() => dataManager.dataChoosing.map(item => item.Id))
+            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
         }, [])
     );
 
