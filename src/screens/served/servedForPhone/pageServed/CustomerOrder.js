@@ -276,7 +276,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingVertical: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, }}>
                     <TouchableOpacity
                         style={{ paddingHorizontal: 5 }}
-                        onPress={() => removeItem}>
+                        onPress={removeItem}>
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flex: 1, }}>
