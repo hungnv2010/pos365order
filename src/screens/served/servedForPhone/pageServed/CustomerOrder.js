@@ -209,6 +209,19 @@ export default (props) => {
         }
     }
 
+    const removeItem = (item, index) => {
+        console.log('delete');
+        list.splice(index, 1)
+        if (list.length == 0) {
+            dataManager.dataChoosing.forEach(item => {
+                if (item.Id == props.route.params.room.Id) {
+                    item.data = item.data.filter(it => it.key != props.Position)
+                }
+            })
+        }
+        syncListProducts([...list])
+    }
+
     const onCallBack = (data) => {
         console.log('data', data);
         setListTopping(data)
@@ -263,11 +276,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingVertical: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, }}>
                     <TouchableOpacity
                         style={{ paddingHorizontal: 5 }}
-                        onPress={() => {
-                            console.log('delete ', props, item);
-                            list.splice(index, 1)
-                            syncListProducts([...list])
-                        }}>
+                        onPress={() => removeItem}>
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flex: 1, }}>
