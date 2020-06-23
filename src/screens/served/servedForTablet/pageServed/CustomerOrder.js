@@ -14,7 +14,6 @@ import TextTicker from 'react-native-text-ticker';
 import { currencyToString } from '../../../../common/Utils';
 import I18n from "../../../../common/language/i18n";
 import { Snackbar } from 'react-native-paper';
-import { useSelector } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -212,13 +211,14 @@ export default (props) => {
                             hasData = false
                         }
                     })
+                    if (!hasData) {
+                        dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
+                        dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+                    }
                 }
             })
         }
-        if (!hasData) {
-            dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
-            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
-        }
+
     }
 
     const removeItem = (item, index) => {

@@ -84,7 +84,7 @@ export default (props) => {
             }
         })
         if (!exist) {
-            listPosition.push({ key: props.Position, list: [] })
+            // listPosition.push({ key: props.Position, list: [] })
             syncListProducts([])
         }
     }, [props.Position, listPosition])
@@ -210,13 +210,14 @@ export default (props) => {
                             hasData = false
                         }
                     })
+                    if (!hasData) {
+                        dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
+                        dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+                    }
                 }
             })
         }
-        if (!hasData) {
-            dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
-            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
-        }
+
     }
 
     const removeItem = (item, index) => {
