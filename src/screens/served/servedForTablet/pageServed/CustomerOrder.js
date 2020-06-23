@@ -95,7 +95,7 @@ export default (props) => {
             }
         })
         if (!exist) {
-            listPosition.push({ key: props.Position, list: [] })
+            // listPosition.push({ key: props.Position, list: [] })/I
             syncListProducts([])
         }
     }, [props.Position, listPosition])
@@ -210,6 +210,19 @@ export default (props) => {
         }
     }
 
+    const removeItem = (item, index) => {
+        console.log('delete');
+        list.splice(index, 1)
+        if (list.length == 0) {
+            dataManager.dataChoosing.forEach(item => {
+                if (item.Id == props.route.params.room.Id) {
+                    item.data = item.data.filter(it => it.key != props.Position)
+                }
+            })
+        }
+        syncListProducts([...list])
+    }
+
     const onClickTopping = (item) => {
         props.outputItemOrder(item)
     }
@@ -268,11 +281,7 @@ export default (props) => {
                 }}>
                     <TouchableOpacity
                         style={{ marginRight: 5 }}
-                        onPress={() => {
-                            console.log('delete');
-                            list.splice(index, 1)
-                            syncListProducts([...list])
-                        }}>
+                        onPress={removeItem}>
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flexDirection: "column", flex: 1, }}>
