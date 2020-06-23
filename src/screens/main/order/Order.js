@@ -294,7 +294,7 @@ export default (props) => {
                 </ScrollView>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 12, paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: "red" }}>
-                <View style={{ flexDirection: "row", flex: 1 }}>
+                <View style={{ flexDirection: "row"}}>
                     <Image source={Images.icon_transfer_money} style={{ width: 20, height: 20 }}></Image>
                     <Text>{currencyToString(valueAll.cash)}</Text>
                 </View>

@@ -14,7 +14,6 @@ import TextTicker from 'react-native-text-ticker';
 import { currencyToString } from '../../../../common/Utils';
 import I18n from "../../../../common/language/i18n";
 import { Snackbar } from 'react-native-paper';
-import { useSelector } from 'react-redux';
 import { useSelector, useDispatch } from 'react-redux';
 
 
@@ -147,7 +146,7 @@ export default (props) => {
             }
         })
         if (!exist) {
-            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, Name: props.route.params.room.Name, data: listPosition })
+            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, ProductId: props.route.params.room.ProductId, Name: props.route.params.room.Name, data: listPosition })
         }
         console.log(dataManager.dataChoosing, 'savePosition');
     }

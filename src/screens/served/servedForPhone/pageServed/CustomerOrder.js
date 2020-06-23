@@ -142,7 +142,7 @@ export default (props) => {
             }
         })
         if (!exist) {
-            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, Name: props.route.params.room.Name, data: listPosition })
+            dataManager.dataChoosing.push({ Id: props.route.params.room.Id, ProductId: props.route.params.room.ProductId, Name: props.route.params.room.Name, data: listPosition })
         }
         console.log(dataManager.dataChoosing, 'savePosition');
     }
@@ -204,19 +204,27 @@ export default (props) => {
                     let hasData = true
                     dataManager.dataChoosing.forEach(item => {
                         if (item.Id == props.route.params.room.Id) {
+                            console.log("dellAll ok == ", item.data.length, props.Position);
                             item.data = item.data.filter(it => it.key != props.Position)
+                            console.log("dellAll ok ", item.data.length, props.Position);
+                            if (item.data.length == 0) {
+                                hasData = false
+                            }
                         }
-                        if (item.data.length == 0) {
-                            hasData = false
-                        }
+
                     })
+                    console.log("dellAll hasData ", hasData);
+                    console.log("dellAll dataManager.dataChoosing " + JSON.stringify(dataManager.dataChoosing));
+                    if (!hasData) {
+                        dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
+                        console.log("dellAll dataManager.dataChoosing ", dataManager.dataChoosing);
+
+                        dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+                    }
                 }
             })
         }
-        if (!hasData) {
-            dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
-            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
-        }
+
     }
 
     const removeItem = (item, index) => {
