@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import { Image, View, Text, FlatList, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground } from 'react-native';
+import { Image, View, Text, FlatList, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground, Platform } from 'react-native';
 import { Colors, Images, Metrics } from '../../../../theme';
 import Menu from 'react-native-material-menu';
 import dataManager from '../../../../data/DataManager';
@@ -389,6 +389,7 @@ export default (props) => {
                             padding: 0,
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                             width: Metrics.screenWidth * 0.8,
+                            marginBottom: Platform.OS == 'ios' ? Metrics.screenHeight / 10 : 0
                         }}>
                             <PopupDetail
                                 onClickTopping={() => onClickTopping(itemOrder)}
@@ -436,7 +437,7 @@ const PopupDetail = (props) => {
 
 
     return (
-        <View>
+        <View >
             <View style={{ backgroundColor: Colors.colorchinh, borderTopRightRadius: 4, borderTopLeftRadius: 4, }}>
                 <Text style={{ margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, color: "#fff" }}>{itemOrder.Name}</Text>
             </View>
@@ -452,19 +453,19 @@ const PopupDetail = (props) => {
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
-                            itemOrder.Quantity++
-                            setItemOrder({ ...itemOrder })
-                        }}>
-                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>+</Text>
-                        </TouchableOpacity>
-                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
-                        <TouchableOpacity onPress={() => {
                             if (itemOrder.Quantity > 0) {
                                 itemOrder.Quantity--
                                 setItemOrder({ ...itemOrder })
                             }
                         }}>
-                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>-</Text>
+                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 17, paddingVertical: 10, borderRadius: 5 }}>-</Text>
+                        </TouchableOpacity>
+                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
+                        <TouchableOpacity onPress={() => {
+                            itemOrder.Quantity++
+                            setItemOrder({ ...itemOrder })
+                        }}>
+                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>+</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -479,7 +480,7 @@ const PopupDetail = (props) => {
                             numberOfLines={3}
                             multiline={true}
                             value={itemOrder.Description}
-                            style={{ flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC" }}
+                            style={{ height: 50, flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC" , padding: 5}}
                             placeholder={I18n.t('nhap_ghi_chu')} />
                     </View>
                 </View>

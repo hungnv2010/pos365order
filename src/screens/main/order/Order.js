@@ -228,7 +228,7 @@ export default (props) => {
             (<View style={{ width: widthRoom - 5 }}></View>)
             :
             (<TouchableOpacity onPress={() => { onItemPress(item) }} key={item.Id}
-                style={[styles.room, { width: widthRoom - 5, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white' }]}>
+                style={[styles.room, { width: widthRoom - 5, height: widthRoom, backgroundColor: item.IsActive ? colors.colorLightBlue : 'white', borderColor: listOrder.includes(item.Id) ? colors.colorchinh : "#fff", borderWidth: listOrder.includes(item.Id) ? 1 : 0 }]}>
                 <View style={{ flex: 1, flexDirection: 'column', justifyContent: "center", alignItems: "center" }}>
                     <View style={{ alignItems: "center", padding: 0, flex: 1 }}>
                         <View style={{ justifyContent: "center", alignItems: "center", flex: 1, height: "90%" }}>
@@ -252,12 +252,12 @@ export default (props) => {
                             : null}
                         <Text style={{ paddingTop: item.IsActive ? 10 : 0, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sắn sàng"}</Text>
                     </View>
-                    {
+                    {/* {
                         listOrder.includes(item.Id) ?
-                            <Icon style={{ position: "absolute", right: 3, top: 3 }} name="pencil" size={10} color="black" />
+                            <Icon style={{ position: "absolute", right: 3, top: 3 }} name="pencil" size={20} color="black" />
                             :
                             null
-                    }
+                    } */}
                 </View>
             </TouchableOpacity>
             );
