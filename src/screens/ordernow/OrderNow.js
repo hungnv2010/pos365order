@@ -1,12 +1,12 @@
 import React, { useEffect, useState, useRef, createRef } from 'react';
-import { View, Text, FlatList, Dimensions, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, Dimensions, TouchableOpacity, ImageBackground } from 'react-native';
 import dataManager from '../../data/DataManager'
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
 import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
 import realmStore from '../../data/realm/RealmStore';
 import MainToolBar from '../main/MainToolBar';
-import { Metrics } from '../../theme';
+import { Metrics, Images } from '../../theme';
 import { useSelector, useDispatch } from 'react-redux';
 import { Constant } from '../../common/Constant';
 import colors from '../../theme/Colors';
@@ -77,7 +77,7 @@ export default (props) => {
                 <TouchableOpacity
                     onPress={() => onClickOrder(item)}
                     key={item.Id}
-                    style={{ borderRadius: 5, margin: numberColumn == 3 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center" }}>
+                    style={{ borderRadius: 5, margin: numberColumn == 3 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#EED6A7" }}>
                     <Icon onPress={() => removeItem(item)} name="close-circle-outline" style={{ position: "absolute", top: 0, right: 0, paddingLeft: 5, paddingBottom: 5 }} size={30} color={"#808080"} />
                     <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000" }}>{item.Name}</Text>
                 </TouchableOpacity>
@@ -89,14 +89,19 @@ export default (props) => {
     }
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <MainToolBar
                 navigation={props.navigation}
                 title={I18n.t('nhan_vien_order')}
                 rightIcon="plus"
                 clickRightIcon={clickRightIcon}
             />
-            {renderList()}
+            {listOrder.length > 0 ?
+                renderList()
+                :
+                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
+                </ImageBackground>
+            }
         </View>
     );
 };

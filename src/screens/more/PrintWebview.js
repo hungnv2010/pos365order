@@ -210,6 +210,8 @@ import AutoHeightWebView from 'react-native-autoheight-webview/autoHeightWebView
 import ModulePrint from './ModulePrint';
 import printManager from './PrintManager';
 import ViewPrint from './ViewPrint';
+import I18n from '../../common/language/i18n'
+
 const FOOTER_HEIGHT = 21;
 const PADDING = 16;
 const BOTTOM_MARGIN_FOR_WATERMARK = FOOTER_HEIGHT * PADDING;
@@ -314,7 +316,7 @@ export default forwardRef((props, ref) => {
         console.log("do something with ", uri);
         setUri(uri);
     }
-    
+
     const viewPrintRef = useRef();
 
     return (

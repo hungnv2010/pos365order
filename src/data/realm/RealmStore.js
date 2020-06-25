@@ -257,7 +257,7 @@ const ToppingsSchema = {
 const databaseOption = {
     path: 'Pos365Boss.realm',
     schema: [ServerEventSchema, RoomSchema, RoomGroupSchema, ProductSchema, CategoriesSchema, ToppingsSchema],
-    schemaVersion: 20
+    schemaVersion: 22
 }
 
 const realm = new Realm(databaseOption);

@@ -58,8 +58,8 @@ export default (props) => {
         return numberColumn
     });
 
-    let rooms = null
-    let roomGroups = null
+    let rooms = []
+    let roomGroups = []
     let serverEvents = null
     const [datas, setData] = useState([])
     const [valueAll, setValueAll] = useState({})
@@ -206,9 +206,6 @@ export default (props) => {
         refScroll.scrollTo({ y: 500 })
     }
 
-    let indexGroup = 0;
-    let listNode = [];
-
     const onItemPress = ({ Id, Name, ProductId }) => {
         if (props.route.params && props.route.params.Name) {
             toRoomId.current = { Id: Id, Name: Name, ProductId: ProductId }
@@ -282,7 +279,6 @@ export default (props) => {
                                 onPress={() => {
                                     setIndexRoom(index)
                                     console.log("_nodes.size ", _nodes.size);
-                                    console.log("listNode ", listNode);
                                     const node = _nodes.get(data.Id);
                                     console.log("node ", node);
                                     refScroll.scrollTo({ y: node })
@@ -294,18 +290,18 @@ export default (props) => {
                 </ScrollView>
             </View>
             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 12, paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: "red" }}>
-                <View style={{ flexDirection: "row"}}>
+                <View style={{ flexDirection: "row", flex: 1.2, justifyContent: "flex-start" }}>
                     <Image source={Images.icon_transfer_money} style={{ width: 20, height: 20 }}></Image>
-                    <Text>{currencyToString(valueAll.cash)}</Text>
+                    <Text style={{ marginTop: 2 }}>{currencyToString(valueAll.cash)}</Text>
                 </View>
-                <View style={{ flexDirection: "row", flex: 1, justifyContent: "space-around" }}>
-                    <View style={{ backgroundColor: colors.colorLightBlue, justifyContent: "center", borderRadius: 5 }}>
+                <View style={{ flexDirection: "row", flex: 1, justifyContent: "center" }}>
+                    <View style={{ backgroundColor: colors.colorLightBlue, justifyContent: "center", borderRadius: 5, marginRight: 5 }}>
                         <Text style={{ color: "white", fontSize: 12, paddingHorizontal: 2 }}>{valueAll.use}/{valueAll.room}</Text>
                     </View>
                     <Text>{I18n.t('dang_dung')}</Text>
                 </View>
-                <View style={{ flexDirection: "row", flex: 1, justifyContent: "space-around" }}>
-                    <View style={{ backgroundColor: "white", height: 20, width: 20, borderRadius: 5 }}></View>
+                <View style={{ flexDirection: "row", flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
+                    <View style={{ backgroundColor: "white", height: 20, width: 20, borderRadius: 5, marginRight: 5 }}></View>
                     <Text>{I18n.t('dang_trong')}</Text>
                 </View>
             </View>
@@ -323,7 +319,6 @@ export default (props) => {
                                                 if (data.isGroup) {
                                                     console.log("footerY ", footerY);
                                                     _nodes.set(data.Id, footerY)
-                                                    listNode.push({ Id: data.Id, footerY: footerY })
                                                 }
                                             }}
                                             style={{ flexDirection: "row" }}>

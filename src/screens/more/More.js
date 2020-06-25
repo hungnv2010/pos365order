@@ -3,7 +3,7 @@ import { Image, View, StyleSheet, TouchableWithoutFeedback, Text, TouchableOpaci
 import { Images, Colors, Metrics } from '../../theme';
 import { setFileLuuDuLieu, getFileDuLieuString } from '../../data/fileStore/FileStorage';
 import { Constant } from '../../common/Constant';
-import realmStore from '../../data/realm/RealmStore';
+import realmStore, { SchemaName } from '../../data/realm/RealmStore';
 import I18n from '../../common/language/i18n'
 import { Switch, Snackbar } from 'react-native-paper';
 import dialogManager from '../../components/dialog/DialogManager';
@@ -12,6 +12,7 @@ import { ApiPath } from '../../data/services/ApiPath';
 import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../theme/Colors';
+import dataManager from '../../data/DataManager';
 const { Print } = NativeModules;
 const IP_DEFAULT = "192.168.99.";
 
@@ -69,17 +70,9 @@ const HeaderComponent = (props) => {
                 console.log('HeaderComponent branch', JSON.parse(branch));
                 setBranch(JSON.parse(branch))
             } else {
-                setBranch(data.Branchs[0])
+                if (data.Branchs.length > 0)
+                    setBranch(data.Branchs[0])
             }
-
-            // let CurrentBranch = data.Branchs.filter(item => item.Id == data.CurrentBranchId)
-            // console.log("CurrentBranch ", CurrentBranch);
-            // if (CurrentBranch.length == 1) {
-            //     CurrentBranch = CurrentBranch[0]
-            //     setBranch(CurrentBranch)
-            // } else if (CurrentBranch.length > 1) {
-
-            // }
         }
         getVendorSession()
     }, [])
@@ -90,7 +83,6 @@ const HeaderComponent = (props) => {
 
     const onClickBranh = () => {
         console.log("onClickBranh ", vendorSession);
-
         if (vendorSession.Branchs.length > 1) {
             setShowModal(true)
         } else {
@@ -101,13 +93,26 @@ const HeaderComponent = (props) => {
     const onClickItemBranch = (item) => {
         console.log("onClickItemBranch ", item);
         setShowModal(false)
+        if (Branch.Id == item.Id) {
+            return;
+        }
         let params = { branchId: item.Id }
         dialogManager.showLoading();
-        new HTTPService().setPath(ApiPath.CHANGE_BRANCH).POST(params).then((res) => {
+        new HTTPService().setPath(ApiPath.CHANGE_BRANCH).POST(params).then(async (res) => {
             console.log("onClickItemBranch res ", res);
             setFileLuuDuLieu(Constant.CURRENT_BRANCH, JSON.stringify(item));
             setBranch(item)
-            dialogManager.hiddenLoading()
+            dataManager.dataChoosing = [];
+            await realmStore.deleteAll(),
+                dialogManager.hiddenLoading()
+            props.navigation.dispatch(
+                CommonActions.reset({
+                    index: 0,
+                    routes: [
+                        { name: 'Home' },
+                    ],
+                })
+            )
         }).catch((e) => {
             console.log("onClickItemBranch err ", e);
             dialogManager.hiddenLoading()
@@ -115,7 +120,8 @@ const HeaderComponent = (props) => {
     }
 
     const onClickLogOut = () => {
-        // realmStore.deleteAll()
+        realmStore.deleteAll()
+        dataManager.dataChoosing = [];
         setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
         setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
         // props.navigation.navigate('Login', { param: "logout" })
@@ -151,9 +157,9 @@ const HeaderComponent = (props) => {
                     <Text style={{ color: "#fff" }}>{Branch.Name && Branch.Name != "" ? Branch.Name : I18n.t('chi_nhanh')}</Text>
                 </TouchableOpacity>
             </View>
-            <TouchableOpacity onPress={() => onClickLogOut()}>
+            {/* <TouchableOpacity onPress={() => onClickLogOut()}>
                 <Text style={{ textDecorationLine: "underline", color: "#fff" }}>{I18n.t('logout')}</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
             <Modal
                 animationType="fade"
                 transparent={true}
@@ -261,7 +267,7 @@ const ContentComponent = (props) => {
             <ScrollView style={{ flexGrow: 1 }}>
                 <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
                     <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>{I18n.t('ket_noi_may_in')}</Text>
-                    <TouchableOpacity  style={{ paddingVertical: 10, paddingTop: 20 }} onPress={() => {
+                    <TouchableOpacity style={{ paddingVertical: 10, paddingTop: 20 }} onPress={() => {
                         setShowModal(true)
                     }}>
                         <Text style={{}}>{I18n.t('may_in_tam_tinh')} ({I18n.t('qua_mang_lan')} {ip})</Text>

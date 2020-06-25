@@ -110,14 +110,19 @@ const LoginScreen = (props) => {
                     let account = { UserName: userName, Link: shop };
                     setFileLuuDuLieu(Constant.REMEMBER_ACCOUNT, JSON.stringify(account));
                 }
-                props.navigation.dispatch(
-                    CommonActions.reset({
-                        index: 0,
-                        routes: [
-                            { name: 'Home' },
-                        ],
-                    })
-                )
+
+                if (res.CurrentRetailer && (res.CurrentRetailer.FieldId == 3 || res.CurrentRetailer.FieldId == 11)) {
+                    props.navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [
+                                { name: 'Home' },
+                            ],
+                        })
+                    )
+                } else {
+                    dialogManager.showPopupOneButton("Vui lòng chọn lĩnh vực BÁN LẺ hỗ trợ: shop, thời trang, siêu thị...", I18n.t('thong_bao'));
+                }
 
             } else {
                 error = I18n.t('ban_khong_co_quyen_truy_cap');
