@@ -358,7 +358,7 @@ export default (props) => {
             <View
                 style={{ borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3, backgroundColor: "white" }}>
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                    <Text style={{ fontWeight: "bold" }}>{I18n.t('tong_thanh_tien')}</Text>
+                    <Text style={{ fontWeight: "bold" }}>{I18n.t('tam_tinh')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
                         <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice())} đ</Text>
                     </View>
