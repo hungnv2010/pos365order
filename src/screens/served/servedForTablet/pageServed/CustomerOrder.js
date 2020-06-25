@@ -245,8 +245,10 @@ export default (props) => {
     const getTotalPrice = () => {
         let total = 0;
         list.forEach(item => {
-            let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
-            total += price * item.Quantity + item.TotalTopping
+            if (item.ProductType != 2) {
+                let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
+                total += price * item.Quantity + item.TotalTopping
+            }
         })
         return total
     }

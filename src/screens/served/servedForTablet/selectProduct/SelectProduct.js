@@ -100,7 +100,6 @@ export default (props) => {
 
 
   const onClickCate = async (item, index) => {
-    if (item.Id == listCateId[0]) return
     setHasProducts(false)
     resetState()
     setListCateId([item.Id])
