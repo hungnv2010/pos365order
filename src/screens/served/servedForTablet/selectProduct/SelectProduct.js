@@ -32,6 +32,16 @@ export default (props) => {
         let valueSearchLatin = change_alias(debouncedVal)
         let results = await realmStore.queryProducts()
         let searchResult = results.filtered(`NameLatin CONTAINS "${valueSearchLatin}" OR Code CONTAINS "${valueSearchLatin}"`)
+        searchResult = JSON.parse(JSON.stringify(searchResult))
+        searchResult = Object.values(searchResult)
+        searchResult.forEach(item => {
+          item.Quantity = 0
+          listProducts.forEach(elm => {
+            if (item.Id == elm.Id) {
+              item.Quantity += elm.Quantity
+            }
+          })
+        })
         setProduct(searchResult)
         setHasProducts(true)
       } else {
@@ -90,7 +100,6 @@ export default (props) => {
 
 
   const onClickCate = async (item, index) => {
-    if (item.Id == listCateId[0]) return
     setHasProducts(false)
     resetState()
     setListCateId([item.Id])
@@ -121,7 +130,7 @@ export default (props) => {
       })
       if (!exist) {
         item.Quantity = qtt
-        listProducts.unshift(item)
+        listProducts.unshift({ ...item })
       }
     }
     props.outputListProducts([...listProducts], 0)

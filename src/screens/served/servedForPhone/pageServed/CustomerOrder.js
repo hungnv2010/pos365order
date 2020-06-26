@@ -267,6 +267,17 @@ export default (props) => {
         setListOrder([...list])
     }
 
+    const getTotalPrice = () => {
+        let total = 0;
+        list.forEach(item => {
+            if (item.ProductType != 2) {
+                let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
+                total += price * item.Quantity + item.TotalTopping
+            }
+        })
+        return total
+    }
+
 
     let _menu = null;
 
@@ -343,6 +354,15 @@ export default (props) => {
                     <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
                     </ImageBackground>
                 }
+            </View>
+            <View
+                style={{ borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3, backgroundColor: "white" }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                    <Text style={{ fontWeight: "bold" }}>{I18n.t('tam_tinh')}</Text>
+                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
+                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice())} đ</Text>
+                    </View>
+                </View>
             </View>
             <View style={{ height: 40, flexDirection: "row", backgroundColor: "#0072bc", alignItems: "center" }}>
                 <TouchableOpacity
