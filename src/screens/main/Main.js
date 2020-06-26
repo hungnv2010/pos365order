@@ -6,6 +6,9 @@ import Order from './order/Order';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
 import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
+import signalRManager from '../../common/SignalR';
+import { getFileDuLieuString } from '../../data/fileStore/FileStorage';
+import { Constant } from '../../common/Constant';
 
 
 
@@ -15,6 +18,19 @@ export default (props) => {
   const [already, setAlready] = useState(false)
 
   useEffect(() => {
+    const getVendorSession = async () => {
+      let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
+      console.log('getVendorSession data ====', JSON.parse(data));
+      
+      if (data) {
+        data = JSON.parse(data);
+        console.log('this.info data.BID ',data.BID);
+        signalRManager.init(data)
+      }
+    }
+    getVendorSession()
+
+
     if (props.route.params && props.route.params.Name) return
     const syncAllDatas = async () => {
       dialogManager.showLoading()

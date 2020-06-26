@@ -59,7 +59,7 @@ export default (props) => {
     });
 
     let rooms = []
-    let roomGroups = []
+    let roomGroups = null
     let serverEvents = null
     const [datas, setData] = useState([])
     const [valueAll, setValueAll] = useState({})

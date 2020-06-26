@@ -11,12 +11,15 @@ import dialogManager from '../components/dialog/DialogManager';
 
 class SignalRManager {
 
-    init() {
+    init(data) {
+        console.log("this.info" ,data.Rid);
         this.info = {
             SessionId: "NR49Agi4hu7nTpidgFHd",
-            rId: "LeTx/eEAOlM=",
-            bId: "ZnoAkt+5g3Q="
+            rId: data.RID,
+            bId: data.BID
         }
+        console.log("this.info" , this.info);
+        
         this.subject = new Subject()
         this.subject.distinct(serverEvent => serverEvent.Version)
             .subscribe(serverEvent => this.onReceiveServerEvent(serverEvent))
@@ -37,10 +40,11 @@ class SignalRManager {
             .done(() => {
                 console.log('Now connected, connection ID=' + connectionHub.id);
                 this.isStartSignalR = true
+                alert("Ok signal R")
             })
             .fail(() => {
                 console.log("Failed");
-
+                alert("Failed signal R")
             })
     }
 
