@@ -108,6 +108,7 @@ export default {
   man_hinh_thu_ngan: "Màn hình thu ngân",
   may_in_tam_tinh: "Máy in tạm tính",
   ma_khong_hop_le: "Mã không hợp lệ vui lòng kiểm tra lại.",
+  mon_da_xac_nhan:"Món đã xác nhận",
 
   // TODO: N
   no: "Nợ",
@@ -213,6 +214,7 @@ export default {
   tong_thanh_tien: "Tổng thành tiền",
   tong_chiet_khau: "Tổng chiết khấu",
   tu: "từ",
+  thuc_don_da_goi:"Thực đơn đã gọi",
   // TODO: U
 
   // TODO: V
