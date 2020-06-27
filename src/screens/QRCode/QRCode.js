@@ -8,6 +8,8 @@ import ToolBarDefault from '../../components/toolbar/ToolBarDefault';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import { RNCamera } from 'react-native-camera';
 import realmStore from '../../data/realm/RealmStore';
+import { useSelector } from 'react-redux';
+import { Constant } from '../../common/Constant';
 
 const FLASH_ON = "flash"
 const FLASH_OFF = "flash-off"
@@ -19,7 +21,13 @@ export default (props) => {
 
     useEffect(() => {
         console.log("props ", props);
+
     }, [])
+
+    const deviceType = useSelector(state => {
+        console.log("useSelector state ", state);
+        return state.Common.orientaition
+    });
 
     const onSuccess = async e => {
         console.log("e ", e);
@@ -60,7 +68,9 @@ export default (props) => {
                 {...props}
                 leftIcon="keyboard-backspace"
                 title="QRCode"
-                clickLeftIcon={() => { props.navigation.goBack() }}
+                clickLeftIcon={() => {
+                    props.navigation.goBack()
+                }}
                 clickRightIcon={() => {
                     if (flash == FLASH_ON) {
                         setFlash(FLASH_OFF)
@@ -78,11 +88,15 @@ export default (props) => {
                 customMarker={
                     <View style={styles.viewCustom}>
                         <View style={styles.viewTopCustom}></View>
-                        <View style={styles.viewCenterCustom}>
-                            <View style={styles.viewCenterLeft}></View>
-                            <View style={[styles.viewCenterContent, styles.rectangle]}>
-                            </View>
-                            <View style={styles.viewCenterRight}></View>
+                        {/* <View style={{ flex: 4.4, flexDirection: 'row' }}>
+                            <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: "5%" }}></View>
+                            <View style={[{ backgroundColor: 'transparent', height: "100%", width: deviceType == Constant.PORTRAIT ? "46.2%" : "90%", }, styles.rectangle]}></View>
+                            <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: "5%" }}></View>
+                        </View> */}
+                        <View style={{ height: "45%", width: deviceType == Constant.PORTRAIT ? Metrics.screenWidth : Metrics.screenHeight, flexDirection: 'row' }}>
+                            <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: "5%", }}></View>
+                            <View style={[{ backgroundColor: 'transparent', height: "100%", width: "90%", }, styles.rectangle]}></View>
+                            <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: "5%", }}></View>
                         </View>
                         <View style={styles.viewBottomCustom}></View>
                     </View>
@@ -98,17 +112,15 @@ export default (props) => {
 const styles = StyleSheet.create({
     container: { flex: 1 },
     rectangle: {
-        borderWidth: 0,
+        borderWidth: 1,
         borderColor: "#fff",
-        alignItems: "center",
-        justifyContent: "flex-start"
     },
     viewCustom: { backgroundColor: 'transparent' },
     viewCenterCustom: { flex: 4.4, flexDirection: 'row' },
-    viewCenterContent: { backgroundColor: 'transparent', height: "100%", width: 8 * (Metrics.screenWidth / 10) },
-    viewCenterLeft: { backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenWidth / 10 },
-    viewCenterRight: { backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenWidth / 10 },
-    viewBottomCustom: { flex: 3.5, backgroundColor: 'rgba(1,1,1,0.5)', height: Metrics.screenHeight / 3, width: Metrics.screenWidth },
-    viewTopCustom: { backgroundColor: 'rgba(1,1,1,0.5)', flex: 2, width: Metrics.screenWidth },
+    // viewCenterContent: { backgroundColor: 'transparent', height: "100%", width: 8 * (Metrics.screenHeight / deviceType == Constant. 22) },
+    // viewCenterLeft: { backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenHeight / 10 },
+    // viewCenterRight: { backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenHeight / 10 },
+    viewBottomCustom: { flex: 3.5, backgroundColor: 'rgba(1,1,1,0.5)', height: Metrics.screenWidth / 3, width: Metrics.screenHeight },
+    viewTopCustom: { backgroundColor: 'rgba(1,1,1,0.5)', flex: 2, width: Metrics.screenHeight },
     textQRCode: { position: "absolute", bottom: 20, color: "#fff", textAlign: "center", width: "100%" }
 })

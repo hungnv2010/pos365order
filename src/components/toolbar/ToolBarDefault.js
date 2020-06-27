@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         height: 40,
         backgroundColor: Colors.colorchinh,
+        zIndex: 99999999
     },
 })
 
