@@ -32,9 +32,10 @@ export default (props) => {
 
 
     useEffect(() => {
-        console.log('props', props);
-
-    })
+        if (tab != 1) {
+            setTab(1)
+        }
+    }, [props.listProducts])
 
     const selectPosition = (position) => {
         setPosition(position)

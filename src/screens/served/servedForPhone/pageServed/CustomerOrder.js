@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import { Image, View, Text, FlatList, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground, Platform } from 'react-native';
+import { StyleSheet, View, Text, FlatList, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground, Platform } from 'react-native';
 import { Colors, Images, Metrics } from '../../../../theme';
 import Menu from 'react-native-material-menu';
 import dataManager from '../../../../data/DataManager';
@@ -84,7 +84,6 @@ export default (props) => {
             }
         })
         if (!exist) {
-            // listPosition.push({ key: props.Position, list: [] })
             syncListProducts([])
         }
     }, [props.Position, listPosition])
@@ -272,7 +271,8 @@ export default (props) => {
         list.forEach(item => {
             if (item.ProductType != 2) {
                 let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
-                total += price * item.Quantity + item.TotalTopping
+                let totalTopping = item.TotalTopping ? item.TotalTopping : 0
+                total += (price + totalTopping) * item.Quantity
             }
         })
         return total
@@ -306,7 +306,7 @@ export default (props) => {
                 setItemOrder(item)
                 setShowModal(!showModal)
             }}>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-evenly", paddingVertical: 10, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5, }}>
+                <View style={styles.mainItem}>
                     <TouchableOpacity
                         style={{ paddingHorizontal: 5 }}
                         onPress={removeItem}>
@@ -355,16 +355,15 @@ export default (props) => {
                     </ImageBackground>
                 }
             </View>
-            <View
-                style={{ borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3, backgroundColor: "white" }}>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
-                    <Text style={{ fontWeight: "bold" }}>{I18n.t('tam_tinh')}</Text>
-                    <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
+            <View style={styles.wrapTamTinh}>
+                <View style={styles.tamTinh}>
+                    <Text style={styles.textTamTinh}>{I18n.t('tam_tinh')}</Text>
+                    <View style={styles.totalPrice}>
                         <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice())} đ</Text>
                     </View>
                 </View>
             </View>
-            <View style={{ height: 40, flexDirection: "row", backgroundColor: "#0072bc", alignItems: "center" }}>
+            <View style={styles.footerMenu}>
                 <TouchableOpacity
                     onPress={showMenu}>
                     <Menu
@@ -374,14 +373,6 @@ export default (props) => {
                         <View style={{
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 5,
                         }}>
-                            {/* <TouchableOpacity onPress={() => sendNotidy(1)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
-                                <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => sendNotidy(2)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} >
-                                <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
-                            </TouchableOpacity> */}
                             <TouchableOpacity onPress={() => sendNotidy(1)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
                                 <MaterialIcons style={{ paddingHorizontal: 7 }} name="notifications" size={26} color={Colors.colorchinh} />
                                 <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
@@ -480,14 +471,14 @@ const PopupDetail = (props) => {
 
     return (
         <View >
-            <View style={{ backgroundColor: Colors.colorchinh, borderTopRightRadius: 4, borderTopLeftRadius: 4, }}>
-                <Text style={{ margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, color: "#fff" }}>{itemOrder.Name}</Text>
+            <View style={styles.headerModal}>
+                <Text style={styles.headerModalText}>{itemOrder.Name}</Text>
             </View>
             <View style={{ padding: 10 }}>
                 <View style={{ flexDirection: "row", justifyContent: "center", }} onPress={() => setShowModal(false)}>
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('don_gia')}</Text>
-                    <View style={{ alignItems: "center", flexDirection: "row", flex: 7, backgroundColor: "#D5D8DC" }}>
-                        <Text style={{ padding: 7, flex: 1, fontSize: 14, borderWidth: 0.5, borderRadius: 4 }}>{currencyToString(itemOrder.Price)}</Text>
+                    <View style={styles.wrapTextPriceModal}>
+                        <Text style={styles.textPriceModal}>{currencyToString(itemOrder.Price)}</Text>
                     </View>
 
                 </View>
@@ -500,14 +491,14 @@ const PopupDetail = (props) => {
                                 setItemOrder({ ...itemOrder })
                             }
                         }}>
-                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 17, paddingVertical: 10, borderRadius: 5 }}>-</Text>
+                            <Text style={styles.button}>-</Text>
                         </TouchableOpacity>
-                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
+                        <TextInput style={styles.textQuantityModal} value={"" + itemOrder.Quantity} />
                         <TouchableOpacity onPress={() => {
                             itemOrder.Quantity++
                             setItemOrder({ ...itemOrder })
                         }}>
-                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>+</Text>
+                            <Text style={styles.button}>+</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -522,18 +513,18 @@ const PopupDetail = (props) => {
                             numberOfLines={3}
                             multiline={true}
                             value={itemOrder.Description}
-                            style={{ height: 50, flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC", padding: 5 }}
+                            style={styles.descModal}
                             placeholder={I18n.t('nhap_ghi_chu')} />
                     </View>
                 </View>
-                <View style={{ alignItems: "center", justifyContent: "space-between", flexDirection: "row", marginTop: 10 }}>
-                    <TouchableOpacity onPress={() => props.setShowModal(false)} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, padding: 5, borderRadius: 4, backgroundColor: "#fff" }} >
-                        <Text style={{ color: Colors.colorchinh, textTransform: "uppercase" }}>{I18n.t('huy')}</Text>
+                <View style={styles.wrapAllButtonModal}>
+                    <TouchableOpacity onPress={() => props.setShowModal(false)} style={styles.wrapButtonModal} >
+                        <Text style={styles.buttonModal}>{I18n.t('huy')}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => onClickTopping()} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, padding: 5, borderRadius: 4, backgroundColor: "#fff" }} >
-                        <Text style={{ color: Colors.colorchinh, textTransform: "uppercase" }}>Topping</Text>
+                    <TouchableOpacity onPress={() => onClickTopping()} style={styles.wrapButtonModal} >
+                        <Text style={styles.buttonModal}>Topping</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => onClickOk()} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, padding: 5, borderRadius: 4, backgroundColor: Colors.colorchinh }} >
+                    <TouchableOpacity onPress={() => onClickOk()} style={[styles.wrapButtonModal, { backgroundColor: Colors.colorchinh }]} >
                         <Text style={{ color: "#fff", textTransform: "uppercase", }}>{I18n.t('dong_y')}</Text>
                     </TouchableOpacity>
                 </View>
@@ -541,4 +532,86 @@ const PopupDetail = (props) => {
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    mainItem: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-evenly",
+        paddingVertical: 10,
+        borderBottomColor: "#ABB2B9",
+        borderBottomWidth: 0.5,
+    },
+    wrapTamTinh: {
+        borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3, backgroundColor: "white"
+    },
+    tamTinh: {
+        flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 5
+    },
+    textTamTinh: {
+        fontWeight: "bold"
+    },
+    totalPrice: {
+        flexDirection: "row", alignItems: "center", justifyContent: "space-around"
+    },
+    footerMenu: {
+        height: 40, flexDirection: "row", backgroundColor: "#0072bc", alignItems: "center"
+    },
+    headerModal: {
+        backgroundColor: Colors.colorchinh, borderTopRightRadius: 4, borderTopLeftRadius: 4,
+    },
+    headerModalText: {
+        margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, color: "#fff"
+    },
+    button: {
+        borderColor: Colors.colorchinh,
+        borderWidth: 1,
+        color: Colors.colorchinh,
+        fontWeight: "bold",
+        paddingHorizontal: 17,
+        paddingVertical: 10,
+        borderRadius: 5
+    },
+    textPriceModal: {
+        padding: 7, flex: 1, fontSize: 14, borderWidth: 0.5, borderRadius: 4
+    },
+    wrapTextPriceModal: {
+        alignItems: "center", flexDirection: "row", flex: 7, backgroundColor: "#D5D8DC"
+    },
+    wrapAllButtonModal: {
+        alignItems: "center", justifyContent: "space-between", flexDirection: "row", marginTop: 10
+    },
+    wrapButtonModal: {
+        alignItems: "center",
+        margin: 2,
+        flex: 1,
+        borderWidth: 1,
+        borderColor: Colors.colorchinh,
+        padding: 5,
+        borderRadius: 4,
+        backgroundColor: "#fff"
+    },
+    buttonModal: {
+        color: Colors.colorchinh, textTransform: "uppercase"
+    },
+    descModal: {
+        height: 50,
+        flex: 7,
+        fontStyle: "italic",
+        fontSize: 12,
+        borderWidth: 0.5,
+        borderRadius: 4,
+        backgroundColor: "#D5D8DC",
+        padding: 5
+    },
+    textQuantityModal: {
+        padding: 6,
+        textAlign: "center",
+        margin: 10,
+        flex: 1,
+        borderRadius: 4,
+        borderWidth: 0.5,
+        backgroundColor: "#D5D8DC"
+    },
+});
 

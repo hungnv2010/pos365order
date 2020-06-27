@@ -40,11 +40,11 @@ class SignalRManager {
             .done(() => {
                 console.log('Now connected, connection ID=' + connectionHub.id);
                 this.isStartSignalR = true
-                alert("Ok signal R")
+                // alert("Ok signal R")
             })
             .fail(() => {
                 console.log("Failed");
-                alert("Failed signal R")
+                // alert("Failed signal R")
             })
     }
 
