@@ -102,7 +102,7 @@ export default (props) => {
             default:
                 break;
         }
-        setTab(1)
+        if (tab != 1) setTab(1)
         checkProductId(data, props.route.params.room.ProductId)
     }
 

@@ -13,12 +13,12 @@ const ProductsItemForPhone = ({ item, index, onClickProduct, handleButtonDecreas
     }
 
     return (
-        <TouchableOpacity key={index} onPress={onClickItem} style={{ flex: 1, flexDirection: "row", backgroundColor: item.Quantity > 0 ? "#EED6A7" : "white", paddingVertical: 5, marginBottom: 3, marginHorizontal: 5, borderRadius: 10 }}>
+        <TouchableOpacity key={index} onPress={onClickItem} style={[styles.item, { backgroundColor: item.Quantity > 0 ? "#EED6A7" : "white", }]}>
             <Image
                 style={{ height: 70, width: 70, borderRadius: 50 }}
                 source={JSON.parse(item.ProductImages).length > 0 ? { uri: JSON.parse(item.ProductImages)[0].ImageURL } : Images.default_food_image}
             />
-            <View style={{ flexDirection: "column", flex: 2, marginLeft: 10, justifyContent: "center" }}>
+            <View style={styles.wrapNameItem}>
                 <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold" }}>{item.Name}</Text>
                 <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(item.Price)}<Text style={{ color: Colors.colorchinh }}>{item.LargeUnit != '' ? `/${item.LargeUnit}` : item.Unit != '' ? `/${item.Unit}` : ''}</Text></Text>
             </View>
@@ -48,5 +48,22 @@ const ProductsItemForPhone = ({ item, index, onClickProduct, handleButtonDecreas
         </TouchableOpacity>
     );
 }
+
+const styles = StyleSheet.create({
+    item: {
+        flex: 1,
+        flexDirection: "row",
+        paddingVertical: 5,
+        marginBottom: 3,
+        marginHorizontal: 5,
+        borderRadius: 10
+    },
+    wrapNameItem: {
+        flexDirection: "column",
+        flex: 2,
+        marginLeft: 10,
+        justifyContent: "center"
+    },
+})
 
 export default React.memo(ProductsItemForPhone);
