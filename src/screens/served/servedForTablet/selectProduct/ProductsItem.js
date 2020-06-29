@@ -18,9 +18,10 @@ const ProductsItem = ({ item, index, getQuantityProduct, numColumns, onClickProd
                     style={{ height: 150, width: "100%", borderTopLeftRadius: 10, borderTopRightRadius: 10 }}
                     source={JSON.parse(item.ProductImages).length > 0 ? { uri: JSON.parse(item.ProductImages)[0].ImageURL } : Images.default_food_image}
                 />
+                <View style={{ height: 1, backgroundColor: "#E5E7E9", width: "90%", alignSelf:"center" }}></View>
                 <View style={{ marginLeft: 10 }}>
                     <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold", paddingVertical: 5 }}>{item.Name}</Text>
-                    <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(item.Price)}<Text style={{ color: Colors.colorchinh }}>{item.LargeUnit != '' ? `/${item.LargeUnit}` : item.Unit != '' ? `/${item.Unit}` : ''}</Text></Text>
+                    <Text style={{  fontStyle: "italic" }}>{currencyToString(item.Price)}<Text style={{ color: Colors.colorchinh }}>{item.LargeUnit != '' ? `/${item.LargeUnit}` : item.Unit != '' ? `/${item.Unit}` : ''}</Text></Text>
                 </View>
             </View>
             {getQuantityProduct > 0 ?

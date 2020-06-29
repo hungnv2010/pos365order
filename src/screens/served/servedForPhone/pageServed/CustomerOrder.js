@@ -313,7 +313,12 @@ export default (props) => {
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flex: 1, }}>
-                        <Text style={{ fontWeight: "bold", }}>{item.Name}</Text>
+                        <TextTicker
+                            style={{ fontWeight: "bold", marginBottom: 7 }}
+                            duration={6000}
+                            marqueeDelay={1000}>
+                            {item.Name}
+                        </TextTicker>
                         <Text style={{ fontSize: 12 }}>{currencyToString(item.Price)} x <Text style={{ color: "red", fontWeight: "bold" }}>{Math.round(item.Quantity * 1000) / 1000}</Text></Text>
                         {item.Description != "" ?
                             <TextTicker

@@ -24,7 +24,6 @@ import { Checkbox } from 'react-native-paper';
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import dataManager from '../../../data/DataManager';
 import { useFocusEffect } from '@react-navigation/native';
 

@@ -185,7 +185,7 @@ export default (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 0.5, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
+      <View style={{ height: 65, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
         <View style={{ flex: 1 }}>
           {isSearching ?
             <TouchableOpacity style={[styles.renderCateItem, { backgroundColor: Colors.colorchinh, flex: 1 }]}>
@@ -203,7 +203,7 @@ export default (props) => {
         </View>
       </View>
 
-      <View style={{ flex: 5, }}>
+      <View style={{ flex: 1, }}>
         <View style={{ flex: 1, justifyContent: "center", }}>
           {hasProducts ?
             <FlatList

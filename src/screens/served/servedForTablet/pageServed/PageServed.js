@@ -10,6 +10,7 @@ import { Constant } from '../../../../common/Constant';
 import I18n from '../../../../common/language/i18n';
 import { Snackbar } from 'react-native-paper';
 import signalRManager from '../../../../common/SignalR';
+import { useSelector } from 'react-redux';
 
 
 
@@ -29,6 +30,10 @@ export default (props) => {
         { name: "D", status: false },
     ])
 
+    const orientaition = useSelector(state => {
+        console.log("useSelector state ", state.Common.orientaition);
+        return state.Common.orientaition
+    });
 
 
     useEffect(() => {
@@ -104,11 +109,11 @@ export default (props) => {
                 </TouchableOpacity>
             </View>
             <View style={{ flexDirection: "row", justifyContent: "space-between", marginTop: 2, borderColor: Colors.colorchinh, borderWidth: 0.5 }}>
-                <TouchableOpacity onPress={() => setTab(1)} style={{ paddingVertical: 8, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 1 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
-                    <Text style={{ color: tab == 1 ? "white" : Colors.colorchinh, fontWeight: "bold" }}>Thực đơn đã gọi</Text>
+                <TouchableOpacity onPress={() => setTab(1)} style={{ height: 32, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 1 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
+                    <Text style={{ color: tab == 1 ? "white" : Colors.colorchinh, fontWeight: "bold", fontSize: orientaition == Constant.PORTRAIT ? 11 : null }}>{I18n.t('thuc_don_da_goi')}</Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => setTab(2)} style={{ paddingVertical: 8, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 2 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
-                    <Text style={{ color: tab == 2 ? "white" : Colors.colorchinh, fontWeight: "bold" }}>Món đã xác nhận</Text>
+                <TouchableOpacity onPress={() => setTab(2)} style={{ height: 32, flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: tab == 2 ? Colors.colorchinh : "#fff", paddingHorizontal: 20, flexDirection: "row" }}>
+                    <Text style={{ color: tab == 2 ? "white" : Colors.colorchinh, fontWeight: "bold", fontWeight: "bold", fontSize: orientaition == Constant.PORTRAIT ? 11 : null }}>{I18n.t('mon_da_xac_nhan')}</Text>
                 </TouchableOpacity>
             </View>
             {tab == 1 ?
@@ -185,3 +190,8 @@ export default (props) => {
         </View >
     );
 }
+
+
+const styles = StyleSheet.create({
+
+});

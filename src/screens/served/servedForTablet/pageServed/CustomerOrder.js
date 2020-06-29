@@ -18,6 +18,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 
 
+
 export default (props) => {
 
     const [listPosition, setListPosition] = useState([])
@@ -315,7 +316,12 @@ export default (props) => {
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flexDirection: "column", flex: 1, }}>
-                        <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
+                        <TextTicker
+                            style={{ fontWeight: "bold", marginBottom: 7 }}
+                            duration={6000}
+                            marqueeDelay={1000}>
+                            {item.Name}
+                        </TextTicker>
                         <Text>{currencyToString(item.Price)} x {orientaition == Constant.PORTRAIT ? <Text style={{ color: Colors.colorchinh, fontWeight: "bold" }}>{Math.round(item.Quantity * 1000) / 1000}</Text> : null}</Text>
                         <TextTicker
                             style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}
@@ -429,10 +435,10 @@ export default (props) => {
             </View>
             <View
                 style={{ borderTopWidth: .5, borderTopColor: "red", paddingVertical: 3, backgroundColor: "white" }}>
-                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
+                <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingHorizontal: 5 }}>
                     <Text style={{ fontWeight: "bold" }}>{I18n.t('tam_tinh')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice())} đ</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice())}đ</Text>
                     </View>
                 </View>
             </View>
