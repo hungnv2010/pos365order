@@ -320,7 +320,7 @@ export default forwardRef((props, ref) => {
     const viewPrintRef = useRef();
 
     return (
-        <View style={{ backgroundColor: "#fff", flex: 1 }}>
+        <View style={{ backgroundColor: "#fff",alignItems: "center", flex: 1 }}>
             <ViewPrint
                 ref={viewPrintRef}
                 html={data}

@@ -13,6 +13,7 @@ import colors from '../../theme/Colors';
 import { NavigationEvents } from 'react-navigation';
 import { useFocusEffect } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { currencyToString } from '../../common/Utils';
 
 export default (props) => {
 
@@ -26,7 +27,7 @@ export default (props) => {
         console.log("useSelector state ", state);
 
         console.log("dataManager.dataChoosing ", dataManager.dataChoosing);
-        let numberColumn = (state.Common.orientaition == Constant.LANDSCAPE) ? 5 : 3
+        let numberColumn = (state.Common.orientaition == Constant.LANDSCAPE) ? 5 : 2
         if (state.Common.deviceType == Constant.TABLET) numberColumn++
         return numberColumn
     });
@@ -69,6 +70,38 @@ export default (props) => {
 
     }
 
+    const totalProduct = (data) => {
+        let total = 0;
+        data.forEach(element => {
+            total += element.list.length;
+        });
+        return total;
+    }
+
+    // const totalPriceProduct = (data) => {
+    //     let total = 0;
+    //     data.forEach(element => {
+    //         element.list.array.forEach(element => {
+
+    //         });
+    //     });
+    //     return total;
+    // }
+
+    const getTotalPrice = (data) => {
+        let total = 0;
+        data.forEach(element => {
+            element.list.forEach(item => {
+                if (item.ProductType != 2) {
+                    let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
+                    let totalTopping = item.TotalTopping ? item.TotalTopping : 0
+                    total += (price + totalTopping) * item.Quantity
+                }
+            })
+        })
+        return total
+    }
+
     const renderList = () => {
         return <FlatList
             style={{ padding: 5 }}
@@ -77,9 +110,11 @@ export default (props) => {
                 <TouchableOpacity
                     onPress={() => onClickOrder(item)}
                     key={item.Id}
-                    style={{ borderRadius: 5, margin: numberColumn == 3 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#EED6A7" }}>
+                    style={{ borderRadius: 5, margin: numberColumn == 2 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#EED6A7" }}>
                     <Icon onPress={() => removeItem(item)} name="close-circle-outline" style={{ position: "absolute", top: 0, right: 0, paddingLeft: 5, paddingBottom: 5 }} size={30} color={"#808080"} />
-                    <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000" }}>{item.Name}</Text>
+                    <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000", fontWeight: "bold" }}>{item.Name}</Text>
+                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>Số sản phẩm: {totalProduct(item.data)}</Text>
+                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>Tạm tính: {currencyToString(getTotalPrice(item.data))} đ</Text>
                 </TouchableOpacity>
             )}
             numColumns={numberColumn}
