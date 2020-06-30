@@ -160,6 +160,7 @@ export default {
   so_no: "Sổ nợ",
   so_tay_ban_hang_nhanh: "Sổ tay bán hàng nhanh",
   so_luong: "Số lượng",
+  so_san_pham: "Số sản phẩm",
 
   // TODO: T
   thong_bao_quet_van_tay: "Quý khách vui lòng quét dấu vân tay đã đăng ký trên thiết bị.",
