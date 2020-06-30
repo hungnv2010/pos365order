@@ -99,7 +99,7 @@ export default (props) => {
             let topping = []
             lt.forEach(item => {
                 if (item.Quantity > 0) {
-                    description += ` -- ${item.Name} x ${item.Quantity} = ${currencyToString(item.Quantity * item.Price)} ; \n`
+                    description += ` -${item.Name} x${item.Quantity} = ${currencyToString(item.Quantity * item.Price)};\n `
                     totalPrice += item.Quantity * item.Price
                     topping.push({ ExtraId: item.ExtraId, QuantityExtra: item.Quantity, Price: item.Price, Quantity: item.Quantity })
                 }
@@ -350,13 +350,10 @@ export default (props) => {
                         </TextTicker>
                         <Text style={{ fontSize: 12 }}>{currencyToString(item.Price)} x <Text style={{ color: "red", fontWeight: "bold" }}>{Math.round(item.Quantity * 1000) / 1000}</Text></Text>
                         {item.Description != "" ?
-                            <TextTicker
-                                style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}
-                                duration={10000}
-                                bounce={false}
-                                marqueeDelay={1000}>
+                            <Text
+                                style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}>
                                 {item.Description}
-                            </TextTicker>
+                            </Text>
                             :
                             null}
                     </View>
