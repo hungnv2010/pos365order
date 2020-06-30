@@ -201,6 +201,9 @@ export default (props) => {
                         list: ls, RoomId: props.route.params.room.Id,
                         RoomName: props.route.params.room.Name,
                     })
+                    if (history.length >= 100) {
+                        history = history.slice(1, 99);
+                    }
                     historyTemp = history;
                 } else {
                     historyTemp.push({
