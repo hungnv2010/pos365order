@@ -24,7 +24,7 @@ export default (props) => {
 
     }, [])
 
-    const deviceType = useSelector(state => {
+    const orientation = useSelector(state => {
         console.log("useSelector state ", state);
         return state.Common.orientaition
     });
@@ -90,10 +90,10 @@ export default (props) => {
                         <View style={styles.viewTopCustom}></View>
                         {/* <View style={{ flex: 4.4, flexDirection: 'row' }}>
                             <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: "5%" }}></View>
-                            <View style={[{ backgroundColor: 'transparent', height: "100%", width: deviceType == Constant.PORTRAIT ? "46.2%" : "90%", }, styles.rectangle]}></View>
+                            <View style={[{ backgroundColor: 'transparent', height: "100%", width: orientation == Constant.PORTRAIT ? "46.2%" : "90%", }, styles.rectangle]}></View>
                             <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: "5%" }}></View>
                         </View> */}
-                        <View style={{ height: "45%", width: deviceType == Constant.PORTRAIT ? Metrics.screenWidth : Metrics.screenHeight, flexDirection: 'row' }}>
+                        <View style={{ height: "45%", width: orientation == Constant.PORTRAIT ? Metrics.screenWidth : Metrics.screenHeight, flexDirection: 'row' }}>
                             <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: "5%", }}></View>
                             <View style={[{ backgroundColor: 'transparent', height: "100%", width: "90%", }, styles.rectangle]}></View>
                             <View style={{ backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: "5%", }}></View>
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     },
     viewCustom: { backgroundColor: 'transparent' },
     viewCenterCustom: { flex: 4.4, flexDirection: 'row' },
-    // viewCenterContent: { backgroundColor: 'transparent', height: "100%", width: 8 * (Metrics.screenHeight / deviceType == Constant. 22) },
+    // viewCenterContent: { backgroundColor: 'transparent', height: "100%", width: 8 * (Metrics.screenHeight / orientation == Constant. 22) },
     // viewCenterLeft: { backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenHeight / 10 },
     // viewCenterRight: { backgroundColor: 'rgba(1,1,1,0.5)', height: "100%", width: Metrics.screenHeight / 10 },
     viewBottomCustom: { flex: 3.5, backgroundColor: 'rgba(1,1,1,0.5)', height: Metrics.screenWidth / 3, width: Metrics.screenHeight },
