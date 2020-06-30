@@ -83,7 +83,7 @@ export default (props) => {
                 navigation={props.navigation}
                 title={I18n.t('nhan_vien_order')}
             /> : null}
-            <View style={{ padding: 10, backgroundColor: colors.colorchinh, flexDirection: "row", justifyContent: "space-between" }}>
+            <View style={{ padding: 10, marginTop: deviceType != Constant.PHONE ? 2 : 0, backgroundColor: colors.colorchinh, flexDirection: "row", justifyContent: "space-between" }}>
                 <Text style={{ fontWeight: "bold", color: "#fff" }}>{deviceType != Constant.PHONE ? props.data.RoomName : props.route.params.RoomName}</Text>
                 <Text style={{ fontWeight: "bold", color: "#fff" }}>{deviceType != Constant.PHONE ? props.data.Position : props.route.params.Position}</Text>
             </View>

@@ -221,6 +221,7 @@ const ContentComponent = (props) => {
         setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
         setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
         // props.navigation.navigate('Login', { param: "logout" })
+        dataManager.dataChoosing = []
         props.navigation.dispatch(
             CommonActions.reset({
                 index: 0,

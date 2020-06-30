@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import { Image, View, Text, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground, FlatList } from 'react-native';
+import { Image, View, Text, Keyboard, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground, FlatList } from 'react-native';
 import { Colors, Images, Metrics } from '../../../../theme';
 import Menu from 'react-native-material-menu';
 import dataManager from '../../../../data/DataManager';
@@ -28,12 +28,17 @@ export default (props) => {
     const [itemOrder, setItemOrder] = useState({})
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
-
+    const [marginModal, setMargin] = useState(0)
     const dispatch = useDispatch();
 
     const orientaition = useSelector(state => {
         console.log("orientaition", state);
         return state.Common.orientaition
+    });
+
+    const deviceType = useSelector(state => {
+        console.log("deviceType", state);
+        return state.Common.deviceType
     });
 
 
@@ -54,11 +59,25 @@ export default (props) => {
         }
         getVendorSession()
         init()
+
+        var keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', _keyboardDidShow);
+        var keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', _keyboardDidHide);
+
         return () => {
             console.log(dataManager.dataChoosing, 'dataManager.dataChoosing');
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
         }
     }, [])
 
+    const _keyboardDidShow = () => {
+        if (orientaition != Constant.PORTRAIT)
+            setMargin(Metrics.screenWidth / 2)
+    }
+
+    const _keyboardDidHide = () => {
+        setMargin(0)
+    }
 
     useEffect(() => {
         setItemOrder(props.itemOrder)
@@ -225,6 +244,9 @@ export default (props) => {
                         list: ls, RoomId: props.route.params.room.Id,
                         RoomName: props.route.params.room.Name,
                     })
+                    if (history.length >= 100) {
+                        history = history.slice(1, 99);
+                    }
                     historyTemp = history;
                 } else {
                     historyTemp.push({
@@ -553,6 +575,7 @@ export default (props) => {
                             padding: 0,
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                             width: Metrics.screenWidth * 0.8,
+                            marginBottom: Platform.OS == 'ios' ? marginModal : 0
                         }}>
                             <PopupDetail
                                 onClickTopping={() => onClickTopping(itemOrder)}
@@ -616,19 +639,19 @@ const PopupDetail = (props) => {
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
-                            itemOrder.Quantity++
-                            setItemOrder({ ...itemOrder })
-                        }}>
-                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>+</Text>
-                        </TouchableOpacity>
-                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
-                        <TouchableOpacity onPress={() => {
-                            if (itemOrder.Quantity > 0) {
+                            if (itemOrder.Quantity > 1) {
                                 itemOrder.Quantity--
                                 setItemOrder({ ...itemOrder })
                             }
                         }}>
                             <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>-</Text>
+                        </TouchableOpacity>
+                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
+                        <TouchableOpacity onPress={() => {
+                            itemOrder.Quantity++
+                            setItemOrder({ ...itemOrder })
+                        }}>
+                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>+</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -643,7 +666,8 @@ const PopupDetail = (props) => {
                             numberOfLines={3}
                             multiline={true}
                             value={itemOrder.Description}
-                            style={{ flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC" }}
+
+                            style={{ height: 50, paddingLeft: 5, flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC" }}
                             placeholder={I18n.t('nhap_ghi_chu')} />
                     </View>
                 </View>
