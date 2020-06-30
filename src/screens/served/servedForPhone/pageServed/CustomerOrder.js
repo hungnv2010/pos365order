@@ -96,19 +96,21 @@ export default (props) => {
         const getInfoTopping = (lt) => {
             let description = '';
             let totalPrice = 0;
+            let topping = []
             lt.forEach(item => {
                 if (item.Quantity > 0) {
                     description += ` -- ${item.Name} x ${item.Quantity} = ${currencyToString(item.Quantity * item.Price)} ; \n`
                     totalPrice += item.Quantity * item.Price
+                    topping.push({ ExtraId: item.ExtraId, QuantityExtra: item.Quantity, Price: item.Price, Quantity: item.Quantity })
                 }
             })
-            return [description, totalPrice]
+            return [description, totalPrice, topping]
         }
-        let [description, totalPrice] = getInfoTopping(listTopping)
+        let [description, totalPrice, topping] = getInfoTopping(listTopping)
         list.forEach(element => {
             if (element.Sid == itemOrder.Sid) {
                 element.Description = description
-                element.Topping = JSON.stringify(listTopping)
+                element.Topping = JSON.stringify(topping)
                 element.TotalTopping = totalPrice
             }
         });
@@ -176,13 +178,8 @@ export default (props) => {
                     TotalTopping: element.TotalTopping,
                     Description: element.Description
                 }
-                // if (element.Description != '') {
-                //     obj.Description = element.Description
-                // }
                 params.ServeEntities.push(obj)
             });
-            console.log('params.ServeEntities', params.ServeEntities);
-
             dialogManager.showLoading();
             new HTTPService().setPath(ApiPath.SAVE_ORDER).POST(params).then(async (res) => {
                 console.log("sendOrder res ", res);
