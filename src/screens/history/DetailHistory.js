@@ -1,20 +1,12 @@
 import React, { useEffect, useState, useRef, createRef } from 'react';
 import { View, Text, FlatList, Dimensions, TouchableOpacity, ImageBackground, ScrollView, Image } from 'react-native';
-import dataManager from '../../data/DataManager'
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault'
-import dialogManager from '../../components/dialog/DialogManager';
 import I18n from '../../common/language/i18n';
-import realmStore from '../../data/realm/RealmStore';
-import MainToolBar from '../main/MainToolBar';
 import { Metrics, Images } from '../../theme';
 import { useSelector, useDispatch } from 'react-redux';
 import { Constant } from '../../common/Constant';
 import colors from '../../theme/Colors';
-import { NavigationEvents } from 'react-navigation';
-import { useFocusEffect } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { currencyToString } from '../../common/Utils';
-import { getFileDuLieuString, setFileLuuDuLieu } from '../../data/fileStore/FileStorage';
 
 export default (props) => {
 
@@ -23,34 +15,19 @@ export default (props) => {
         console.log("useSelector state ", state);
         return state.Common
     });
-    const dispatch = useDispatch();
-    const numberColumn = useSelector(state => {
-        console.log("useSelector state ", state);
-
-        console.log("dataManager.dataChoosing ", dataManager.dataChoosing);
-        let numberColumn = (state.Common.orientaition == Constant.LANDSCAPE) ? 5 : 2
-        if (state.Common.deviceType == Constant.TABLET) numberColumn++
-        return numberColumn
-    });
 
     useEffect(() => {
-
         const getData = () => {
             if (deviceType == Constant.PHONE) {
                 console.log("props.route.params ", props.route.params);
                 setListOrder(props.route.params.list);
             }
-            // else {
-            //     if (props.data != "")
-            //         setListOrder(props.data.list);
-            // }
         }
         getData()
 
     }, [])
 
     useEffect(() => {
-
         const getData = () => {
             if (deviceType != Constant.PHONE) {
                 console.log("getData list ", props.data);
@@ -108,7 +85,7 @@ export default (props) => {
                     }) : null}
             </ScrollView>
             <View style={{ height: 40, flexDirection: "row", backgroundColor: colors.colorchinh, justifyContent: "space-between", alignItems: "center", padding: 10 }}>
-                <Text style={{ color: "#fff" }}>Tạm tính</Text>
+                <Text style={{ color: "#fff" }}>{I18n.t('tam_tinh')}</Text>
                 <Text style={{ color: "#fff", fontWeight: "bold" }}>{currencyToString(getTotalPrice(listOrder))} đ</Text>
             </View>
         </View>

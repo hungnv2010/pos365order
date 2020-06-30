@@ -30,7 +30,6 @@ export default (props) => {
     const dispatch = useDispatch();
     const numberColumn = useSelector(state => {
         console.log("useSelector state ", state);
-
         console.log("dataManager.dataChoosing ", dataManager.dataChoosing);
         let numberColumn = (state.Common.orientaition == Constant.LANDSCAPE) ? 5 : 2
         if (state.Common.deviceType == Constant.TABLET) numberColumn++
@@ -54,7 +53,6 @@ export default (props) => {
                 }
             }
             getHistory();
-            // setListOrder([...dataManager.dataChoosing]);
             return;
         }, [])
     );
@@ -106,8 +104,8 @@ export default (props) => {
                         key={item.Id}
                         style={{ borderRadius: 5, margin: numberColumn == 2 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#EED6A7" }}>
                         <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000", fontWeight: "bold" }}>{item.RoomName}</Text>
-                        <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>Số sản phẩm: {totalProduct(item.list)}</Text>
-                        <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>Tạm tính: {currencyToString(getTotalPrice(item.list))} đ</Text>
+                        <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{I18n.t('so_san_pham')}: {totalProduct(item.list)}</Text>
+                        <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{I18n.t('tam_tinh')}: {currencyToString(getTotalPrice(item.list))} đ</Text>
                         {item.time && item.time != "" ? <Text style={{ color: "#0072bc", textAlign: "center", marginTop: 10 }}>{moment(item.time).fromNow()}</Text> : null}
                     </TouchableOpacity>
                 )}
@@ -129,8 +127,8 @@ export default (props) => {
                                     key={item.Id}
                                     style={{ borderRadius: 5, marginVertical: 4, padding: 15, width: "100%", height: widthRoom / 1.5, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#EED6A7" }}>
                                     <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000", fontWeight: "bold" }}>{item.RoomName}</Text>
-                                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>Số sản phẩm: {totalProduct(item.list)}</Text>
-                                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>Tạm tính: {currencyToString(getTotalPrice(item.list))} đ</Text>
+                                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{I18n.t('so_san_pham')}: {totalProduct(item.list)}</Text>
+                                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{I18n.t('tam_tinh')}: {currencyToString(getTotalPrice(item.list))} đ</Text>
                                     {item.time && item.time != "" ? <Text style={{ color: "#0072bc", textAlign: "center", marginTop: 10 }}>{moment(item.time).fromNow()}</Text> : null}
                                 </TouchableOpacity>
                             )}
