@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from 'react';
-import { Image, View, Text, ScrollView, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground, FlatList } from 'react-native';
+import { Image, View, Text, Keyboard, TouchableWithoutFeedback, TouchableOpacity, Modal, TextInput, ImageBackground, FlatList } from 'react-native';
 import { Colors, Images, Metrics } from '../../../../theme';
 import Menu from 'react-native-material-menu';
 import dataManager from '../../../../data/DataManager';
@@ -28,12 +28,17 @@ export default (props) => {
     const [itemOrder, setItemOrder] = useState({})
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
-
+    const [marginModal, setMargin] = useState(0)
     const dispatch = useDispatch();
 
     const orientaition = useSelector(state => {
         console.log("orientaition", state);
         return state.Common.orientaition
+    });
+
+    const deviceType = useSelector(state => {
+        console.log("deviceType", state);
+        return state.Common.deviceType
     });
 
 
@@ -54,11 +59,25 @@ export default (props) => {
         }
         getVendorSession()
         init()
+
+        var keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', _keyboardDidShow);
+        var keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', _keyboardDidHide);
+
         return () => {
             console.log(dataManager.dataChoosing, 'dataManager.dataChoosing');
+            keyboardDidShowListener.remove();
+            keyboardDidHideListener.remove();
         }
     }, [])
 
+    const _keyboardDidShow = () => {
+        if (orientaition != Constant.PORTRAIT)
+            setMargin(Metrics.screenWidth / 2)
+    }
+
+    const _keyboardDidHide = () => {
+        setMargin(0)
+    }
 
     useEffect(() => {
         setItemOrder(props.itemOrder)
@@ -556,6 +575,7 @@ export default (props) => {
                             padding: 0,
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
                             width: Metrics.screenWidth * 0.8,
+                            marginBottom: Platform.OS == 'ios' ? marginModal : 0
                         }}>
                             <PopupDetail
                                 onClickTopping={() => onClickTopping(itemOrder)}
