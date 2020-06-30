@@ -84,11 +84,7 @@ export default (props) => {
 
 
     const getPriceItem = (item) => {
-        if (item.ProductType == 2) {
-            return item.Quantity * item.Price
-        } else {
-            return item.Price
-        }
+        return item.Quantity * item.Price
     }
 
 
@@ -190,7 +186,7 @@ export default (props) => {
             />
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
                 <View style={{ alignItems: "center", flex: 1 }}>
-                    <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth/2 }}>
+                    <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth / 2 }}>
                     </ImageBackground>
                 </View>
                 :
