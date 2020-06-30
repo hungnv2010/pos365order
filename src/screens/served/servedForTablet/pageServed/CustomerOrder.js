@@ -483,7 +483,7 @@ export default (props) => {
                     />
                     :
                     <View style={{ alignItems: "center", flex: 1 }}>
-                        <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth / 2 }}>
+                        <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth / 3 }}>
                         </ImageBackground>
                     </View>
                 }
@@ -619,19 +619,19 @@ const PopupDetail = (props) => {
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
-                            itemOrder.Quantity++
-                            setItemOrder({ ...itemOrder })
-                        }}>
-                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>+</Text>
-                        </TouchableOpacity>
-                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
-                        <TouchableOpacity onPress={() => {
-                            if (itemOrder.Quantity > 0) {
+                            if (itemOrder.Quantity > 1) {
                                 itemOrder.Quantity--
                                 setItemOrder({ ...itemOrder })
                             }
                         }}>
                             <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>-</Text>
+                        </TouchableOpacity>
+                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
+                        <TouchableOpacity onPress={() => {
+                            itemOrder.Quantity++
+                            setItemOrder({ ...itemOrder })
+                        }}>
+                            <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>+</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -646,7 +646,8 @@ const PopupDetail = (props) => {
                             numberOfLines={3}
                             multiline={true}
                             value={itemOrder.Description}
-                            style={{ flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC" }}
+
+                            style={{ height: 50, paddingLeft: 5, flex: 7, fontStyle: "italic", fontSize: 12, borderWidth: 0.5, borderRadius: 4, backgroundColor: "#D5D8DC" }}
                             placeholder={I18n.t('nhap_ghi_chu')} />
                     </View>
                 </View>

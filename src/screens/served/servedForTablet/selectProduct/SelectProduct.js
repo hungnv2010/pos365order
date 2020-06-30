@@ -207,6 +207,7 @@ export default (props) => {
         <View style={{ flex: 1, justifyContent: "center", }}>
           {hasProducts ?
             <FlatList
+              keyboardShouldPersistTaps="always"
               removeClippedSubviews={true}
               showsVerticalScrollIndicator={false}
               data={product}
