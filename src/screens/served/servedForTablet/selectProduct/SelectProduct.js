@@ -225,18 +225,19 @@ export default (props) => {
               keyExtractor={(item, index) => '' + index}
               extraData={product.Quantity}
               onEndReached={(info) => { loadMore(info) }}
+              ListFooterComponent={isLoadMore ? <ActivityIndicator color={Colors.colorchinh} /> : null}
             />
             :
             <ActivityIndicator size="large" style={{}} color={Colors.colorchinh} />}
         </View>
       </View>
-      {isLoadMore ? <ActivityIndicator style={{ position: "absolute", right: 5, bottom: 5 }} color={Colors.colorchinh} /> : null}
+      {/* {isLoadMore ? <ActivityIndicator style={{ position: "absolute", right: 5, bottom: 5 }} color={Colors.colorchinh} /> : null} */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  renderCateItem: { justifyContent: "center", alignItems: "center", paddingHorizontal: 5, marginLeft: 5, width: 150 },
+  renderCateItem: { justifyContent: "center", alignItems: "center", paddingHorizontal: 5, marginLeft: 5, width: 145, },
   textRenderCateItem: { fontWeight: "bold", textTransform: "uppercase", textAlign: "center", },
   button: { borderWidth: 1, padding: 20, borderRadius: 10 },
 });

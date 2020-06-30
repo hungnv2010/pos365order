@@ -171,13 +171,18 @@ export default (props) => {
                     RoomId: props.route.params.room.Id,
                     RoomName: props.route.params.room.Name,
                     SecondPrinter: null,
-                    Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : ""
+                    Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : "",
+                    Topping: element.Topping,
+                    TotalTopping: element.TotalTopping,
+                    Description: element.Description
                 }
-                if (element.Description != '') {
-                    obj.Description = element.Description
-                }
+                // if (element.Description != '') {
+                //     obj.Description = element.Description
+                // }
                 params.ServeEntities.push(obj)
             });
+            console.log('params.ServeEntities', params.ServeEntities);
+
             dialogManager.showLoading();
             new HTTPService().setPath(ApiPath.SAVE_ORDER).POST(params).then((res) => {
                 console.log("sendOrder res ", res);

@@ -133,7 +133,7 @@ export default (props) => {
     let Quantity = 1
     if (item.IsPriceForBlock) {
       Quantity = item.BlockOfTimeToUseService / 60
-    } 
+    }
     return Quantity
   }
 
@@ -174,7 +174,7 @@ export default (props) => {
 
   const onChangeText = (numb, item) => {
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-      listProducts.current[pos].Quantity = numb
+    listProducts.current[pos].Quantity = numb
   }
 
 
@@ -266,12 +266,13 @@ export default (props) => {
               keyExtractor={(item, index) => '' + index}
               extraData={product.Quantity}
               onEndReached={(info) => { loadMore(info) }}
+              ListFooterComponent={isLoadMore ? <ActivityIndicator color={Colors.colorchinh} /> : null}
             />
             :
             <ActivityIndicator size="large" style={{}} color={Colors.colorchinh} />}
         </View>
       </View>
-      {isLoadMore ? <ActivityIndicator style={{ position: "absolute", right: 5, bottom: 5 }} color={Colors.colorchinh} /> : null}
+      {/* {isLoadMore ? <ActivityIndicator style={{ position: "absolute", right: 5, bottom: 5 }} color={Colors.colorchinh} /> : null} */}
     </View>
   );
 }

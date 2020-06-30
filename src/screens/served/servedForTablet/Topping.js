@@ -147,7 +147,7 @@ export default (props) => {
 
     const renderTopping = (item, index) => {
         return (
-            <View key={item.Id} style={[styles.toppingItem, { backgroundColor: item.Quantity > 0 ? "#6EA2D6" : "white" }]}>
+            <View key={item.Id} style={[styles.toppingItem, { backgroundColor: item.Quantity > 0 ? "#EED6A7" : "white", flex: 1 / props.numColumns, }]}>
                 <View style={{ flex: 3, paddingRight: 10 }}>
                     <Text numberOfLines={2} style={{}}>{item.Name}</Text>
                     <Text numberOfLines={2} style={{ fontStyle: "italic", fontSize: 13, color: "gray" }}>{currencyToString(item.Price)}</Text>
@@ -214,7 +214,7 @@ export default (props) => {
 
 const styles = StyleSheet.create({
     cateItem: { borderWidth: 0.5, padding: 15, margin: 5, borderRadius: 10 },
-    toppingItem: { flex: 1, flexDirection: "row", justifyContent: "space-between", padding: 10, alignItems: "center", borderRadius: 10, margin: 3 },
+    toppingItem: { flexDirection: "row", justifyContent: "space-between", padding: 10, alignItems: "center", borderRadius: 10, margin: 2 },
     button: { borderWidth: .5, padding: 15, borderRadius: 10 },
 })
 

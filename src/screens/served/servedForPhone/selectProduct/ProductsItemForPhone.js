@@ -19,7 +19,7 @@ const ProductsItemForPhone = ({ item, index, onClickProduct, handleButtonDecreas
                 source={JSON.parse(item.ProductImages).length > 0 ? { uri: JSON.parse(item.ProductImages)[0].ImageURL } : Images.default_food_image}
             />
             <View style={styles.wrapNameItem}>
-                <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold" }}>{item.Name}</Text>
+                <Text numberOfLines={2} style={{ textTransform: "uppercase", fontWeight: "bold" }}>{item.Name}</Text>
                 <Text style={{ paddingVertical: 5, fontStyle: "italic" }}>{currencyToString(item.Price)}<Text style={{ color: Colors.colorchinh }}>{item.LargeUnit != '' ? `/${item.LargeUnit}` : item.Unit != '' ? `/${item.Unit}` : ''}</Text></Text>
             </View>
             <View style={{ flex: 1.5, flexDirection: "row", alignItems: "center", marginRight: 25 }}>

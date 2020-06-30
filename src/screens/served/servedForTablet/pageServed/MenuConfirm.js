@@ -45,6 +45,7 @@ export default (props) => {
                     item.status = true
                     if (item.name == props.Position) {
                         serverEvent = serverEventPos
+                        console.log('JSON.parse(serverEvent[0].JsonContent)', JSON.parse(serverEvent[0].JsonContent));
                         setJsonContent(JSON.parse(serverEvent[0].JsonContent))
                         serverEvent.addListener((collection, changes) => {
                             setJsonContent(JSON.parse(serverEvent[0].JsonContent))
@@ -78,6 +79,11 @@ export default (props) => {
     const showMenu = () => {
         _menu.show();
     };
+
+
+    const getPriceItem = (item) => {
+        return item.Quantity * item.Price
+    }
 
 
     const changTable = () => {
@@ -176,11 +182,15 @@ export default (props) => {
                                         <Text style={{ fontStyle: "italic" }}>{currencyToString(item.Price)} x</Text>
                                         <Text style={{ color: Colors.colorPhu }}> {item.Quantity} {}</Text>
                                     </View>
+                                    {item.Description != "" ?
+                                        <Text style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}>
+                                            {item.Description}
+                                        </Text>
+                                        :
+                                        null}
                                 </View>
                                 <View style={{ alignItems: "center", flexDirection: "row" }}>
-
-                                    <Text style={{ padding: 10 }}>{item.Quantity}</Text>
-
+                                    <Text style={{ fontWeight: "bold", color: Colors.colorchinh, padding: 10 }}>{currencyToString(getPriceItem(item))}</Text>
                                 </View>
                             </View>
                         )
