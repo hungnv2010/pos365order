@@ -57,7 +57,7 @@ export default (props) => {
         return numberColumn
     });
 
-    let rooms = []
+    let rooms = null
     let roomGroups = null
     let serverEvents = null
     const [datas, setData] = useState([])
@@ -66,15 +66,13 @@ export default (props) => {
     const RoomAll = { Name: "Tất cả", Id: "All" }
     const [listRoom, setListRoom] = useState([])
 
-    useEffect(() => {
-        return () => {
-            if (serverEvents) serverEvents.removeAllListeners()
-        }
-    }, [])
 
     useEffect(() => {
         if (props.already || (props.route.params && props.route.params.Name)) {
             init()
+        }
+        return () => {
+            if (serverEvents) serverEvents.removeAllListeners()
         }
     }, [props.already])
 

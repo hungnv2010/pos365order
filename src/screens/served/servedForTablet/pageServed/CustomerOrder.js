@@ -71,7 +71,6 @@ export default (props) => {
 
     useEffect(() => {
         if (props.listProducts.length == 0) return
-        console.log('useEffect props.listProducts', props.listProducts);
         let exist = false
         listPosition.forEach(element => {
             if (element.key == props.Position) {
@@ -98,7 +97,6 @@ export default (props) => {
             }
         })
         if (!exist) {
-            // listPosition.push({ key: props.Position, list: [] })/I
             syncListProducts([])
         }
     }, [props.Position, listPosition])
@@ -112,19 +110,21 @@ export default (props) => {
         const getInfoTopping = (listTopping) => {
             let description = '';
             let totalPrice = 0;
+            let topping = []
             listTopping.forEach(item => {
                 if (item.Quantity > 0) {
-                    description += ` -- ${item.Name} x ${item.Quantity} = ${currencyToString(item.Quantity * item.Price)} ; `
+                    description += ` -${item.Name} x${item.Quantity} = ${currencyToString(item.Quantity * item.Price)}\n `
                     totalPrice += item.Quantity * item.Price
+                    topping.push({ ExtraId: item.ExtraId, QuantityExtra: item.Quantity, Price: item.Price, Quantity: item.Quantity })
                 }
             })
-            return [description, totalPrice]
+            return [description, totalPrice, topping]
         }
-        let [description, totalPrice] = getInfoTopping(props.listTopping)
+        let [description, totalPrice, topping] = getInfoTopping(props.listTopping)
         list.forEach(element => {
             if (element.Sid == props.itemOrder.Sid) {
                 element.Description = description
-                element.Topping = JSON.stringify(props.listTopping)
+                element.Topping = JSON.stringify(topping)
                 element.TotalTopping = totalPrice
             }
         });
@@ -160,10 +160,34 @@ export default (props) => {
             let params = {
                 ServeEntities: []
             };
+
+
+            // BasePrice: 20000
+            // Code: "HH-0002"
+            // Description: " -Cà phê chago x1=5,000↵"
+            // DiscountRatio: 0
+            // Name: "Trà bí đao "
+            // OrderQuickNotes: []
+            // Position: "A"
+            // Price: 25000
+            // Printer: "KitchenA"
+            // Printer3: null
+            // Printer4: null
+            // Printer5: null
+            // ProductId: 8069056
+            // Quantity: 2
+            // RoomId: 156169
+            // RoomName: "Bàn 28"
+            // SecondPrinter: null
+            // Serveby: 39207
+            // Topping: "[{"ExtraId":8069091,"QuantityExtra":1,"Price":5000,"Quantity":1}]"
+            // TotalTopping: 5000
+
             ls.forEach(element => {
                 let obj = {
                     BasePrice: element.Price,
                     Code: element.Code,
+                    Description: element.Description,
                     Name: element.Name,
                     OrderQuickNotes: [],
                     Position: props.Position,
@@ -177,7 +201,9 @@ export default (props) => {
                     RoomId: props.route.params.room.Id,
                     RoomName: props.route.params.room.Name,
                     SecondPrinter: null,
-                    Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : ""
+                    Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : "",
+                    Topping: element.Topping,
+                    TotalTopping: element.TotalTopping,
                 }
                 params.ServeEntities.push(obj)
             });
@@ -332,7 +358,7 @@ export default (props) => {
                 setShowModal(!showModal)
             }}>
                 <View style={{
-                    flexDirection: "row", flex: 1, alignItems: "center", justifyContent: "space-evenly", padding: 5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : null, borderBottomColor: "#ABB2B9", borderBottomWidth: 0.5,
+                    flexDirection: "row", flex: 1, alignItems: "center", justifyContent: "space-evenly", padding: 5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : 'white', borderRadius: 10, marginBottom: 2
                 }}>
                     <TouchableOpacity
                         style={{ marginRight: 5 }}
@@ -478,15 +504,6 @@ export default (props) => {
                         <View style={{
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 5,
                         }}>
-                            {/* <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text> */}
-                            {/* <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={() => sendNotidy(1)}>
-                                <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={() => sendNotidy(2)}>
-                                <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
-                            </TouchableOpacity> */}
                             <TouchableOpacity onPress={() => sendNotidy(1)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
                                 <MaterialIcons style={{ paddingHorizontal: 7 }} name="notifications" size={26} color={Colors.colorchinh} />
                                 <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>

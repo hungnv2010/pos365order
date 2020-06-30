@@ -20,7 +20,7 @@ const ProductsItem = ({ item, index, getQuantityProduct, numColumns, onClickProd
                 />
                 <View style={{ height: 1, backgroundColor: "#E5E7E9", width: "90%", alignSelf:"center" }}></View>
                 <View style={{ marginLeft: 10 }}>
-                    <Text numberOfLines={3} style={{ textTransform: "uppercase", fontWeight: "bold", paddingVertical: 5 }}>{item.Name}</Text>
+                    <Text numberOfLines={2} style={{ textTransform: "uppercase", fontWeight: "bold", paddingVertical: 5 }}>{item.Name}</Text>
                     <Text style={{  fontStyle: "italic" }}>{currencyToString(item.Price)}<Text style={{ color: Colors.colorchinh }}>{item.LargeUnit != '' ? `/${item.LargeUnit}` : item.Unit != '' ? `/${item.Unit}` : ''}</Text></Text>
                 </View>
             </View>
