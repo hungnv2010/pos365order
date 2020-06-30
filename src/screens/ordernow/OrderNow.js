@@ -134,8 +134,10 @@ export default (props) => {
             {listOrder.length > 0 ?
                 renderList()
                 :
-                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
-                </ImageBackground>
+                <View style={{ alignItems: "center", flex: 1 }}>
+                    <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth / 3 }}>
+                    </ImageBackground>
+                </View>
             }
         </View>
     );

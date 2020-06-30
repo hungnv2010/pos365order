@@ -17,6 +17,7 @@ import dialogManager from '../../../../components/dialog/DialogManager';
 import { StackActions } from '@react-navigation/native';
 
 import ViewPrint from '../../../more/ViewPrint';
+import { Metrics } from '../../../../theme';
 const { Print } = NativeModules;
 
 export default (props) => {
@@ -162,8 +163,10 @@ export default (props) => {
                 }
             />
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
-                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
-                </ImageBackground>
+                <View style={{ alignItems: "center", flex: 1 }}>
+                    <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth / 3 }}>
+                    </ImageBackground>
+                </View>
                 :
                 <ScrollView style={{ flex: 1 }}>
                     {jsonContent.OrderDetails.map((item, index) => {
@@ -235,15 +238,6 @@ export default (props) => {
                         <View style={{
                             backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 5,
                         }}>
-                            {/* <Text style={{ padding: 10, fontSize: 16, textAlign: "center", borderBottomWidth: .5 }}>Giờ vào: 27/04/2020 08:00</Text>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={() => sendNotidy(1)}>
-                                <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }} onPress={() => sendNotidy(2)}>
-                                <Image style={{ width: 20, height: 20 }} source={Images.icon_notification} />
-                                <Text style={{ padding: 10, fontSize: 16 }}>{I18n.t('gui_thong_bao_toi_thu_ngan')}</Text>
-                            </TouchableOpacity> */}
                             <TouchableOpacity onPress={() => sendNotidy(1)} style={{ flexDirection: "row", alignItems: "center", borderBottomWidth: .5 }}>
                                 <MaterialIcons style={{ paddingHorizontal: 7 }} name="notifications" size={26} color={Colors.colorchinh} />
                                 <Text style={{ padding: 15, fontSize: 16 }}>{I18n.t('yeu_cau_thanh_toan')}</Text>

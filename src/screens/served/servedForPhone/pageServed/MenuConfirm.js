@@ -17,6 +17,7 @@ import { Snackbar } from 'react-native-paper';
 import ViewPrint from '../../../more/ViewPrint';
 const { Print } = NativeModules;
 import { dateToDate, DATE_FORMAT, currencyToString } from '../../../../common/Utils';
+import { Metrics } from '../../../../theme';
 
 
 export default (props) => {
@@ -188,8 +189,10 @@ export default (props) => {
                 }
             />
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
-                <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
-                </ImageBackground>
+                <View style={{ alignItems: "center", flex: 1 }}>
+                    <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth / 3 }}>
+                    </ImageBackground>
+                </View>
                 :
                 <ScrollView style={{ flex: 1 }}>
                     {jsonContent.OrderDetails.map((item, index) => {

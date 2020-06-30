@@ -10,6 +10,7 @@ import More from '../../screens/more/More'
 import OrderNow from '../../screens/ordernow/OrderNow';
 import { useSelector } from 'react-redux';
 import dataManager from '../../data/DataManager';
+import History from '../../screens/history/History'
 
 export default () => {
 
@@ -23,7 +24,7 @@ export default () => {
             initialRouteName="Home"
             activeColor={Colors.colorchinh}
             inactiveColor="#696969"
-            // shifting={true}
+            shifting={false}
             barStyle={{ backgroundColor: '#ffffff', height: 50 }}
         >
             <Tab.Screen name="Home" component={Main} options={{
@@ -59,14 +60,16 @@ export default () => {
                     </View>
                 ),
             }} />
+            <Tab.Screen name="History" component={History} options={{
+                tabBarLabel: 'History',
+                tabBarIcon: ({ color }) => (
+                    <Icon name="history" size={26} color={color} />
+                ),
+            }} />
             <Tab.Screen name="More" component={More} options={{
                 tabBarLabel: 'More',
                 tabBarIcon: ({ color }) => (
                     <Icon name="more-horiz" size={26} color={color} />
-                    // color == colors.colorchinh ?
-                    //     <Image style={{ width: 20, height: 20, padding: 5 }} color={color} source={Images.icon_more_active} />
-                    //     :
-                    //     <Image style={{ width: 20, height: 20, padding: 5 }} color={color} source={Images.icon_more} />
                 ),
             }} />
 

@@ -130,7 +130,7 @@ const Served = (props) => {
                         <View style={!itemOrder.Sid ? { flex: 1 } : { width: 0, height: 0 }}>
                             <SelectProduct
                                 valueSearch={value}
-                                numColumns={orientaition == Constant.LANDSCAPE ? 4 : 2}
+                                numColumns={orientaition == Constant.LANDSCAPE ? 4 : 3}
                                 listProducts={[...listProducts]}
                                 outputListProducts={outputListProducts} />
                         </View>

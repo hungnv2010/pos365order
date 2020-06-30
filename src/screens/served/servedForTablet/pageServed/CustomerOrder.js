@@ -8,7 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { ApiPath } from '../../../../data/services/ApiPath';
 import dialogManager from '../../../../components/dialog/DialogManager';
 import { HTTPService } from '../../../../data/services/HttpService';
-import { getFileDuLieuString } from '../../../../data/fileStore/FileStorage';
+import { getFileDuLieuString, setFileLuuDuLieu } from '../../../../data/fileStore/FileStorage';
 import { Constant } from '../../../../common/Constant';
 import TextTicker from 'react-native-text-ticker';
 import { currencyToString } from '../../../../common/Utils';
@@ -182,11 +182,35 @@ export default (props) => {
                 params.ServeEntities.push(obj)
             });
             dialogManager.showLoading();
-            new HTTPService().setPath(ApiPath.SAVE_ORDER).POST(params).then((res) => {
+            new HTTPService().setPath(ApiPath.SAVE_ORDER).POST(params).then(async (res) => {
                 console.log("sendOrder res ", res);
                 syncListProducts([])
                 let tempListPosition = dataManager.dataChoosing.filter(item => item.Id != props.route.params.room.Id)
                 dataManager.dataChoosing = tempListPosition;
+
+                let historyTemp = [];
+                let history = await getFileDuLieuString(Constant.HISTORY_ORDER, true);
+                console.log("history ", history);
+                if (history && history != "") {
+                    history = JSON.parse(history)
+                    history.push({
+                        time: new Date(),
+                        Position: props.Position,
+                        list: ls, RoomId: props.route.params.room.Id,
+                        RoomName: props.route.params.room.Name,
+                    })
+                    historyTemp = history;
+                } else {
+                    historyTemp.push({
+                        time: new Date(),
+                        Position: props.Position,
+                        list: ls, RoomId: props.route.params.room.Id,
+                        RoomName: props.route.params.room.Name,
+                    })
+                }
+
+                setFileLuuDuLieu(Constant.HISTORY_ORDER, JSON.stringify(historyTemp))
+
                 dialogManager.hiddenLoading()
             }).catch((e) => {
                 console.log("sendOrder err ", e);
@@ -429,8 +453,10 @@ export default (props) => {
                         keyExtractor={(item, index) => '' + index}
                     />
                     :
-                    <ImageBackground resizeMode="contain" source={Images.logo_365} style={{ flex: 1, opacity: .2, margin: 20 }}>
-                    </ImageBackground>
+                    <View style={{ alignItems: "center", flex: 1 }}>
+                        <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth / 3 }}>
+                        </ImageBackground>
+                    </View>
                 }
             </View>
             <View
