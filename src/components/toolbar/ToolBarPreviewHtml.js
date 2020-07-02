@@ -11,6 +11,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Fonts from '../../theme/Fonts';
 import LinearGradient from 'react-native-linear-gradient';
 import PropTypes from 'prop-types';
+import colors from '../../theme/Colors';
 
 export default function ToolBarPreviewHtml(props) {
 
@@ -19,11 +20,11 @@ export default function ToolBarPreviewHtml(props) {
     };
 
     return (
-        <LinearGradient
-            start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
-            colors={['#FFAB40', '#FF5722']}
-            style={{ height: 44 }}
-        >
+        // <LinearGradient
+        //     start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}
+        //     colors={['#FFAB40', '#FF5722']}
+        //     style={{ height: 44, zIndex: 9999999999}}
+        // >
             <View style={styles.toolbarContainer}>
                 <View style={{
                     flex: 1,
@@ -64,7 +65,7 @@ export default function ToolBarPreviewHtml(props) {
                     </View>
                 </View>
             </View>
-        </LinearGradient>
+        // </LinearGradient>
     )
 
 }
@@ -72,15 +73,10 @@ export default function ToolBarPreviewHtml(props) {
 const styles = StyleSheet.create({
 
     toolbarContainer: {
-        height: 44,
-        flex: 1,
-        shadowColor: Colors.black,
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.24,
-        shadowRadius: 0.3,
+        flexDirection: "row",
+        height: 40,
+        backgroundColor: Colors.colorchinh,
+        zIndex: 99999999
     },
 })
 

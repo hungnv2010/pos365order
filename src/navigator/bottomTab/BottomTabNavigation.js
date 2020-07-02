@@ -12,6 +12,8 @@ import { useSelector } from 'react-redux';
 import dataManager from '../../data/DataManager';
 import History from '../../screens/history/History'
 
+import I18n from '../../common/language/i18n'
+
 export default () => {
 
     const numberOrder = useSelector(state => {
@@ -28,7 +30,7 @@ export default () => {
             barStyle={{ backgroundColor: '#ffffff', height: 50 }}
         >
             <Tab.Screen name="Home" component={Main} options={{
-                tabBarLabel: 'Home',
+                tabBarLabel: I18n.t('tong_quan'),
                 tabBarIcon: ({ color }) => (
                     <View>
                         <Icon name="home" size={22} color={color} />
@@ -46,7 +48,7 @@ export default () => {
                 ),
             }} />
             <Tab.Screen name="OrderNow" component={OrderNow} options={{
-                tabBarLabel: 'Order',
+                tabBarLabel: I18n.t('dang_goi'),
                 tabBarIcon: ({ color }) => (
                     <View>
                         <Icon name="restaurant-menu" size={22} color={color} />
@@ -61,13 +63,13 @@ export default () => {
                 ),
             }} />
             <Tab.Screen name="History" component={History} options={{
-                tabBarLabel: 'History',
+                tabBarLabel: I18n.t('lich_su'),
                 tabBarIcon: ({ color }) => (
                     <Icon name="history" size={26} color={color} />
                 ),
             }} />
             <Tab.Screen name="More" component={More} options={{
-                tabBarLabel: 'More',
+                tabBarLabel: I18n.t('them'),
                 tabBarIcon: ({ color }) => (
                     <Icon name="more-horiz" size={26} color={color} />
                 ),

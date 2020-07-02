@@ -5,7 +5,7 @@ export default `<!DOCTYPE html>
       <meta charset="UTF-8">
       <title>Document</title>
       <style>
-          table, th, td { border-collapse: collapse; font-size:16.0px; }
+          table, th, td { border-collapse: collapse; font-size:12.0px; }
           td { text-align: right; word-wrap: break-word; max-width: 0px; }
           body { margin:0 auto; background-color: white;}
       </style>

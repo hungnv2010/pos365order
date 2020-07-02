@@ -15,7 +15,6 @@ import I18n from '../../../common/language/i18n';
 import realmStore from '../../../data/realm/RealmStore'
 import { useSelector, useDispatch } from 'react-redux';
 import { currencyToString, dateUTCToMoment, momentToDateUTC } from '../../../common/Utils'
-import moment from "moment";
 import { Constant } from '../../../common/Constant';
 import { Images, Metrics } from '../../../theme';
 import colors from '../../../theme/Colors';
@@ -26,6 +25,8 @@ import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
 import dataManager from '../../../data/DataManager';
 import { useFocusEffect } from '@react-navigation/native';
+import moment from 'moment';
+import 'moment/min/locales'
 
 const _nodes = new Map();
 
@@ -76,11 +77,16 @@ export default (props) => {
         }
     }, [props.already])
 
+    useEffect(() => {
+        moment.locale('vi');
+    }, [])
+
     useFocusEffect(
         React.useCallback(() => {
             console.log("useFocusEffect Main ", dataManager.dataChoosing);
             setListOrder(() => dataManager.dataChoosing.map(item => item.Id))
             dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+
         }, [])
     );
 
