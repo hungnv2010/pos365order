@@ -333,7 +333,7 @@ export default (props) => {
     const mapDataToList = (data) => {
         console.log("mapDataToList(data) ", data);
         list.forEach(element => {
-            if (element.Id == data.Id) {
+            if (element.Sid == data.Sid) {
                 element.Description = data.Description
                 element.Quantity = data.Quantity
             }
@@ -376,7 +376,7 @@ export default (props) => {
                     return
                 }
                 console.log("setItemOrder ", item);
-                setItemOrder(item)
+                setItemOrder({...item})
                 setShowModal(!showModal)
             }}>
                 <View style={{
