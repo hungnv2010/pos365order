@@ -252,7 +252,7 @@ export default (props) => {
     }
 
     const removeItem = (item, index) => {
-        console.log('delete');
+        console.log('delete ', item.Name, index);
         let hasData = true
         list.splice(index, 1)
         dataManager.dataChoosing.forEach(item => {
@@ -298,7 +298,7 @@ export default (props) => {
     const getTotalPrice = () => {
         let total = 0;
         list.forEach(item => {
-            if (item.ProductType != 2) {
+            if (item.ProductType != 2 && !item.IsTimer) {
                 let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
                 let totalTopping = item.TotalTopping ? item.TotalTopping : 0
                 total += (price + totalTopping) * item.Quantity
@@ -326,19 +326,19 @@ export default (props) => {
     const renderForPhone = (item, index) => {
         return (
             <TouchableOpacity key={index} onPress={() => {
-                if (item.ProductType == 2) {
+                if (item.ProductType == 2 && item.IsTimer) {
                     setToastDescription(I18n.t("ban_khong_co_quyen_dieu_chinh_mat_hang_thoi_gian"))
                     setShowToast(true)
                     return
                 }
                 console.log("setItemOrder ", item);
-                setItemOrder({...item})
+                setItemOrder({ ...item })
                 setShowModal(!showModal)
             }}>
                 <View style={styles.mainItem}>
                     <TouchableOpacity
                         style={{ paddingHorizontal: 5 }}
-                        onPress={removeItem}>
+                        onPress={()=>removeItem(item, index)}>
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flex: 1, }}>
@@ -357,7 +357,7 @@ export default (props) => {
                             :
                             null}
                     </View>
-                    {item.ProductType == 2 ?
+                    {item.ProductType == 2 && item.IsTimer ?
                         null
                         :
                         <TouchableOpacity
@@ -568,6 +568,7 @@ const PopupDetail = (props) => {
 
 const styles = StyleSheet.create({
     mainItem: {
+        borderBottomColor: "#ddd", borderBottomWidth: 0.5,
         flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-evenly",

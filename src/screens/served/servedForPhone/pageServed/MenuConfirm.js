@@ -137,7 +137,7 @@ export default (props) => {
     const sendNotidy = (type) => {
         console.log("sendNotidy type ", type);
         hideMenu();
-        if (type == 1 && !(jsonContent.OrderDetails.length > 0)) {
+        if (type == 1 && !(jsonContent.OrderDetails&&jsonContent.OrderDetails.length > 0)) {
             setToastDescription(I18n.t("ban_hay_chon_mon_an_truoc"))
             setShowToast(true)
         } else

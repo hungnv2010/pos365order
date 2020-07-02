@@ -295,7 +295,7 @@ export default (props) => {
     }
 
     const removeItem = (item, index) => {
-        console.log('delete');
+        console.log('delete', index, item);
         let hasData = true
         list.splice(index, 1)
         dataManager.dataChoosing.forEach(item => {
@@ -318,7 +318,7 @@ export default (props) => {
     const getTotalPrice = () => {
         let total = 0;
         list.forEach(item => {
-            if (item.ProductType != 2) {
+            if (item.ProductType != 2 && !item.IsTimer) {
                 let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
                 total += price * item.Quantity + item.TotalTopping
             }
@@ -370,21 +370,22 @@ export default (props) => {
     const renderForTablet = (item, index) => {
         return (
             <TouchableOpacity key={index} onPress={() => {
-                if (item.ProductType == 2) {
+                if (item.ProductType == 2 && item.IsTimer) {
                     setToastDescription(I18n.t("ban_khong_co_quyen_dieu_chinh_mat_hang_thoi_gian"))
                     setShowToast(true)
                     return
                 }
                 console.log("setItemOrder ", item);
-                setItemOrder({...item})
+                setItemOrder({ ...item })
                 setShowModal(!showModal)
             }}>
                 <View style={{
+                    borderBottomColor: "#ddd", borderBottomWidth: 0.5,
                     flexDirection: "row", flex: 1, alignItems: "center", justifyContent: "space-evenly", padding: 5, backgroundColor: item.Sid == props.itemOrder.Sid ? "#EED6A7" : 'white', borderRadius: 10, marginBottom: 2
                 }}>
                     <TouchableOpacity
                         style={{ marginRight: 5 }}
-                        onPress={removeItem}>
+                        onPress={() => removeItem(item, index)}>
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flexDirection: "column", flex: 1, }}>
@@ -406,7 +407,7 @@ export default (props) => {
                             :
                             <View style={{ flex: 1, flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
                                 {
-                                    item.ProductType == 2 ?
+                                    item.ProductType == 2 && item.IsTimer ?
                                         <View style={{
                                             flex: 1 / 2, alignItems: "center", paddingVertical: 10,
                                             shadowColor: "#000",
@@ -470,7 +471,7 @@ export default (props) => {
                             </View>
                     }
                     {
-                        item.ProductType == 2 ?
+                        item.ProductType == 2 && item.IsTimer ?
                             null
                             :
                             <TouchableOpacity

@@ -19,7 +19,7 @@ import { Constant } from '../../../common/Constant';
 import { Images, Metrics } from '../../../theme';
 import colors from '../../../theme/Colors';
 import TextTicker from 'react-native-text-ticker';
-import { Checkbox } from 'react-native-paper';
+import { Checkbox, RadioButton } from 'react-native-paper';
 import { HTTPService } from '../../../data/services/HttpService';
 import dialogManager from '../../../components/dialog/DialogManager';
 import { ApiPath } from '../../../data/services/ApiPath';
@@ -376,8 +376,12 @@ export default (props) => {
                             <Text style={{ fontSize: 20, paddingHorizontal: 20, paddingVertical: 15, fontWeight: "bold" }}>{I18n.t('chon_vi_tri')}</Text>
                             {listPosition.map((item, index) => {
                                 return (
-                                    <View key={index} style={{ flexDirection: "row", alignItems: "center", }}>
-                                        <Checkbox
+                                    <TouchableOpacity onPress={() => {
+                                        listPosition.forEach(lp => { lp.checked = false })
+                                        listPosition[index].checked = !listPosition[index].checked;
+                                        setListPosition([...listPosition])
+                                    }} key={index} style={{ flexDirection: "row", alignItems: "center", }}>
+                                        <RadioButton.Android
                                             color="orange"
                                             status={item.checked ? 'checked' : 'unchecked'}
                                             onPress={() => {
@@ -387,7 +391,7 @@ export default (props) => {
                                             }}
                                         />
                                         <Text style={{ marginLeft: 20, fontSize: 20 }}>[{item.position}]</Text>
-                                    </View>
+                                    </TouchableOpacity>
                                 )
                             })}
                             <View style={{ flexDirection: "row", justifyContent: "flex-end", padding: 15, alignItems: "center" }}>
