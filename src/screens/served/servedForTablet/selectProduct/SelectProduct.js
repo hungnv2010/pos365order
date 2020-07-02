@@ -149,7 +149,7 @@ export default (props) => {
 
   const getDescription = (item) => {
     let Description = ''
-    if (item.ProductType == 2) {
+    if (item.ProductType == 2&& item.IsTimer) {
       let date = new Date()
       let [day, month, hour, minute] = [date.getDate(), date.getMonth(), date.getHours(), date.getMinutes()]
       Description = `${day}/${month} ${hour}:${minute}=>${day}/${month} ${hour}:${minute} (0 ${I18n.t('phut')})`

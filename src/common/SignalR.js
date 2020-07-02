@@ -14,7 +14,7 @@ class SignalRManager {
     init(data) {
         console.log("this.info" ,data.Rid);
         this.info = {
-            SessionId: "NR49Agi4hu7nTpidgFHd",
+            SessionId: data.SessionId,
             rId: data.RID,
             bId: data.BID
         }

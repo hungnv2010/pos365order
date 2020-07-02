@@ -68,7 +68,7 @@ export default (props) => {
             <ScrollView style={{ flex: 1 }}>
                 {listOrder.length > 0 ?
                     listOrder.map(item => {
-                        return (<View style={{ flex: 1, padding: 10, flexDirection: "row", }} key={item.Id}>
+                        return (<View style={{borderBottomColor: "#ddd", borderBottomWidth: 0.5, flex: 1, padding: 10, flexDirection: "row", }} key={item.Id}>
                             <Image
                                 style={{ height: 70, width: 70, borderRadius: 50, borderWidth: 0.5 }}
                                 source={item.ProductImages != "" && JSON.parse(item.ProductImages).length > 0 ? { uri: JSON.parse(item.ProductImages)[0].ImageURL } : Images.default_food_image}

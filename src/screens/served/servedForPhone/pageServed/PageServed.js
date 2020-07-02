@@ -165,7 +165,7 @@ export default (props) => {
 
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, backgroundColor: "#fff" }}>
             <ToolBarPhoneServed
                 ref={toolBarPhoneServedRef}
                 {...props}

@@ -9,6 +9,7 @@ import I18n from '../../common/language/i18n';
 import signalRManager from '../../common/SignalR';
 import { getFileDuLieuString } from '../../data/fileStore/FileStorage';
 import { Constant } from '../../common/Constant';
+import store from '../../store/configureStore';
 
 
 
@@ -25,7 +26,8 @@ export default (props) => {
       if (data) {
         data = JSON.parse(data);
         console.log('this.info data.BID ',data.BID);
-        signalRManager.init(data)
+        let state = store.getState();
+        signalRManager.init({...data, SessionId: state.Common.info.SessionId})
       }
     }
     getVendorSession()

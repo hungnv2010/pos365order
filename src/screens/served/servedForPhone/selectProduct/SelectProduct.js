@@ -139,7 +139,7 @@ export default (props) => {
 
   const getDescription = (item) => {
     let Description = ''
-    if (item.ProductType == 2) {
+    if (item.ProductType == 2 && item.IsTimer) {
       let date = new Date()
       let [day, month, hour, minute] = [date.getDate(), date.getMonth(), date.getHours(), date.getMinutes()]
       Description = `${day}/${month} ${hour}:${minute}=>${day}/${month} ${hour}:${minute} (0 ${I18n.t('phut')})`
@@ -151,7 +151,7 @@ export default (props) => {
     console.log('handleButtonIncrease', item, index);
     let qtt = getQuantity(item)
     item.Quantity += qtt
-    if (item.SplitForSalesOrder || item.ProductType == 2) {
+    if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
       listProducts.current.unshift({ ...item, Quantity: qtt, Sid: Date.now() })
     } else {
       let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
@@ -164,7 +164,7 @@ export default (props) => {
     let qtt = getQuantity(item)
     item.Quantity -= qtt
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-    if (item.SplitForSalesOrder || item.ProductType == 2) {
+    if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
       listProducts.current.splice(pos, 1)
     } else {
       listProducts.current[pos].Quantity -= qtt

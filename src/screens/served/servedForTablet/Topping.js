@@ -172,7 +172,7 @@ export default (props) => {
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                     <Text numberOfLines={1} style={{ color: "white", textAlign: "center" }}>{itemOrder ? itemOrder.Name : ''}</Text>
                 </View>
-                <View style={{ flex: 5, justifyContent: "center", alignItems: "center" }}>
+                <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
                     <Text style={{ color: "white", fontWeight: "bold", fontSize: 15 }}>Topping</Text>
                 </View>
                 <View style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}>
