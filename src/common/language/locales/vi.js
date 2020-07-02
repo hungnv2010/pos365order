@@ -44,6 +44,7 @@ export default {
   d: "đ",
   don_gia: "Đơn giá",
   den: "đến",
+  dang_goi: "Gọi món",
   // TODO: E
 
 
@@ -97,6 +98,7 @@ export default {
   lan: "lần",
   lich_su_giao_dich: "Lịch sử giao dịch",
   logout: "Đăng xuất",
+  lich_su: "Lịch sử",
 
   // TODO: M
   mang_luoi: 'Mạng lưới',

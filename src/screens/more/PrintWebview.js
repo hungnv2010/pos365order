@@ -320,8 +320,8 @@ export default forwardRef((props, ref) => {
     const viewPrintRef = useRef();
 
     return (
-        <View style={{ backgroundColor: "#fff",alignItems: "center", flex: 1 }}>
-            <ViewPrint
+        <View style={{ backgroundColor: "#fff", alignItems: "center", flex: 1 }}>
+            {/* <ViewPrint
                 ref={viewPrintRef}
                 html={data}
                 callback={(uri) => {
@@ -330,23 +330,23 @@ export default forwardRef((props, ref) => {
                     Print.printImageFromClient([uri + ""])
                 }
                 }
-            />
+            /> */}
             {deviceType == Constant.PHONE ? <ToolBarPreviewHtml
                 navigation={props.navigation} title="HTML"
                 clickPrint={() => clickPrint()}
                 clickCheck={() => clickCheck()}
             /> : null}
-            <AutoHeightWebView
-                // scrollEnabled={false}
-                style={{ width: deviceType == Constant.PHONE ? Metrics.screenWidth : Metrics.screenWidth / 2 }}
-                files={[{
-                    href: 'cssfileaddress',
-                    type: 'text/css',
-                    rel: 'stylesheet'
-                }]}
-                source={{ html: data }}
-            // scalesPageToFit={true}
-            />
+                <AutoHeightWebView
+                    // scrollEnabled={false}
+                    style={{ width: deviceType == Constant.PHONE ? Metrics.screenWidth : Metrics.screenWidth / 2.5 }}
+                    files={[{
+                        href: 'cssfileaddress',
+                        type: 'text/css',
+                        rel: 'stylesheet'
+                    }]}
+                    source={{ html: data }}
+                // scalesPageToFit={true}
+                />
         </View>
     );
 });

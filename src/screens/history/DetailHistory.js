@@ -20,7 +20,8 @@ export default (props) => {
         const getData = () => {
             if (deviceType == Constant.PHONE) {
                 console.log("props.route.params ", props.route.params);
-                setListOrder(props.route.params.list);
+                if (props.route.params.list.length > 0)
+                    setListOrder(props.route.params.list);
             }
         }
         getData()
@@ -70,7 +71,7 @@ export default (props) => {
                         return (<View style={{ flex: 1, padding: 10, flexDirection: "row", }} key={item.Id}>
                             <Image
                                 style={{ height: 70, width: 70, borderRadius: 50, borderWidth: 0.5 }}
-                                source={JSON.parse(item.ProductImages).length > 0 ? { uri: JSON.parse(item.ProductImages)[0].ImageURL } : Images.default_food_image}
+                                source={item.ProductImages != "" && JSON.parse(item.ProductImages).length > 0 ? { uri: JSON.parse(item.ProductImages)[0].ImageURL } : Images.default_food_image}
                             />
                             <View style={{ flexDirection: "column", justifyContent: "center", padding: 5, flex: 1 }}>
                                 <Text style={{ color: "#000", fontWeight: "bold", }}>{item.Name.trim()}</Text>

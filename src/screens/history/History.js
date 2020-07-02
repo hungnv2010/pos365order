@@ -36,8 +36,6 @@ export default (props) => {
         return numberColumn
     });
 
-    const widthRoom = Dimensions.get('screen').width / numberColumn;
-
     useEffect(() => {
         moment.locale('vi');
     }, [])
@@ -57,18 +55,6 @@ export default (props) => {
         }, [])
     );
 
-    const removeItem = (item) => {
-        console.log("removeItem ", item.Id);
-        dialogManager.showPopupTwoButton(I18n.t("ban_co_chac_chan_muon_xoa_ban_nay"), I18n.t('thong_bao'), res => {
-            if (res == 1) {
-                let tempListPosition = dataManager.dataChoosing.filter(el => el.Id != item.Id)
-                dataManager.dataChoosing = tempListPosition;
-                console.log("removeItem tempListPosition ", tempListPosition);
-                setListOrder([...tempListPosition]);
-                dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
-            }
-        })
-    }
     const onClickOrder = (item) => {
         deviceType == Constant.TABLET ?
             setDataItem(item)
@@ -92,6 +78,24 @@ export default (props) => {
         return total
     }
 
+    const renderItem = (item) => {
+        return (
+            <TouchableOpacity
+                onPress={() => onClickOrder(item)}
+                key={item.Id}
+                style={{flexDirection: "row", borderRadius: 5, marginVertical: 4, padding: 20, width: "100%", borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center", backgroundColor: deviceType != Constant.PHONE && dataItem.time == item.time ? "#FFCC66" :  "#EED6A7" }}>
+                <View style={{ flex: 1 }}>
+                    <Text style={{ textTransform: "uppercase", color: "#000", fontWeight: "bold" }}>{item.RoomName}</Text>
+                    <Text style={{ color: "#000", marginTop: 10 }}>{I18n.t('so_san_pham')}: {totalProduct(item.list)}</Text>
+                </View>
+                <View style={{ flex: 1 }}>
+                    <Text style={{ textAlign: "right", color: "#000", marginTop: 10 }}>{I18n.t('tam_tinh')}: {currencyToString(getTotalPrice(item.list))} đ</Text>
+                    {item.time && item.time != "" ? <Text style={{ color: "#0072bc", textAlign: "right", marginTop: 10 }}>{moment(item.time).fromNow()}</Text> : null}
+                </View>
+            </TouchableOpacity>
+        )
+    }
+
     const renderList = () => {
         if (deviceType == Constant.PHONE) {
             return <FlatList
@@ -99,19 +103,11 @@ export default (props) => {
                 style={{ padding: 5 }}
                 data={listOrder}
                 renderItem={({ item, index }) => (
-                    <TouchableOpacity
-                        onPress={() => onClickOrder(item)}
-                        key={item.Id}
-                        style={{ borderRadius: 5, margin: numberColumn == 2 ? 5.8 : 6.4, padding: 15, width: widthRoom - 15, height: widthRoom - 15, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#EED6A7" }}>
-                        <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000", fontWeight: "bold" }}>{item.RoomName}</Text>
-                        <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{I18n.t('so_san_pham')}: {totalProduct(item.list)}</Text>
-                        <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{I18n.t('tam_tinh')}: {currencyToString(getTotalPrice(item.list))} đ</Text>
-                        {item.time && item.time != "" ? <Text style={{ color: "#0072bc", textAlign: "center", marginTop: 10 }}>{moment(item.time).fromNow()}</Text> : null}
-                    </TouchableOpacity>
+                    renderItem(item)
                 )}
-                numColumns={numberColumn}
+                numColumns={1}
                 keyExtractor={(item, index) => index.toString()}
-                key={numberColumn}
+                key={1}
             />
         } else {
             return (
@@ -122,15 +118,7 @@ export default (props) => {
                             style={{ padding: 5, flex: 1 }}
                             data={listOrder}
                             renderItem={({ item, index }) => (
-                                <TouchableOpacity
-                                    onPress={() => onClickOrder(item)}
-                                    key={item.Id}
-                                    style={{ borderRadius: 5, marginVertical: 4, padding: 15, width: "100%", height: widthRoom / 1.5, borderColor: colors.colorchinh, borderWidth: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#EED6A7" }}>
-                                    <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000", fontWeight: "bold" }}>{item.RoomName}</Text>
-                                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{I18n.t('so_san_pham')}: {totalProduct(item.list)}</Text>
-                                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{I18n.t('tam_tinh')}: {currencyToString(getTotalPrice(item.list))} đ</Text>
-                                    {item.time && item.time != "" ? <Text style={{ color: "#0072bc", textAlign: "center", marginTop: 10 }}>{moment(item.time).fromNow()}</Text> : null}
-                                </TouchableOpacity>
+                                renderItem(item)
                             )}
                             numColumns={1}
                             keyExtractor={(item, index) => index.toString()}
