@@ -175,7 +175,7 @@ export default (props) => {
                 <View style={{ flex: 2, justifyContent: "center", alignItems: "center" }}>
                     <Text style={{ color: "white", fontWeight: "bold", fontSize: 15 }}>Topping</Text>
                 </View>
-                <View style={{ flex: 1, justifyContent: "center", alignItems: "flex-end" }}>
+                <View style={{ flex: 1, justifyContent: "center", alignItems: "flex-end", paddingRight: 5 }}>
                     <TouchableOpacity style={{}} onPress={() => { onclose() }}>
                         {/* <Text style={{ fontStyle: "italic", paddingHorizontal: 5, color: "white" }}>{I18n.t('dong')}</Text> */}
                         <Icon name="check" size={30} color="white" style={{}} />

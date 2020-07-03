@@ -318,7 +318,7 @@ export default (props) => {
     const getTotalPrice = () => {
         let total = 0;
         list.forEach(item => {
-            if (item.ProductType != 2 && !item.IsTimer) {
+            if (!(item.ProductType == 2 && item.IsTimer)) {
                 let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
                 total += price * item.Quantity + item.TotalTopping
             }
@@ -438,7 +438,7 @@ export default (props) => {
                                             <TextInput
                                                 placeholder="1"
                                                 onChangeText={numb => {
-                                                    if (numb == '') item.Quantity = 1
+                                                    if ("" + numb < 1) item.Quantity = 1
                                                     else {
                                                         item.Quantity = numb;
                                                         syncListProducts([...list])
@@ -645,7 +645,17 @@ const PopupDetail = (props) => {
                         }}>
                             <Text style={{ borderColor: Colors.colorchinh, borderWidth: 1, color: Colors.colorchinh, fontWeight: "bold", paddingHorizontal: 15, paddingVertical: 10, borderRadius: 5 }}>-</Text>
                         </TouchableOpacity>
-                        <TextInput style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }} value={"" + itemOrder.Quantity} />
+                        <TextInput
+                            style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }}
+                            value={"" + itemOrder.Quantity}
+                            placeholder="1"
+                            onChangeText={text => {
+                                if ("" + text < 1) itemOrder.Quantity = 1
+                                else {
+                                    itemOrder.Quantity = text
+                                    setItemOrder({ ...itemOrder })
+                                }
+                            }} />
                         <TouchableOpacity onPress={() => {
                             itemOrder.Quantity++
                             setItemOrder({ ...itemOrder })

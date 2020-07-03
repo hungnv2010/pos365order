@@ -35,6 +35,7 @@ export default {
   chon_vi_tri: "Chọn vị trí",
   chuyen_ban:"Chuyển bàn",
   chuc_nang_dang_duoc_phat_trien: "Chức năng đang được phát triển.",
+  chon_mon:"Chọn món",
 
   // TODO: D
   dang_dung: "Đang dùng",

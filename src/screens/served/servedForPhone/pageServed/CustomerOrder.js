@@ -298,7 +298,7 @@ export default (props) => {
     const getTotalPrice = () => {
         let total = 0;
         list.forEach(item => {
-            if (item.ProductType != 2 && !item.IsTimer) {
+            if (!(item.ProductType == 2 && item.IsTimer)) {
                 let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
                 let totalTopping = item.TotalTopping ? item.TotalTopping : 0
                 total += (price + totalTopping) * item.Quantity
@@ -338,7 +338,7 @@ export default (props) => {
                 <View style={styles.mainItem}>
                     <TouchableOpacity
                         style={{ paddingHorizontal: 5 }}
-                        onPress={()=>removeItem(item, index)}>
+                        onPress={() => removeItem(item, index)}>
                         <Icon name="trash-can-outline" size={40} color="black" />
                     </TouchableOpacity>
                     <View style={{ flex: 1, }}>
@@ -526,7 +526,18 @@ const PopupDetail = (props) => {
                         }}>
                             <Text style={styles.button}>-</Text>
                         </TouchableOpacity>
-                        <TextInput style={styles.textQuantityModal} value={"" + itemOrder.Quantity} />
+                        <TextInput
+                            placeholder="1"
+                            onChangeText={text => {
+                                if ("" + text < 1) itemOrder.Quantity = 1
+                                else {
+                                    itemOrder.Quantity = text
+                                    setItemOrder({ ...itemOrder })
+                                }
+                            }}
+                            style={styles.textQuantityModal}
+                            value={"" + itemOrder.Quantity}
+                            keyboardType="numeric" />
                         <TouchableOpacity onPress={() => {
                             itemOrder.Quantity++
                             setItemOrder({ ...itemOrder })

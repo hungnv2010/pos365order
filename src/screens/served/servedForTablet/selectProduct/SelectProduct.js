@@ -149,7 +149,7 @@ export default (props) => {
 
   const getDescription = (item) => {
     let Description = ''
-    if (item.ProductType == 2&& item.IsTimer) {
+    if (item.ProductType == 2 && item.IsTimer) {
       let date = new Date()
       let [day, month, hour, minute] = [date.getDate(), date.getMonth(), date.getHours(), date.getMinutes()]
       Description = `${day}/${month} ${hour}:${minute}=>${day}/${month} ${hour}:${minute} (0 ${I18n.t('phut')})`
@@ -185,23 +185,23 @@ export default (props) => {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ height: 65, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
-        <View style={{ flex: 1 }}>
-          {isSearching ?
-            <TouchableOpacity style={[styles.renderCateItem, { backgroundColor: Colors.colorchinh, flex: 1 }]}>
-              <Text style={[styles.textRenderCateItem, { color: "white" }]}>Searching</Text>
-            </TouchableOpacity>
-            :
-            <FlatList
-              extraData={listCateId}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              data={category}
-              renderItem={({ item, index }) => renderCateItem(item, index)}
-              keyExtractor={(item, index) => '' + index}
-            />}
-        </View>
-      </View>
+      {
+        isSearching ?
+          null
+          :
+          <View style={{ height: 65, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
+            <View style={{ flex: 1 }}>
+              <FlatList
+                extraData={listCateId}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                data={category}
+                renderItem={({ item, index }) => renderCateItem(item, index)}
+                keyExtractor={(item, index) => '' + index}
+              />
+            </View>
+          </View>
+      }
 
       <View style={{ flex: 1, }}>
         <View style={{ flex: 1, justifyContent: "center", }}>

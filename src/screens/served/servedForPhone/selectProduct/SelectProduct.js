@@ -226,25 +226,25 @@ export default (props) => {
         leftIcon="keyboard-backspace"
         clickLeftIcon={clickLeftIcon}
         onClickDone={onClickDone}
-        title="Select Product"
+        title={I18n.t('chon_mon')}
         outputTextSearch={outputTextSearch} />
-      <View style={{ flex: 0.5, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
-        <View style={{ flex: 1 }}>
-          {isSearching ?
-            <TouchableOpacity style={[styles.renderCateItem, { backgroundColor: Colors.colorchinh, flex: 1 }]}>
-              <Text style={[styles.textRenderCateItem, { color: "white" }]}>Searching</Text>
-            </TouchableOpacity>
-            :
-            <FlatList
-              extraData={listCateId}
-              horizontal={true}
-              showsHorizontalScrollIndicator={false}
-              data={category}
-              renderItem={({ item, index }) => renderCateItem(item, index)}
-              keyExtractor={(item, index) => '' + index}
-            />}
-        </View>
-      </View>
+      {
+        isSearching ?
+          null
+          :
+          <View style={{ flex: 0.5, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
+            <View style={{ flex: 1 }}>
+              <FlatList
+                extraData={listCateId}
+                horizontal={true}
+                showsHorizontalScrollIndicator={false}
+                data={category}
+                renderItem={({ item, index }) => renderCateItem(item, index)}
+                keyExtractor={(item, index) => '' + index}
+              />
+            </View>
+          </View>
+      }
 
       <View style={{ flex: 5, }}>
         <View style={{ flex: 1, justifyContent: "center", }}>
