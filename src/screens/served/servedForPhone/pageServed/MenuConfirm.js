@@ -99,7 +99,7 @@ export default (props) => {
 
             props.navigation.dispatch(pushAction);
         } else {
-            dialogManager.showPopupOneButton("Bạn hãy chọn món ăn trước.")
+            dialogManager.showPopupOneButton(I18n.t("ban_hay_chon_mon_an_truoc"))
         }
     }
 
@@ -124,7 +124,7 @@ export default (props) => {
 
                 }
                 else
-                    dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
+                    dialogManager.showPopupOneButton(I18n.t("ban_hay_chon_mon_an_truoc"))
             } else {
                 dialogManager.showPopupOneButton(I18n.t("ban_khong_co_quyen_su_dung_chuc_nang_nay"))
             }

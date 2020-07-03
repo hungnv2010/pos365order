@@ -16,6 +16,7 @@ export default {
   ban_khong_co_quyen_dieu_chinh_mat_hang_thoi_gian: "Bạn không có quyền điều chỉnh mặt hàng thời gian",
   ban_co_chac_muon_xoa_toan_bo_mat_hang_da_chon: 'Bạn có chắc muốn xóa toàn bộ mặt hàng đã chọn?',
   ban_co_chac_chan_muon_xoa_ban_nay: "Bạn có chắc chắn muốn xoá bàn này?",
+  ban_co_chac_chan_muon_dang_xuat: "Bạn có chắc chắn muốn đăng xuất không?",
 
   // TODO: C
   chuyen_thiet_bi_cai_dat_otp: 'Chuyển thiết bị cài đặt Smart OTP',

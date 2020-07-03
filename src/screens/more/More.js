@@ -217,19 +217,23 @@ const ContentComponent = (props) => {
     }, [])
 
     const onClickLogOut = () => {
-        realmStore.deleteAll()
-        setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
-        setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
-        // props.navigation.navigate('Login', { param: "logout" })
-        dataManager.dataChoosing = []
-        props.navigation.dispatch(
-            CommonActions.reset({
-                index: 0,
-                routes: [
-                    { name: 'Login' },
-                ],
-            })
-        )
+        dialogManager.showPopupTwoButton(I18n.t('ban_co_chac_chan_muon_dang_xuat'), I18n.t("thong_bao"), res => {
+            if (res == 1) {
+                realmStore.deleteAll()
+                setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
+                setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
+                // props.navigation.navigate('Login', { param: "logout" })
+                dataManager.dataChoosing = []
+                props.navigation.dispatch(
+                    CommonActions.reset({
+                        index: 0,
+                        routes: [
+                            { name: 'Login' },
+                        ],
+                    })
+                )
+            }
+        })
     }
 
     const onClickSaveIP = () => {
