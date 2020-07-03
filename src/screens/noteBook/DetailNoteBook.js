@@ -6,6 +6,7 @@ import { HTTPService } from '../../data/services/HttpService';
 import { ApiPath } from '../../data/services/ApiPath';
 import I18n from '../../common/language/i18n';
 import ToolBarDefault from '../../components/toolbar/ToolBarDefault';
+import { currencyToString } from '../../common/Utils';
 
 export default (props) => {
 
@@ -56,7 +57,7 @@ export default (props) => {
                             <TouchableOpacity style={styles.viewItem}>
                                 <Text style={{}}>{item.Product.Name}</Text>
                                 <View style={styles.viewPrice}>
-                                    <Text style={{}}>{item.Price} x </Text>
+                                    <Text style={{}}>{currencyToString(item.Price)} x </Text>
                                     <Text style={{}}>{item.Quantity}</Text>
                                 </View>
                             </TouchableOpacity>))
@@ -65,7 +66,7 @@ export default (props) => {
             </ScrollView>
             <View style={styles.viewTotal}>
                 <Text style={styles.textTotal}>{I18n.t('tong_thanh_tien')} </Text>
-                <Text style={styles.textTotalPrice}>{TotalPrice} {I18n.t('d')}</Text>
+                <Text style={styles.textTotalPrice}>{currencyToString(TotalPrice)} {I18n.t('d')}</Text>
             </View>
         </View>
     );
