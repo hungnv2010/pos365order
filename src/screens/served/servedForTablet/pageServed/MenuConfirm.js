@@ -178,7 +178,12 @@ export default (props) => {
                     {jsonContent.OrderDetails.map((item, index) => {
                         return (
                             <View key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
-                                <Image style={{ width: 20, height: 20, margin: 10 }} source={Images.icon_return} />
+                                {
+                                    item.ProductType == 2 && item.IsTimer ?
+                                        <Icon style={{ margin: 5 }} name="clock-outline" size={30} color={Colors.colorchinh} />
+                                        :
+                                        <Image style={{ width: 22, height: 22, margin: 5 }} source={Images.icon_return} />
+                                }
                                 <View style={{ flexDirection: "column", flex: 1 }}>
                                     <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
                                     <View style={{ flexDirection: "row" }}>

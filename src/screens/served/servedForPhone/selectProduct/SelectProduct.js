@@ -116,6 +116,7 @@ export default (props) => {
   }
 
   const onClickProduct = (item, index) => {
+    console.log('onClickProduct', item);
     item.Sid = Date.now()
     item.Description = getDescription(item)
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
@@ -141,7 +142,7 @@ export default (props) => {
     let Description = ''
     if (item.ProductType == 2 && item.IsTimer) {
       let date = new Date()
-      let [day, month, hour, minute] = [date.getDate(), date.getMonth(), date.getHours(), date.getMinutes()]
+      let [day, month, hour, minute] = [date.getDate(), date.getMonth() + 1, date.getHours(), date.getMinutes()]
       Description = `${day}/${month} ${hour}:${minute}=>${day}/${month} ${hour}:${minute} (0 ${I18n.t('phut')})`
     }
     return Description
@@ -176,8 +177,8 @@ export default (props) => {
   }
 
   const onChangeText = (numb, item) => {
-    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-    listProducts.current[pos].Quantity = numb
+    listProducts.current = listProducts.current.filter(elm => elm.Id != item.Id)
+    listProducts.current.unshift({ ...item, Quantity: numb, Sid: Date.now() })
   }
 
 
@@ -187,8 +188,9 @@ export default (props) => {
       if (elm.SplitForSalesOrder || (elm.ProductType == 2 && elm.IsTimer)) {
         let qtt = getQuantity(elm)
         arr.splice(index, 1)
+        // arr = arr.filter(item => item.Id != elm.Id)
         for (let i = 0; i < elm.Quantity; i++) {
-          arr.splice(index, 0, { ...elm, Quantity: qtt, Sid: Date.now() + index })
+          arr.splice(index, 0, { ...elm, Quantity: qtt, Sid: Date.now() + i })
         }
       }
     })

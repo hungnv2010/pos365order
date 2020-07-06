@@ -304,7 +304,7 @@ export default (props) => {
             }
         })
         if (!hasData) {
-           handleDataChoosing()
+            handleDataChoosing()
         }
         syncListProducts([...list])
     }
@@ -564,13 +564,10 @@ const PopupDetail = (props) => {
                             <Text style={styles.button}>-</Text>
                         </TouchableOpacity>
                         <TextInput
-                            placeholder="1"
                             onChangeText={text => {
-                                if ("" + text < 1) itemOrder.Quantity = 1
-                                else {
-                                    itemOrder.Quantity = text
-                                    setItemOrder({ ...itemOrder })
-                                }
+                                if (!Number.isInteger(+text)) return
+                                itemOrder.Quantity = text
+                                setItemOrder({ ...itemOrder })
                             }}
                             style={styles.textQuantityModal}
                             value={"" + itemOrder.Quantity}
