@@ -63,7 +63,7 @@ class PrintService {
                     CurrentBranch = CurrentBranch[0]
                 }
                 HTMLBase = HTMLBase.replace("{Ten_Cua_Hang}", CurrentBranch.Name)
-                HTMLBase = HTMLBase.replace("{Dia_Chi_Cua_Hang}", vendorSession.CurrentRetailer.Address)
+                HTMLBase = HTMLBase.replace("{Dia_Chi_Cua_Hang}", vendorSession.CurrentRetailer.Address ? vendorSession.CurrentRetailer.Address : "")
                 HTMLBase = HTMLBase.replace("{Dien_Thoai_Cua_Hang}", vendorSession.CurrentRetailer.Phone)
                 HTMLBase = HTMLBase.replace("{Loai_Hoa_Don}", typeHeader)
                 HTMLBase = HTMLBase.replace("{Ma_Chung_Tu}", number + ": " + code)

@@ -229,36 +229,37 @@ export default (props) => {
             dialogManager.showLoading();
             new HTTPService().setPath(ApiPath.SAVE_ORDER).POST(params).then(async (res) => {
                 console.log("sendOrder res ", res);
-                syncListProducts([])
-                let tempListPosition = dataManager.dataChoosing.filter(item => item.Id != props.route.params.room.Id)
-                dataManager.dataChoosing = tempListPosition;
+                if (res) {
+                    syncListProducts([])
+                    let tempListPosition = dataManager.dataChoosing.filter(item => item.Id != props.route.params.room.Id)
+                    dataManager.dataChoosing = tempListPosition;
 
-                let historyTemp = [];
-                let history = await getFileDuLieuString(Constant.HISTORY_ORDER, true);
-                console.log("history ", history);
-                if (history && history != "") {
-                    history = JSON.parse(history)
-                    history.push({
-                        time: new Date(),
-                        Position: props.Position,
-                        list: ls, RoomId: props.route.params.room.Id,
-                        RoomName: props.route.params.room.Name,
-                    })
-                    if (history.length >= 100) {
-                        history = history.slice(1, 99);
+                    let historyTemp = [];
+                    let history = await getFileDuLieuString(Constant.HISTORY_ORDER, true);
+                    console.log("history ", history);
+                    if (history && history != "") {
+                        history = JSON.parse(history)
+                        history.push({
+                            time: new Date(),
+                            Position: props.Position,
+                            list: ls, RoomId: props.route.params.room.Id,
+                            RoomName: props.route.params.room.Name,
+                        })
+                        if (history.length >= 100) {
+                            history = history.slice(1, 99);
+                        }
+                        historyTemp = history;
+                    } else {
+                        historyTemp.push({
+                            time: new Date(),
+                            Position: props.Position,
+                            list: ls, RoomId: props.route.params.room.Id,
+                            RoomName: props.route.params.room.Name,
+                        })
                     }
-                    historyTemp = history;
-                } else {
-                    historyTemp.push({
-                        time: new Date(),
-                        Position: props.Position,
-                        list: ls, RoomId: props.route.params.room.Id,
-                        RoomName: props.route.params.room.Name,
-                    })
+
+                    setFileLuuDuLieu(Constant.HISTORY_ORDER, JSON.stringify(historyTemp))
                 }
-
-                setFileLuuDuLieu(Constant.HISTORY_ORDER, JSON.stringify(historyTemp))
-
                 dialogManager.hiddenLoading()
             }).catch((e) => {
                 console.log("sendOrder err ", e);
