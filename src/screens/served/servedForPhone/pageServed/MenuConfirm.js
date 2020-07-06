@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, NativeModules } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, NativeModules, Modal, TouchableWithoutFeedback } from 'react-native';
 import Images from '../../../../theme/Images';
 import realmStore from '../../../../data/realm/RealmStore'
 import Colors from '../../../../theme/Colors';
@@ -18,15 +18,19 @@ import ViewPrint from '../../../more/ViewPrint';
 const { Print } = NativeModules;
 import { dateToDate, DATE_FORMAT, currencyToString } from '../../../../common/Utils';
 import { Metrics } from '../../../../theme';
+import { ReturnProduct } from '../../ReturnProduct';
 
 
 export default (props) => {
 
+    const [showModal, setShowModal] = useState(false)
+    const [itemProduct, setItemProduct] = useState("")
     const [data, setData] = useState("");
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
+    const [vendorSession, setVendorSession] = useState({});
     let provisional = useRef();
     let serverEvent = null;
     let listPos = [
@@ -57,6 +61,12 @@ export default (props) => {
             provisional.current = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
             console.log('provisional ', provisional.current);
 
+            const getVendorSession = async () => {
+                let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
+                console.log('ReturnProduct data', JSON.parse(data));
+                setVendorSession(JSON.parse(data))
+            }
+            getVendorSession();
 
         }
         init()
@@ -147,7 +157,14 @@ export default (props) => {
     const viewPrintRef = useRef();
     const renderItem = (item, index) => {
         return (
-            <View key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
+            <TouchableOpacity onPress={() => {
+                console.log("itemProduct ", itemProduct);
+                setItemProduct(item)
+                setTimeout(() => {
+                    setShowModal(true);
+                }, 500);
+                
+            }} key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
                 {
                     item.ProductType == 2 ?
                         <Icon style={{ margin: 5 }} name="clock-outline" size={30} color={Colors.colorchinh} />
@@ -168,7 +185,7 @@ export default (props) => {
                         null}
                 </View>
                 <Text style={{ fontWeight: "bold", color: Colors.colorchinh }}>{currencyToString(getPriceItem(item))}</Text>
-            </View>
+            </TouchableOpacity>
         )
     }
 
@@ -264,6 +281,55 @@ export default (props) => {
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('tam_tinh')}</Text>
                 </TouchableOpacity>
             </View>
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={showModal}
+                supportedOrientations={['portrait', 'landscape']}
+                onRequestClose={() => {
+                }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                    <TouchableWithoutFeedback
+                        onPress={() => { setShowModal(false) }}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0
+                        }}>
+                        <View style={[{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0
+                        }, { backgroundColor: 'rgba(0,0,0,0.5)' }]}></View>
+
+                    </TouchableWithoutFeedback>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+                        <View style={{
+                            padding: 0,
+                            backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
+                            width: Metrics.screenWidth * 0.8,
+                            marginBottom: Platform.OS == 'ios' ? Metrics.screenHeight / 10 : 0
+                        }}>
+                            <ReturnProduct
+                                Name={itemProduct.Name}
+                                Quantity={itemProduct.Quantity}
+                                vendorSession={vendorSession}
+                                getDataOnClick={(data) => {
+                                    console.log("getDataOnClick ", data);
+                                    mapDataToList(data)
+                                }}
+                                setShowModal={() => {
+                                    setShowModal(false)
+                                }
+                                } />
+                        </View>
+                    </View>
+                </View>
+            </Modal>
             <Snackbar
                 duration={5000}
                 visible={showToast}
