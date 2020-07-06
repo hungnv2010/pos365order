@@ -55,7 +55,7 @@ export default (props) => {
       item.Quantity = 0
       listProducts.current.forEach(elm => {
         if (item.Id == elm.Id) {
-          item.Quantity += elm.Quantity
+          item.Quantity += +elm.Quantity
         }
       })
     })
@@ -88,7 +88,7 @@ export default (props) => {
           item.Quantity = 0
           listProducts.current.forEach(elm => {
             if (item.Id == elm.Id) {
-              item.Quantity += elm.Quantity
+              item.Quantity += +elm.Quantity
             }
           })
         })

@@ -54,44 +54,44 @@ export default (props) => {
     }, [])
 
 
-    useEffect(() => {
-        if (props.listProducts.length == 1 && props.listProducts[0].Id == -1) {
-            setListOrder([])
-            listPosition.forEach((element, index, arr) => {
-                if (element.key == props.Position) {
-                    arr.splice(index, 1)
-                }
-            })
-            let hasData = true
-            dataManager.dataChoosing.forEach(item => {
-                if (item.Id == props.route.params.room.Id) {
-                    item.data = item.data.filter(it => it.key != props.Position)
-                    if (item.data.length == 0) {
-                        hasData = false
-                    }
-                }
+    useLayoutEffect(() => {
+        // if (props.listProducts.length == 1 && props.listProducts[0].Id == -1) {
+        //     setListOrder([])
+        //     listPosition.forEach((element, index, arr) => {
+        //         if (element.key == props.Position) {
+        //             arr.splice(index, 1)
+        //         }
+        //     })
+        //     let hasData = true
+        //     dataManager.dataChoosing.forEach(item => {
+        //         if (item.Id == props.route.params.room.Id) {
+        //             item.data = item.data.filter(it => it.key != props.Position)
+        //             if (item.data.length == 0) {
+        //                 hasData = false
+        //             }
+        //         }
 
-            })
-            if (!hasData) {
-                handleDataChoosing()
-            }
-            return
-        }
+        //     })
+        //     if (!hasData) {
+        //         handleDataChoosing()
+        //     }
+        //     return
+        // }
         if (props.listProducts.length > 0) {
-            console.log('useEffect props.listProducts', props.listProducts);
+            let list = props.listProducts.filter(item => item.Id > 0)
             let exist = false
             listPosition.forEach(element => {
                 if (element.key == props.Position) {
                     exist = true
-                    element.list = props.listProducts
+                    element.list = list
                 }
             })
             if (!exist) {
-                listPosition.push({ key: props.Position, list: props.listProducts })
+                listPosition.push({ key: props.Position, list: list })
             }
             console.log(listPosition, 'listPosition');
 
-            setListOrder(props.listProducts)
+            setListOrder(list)
             savePosition()
         }
     }, [props.listProducts])
@@ -157,15 +157,15 @@ export default (props) => {
     }
 
     const savePosition = () => {
+        console.log('savePosition');
         let exist = false
         let hasData = true
         dataManager.dataChoosing.forEach(element => {
             if (element.Id == props.route.params.room.Id) {
                 exist = true
                 element.data = listPosition
+                element.data = element.data.filter(it => it.key != props.Position)
                 if (element.data.length == 0) {
-                    console.log('hasData = false');
-
                     hasData = false
                 }
             }
