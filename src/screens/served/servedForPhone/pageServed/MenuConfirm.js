@@ -19,6 +19,8 @@ const { Print } = NativeModules;
 import { dateToDate, DATE_FORMAT, currencyToString } from '../../../../common/Utils';
 import { Metrics } from '../../../../theme';
 import { ReturnProduct } from '../../ReturnProduct';
+import { HTTPService } from '../../../../data/services/HttpService';
+import { ApiPath } from '../../../../data/services/ApiPath';
 
 
 export default (props) => {
@@ -154,6 +156,68 @@ export default (props) => {
             props.outputSendNotify(type);
     }
 
+    const saveOrder = (data) => {
+        console.log("saveOrder data ", data, itemProduct);
+        
+        // ServeEntities: [,…]
+        // 0: {ProductId: 868689, Name: "Kem trứng (cao/đậu xanh/cafe)", Printer: "KitchenA", SecondPrinter: null,…}
+        // BasePrice: 30000
+        // Name: "Kem trứng (cao/đậu xanh/cafe)"
+        // OrderQuickNotes: []
+        // Position: "A"
+        // Price: 30000
+        // Printer: "KitchenA"
+        // Printer3: null
+        // Printer4: null
+        // Printer5: null
+        // ProductId: 868689
+        // Quantity: -1
+        // RoomId: 292910
+        // RoomName: "Phòng Vé"
+        // SecondPrinter: null
+        // Serveby: 426
+
+        let element = itemProduct;
+
+        let params = {
+            ServeEntities: []
+        };
+        let obj = {
+            BasePrice: element.Price,
+            Code: element.Code,
+            Name: element.Name,
+            OrderQuickNotes: [],
+            Position: props.Position,
+            Price: element.Price,
+            Printer: element.Printer,
+            Printer3: null,
+            Printer4: null,
+            Printer5: null,
+            ProductId: element.Id,
+            Quantity: data.QuantityChange * -1,
+            RoomId: props.route.params.room.Id,
+            RoomName: props.route.params.room.Name,
+            SecondPrinter: null,
+            Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : "",
+            Topping: element.Topping,
+            TotalTopping: element.TotalTopping,
+            Description: data.Description
+        }
+        params.ServeEntities.push(obj)
+
+        console.log("saveOrder params ", params);
+        dialogManager.showLoading();
+        new HTTPService().setPath(ApiPath.SAVE_ORDER).POST(params).then((res) => {
+            console.log("saveOrder res ", res);
+            dialogManager.hiddenLoading();
+        }).catch((e) => {
+            dialogManager.hiddenLoading();
+            error = I18n.t('loi_server');
+            setShowToast(true);
+            console.log("saveOrder err ", e);
+        })
+    }
+
     const viewPrintRef = useRef();
     const renderItem = (item, index) => {
         return (
@@ -163,7 +227,7 @@ export default (props) => {
                 setTimeout(() => {
                     setShowModal(true);
                 }, 500);
-                
+
             }} key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
                 {
                     item.ProductType == 2 ?
@@ -318,10 +382,7 @@ export default (props) => {
                                 Name={itemProduct.Name}
                                 Quantity={itemProduct.Quantity}
                                 vendorSession={vendorSession}
-                                getDataOnClick={(data) => {
-                                    console.log("getDataOnClick ", data);
-                                    mapDataToList(data)
-                                }}
+                                getDataOnClick={(data) => saveOrder(data)}
                                 setShowModal={() => {
                                     setShowModal(false)
                                 }
