@@ -19,24 +19,20 @@ export const ReturnProduct = (props) => {
     const [Name, setName] = useState(props.Name)
     const [vendorSession, setVendorSession] = useState(props.vendorSession);
     const [Description, setDescription] = useState("");
-    // const VendorSession = useRef();
+
     useEffect(() => {
         console.log("ReturnProduct ", props);
-        // const getVendorSession = async () => {
-        //     let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
-        //     console.log('ReturnProduct data', JSON.parse(data));
-        //     setVendorSession(JSON.parse(data))
-        //     setVendor(JSON.parse(data))
-        //     VendorSession.current = JSON.parse(data)
-        //     console.log('ReturnProduct VendorSession.current', VendorSession.current);
-        // }
-        // getVendorSession();
-
     }, [])
 
     const onClickOk = () => {
-        // props.getDataOnClick(itemOrder)
-        // props.setShowModal(false)
+        let data = {
+            QuantityChange: QuantityChange,
+            Name: Name,
+            Description: Description,
+            Quantity: Quantity
+        }
+        props.getDataOnClick(data)
+        props.setShowModal(false)
     }
 
     return (
@@ -66,8 +62,6 @@ export const ReturnProduct = (props) => {
                             value={"" + QuantityChange}
                             keyboardType="numeric" />
                         <TouchableOpacity onPress={() => {
-                            // itemOrder.Quantity++
-                            // setItemOrder({ ...itemOrder })
                             if (Number(QuantityChange) < Quantity)
                                 setQuantityChange(Number(QuantityChange) + 1)
                         }}>
@@ -121,7 +115,7 @@ export const ReturnProduct = (props) => {
                     <TouchableOpacity onPress={() => props.setShowModal(false)} style={styles.wrapButtonModal} >
                         <Text style={styles.buttonModal}>{I18n.t('huy')}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={() => onClickOk()} style={[styles.wrapButtonModal, { backgroundColor: Colors.colorchinh }]} >
+                    <TouchableOpacity disabled={Description == "" || QuantityChange == 0} onPress={() => onClickOk()} style={[styles.wrapButtonModal, { backgroundColor: Colors.colorchinh, opacity: (Description == "" || QuantityChange == 0) ? .5 : 1 }]} >
                         <Text style={{ color: "#fff", textTransform: "uppercase", }}>{I18n.t('dong_y')}</Text>
                     </TouchableOpacity>
                 </View>
