@@ -69,7 +69,7 @@ export default (props) => {
     const getTotalPrice = (data) => {
         let total = 0;
         data.forEach(item => {
-            if (item.ProductType != 2) {
+            if (!(item.ProductType == 2 && item.IsTimer)) {
                 let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
                 let totalTopping = item.TotalTopping ? item.TotalTopping : 0
                 total += (price + totalTopping) * item.Quantity

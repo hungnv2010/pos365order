@@ -43,6 +43,7 @@ export default (props) => {
         React.useCallback(() => {
             console.log("useFocusEffect dataManager.dataChoosing ", dataManager.dataChoosing);
             setListOrder([...dataManager.dataChoosing]);
+            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
         }, [])
     );
 
@@ -78,27 +79,19 @@ export default (props) => {
         return total;
     }
 
-    // const totalPriceProduct = (data) => {
-    //     let total = 0;
-    //     data.forEach(element => {
-    //         element.list.array.forEach(element => {
-
-    //         });
-    //     });
-    //     return total;
-    // }
-
     const getTotalPrice = (data) => {
+        console.log("totalProduct " + JSON.stringify(data));
         let total = 0;
         data.forEach(element => {
             element.list.forEach(item => {
-                if (item.ProductType != 2) {
+                if (!(item.ProductType == 2 && item.IsTimer)) {
                     let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
                     let totalTopping = item.TotalTopping ? item.TotalTopping : 0
                     total += (price + totalTopping) * item.Quantity
                 }
             })
         })
+        console.log("totalProduct total " + JSON.stringify(total));
         return total
     }
 
