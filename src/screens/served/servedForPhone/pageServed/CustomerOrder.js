@@ -56,14 +56,25 @@ export default (props) => {
 
     useEffect(() => {
         if (props.listProducts.length == 1 && props.listProducts[0].Id == -1) {
-            console.log('aaaaaaaaaaaaaaaaaaaaa');
-
             setListOrder([])
             listPosition.forEach((element, index, arr) => {
                 if (element.key == props.Position) {
                     arr.splice(index, 1)
                 }
             })
+            let hasData = true
+            dataManager.dataChoosing.forEach(item => {
+                if (item.Id == props.route.params.room.Id) {
+                    item.data = item.data.filter(it => it.key != props.Position)
+                    if (item.data.length == 0) {
+                        hasData = false
+                    }
+                }
+
+            })
+            if (!hasData) {
+                handleDataChoosing()
+            }
             return
         }
         if (props.listProducts.length > 0) {
@@ -147,16 +158,26 @@ export default (props) => {
 
     const savePosition = () => {
         let exist = false
+        let hasData = true
         dataManager.dataChoosing.forEach(element => {
             if (element.Id == props.route.params.room.Id) {
                 exist = true
                 element.data = listPosition
+                if (element.data.length == 0) {
+                    console.log('hasData = false');
+
+                    hasData = false
+                }
             }
         })
+        if (!hasData) {
+            handleDataChoosing()
+        }
         if (!exist) {
             dataManager.dataChoosing.push({ Id: props.route.params.room.Id, ProductId: props.route.params.room.ProductId, Name: props.route.params.room.Name, data: listPosition })
         }
         console.log(dataManager.dataChoosing, 'savePosition');
+
     }
 
     const sendOrder = () => {
@@ -236,6 +257,12 @@ export default (props) => {
         }
     }
 
+    const handleDataChoosing = () => {
+        console.log('handleDataChoosing');
+        dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
+        dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+    }
+
     const dellAll = () => {
         if (list.length > 0) {
             dialogManager.showPopupTwoButton(I18n.t('ban_co_chac_muon_xoa_toan_bo_mat_hang_da_chon'), 'Thông báo', (value) => {
@@ -254,8 +281,7 @@ export default (props) => {
 
                     })
                     if (!hasData) {
-                        dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
-                        dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+                        handleDataChoosing()
                     }
                 }
             })
@@ -278,8 +304,7 @@ export default (props) => {
             }
         })
         if (!hasData) {
-            dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
-            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
+           handleDataChoosing()
         }
         syncListProducts([...list])
     }
