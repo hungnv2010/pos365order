@@ -54,29 +54,7 @@ export default (props) => {
     }, [])
 
 
-    useLayoutEffect(() => {
-        // if (props.listProducts.length == 1 && props.listProducts[0].Id == -1) {
-        //     setListOrder([])
-        //     listPosition.forEach((element, index, arr) => {
-        //         if (element.key == props.Position) {
-        //             arr.splice(index, 1)
-        //         }
-        //     })
-        //     let hasData = true
-        //     dataManager.dataChoosing.forEach(item => {
-        //         if (item.Id == props.route.params.room.Id) {
-        //             item.data = item.data.filter(it => it.key != props.Position)
-        //             if (item.data.length == 0) {
-        //                 hasData = false
-        //             }
-        //         }
-
-        //     })
-        //     if (!hasData) {
-        //         handleDataChoosing()
-        //     }
-        //     return
-        // }
+    useEffect(() => {
         if (props.listProducts.length > 0) {
             let list = props.listProducts.filter(item => item.Id > 0)
             let exist = false
