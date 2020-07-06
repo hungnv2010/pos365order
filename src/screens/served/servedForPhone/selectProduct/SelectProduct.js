@@ -151,12 +151,14 @@ export default (props) => {
     console.log('handleButtonIncrease', item, index);
     let qtt = getQuantity(item)
     item.Quantity += qtt
-    if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
-      listProducts.current.unshift({ ...item, Quantity: qtt, Sid: Date.now() })
-    } else {
-      let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-      listProducts.current[pos].Quantity += qtt
-    }
+    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+    listProducts.current[pos].Quantity += qtt
+    // if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
+    //   listProducts.current.unshift({ ...item, Quantity: qtt, Sid: Date.now() })
+    // } else {
+    //   let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+    //   listProducts.current[pos].Quantity += qtt
+    // }
     setProduct([...product])
   }
 
@@ -164,11 +166,12 @@ export default (props) => {
     let qtt = getQuantity(item)
     item.Quantity -= qtt
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-    if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
-      listProducts.current.splice(pos, 1)
-    } else {
-      listProducts.current[pos].Quantity -= qtt
-    }
+    listProducts.current[pos].Quantity -= qtt
+    // if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
+    //   listProducts.current.splice(pos, 1)
+    // } else {
+    //   listProducts.current[pos].Quantity -= qtt
+    // }
     setProduct([...product])
   }
 
@@ -180,6 +183,15 @@ export default (props) => {
 
   const onClickDone = () => {
     props.navigation.pop();
+    listProducts.current.forEach((elm, index, arr) => {
+      if (elm.SplitForSalesOrder || (elm.ProductType == 2 && elm.IsTimer)) {
+        let qtt = getQuantity(elm)
+        arr.splice(index, 1)
+        for (let i = 0; i < elm.Quantity; i++) {
+          arr.splice(index, 0, { ...elm, Quantity: qtt, Sid: Date.now() + index })
+        }
+      }
+    })
     console.log('listProducts', listProducts.current);
     props.route.params._onSelect(listProducts.current, 1);
   }

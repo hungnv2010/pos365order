@@ -55,6 +55,17 @@ export default (props) => {
 
 
     useEffect(() => {
+        if (props.listProducts.length == 1 && props.listProducts[0].Id == -1) {
+            console.log('aaaaaaaaaaaaaaaaaaaaa');
+
+            setListOrder([])
+            listPosition.forEach((element, index, arr) => {
+                if (element.key == props.Position) {
+                    arr.splice(index, 1)
+                }
+            })
+            return
+        }
         if (props.listProducts.length > 0) {
             console.log('useEffect props.listProducts', props.listProducts);
             let exist = false
@@ -393,7 +404,7 @@ export default (props) => {
                 <View style={styles.tamTinh}>
                     <Text style={styles.textTamTinh}>{I18n.t('tam_tinh')}</Text>
                     <View style={styles.totalPrice}>
-                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice())} đ</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(getTotalPrice())}đ</Text>
                     </View>
                 </View>
             </View>

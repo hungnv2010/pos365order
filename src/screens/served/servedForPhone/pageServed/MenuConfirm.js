@@ -175,7 +175,7 @@ export default (props) => {
                     <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
                     <View style={{ flexDirection: "row" }}>
                         <Text style={{ fontStyle: "italic" }}>{currencyToString(item.BasePrice)} x</Text>
-                        <Text style={{ color: Colors.colorPhu }}> {item.Quantity == parseInt(item.Quantity) ? item.Quantity : item.Quantity.toFixed(3)}</Text>
+                        <Text style={{ color: Colors.colorPhu }}> {Math.round(item.Quantity * 1000) / 1000}</Text>
                     </View>
                     {item.Description != "" ?
                         <Text style={{ fontStyle: "italic", fontSize: 11, color: "gray" }}>
