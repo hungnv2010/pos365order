@@ -230,7 +230,7 @@ export default (props) => {
 
             }} key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
                 {
-                    item.ProductType == 2 ?
+                    item.ProductType == 2 && item.IsTimer ?
                         <Icon style={{ margin: 5 }} name="clock-outline" size={30} color={Colors.colorchinh} />
                         :
                         <Image style={{ width: 22, height: 22, margin: 5 }} source={Images.icon_return} />

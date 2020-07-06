@@ -437,9 +437,8 @@ export default (props) => {
                                                 <Icon name="minus-box" size={40} color={Colors.colorchinh} />
                                             </TouchableOpacity>
                                             <TextInput
-                                                placeholder="1"
                                                 onChangeText={numb => {
-                                                    if ("" + numb < 1) item.Quantity = 1
+                                                    if (!Number.isInteger(+text)) return
                                                     else {
                                                         item.Quantity = numb;
                                                         syncListProducts([...list])
@@ -649,9 +648,8 @@ const PopupDetail = (props) => {
                         <TextInput
                             style={{ padding: 6, textAlign: "center", margin: 10, flex: 1, borderRadius: 4, borderWidth: 0.5, backgroundColor: "#D5D8DC" }}
                             value={"" + itemOrder.Quantity}
-                            placeholder="1"
                             onChangeText={text => {
-                                if ("" + text < 1) itemOrder.Quantity = 1
+                                if (!Number.isInteger(+text)) return
                                 else {
                                     itemOrder.Quantity = text
                                     setItemOrder({ ...itemOrder })

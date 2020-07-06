@@ -53,11 +53,10 @@ export const ReturnProduct = (props) => {
                             <Text style={styles.button}>-</Text>
                         </TouchableOpacity>
                         <TextInput
-                            placeholder="1"
                             onChangeText={text => {
-                                console.log("text", text, Quantity);
-                                if (Number(Quantity) >= text)
-                                    setQuantityChange(text)
+                                if (!Number.isInteger(+text)) return
+                                itemOrder.Quantity = text
+                                setItemOrder({ ...itemOrder })
                             }}
                             style={styles.textQuantityModal}
                             value={"" + QuantityChange}
