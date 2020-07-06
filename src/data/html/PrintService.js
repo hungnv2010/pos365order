@@ -37,7 +37,9 @@ class PrintService {
                 var description = el.Description && el.Description.trim() != "" ? `<br>${el.Description?.replace(";", "<br>")}` : "";
                 let itemTable = listHtml[1];
                 let priceBase = el.IsLargeUnit ? el.PriceLargeUnit : el.UnitPrice;
-                let priceBaseShow = priceBase;
+                let priceBaseShow = priceBase - (el.IsLargeUnit ? el.PriceLargeUnit : el.Price) ;
+                console.log("el.BasePrice priceBaseShow ", priceBaseShow, priceBase, el.BasePrice);
+
                 itemTable = itemTable.replace("{Ten_Hang_Hoa}", "" + el.Name)
                 itemTable = itemTable.replace("{Ghi_Chu_Hang_Hoa}", description)
                 itemTable = itemTable.replace("{So_Luong}", el.Quantity)

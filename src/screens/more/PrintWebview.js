@@ -321,7 +321,7 @@ export default forwardRef((props, ref) => {
 
     return (
         <View style={{ backgroundColor: "#fff", alignItems: "center", flex: 1 }}>
-            {/* <ViewPrint
+            <ViewPrint
                 ref={viewPrintRef}
                 html={data}
                 callback={(uri) => {
@@ -330,7 +330,7 @@ export default forwardRef((props, ref) => {
                     Print.printImageFromClient([uri + ""])
                 }
                 }
-            /> */}
+            />
             {deviceType == Constant.PHONE ? <ToolBarPreviewHtml
                 navigation={props.navigation} title="HTML"
                 clickPrint={() => clickPrint()}

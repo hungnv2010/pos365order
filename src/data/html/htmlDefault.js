@@ -10,7 +10,7 @@ export default `<!DOCTYPE html>
           body { margin:0 auto; background-color: white;}
       </style>
    </head>
-   <body style="padding: 20px;" rules=rows align="center">
+   <body style="" rules=rows align="center">
       <table style="width:100%; border: none;" rules=rows >
          <tr {Logo_Full_Check}>
             <td style="text-align: center; border: none;">

@@ -116,7 +116,7 @@ export const ReturnProduct = (props) => {
                     <TouchableOpacity onPress={() => props.setShowModal(false)} style={styles.wrapButtonModal} >
                         <Text style={styles.buttonModal}>{I18n.t('huy')}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity disabled={Description == "" || QuantityChange == 0} onPress={() => onClickOk()} style={[styles.wrapButtonModal, { backgroundColor: Colors.colorchinh, opacity: (Description == "" || QuantityChange == 0) ? .5 : 1 }]} >
+                    <TouchableOpacity disabled={(vendorSession.Settings.ReturnHistory == true && Description == "") || QuantityChange == 0} onPress={() => onClickOk()} style={[styles.wrapButtonModal, { backgroundColor: Colors.colorchinh, opacity: ((vendorSession.Settings.ReturnHistory == true && Description == "") || QuantityChange == 0) ? .5 : 1 }]} >
                         <Text style={{ color: "#fff", textTransform: "uppercase", }}>{I18n.t('dong_y')}</Text>
                     </TouchableOpacity>
                 </View>

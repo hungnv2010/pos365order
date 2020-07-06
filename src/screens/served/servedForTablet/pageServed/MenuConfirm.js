@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useLayoutEffect, useRef } from 'react';
-import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, NativeModules } from 'react-native';
+import { Image, View, Text, StyleSheet, TouchableOpacity, ScrollView, ImageBackground, NativeModules, Modal, TouchableWithoutFeedback } from 'react-native';
 import Images from '../../../../theme/Images';
 import realmStore from '../../../../data/realm/RealmStore'
 import Colors from '../../../../theme/Colors';
@@ -18,10 +18,16 @@ import { StackActions } from '@react-navigation/native';
 
 import ViewPrint from '../../../more/ViewPrint';
 import { Metrics } from '../../../../theme';
+import { ReturnProduct } from '../../ReturnProduct';
+import { HTTPService } from '../../../../data/services/HttpService';
+import { ApiPath } from '../../../../data/services/ApiPath';
 const { Print } = NativeModules;
 
 export default (props) => {
 
+    const [showModal, setShowModal] = useState(false)
+    const [itemProduct, setItemProduct] = useState("")
+    const [vendorSession, setVendorSession] = useState({});
     const [data, setData] = useState("");
     const [jsonContent, setJsonContent] = useState({})
     const [expand, setExpand] = useState(false)
@@ -57,6 +63,12 @@ export default (props) => {
             props.outputListPos(listPos)
             provisional.current = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
             console.log('provisional ', provisional.current);
+            const getVendorSession = async () => {
+                let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
+                console.log('ReturnProduct data', JSON.parse(data));
+                setVendorSession(JSON.parse(data))
+            }
+            getVendorSession();
         }
         init()
         return () => {
@@ -155,10 +167,72 @@ export default (props) => {
             props.outputSendNotify(type);
     }
 
+    const saveOrder = (data) => {
+        console.log("saveOrder data ", data, itemProduct);
+
+        // ServeEntities: [,…]
+        // 0: {ProductId: 868689, Name: "Kem trứng (cao/đậu xanh/cafe)", Printer: "KitchenA", SecondPrinter: null,…}
+        // BasePrice: 30000
+        // Name: "Kem trứng (cao/đậu xanh/cafe)"
+        // OrderQuickNotes: []
+        // Position: "A"
+        // Price: 30000
+        // Printer: "KitchenA"
+        // Printer3: null
+        // Printer4: null
+        // Printer5: null
+        // ProductId: 868689
+        // Quantity: -1
+        // RoomId: 292910
+        // RoomName: "Phòng Vé"
+        // SecondPrinter: null
+        // Serveby: 426
+
+        let element = itemProduct;
+
+        let params = {
+            ServeEntities: []
+        };
+        let obj = {
+            BasePrice: element.Price,
+            Code: element.Code,
+            Name: element.Name,
+            OrderQuickNotes: [],
+            Position: props.Position,
+            Price: element.Price,
+            Printer: element.Printer,
+            Printer3: null,
+            Printer4: null,
+            Printer5: null,
+            ProductId: element.Id,
+            Quantity: data.QuantityChange * -1,
+            RoomId: props.route.params.room.Id,
+            RoomName: props.route.params.room.Name,
+            SecondPrinter: null,
+            Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : "",
+            Topping: element.Topping,
+            TotalTopping: element.TotalTopping,
+            Description: data.Description
+        }
+        params.ServeEntities.push(obj)
+
+        console.log("saveOrder params ", params);
+        dialogManager.showLoading();
+        new HTTPService().setPath(ApiPath.SAVE_ORDER).POST(params).then((res) => {
+            console.log("saveOrder res ", res);
+            dialogManager.hiddenLoading();
+        }).catch((e) => {
+            dialogManager.hiddenLoading();
+            error = I18n.t('loi_server');
+            setShowToast(true);
+            console.log("saveOrder err ", e);
+        })
+    }
+
     const viewPrintRef = useRef();
 
     return (
-        <View style={{ flex: 1 }}>
+        <View style={{ backgroundColor: "#fff", flex: 1 }}>
             <ViewPrint
                 ref={viewPrintRef}
                 html={data}
@@ -177,7 +251,14 @@ export default (props) => {
                 <ScrollView style={{ flex: 1 }}>
                     {jsonContent.OrderDetails.map((item, index) => {
                         return (
-                            <View key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
+                            <TouchableOpacity onPress={() => {
+                                console.log("itemProduct ", itemProduct);
+                                setItemProduct(item)
+                                setTimeout(() => {
+                                    setShowModal(true);
+                                }, 500);
+
+                            }} key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
                                 <Image style={{ width: 20, height: 20, margin: 10 }} source={Images.icon_return} />
                                 <View style={{ flexDirection: "column", flex: 1 }}>
                                     <Text style={{ fontWeight: "bold", marginBottom: 7 }}>{item.Name}</Text>
@@ -195,7 +276,7 @@ export default (props) => {
                                 <View style={{ alignItems: "center", flexDirection: "row" }}>
                                     <Text style={{ fontWeight: "bold", color: Colors.colorchinh, padding: 10 }}>{currencyToString(getPriceItem(item))}</Text>
                                 </View>
-                            </View>
+                            </TouchableOpacity>
                         )
                     })
                     }
@@ -266,6 +347,52 @@ export default (props) => {
                     <Text style={{ color: "#fff", fontWeight: "bold", textTransform: "uppercase" }}>{I18n.t('tam_tinh')}</Text>
                 </TouchableOpacity>
             </View>
+            <Modal
+                animationType="fade"
+                transparent={true}
+                visible={showModal}
+                supportedOrientations={['portrait', 'landscape']}
+                onRequestClose={() => {
+                }}>
+                <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+                    <TouchableWithoutFeedback
+                        onPress={() => { setShowModal(false) }}
+                        style={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0
+                        }}>
+                        <View style={[{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0
+                        }, { backgroundColor: 'rgba(0,0,0,0.5)' }]}></View>
+
+                    </TouchableWithoutFeedback>
+                    <View style={{ justifyContent: 'center', alignItems: 'center', }}>
+                        <View style={{
+                            padding: 0,
+                            backgroundColor: "#fff", borderRadius: 4, marginHorizontal: 20,
+                            width: Metrics.screenWidth * 0.8,
+                            marginBottom: Platform.OS == 'ios' ? Metrics.screenHeight / 10 : 0
+                        }}>
+                            <ReturnProduct
+                                Name={itemProduct.Name}
+                                Quantity={itemProduct.Quantity}
+                                vendorSession={vendorSession}
+                                getDataOnClick={(data) => saveOrder(data)}
+                                setShowModal={() => {
+                                    setShowModal(false)
+                                }
+                                } />
+                        </View>
+                    </View>
+                </View>
+            </Modal>
             <Snackbar
                 duration={5000}
                 visible={showToast}
