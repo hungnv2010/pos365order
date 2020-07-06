@@ -74,7 +74,8 @@ export default (props) => {
     }
 
     const onClickSelectProduct = () => {
-        props.navigation.navigate('SelectProduct', { _onSelect: onCallBack, listProducts: listProducts })
+        let list = listProducts.filter(item => item.Id > 0)
+        props.navigation.navigate('SelectProduct', { _onSelect: onCallBack, listProducts: list })
     }
 
 
@@ -86,6 +87,9 @@ export default (props) => {
         switch (type) {
             case 1:
                 data = data.filter(item => item.Quantity > 0)
+                if (data.length == 0) {
+                    data.push({ Id: -1, Quantity: 1 })
+                }
                 setListProducts([...data])
                 break;
             case 2:
