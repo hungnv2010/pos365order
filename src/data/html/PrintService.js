@@ -36,17 +36,16 @@ class PrintService {
             JsonContent.OrderDetails.forEach(el => {
                 var description = el.Description && el.Description.trim() != "" ? `<br>${el.Description?.replace(";", "<br>")}` : "";
                 let itemTable = listHtml[1];
-                let priceBase = el.IsLargeUnit ? el.PriceLargeUnit : el.UnitPrice;
-                let priceBaseShow = priceBase - (el.IsLargeUnit ? el.PriceLargeUnit : el.Price) ;
-                console.log("el.BasePrice priceBaseShow ", priceBaseShow, priceBase, el.BasePrice);
+
+                let BasePriceCustomAndTopping = (el.IsLargeUnit ? el.PriceLargeUnit : el.UnitPrice) + el.TotalTopping
 
                 itemTable = itemTable.replace("{Ten_Hang_Hoa}", "" + el.Name)
                 itemTable = itemTable.replace("{Ghi_Chu_Hang_Hoa}", description)
                 itemTable = itemTable.replace("{So_Luong}", el.Quantity)
                 itemTable = itemTable.replace("{Thanh_Tien_Hang_Hoa}", currencyToString(this.getPrice(el)))
-                itemTable = itemTable.replace("{Don_Gia}", currencyToString(el.IsLargeUnit ? el.PriceLargeUnit : el.Price))
-                itemTable = itemTable.replace("{Don_Gia_Goc_Hien_Thi_Check}", priceBaseShow > 0 ? "style='display: block'" : "style='display: none'")
-                itemTable = itemTable.replace("{Don_Gia_Goc_Hien_Thi}", currencyToString(el.BasePrice))
+                itemTable = itemTable.replace("{Don_Gia}", currencyToString(el.Price))
+                itemTable = itemTable.replace("{Don_Gia_Goc_Hien_Thi_Check}", BasePriceCustomAndTopping > el.Price ? "style='display: block'" : "style='display: none'")
+                itemTable = itemTable.replace("{Don_Gia_Goc_Hien_Thi}", currencyToString(BasePriceCustomAndTopping))
                 sum += this.getPrice(el);
                 listTable += itemTable;
             });
@@ -84,16 +83,16 @@ class PrintService {
                 HTMLBase = HTMLBase.replace("{Dia_Chi_Khach_Hang}", addressCustomerShow)
 
                 HTMLBase = HTMLBase.replace("{Tong_Truoc_Chiet_Khau}", currencyToString(sum))
-                HTMLBase = HTMLBase.replace("{Chiet_Khau_Check}", JsonContent.Discount > 0 ? "style='visibility: unset'" : "style='visibility: collapse'")
+                HTMLBase = HTMLBase.replace("{Chiet_Khau_Check}", JsonContent.Discount > 0 ? "style='visibility: unset;'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{Chiet_Khau}", currencyToString(JsonContent.Discount))
-                HTMLBase = HTMLBase.replace("{VAT_Check}", JsonContent.VATRates != "" && JsonContent.VAT > 0 ? "style='visibility: unset'" : "style='visibility: collapse'")
+                HTMLBase = HTMLBase.replace("{VAT_Check}", JsonContent.VATRates != "" && JsonContent.VAT > 0 ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{VAT}", currencyToString(JsonContent.VAT))
                 HTMLBase = HTMLBase.replace("{VAT%}", JsonContent.VATRates + "%")
                 HTMLBase = HTMLBase.replace("{Tong_Cong}", currencyToString(JsonContent.Total))
-                HTMLBase = HTMLBase.replace(/{Excess_Cash_Check}/g, (JsonContent.ExcessCash != 0) ? "style='visibility: unset'" : "style='visibility: collapse'")
+                HTMLBase = HTMLBase.replace(/{Excess_Cash_Check}/g, (JsonContent.ExcessCash != 0) ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{Tien_Khach_Dua}", JsonContent.TotalPayment)
                 HTMLBase = HTMLBase.replace("{Tien_Thua_Tra_Khach}", JsonContent.ExcessCash)
-                HTMLBase = HTMLBase.replace("{Ghi_Chu_Check}", JsonContent.Description != "" ? "style='visibility: unset'" : "style='visibility: collapse'")
+                HTMLBase = HTMLBase.replace("{Ghi_Chu_Check}", JsonContent.Description != "" ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{Ghi_Chu}", JsonContent.Description)
                 HTMLBase = HTMLBase.replace("{Chan_Trang}", "Xin cảm ơn, hẹn gặp quý khách!")
                 HTMLBase = HTMLBase.replace("{FOOTER_POS_365}", CONTENT_FOOTER_POS365)

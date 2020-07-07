@@ -35,7 +35,7 @@ const ProductsItemForPhone = ({ item, index, onClickProduct, handleButtonDecreas
                             onChangeText={(numb) => {
                                 onChangeText(numb, item)
                             }}
-                            style={{ width: 50, borderBottomWidth: .5 }}>{Math.round(item.Quantity * 1000) / 1000}
+                            style={{ width: 50, borderBottomWidth: .5, paddingVertical: 5, paddingTop: 10, marginBottom: 5}}>{Math.round(item.Quantity * 1000) / 1000}
                         </TextInput>
                         <TouchableOpacity onPress={() => { handleButtonIncrease(item, index) }}>
                             <Icon name="plus-box" size={40} color={Colors.colorchinh} />

@@ -94,6 +94,7 @@ export default forwardRef((props, ref) => {
                         <AutoHeightWebView
                             scrollEnabled={false}
                             style={{ width: deviceType == Constant.PHONE ?  Dimensions.get('window').width : Dimensions.get('window').width/2 }}
+                            // style={{ width: Dimensions.get('window').width }}
                             // customScript={`document.body.style.background = 'red';`}
 
                             // onSizeUpdated={({size => console.log(size.height)})},
