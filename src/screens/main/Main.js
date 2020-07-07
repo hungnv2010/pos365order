@@ -19,19 +19,18 @@ export default (props) => {
   const [already, setAlready] = useState(false)
 
   useEffect(() => {
-    // const getVendorSession = async () => {
-    //   let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
-    //   console.log('getVendorSession data ====', JSON.parse(data));
-      
-    //   if (data) {
-    //     data = JSON.parse(data);
-    //     console.log('this.info data.BID ',data.BID);
-    //     let state = store.getState();
-    //     signalRManager.init({...data, SessionId: state.Common.info.SessionId})
-    //   }
-    // }
-    // getVendorSession()
+    const getVendorSession = async () => {
+      let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
+      console.log('getVendorSession data ====', JSON.parse(data));
 
+      if (data) {
+        data = JSON.parse(data);
+        console.log('this.info data.BID ', data.BID);
+        let state = store.getState();
+        signalRManager.init({ ...data, SessionId: state.Common.info.SessionId })
+      }
+    }
+    getVendorSession()
 
     if (props.route.params && props.route.params.Name) return
     const syncAllDatas = async () => {
