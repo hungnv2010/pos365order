@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useRef, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, NativeModules } from 'react-native';
 import { useSelector } from 'react-redux';
 import ToolBarSelectProduct from '../../../components/toolbar/ToolBarSelectProduct'
 import ToolBarServed from '../../../components/toolbar/ToolBarServed'
@@ -8,9 +8,12 @@ import PageServed from './pageServed/PageServed';
 import Topping from './Topping';
 import realmStore from '../../../data/realm/RealmStore';
 import { Constant } from '../../../common/Constant';
+import ViewPrint from '../../more/ViewPrint';
+const { Print } = NativeModules;
 
 const Served = (props) => {
 
+    const [data, setData] = useState("");
     const [listProducts, setListProducts] = useState([])
     const [value, setValue] = useState('');
     const [itemOrder, setItemOrder] = useState({})
@@ -115,9 +118,28 @@ const Served = (props) => {
         }
     }
 
+    const onClickProvisional = (res) => {
+        if (res && res != "") {
+            let html = data.replace("width: 76mm", "")
+            setData(res)
+        }
+        setTimeout(() => {
+            viewPrintRef.current.clickCaptureRef();
+        }, 500);
+    }
+    const viewPrintRef = useRef();
     const renderForTablet = () => {
         return (
             <>
+                <ViewPrint
+                    ref={viewPrintRef}
+                    html={data}
+                    callback={(uri) => {
+                        console.log("callback uri ", uri)
+                        Print.printImageFromClient([uri + ""])
+                    }
+                    }
+                />
                 <ToolBarServed
                     {...props}
                     ref={toolBarTabletServedRef}
@@ -149,6 +171,7 @@ const Served = (props) => {
                         <PageServed
                             {...props}
                             itemOrder={meMoItemOrder}
+                            onClickProvisional={(res) => onClickProvisional(res)}
                             listProducts={[...listProducts]}
                             outputListProducts={outputListProducts}
                             outputItemOrder={outputItemOrder}

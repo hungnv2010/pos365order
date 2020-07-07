@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, View, StyleSheet, Picker, Text, TextInput, TouchableWithoutFeedback, TouchableOpacity, Modal } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { NativeModules, Image, View, StyleSheet, Picker, Text, TextInput, TouchableWithoutFeedback, TouchableOpacity, Modal } from 'react-native';
 import { Colors, Images, Metrics } from '../../../../theme';
 import MenuConfirm from './MenuConfirm';
 import Menu, { MenuItem, MenuDivider } from 'react-native-material-menu';
@@ -11,11 +11,12 @@ import I18n from '../../../../common/language/i18n';
 import { Snackbar } from 'react-native-paper';
 import signalRManager from '../../../../common/SignalR';
 import { useSelector } from 'react-redux';
-
-
+import ViewPrint from '../../../more/ViewPrint';
+// const { Print } = NativeModules;
 
 export default (props) => {
 
+    // const [data, setData] = useState("");
     const [tab, setTab] = useState(1)
     const [showModal, setShowModal] = useState(false)
     const [position, setPosition] = useState('A')
@@ -88,9 +89,29 @@ export default (props) => {
         signalRManager.sendMessageOrder(textNotify)
     }
 
+    const onClickProvisional = (res) => {
+        // if (res && res != "") {
+        //     let html = data.replace("width: 76mm", "")
+        //     setData(res)
+        // }
+        // setTimeout(() => {
+        //     viewPrintRef.current.clickCaptureRef();
+        // }, 500);
+        props.onClickProvisional(res);
+    }
+
+    // const viewPrintRef = useRef();
     return (
         <View style={{ flex: 1, backgroundColor: "#fff" }}>
-
+            {/* <ViewPrint
+                ref={viewPrintRef}
+                html={data}
+                callback={(uri) => {
+                    console.log("callback uri ", uri)
+                    Print.printImageFromClient([uri + ""])
+                }
+                }
+            /> */}
             <View style={{ backgroundColor: Colors.colorchinh, alignItems: "center", flexDirection: "row", justifyContent: "space-between", borderTopColor: "#EAECEE", borderTopWidth: 1.5, height: 35 }}>
                 <View style={{ flex: 1, justifyContent: "center", }}>
                     <Text style={{ paddingLeft: 20, textTransform: "uppercase", color: "white", fontWeight: "bold" }}>{props.route && props.route.params && props.route.params.room && props.route.params.room.Name ? props.route.params.room.Name : ""}</Text>
@@ -122,6 +143,7 @@ export default (props) => {
                     outputSendNotify={outputSendNotify} />
                 :
                 <MenuConfirm Position={position} {...props}
+                    onClickProvisional={(res) => onClickProvisional(res)}
                     outputSendNotify={outputSendNotify}
                     outputListPos={outputListPos} />
             }

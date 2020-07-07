@@ -248,7 +248,7 @@ export default (props) => {
                     <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 2 }}>
                         {item.IsActive ?
                             <View style={{ flexDirection: "row", }}>
-                                <Image source={Images.image_clock} style={{ width: 10, height: 10 , marginHorizontal: 2, alignSelf:"center"}}></Image>
+                                <Image source={Images.image_clock} style={{ width: 10, height: 10 , marginRight: 1, alignSelf:"center"}}></Image>
                                 <Text style={{ paddingTop: 0, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
                             </View>
                             : null}

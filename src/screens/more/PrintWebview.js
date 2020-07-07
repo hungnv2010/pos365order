@@ -254,8 +254,8 @@ export default forwardRef((props, ref) => {
             }
             printService.GenHtml(html, JsonContent1).then(res => {
                 if (res && res != "") {
-                    if (deviceType == Constant.TABLET)
-                        res = res.replace("font-size:16.0px;", "font-size:22.0px;")
+                    // if (deviceType == Constant.TABLET)
+                    //     res = res.replace("font-size:16.0px;", "font-size:22.0px;")
                     setData(res)
                 }
             })
@@ -336,17 +336,17 @@ export default forwardRef((props, ref) => {
                 clickPrint={() => clickPrint()}
                 clickCheck={() => clickCheck()}
             /> : null}
-                <AutoHeightWebView
-                    // scrollEnabled={false}
-                    style={{ width: deviceType == Constant.PHONE ? Metrics.screenWidth : Metrics.screenWidth / 2.5 }}
-                    files={[{
-                        href: 'cssfileaddress',
-                        type: 'text/css',
-                        rel: 'stylesheet'
-                    }]}
-                    source={{ html: data }}
-                // scalesPageToFit={true}
-                />
+            <AutoHeightWebView
+                // scrollEnabled={false}
+                style={{ width: deviceType == Constant.PHONE ? Metrics.screenWidth - 20 : Metrics.screenWidth / 2.5 }}
+                files={[{
+                    href: 'cssfileaddress',
+                    type: 'text/css',
+                    rel: 'stylesheet'
+                }]}
+                source={{ html: data }}
+            // scalesPageToFit={true}
+            />
         </View>
     );
 });
