@@ -42,23 +42,19 @@ export default (props) => {
         { name: "D", status: false },
     ]
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const init = async () => {
-            serverEvent = await realmStore.queryServerEvents()
+            let serverEvent = await realmStore.queryServerEvents()
             listPos.forEach((item, index) => {
                 const row_key = `${props.route.params.room.Id}_${item.name}`
                 let serverEventPos = serverEvent.filtered(`RowKey == '${row_key}'`)
                 if (JSON.stringify(serverEventPos) != "{}" && JSON.parse(serverEventPos[0].JsonContent).OrderDetails.length > 0) {
                     item.status = true
-                    if (item.name == props.Position) {
-                        serverEvent = serverEventPos
-                        setJsonContent(JSON.parse(serverEvent[0].JsonContent))
-                        serverEvent.addListener((collection, changes) => {
-                            setJsonContent(JSON.parse(serverEvent[0].JsonContent))
-                        })
-                    }
                 }
+
             })
+            console.log('listPos', listPos);
+
             props.outputListPos(listPos)
             provisional.current = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
             console.log('provisional ', provisional.current);
@@ -72,6 +68,22 @@ export default (props) => {
 
         }
         init()
+    }, [])
+
+
+    useLayoutEffect(() => {
+        const getListPos = async () => {
+            serverEvent = await realmStore.queryServerEvents()
+            const row_key = `${props.route.params.room.Id}_${props.Position}`
+            serverEvent = serverEvent.filtered(`RowKey == '${row_key}'`)
+            if (JSON.stringify(serverEvent) != "{}" && JSON.parse(serverEvent[0].JsonContent).OrderDetails.length > 0) {
+                setJsonContent(JSON.parse(serverEvent[0].JsonContent))
+                serverEvent.addListener((collection, changes) => {
+                    setJsonContent(JSON.parse(serverEvent[0].JsonContent))
+                })
+            }
+        }
+        getListPos()
         return () => {
             if (serverEvent) serverEvent.removeAllListeners()
             setJsonContent({})
@@ -156,26 +168,55 @@ export default (props) => {
             props.outputSendNotify(type);
     }
 
+    const cancelProduct = (item) => {
+        if (item.ProductType == 2 && item.IsTimer) {
+            setToastDescription(I18n.t("khong_the_huy_tra_mat_hang_thoi_gian"))
+            setShowToast(true)
+            return
+        }
+        let totalQty = 0;
+        jsonContent.OrderDetails.forEach(elm => {
+            if (elm.ProductId == item.ProductId) {
+                totalQty += elm.Quantity
+            }
+        })
+
+        if (totalQty > 0) {
+            item.totalQty = totalQty
+            setItemProduct(item)
+            setTimeout(() => {
+                setShowModal(true);
+            }, 200);
+        } else {
+            setToastDescription(I18n.t("khong_the_huy_tra_mat_hang_nay"))
+            setShowToast(true)
+        }
+
+        console.log('cancelProduct', item);
+
+
+    }
     const saveOrder = (data) => {
         console.log("saveOrder data ", data, itemProduct);
-        
-        // ServeEntities: [,…]
-        // 0: {ProductId: 868689, Name: "Kem trứng (cao/đậu xanh/cafe)", Printer: "KitchenA", SecondPrinter: null,…}
+
         // BasePrice: 30000
-        // Name: "Kem trứng (cao/đậu xanh/cafe)"
+        // Description: " -CUBA LIBRE x1=30,000↵ -BLOODY MARY x1=30,000↵ -Đĩa thịt nguội Tây Ba Nha hảo hạng x1=125,000↵ -Bia Heiniken x1=30,000↵ -Bia Hà Nội x1=30,000↵"
+        // DiscountRatio: 0
+        // Name: "APEROL SPRITZ"
         // OrderQuickNotes: []
         // Position: "A"
-        // Price: 30000
-        // Printer: "KitchenA"
+        // Price: 275000
         // Printer3: null
         // Printer4: null
         // Printer5: null
-        // ProductId: 868689
-        // Quantity: -1
-        // RoomId: 292910
-        // RoomName: "Phòng Vé"
+        // ProductId: 8116696
+        // Quantity: -2
+        // RoomId: 627484
+        // RoomName: "B.1"
         // SecondPrinter: null
-        // Serveby: 426
+        // Serveby: 130772
+        // Topping: "[{"ExtraId":8116697,"QuantityExtra":1,"Price":30000,"Quantity":1},{"ExtraId":8116699,"QuantityExtra":1,"Price":30000,"Quantity":1},{"ExtraId":8116702,"QuantityExtra":1,"Price":125000,"Quantity":1},{"ExtraId":8116715,"QuantityExtra":1,"Price":30000,"Quantity":1},{"ExtraId":8116716,"QuantityExtra":1,"Price":30000,"Quantity":1}]"
+        // TotalTopping: 245000
 
         let element = itemProduct;
 
@@ -184,6 +225,7 @@ export default (props) => {
         };
         let obj = {
             BasePrice: element.Price,
+            Description: data.Description,
             Code: element.Code,
             Name: element.Name,
             OrderQuickNotes: [],
@@ -193,15 +235,12 @@ export default (props) => {
             Printer3: null,
             Printer4: null,
             Printer5: null,
-            ProductId: element.Id,
+            ProductId: element.ProductId,
             Quantity: data.QuantityChange * -1,
             RoomId: props.route.params.room.Id,
             RoomName: props.route.params.room.Name,
             SecondPrinter: null,
             Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : "",
-            Topping: element.Topping,
-            TotalTopping: element.TotalTopping,
-            Description: data.Description
         }
         params.ServeEntities.push(obj)
 
@@ -221,14 +260,7 @@ export default (props) => {
     const viewPrintRef = useRef();
     const renderItem = (item, index) => {
         return (
-            <TouchableOpacity onPress={() => {
-                console.log("itemProduct ", itemProduct);
-                setItemProduct(item)
-                setTimeout(() => {
-                    setShowModal(true);
-                }, 500);
-
-            }} key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
+            <TouchableOpacity onPress={() => cancelProduct(item)} key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
                 {
                     item.ProductType == 2 && item.IsTimer ?
                         <Icon style={{ margin: 5 }} name="clock-outline" size={30} color={Colors.colorchinh} />
@@ -380,7 +412,7 @@ export default (props) => {
                         }}>
                             <ReturnProduct
                                 Name={itemProduct.Name}
-                                Quantity={itemProduct.Quantity}
+                                Quantity={itemProduct.totalQty}
                                 vendorSession={vendorSession}
                                 getDataOnClick={(data) => saveOrder(data)}
                                 setShowModal={() => {

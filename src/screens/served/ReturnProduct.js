@@ -29,7 +29,6 @@ export const ReturnProduct = (props) => {
             QuantityChange: QuantityChange,
             Name: Name,
             Description: Description,
-            Quantity: Quantity
         }
         props.getDataOnClick(data)
         props.setShowModal(false)

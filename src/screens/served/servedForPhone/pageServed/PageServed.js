@@ -20,7 +20,7 @@ export default (props) => {
     const [textNotify, setTextNotify] = useState("")
     const [vendor, setVendor] = useState({})
     const [showModal, setShowModal] = useState(false)
-    const [position, setPosition] = useState(() => props.route.params.Position ? props.route.params.Position : 'A')
+    const [position, setPosition] = useState('A')
     const [listProducts, setListProducts] = useState([])
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")

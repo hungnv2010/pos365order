@@ -151,7 +151,12 @@ export default (props) => {
     let Description = ''
     if (item.ProductType == 2 && item.IsTimer) {
       let date = new Date()
-      let [day, month, hour, minute] = [date.getDate(), date.getMonth(), date.getHours(), date.getMinutes()]
+      let [day, month, hour, minute] = [
+        (date.getDate() < 10 ? "0" : "") + (date.getDate()),
+        ((date.getMonth() + 1) < 10 ? '0' : '') + (date.getMonth() + 1),
+        date.getHours(),
+        date.getMinutes()
+      ]
       Description = `${day}/${month} ${hour}:${minute}=>${day}/${month} ${hour}:${minute} (0 ${I18n.t('phut')})`
     }
     return Description

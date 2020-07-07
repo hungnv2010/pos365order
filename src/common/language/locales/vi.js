@@ -34,9 +34,9 @@ export default {
   cai_dat_may_in: "Cài đặt máy in",
   chuyen: "Chuyển",
   chon_vi_tri: "Chọn vị trí",
-  chuyen_ban:"Chuyển bàn",
+  chuyen_ban: "Chuyển bàn",
   chuc_nang_dang_duoc_phat_trien: "Chức năng đang được phát triển.",
-  chon_mon:"Chọn món",
+  chon_mon: "Chọn món",
 
   // TODO: D
   dang_dung: "Đang dùng",
@@ -82,7 +82,9 @@ export default {
   khac: "Khác",
   ket_noi_may_in: "Kết nối máy in",
   khach_phai_tra: "Khách phải trả",
-  khach_da_tra:"Khách đã trả",
+  khach_da_tra: "Khách đã trả",
+  khong_the_huy_tra_mat_hang_nay: "Không thể hủy trả mặt hàng này",
+  khong_the_huy_tra_mat_hang_thoi_gian: "Không thể hủy trả mặt hàng thời gian",
 
   // TODO: H
   hoa_don: "Hoá đơn",
@@ -112,7 +114,7 @@ export default {
   man_hinh_thu_ngan: "Màn hình thu ngân",
   may_in_tam_tinh: "Máy in tạm tính",
   ma_khong_hop_le: "Mã không hợp lệ vui lòng kiểm tra lại.",
-  mon_da_xac_nhan:"Món đã xác nhận",
+  mon_da_xac_nhan: "Món đã xác nhận",
 
   // TODO: N
   no: "Nợ",
@@ -219,7 +221,7 @@ export default {
   tong_thanh_tien: "Tổng thành tiền",
   tong_chiet_khau: "Tổng chiết khấu",
   tu: "từ",
-  thuc_don_da_goi:"Thực đơn đã gọi",
+  thuc_don_da_goi: "Thực đơn đã gọi",
   // TODO: U
 
   // TODO: V
