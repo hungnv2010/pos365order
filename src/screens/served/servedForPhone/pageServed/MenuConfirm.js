@@ -68,6 +68,10 @@ export default (props) => {
 
         }
         init()
+        return () => {
+            if (serverEvent) serverEvent.removeAllListeners()
+            setJsonContent({})
+        }
     }, [])
 
 

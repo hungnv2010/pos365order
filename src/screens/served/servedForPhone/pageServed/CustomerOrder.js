@@ -21,7 +21,7 @@ export default (props) => {
 
     const [listPosition, setListPosition] = useState([])
     const [showModal, setShowModal] = useState(false)
-    const [list, setListOrder] = useState(() => props.listProducts)
+    const [list, setListOrder] = useState(() => props.listProducts.filter(item => item.Id > 0))
     const [vendorSession, setVendorSession] = useState({})
     const [showToast, setShowToast] = useState(false);
     const [toastDescription, setToastDescription] = useState("")
@@ -58,13 +58,17 @@ export default (props) => {
         if (props.listProducts.length > 0) {
             let list = props.listProducts.filter(item => item.Id > 0)
             let exist = false
-            listPosition.forEach(element => {
+            listPosition.forEach((element, idx, arr) => {
                 if (element.key == props.Position) {
                     exist = true
-                    element.list = list
+                    if (list.length == 0) {
+                        listPosition.splice(idx, 1)
+                    } else {
+                        element.list = list
+                    }
                 }
             })
-            if (!exist) {
+            if (!exist && list.length > 0) {
                 listPosition.push({ key: props.Position, list: list })
             }
             console.log(listPosition, 'listPosition');
@@ -142,7 +146,6 @@ export default (props) => {
             if (element.Id == props.route.params.room.Id) {
                 exist = true
                 element.data = listPosition
-                element.data = element.data.filter(it => it.key != props.Position)
                 if (element.data.length == 0) {
                     hasData = false
                 }
@@ -151,7 +154,7 @@ export default (props) => {
         if (!hasData) {
             handleDataChoosing()
         }
-        if (!exist) {
+        if (!exist && listPosition.length > 0) {
             dataManager.dataChoosing.push({ Id: props.route.params.room.Id, ProductId: props.route.params.room.ProductId, Name: props.route.params.room.Name, data: listPosition })
         }
         console.log(dataManager.dataChoosing, 'savePosition');

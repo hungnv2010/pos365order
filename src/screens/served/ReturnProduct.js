@@ -26,7 +26,7 @@ export const ReturnProduct = (props) => {
 
     const onClickOk = () => {
         let data = {
-            QuantityChange: QuantityChange,
+            QuantityChange: (Quantity - QuantityChange) > 0 ? QuantityChange : Quantity,
             Name: Name,
             Description: Description,
         }
@@ -54,8 +54,7 @@ export const ReturnProduct = (props) => {
                         <TextInput
                             onChangeText={text => {
                                 if (!Number.isInteger(+text)) return
-                                itemOrder.Quantity = text
-                                setItemOrder({ ...itemOrder })
+                                setQuantityChange(text)
                             }}
                             style={styles.textQuantityModal}
                             value={"" + QuantityChange}
@@ -75,7 +74,7 @@ export const ReturnProduct = (props) => {
                         <TextInput
                             editable={false} selectTextOnFocus={false}
                             style={styles.textQuantityModal}
-                            value={"" + (Quantity - QuantityChange)}
+                            value={"" + ((Quantity - QuantityChange) > 0 ? (Quantity - QuantityChange) : 0)}
                             keyboardType="numeric" />
 
                     </View>

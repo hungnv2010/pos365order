@@ -23,6 +23,7 @@ export default (props) => {
   const [valueSearch, setValueSearch] = useState('')
   const count = useRef(0)
   const debouncedVal = useDebounce(valueSearch)
+  const listChangeText = useRef([])
 
 
   useEffect(() => {
@@ -157,48 +158,61 @@ export default (props) => {
     console.log('handleButtonIncrease', item, index);
     let qtt = getQuantity(item)
     item.Quantity += qtt
-    let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-    listProducts.current[pos].Quantity += qtt
-    // if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
-    //   listProducts.current.unshift({ ...item, Quantity: qtt, Sid: Date.now() })
-    // } else {
-    //   let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-    //   listProducts.current[pos].Quantity += qtt
-    // }
+    // let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+    // listProducts.current[pos].Quantity += qtt
+    if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
+      listProducts.current.unshift({ ...item, Quantity: qtt, Sid: Date.now() })
+    } else {
+      let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
+      listProducts.current[pos].Quantity += qtt
+    }
     setProduct([...product])
   }
 
   const handleButtonDecrease = (item, index) => {
     let qtt = getQuantity(item)
-    item.Quantity -= qtt
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
-    listProducts.current[pos].Quantity -= qtt
-    // if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
-    //   listProducts.current.splice(pos, 1)
-    // } else {
-    //   listProducts.current[pos].Quantity -= qtt
-    // }
+    if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
+      listProducts.current.splice(pos, 1)
+    } else {
+      listProducts.current[pos].Quantity -= qtt
+    }
     setProduct([...product])
   }
 
   const onChangeText = (numb, item) => {
+    numb = +numb
+    if (numb <= 0) return
+    let exist = false
     listProducts.current = listProducts.current.filter(elm => elm.Id != item.Id)
-    listProducts.current.unshift({ ...item, Quantity: numb, Sid: Date.now() })
+    // listProducts.current.unshift({ ...item, Quantity: numb, Sid: Date.now() })
+    listChangeText.current.forEach(elm => {
+      if (elm.Id == item.Id) {
+        elm.numb = numb
+        exist = true
+      }
+    })
+    if (!exist) {
+      listChangeText.current.push({ ...item, Quantity: numb, Sid: Date.now() })
+    }
+    console.log('listChangeText', listChangeText.current);
+    console.log('listProducts.current', listProducts.current);
+
   }
 
 
   const onClickDone = () => {
     props.navigation.pop();
-    listProducts.current.forEach((elm, index, arr) => {
-      if (elm.SplitForSalesOrder || (elm.ProductType == 2 && elm.IsTimer)) {
+    listChangeText.current.forEach((elm, idx, arr) => {
+      if ((elm.SplitForSalesOrder || (elm.ProductType == 2 && elm.IsTimer))) {
+        arr.splice(idx, 1)
         let qtt = getQuantity(elm)
-        arr.splice(index, 1)
-        // arr = arr.filter(item => item.Id != elm.Id)
         for (let i = 0; i < elm.Quantity; i++) {
-          arr.splice(index, 0, { ...elm, Quantity: qtt, Sid: Date.now() + i })
+          arr.splice(idx, 0, { ...elm, Quantity: qtt, Sid: Date.now() + i })
         }
       }
     })
+    listProducts.current = [...listProducts.current, ...listChangeText.current]
     console.log('listProducts', listProducts.current);
     props.route.params._onSelect(listProducts.current, 1);
   }
