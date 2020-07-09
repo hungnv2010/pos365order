@@ -22,12 +22,11 @@ export default (props) => {
     const getVendorSession = async () => {
       let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
       console.log('getVendorSession data ====', JSON.parse(data));
-      
       if (data) {
         data = JSON.parse(data);
-        console.log('this.info data.BID ',data.BID);
+        console.log('this.info data.BID ', data.BID);
         let state = store.getState();
-        signalRManager.init({...data, SessionId: state.Common.info.SessionId})
+        signalRManager.init({ ...data, SessionId: state.Common.info.SessionId })
       }
     }
     getVendorSession()
@@ -36,9 +35,14 @@ export default (props) => {
     if (props.route.params && props.route.params.Name) return
     const syncAllDatas = async () => {
       dialogManager.showLoading()
-      await dataManager.syncAllDatas().then(() => {
-        setAlready(true)
-      })
+      await dataManager.syncAllDatas()
+        .then(() => {
+          setAlready(true)
+        })
+        .catch((e) => {
+          console.log('syncAllDatas err', e);
+          setAlready(true)
+        })
       dialogManager.hiddenLoading()
     }
     syncAllDatas()

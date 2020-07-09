@@ -33,14 +33,14 @@ const LoginScreen = (props) => {
 
     useEffect(() => {
         const getCurrentAccount = async () => {
+            dialogManager.showLoading();
             let currentAccount = await getFileDuLieuString(Constant.CURRENT_ACCOUNT, true);
             console.log('currentAccount', currentAccount);
             if (currentAccount && currentAccount != "") {
-                dialogManager.showLoading();
                 currentAccount = JSON.parse(currentAccount);
                 URL.link = "https://" + currentAccount.Link + ".pos365.vn/";
-                dispatch(saveDeviceInfoToStore({ SessionId: currentAccount.SessionId }))
-                getRetailerInfoAndNavigate();
+                // dispatch(saveDeviceInfoToStore({ SessionId: currentAccount.SessionId }))
+                navigateToHome();
             } else {
                 let rememberAccount = await getFileDuLieuString(Constant.REMEMBER_ACCOUNT, true);
                 console.log('rememberAccount', rememberAccount);
@@ -52,6 +52,7 @@ const LoginScreen = (props) => {
                 } else {
                     setHasLogin(false)
                 }
+                dialogManager.hiddenLoading()
             }
         }
         getCurrentAccount()
@@ -99,6 +100,18 @@ const LoginScreen = (props) => {
         getRetailerInfoAndNavigate();
     }
 
+    const navigateToHome = () => {
+        props.navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [
+                    { name: 'Home' },
+                ],
+            })
+        )
+        dialogManager.hiddenLoading();
+    }
+
     const getRetailerInfoAndNavigate = () => {
         let inforParams = {};
         new HTTPService().setPath(ApiPath.VENDOR_SESSION).GET(inforParams, getHeaders()).then((res) => {
@@ -112,14 +125,7 @@ const LoginScreen = (props) => {
                 }
 
                 if (res.CurrentRetailer && (res.CurrentRetailer.FieldId == 3 || res.CurrentRetailer.FieldId == 11)) {
-                    props.navigation.dispatch(
-                        CommonActions.reset({
-                            index: 0,
-                            routes: [
-                                { name: 'Home' },
-                            ],
-                        })
-                    )
+                    navigateToHome()
                 } else {
                     dialogManager.showPopupOneButton("Vui lòng chọn lĩnh vực BÁN LẺ hỗ trợ: shop, thời trang, siêu thị...", I18n.t('thong_bao'));
                 }

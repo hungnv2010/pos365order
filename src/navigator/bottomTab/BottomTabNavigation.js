@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import More from '../../screens/more/More'
 import OrderNow from '../../screens/ordernow/OrderNow';
 import { useSelector } from 'react-redux';
-import dataManager from '../../data/DataManager';
 import History from '../../screens/history/History'
 
 import I18n from '../../common/language/i18n'

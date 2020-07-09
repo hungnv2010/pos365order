@@ -14,7 +14,7 @@ import {
 import I18n from '../../../common/language/i18n';
 import realmStore from '../../../data/realm/RealmStore'
 import { useSelector, useDispatch } from 'react-redux';
-import { currencyToString, dateUTCToMoment, momentToDateUTC } from '../../../common/Utils'
+import { currencyToString, dateUTCToMoment, getTimeFromNow } from '../../../common/Utils'
 import { Constant } from '../../../common/Constant';
 import { Images, Metrics } from '../../../theme';
 import colors from '../../../theme/Colors';
@@ -203,6 +203,7 @@ export default (props) => {
         props.navigation.goBack()
     }
 
+
     let refScroll = null;
 
     const scrollToInitialPosition = () => {
@@ -245,11 +246,17 @@ export default (props) => {
 
                     </View>
                     <View style={{ height: 0.5, width: "90%", backgroundColor: "#ddd", justifyContent: "center", alignItems: "center" }}></View>
-                    <View style={{ justifyContent: "center", padding: 0, alignItems: "center", flex: 2 }}>
+                    <View style={{ justifyContent: "center", paddingHorizontal: 10, alignItems: "center", flex: 2 }}>
                         {item.IsActive ?
                             <View style={{ flexDirection: "row", }}>
-                                <Image source={Images.image_clock} style={{ width: 10, height: 10 , marginRight: 1, alignSelf:"center"}}></Image>
-                                <Text style={{ paddingTop: 0, fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black' }}>{item.RoomMoment && item.IsActive ? moment(item.RoomMoment._i).fromNow() : ""}</Text>
+                                <Image source={Images.image_clock} style={{ width: 10, height: 10, marginRight: 2, alignSelf: "center" }}></Image>
+                                <TextTicker
+                                    style={{  fontSize: 10, textAlign: "center", color: item.IsActive ? 'white' : 'black', fontSize: 8 }}
+                                    duration={6000}
+                                    bounce={false}
+                                    marqueeDelay={1000}>
+                                    {item.RoomMoment && item.IsActive ? getTimeFromNow(item.RoomMoment._i) : ""}
+                                </TextTicker>
                             </View>
                             : null}
                         <Text style={{ paddingTop: item.IsActive ? 10 : 0, color: item.IsActive ? "#fff" : "#000", textAlign: "center", fontSize: 10 }}>{item.IsActive ? currencyToString(item.Total) : "Sẵn sàng"}</Text>
