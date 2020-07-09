@@ -64,3 +64,24 @@ export const change_alias = (alias) => {
   return str;
 }
 
+export const getTimeFromNow = (RoomMoment) => {
+  let [day, hour, minute] = [0, 0, 0]
+  let date = new Date()
+  let timeFromNow = date.getTime() - moment(RoomMoment).valueOf()
+  day = Math.floor(timeFromNow / (1000 * 60 * 60 * 24))
+  timeFromNow -= day * 24 * 60 * 60 * 1000
+  hour = Math.floor(timeFromNow / (1000 * 60 * 60))
+  if (hour < 10) {
+    hour = '0' + hour
+  }
+  timeFromNow -= hour * 60 * 60 * 1000
+  minute = Math.floor(timeFromNow / (1000 * 60))
+  if (minute < 10) {
+    minute = '0' + minute
+  }
+  day = day > 0 ? `${day} ngày` : '';
+  hour = +hour > 0 ? `${hour} giờ` : '';
+  minute = +minute > 0 ? `${minute} phút` : '';
+  return `${day} ${hour} ${minute} trước`
+}
+
