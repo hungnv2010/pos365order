@@ -76,8 +76,7 @@ class PrintService {
                 HTMLBase = HTMLBase.replace("{Nhan_Vien}", vendorSession.CurrentUser.Name)
 
                 let partnerPhone = JsonContent.Partner && JsonContent.Partner.Phone ? JsonContent.Partner.Phone : ""
-                let partnerPhoneShow = partnerPhone != "" ? partnerPhone : "";
-                HTMLBase = HTMLBase.replace("{Dien_Thoai_Khach_Hang}", partnerPhoneShow)
+                HTMLBase = HTMLBase.replace("{Dien_Thoai_Khach_Hang}", partnerPhone)
                 let addressCustomer = JsonContent.Partner && JsonContent.Partner.Address ? JsonContent.Partner.Address : ""
                 let addressCustomerShow = addressCustomer != "" ? addressCustomer : "";
                 HTMLBase = HTMLBase.replace("{Dia_Chi_Khach_Hang}", addressCustomerShow)
@@ -94,7 +93,7 @@ class PrintService {
                 HTMLBase = HTMLBase.replace("{Tien_Thua_Tra_Khach}", JsonContent.ExcessCash)
                 HTMLBase = HTMLBase.replace("{Ghi_Chu_Check}", JsonContent.Description != "" ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{Ghi_Chu}", JsonContent.Description)
-                HTMLBase = HTMLBase.replace("{Chan_Trang}", "Xin cảm ơn, hẹn gặp quý khách!")
+                HTMLBase = HTMLBase.replace("{Chan_Trang}", "Xin cảm ơn, hẹn gặp lại quý khách!")
                 HTMLBase = HTMLBase.replace("{FOOTER_POS_365}", CONTENT_FOOTER_POS365)
             }
             console.log("html ", JSON.stringify(HTMLBase));

@@ -138,6 +138,9 @@ export default (props) => {
         if (getCurrentIP && getCurrentIP != "") {
             if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
                 console.log("onClickProvisional ", jsonContent);
+                if(jsonContent.RoomName == undefined || jsonContent.RoomName == ""){
+                    jsonContent.RoomName = props.route.params.room.Name;
+                }
                 if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
                     // printService.PrintHtmlService(HtmlDefault, jsonContent)
                     printService.GenHtml(HtmlDefault, jsonContent).then(res => {

@@ -132,16 +132,14 @@ export default (props) => {
         console.log('getCurrentIP ', getCurrentIP);
         if (getCurrentIP && getCurrentIP != "") {
             if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
-                console.log("onClickProvisional ", jsonContent);
+                if(jsonContent.RoomName == undefined || jsonContent.RoomName == ""){
+                    jsonContent.RoomName = props.route.params.room.Name;
+                }
+                console.log("onClickProvisional RoomName ", jsonContent.RoomName);
                 if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
                     // printService.PrintHtmlService(HtmlDefault, jsonContent)
                     printService.GenHtml(HtmlDefault, jsonContent).then(res => {
-                        // if (res && res != "") {
-                        //     setData(res)
-                        // }
-                        // setTimeout(() => {
-                        //     viewPrintRef.current.clickCaptureRef();
-                        // }, 500);
+                        
                         props.onClickProvisional(res);
 
                     })
@@ -230,19 +228,8 @@ export default (props) => {
         })
     }
 
-    // const viewPrintRef = useRef();
-
     return (
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
-            {/* <ViewPrint
-                ref={viewPrintRef}
-                html={data}
-                callback={(uri) => {
-                    console.log("callback uri ", uri)
-                    Print.printImageFromClient([uri + ""])
-                }
-                }
-            /> */}
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
                 <View style={{ alignItems: "center", flex: 1 }}>
                     <ImageBackground resizeMode="contain" source={Images.logo_365_long_color} style={{ flex: 1, opacity: 0.7, margin: 20, width: Metrics.screenWidth / 3 }}>
