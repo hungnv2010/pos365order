@@ -9,6 +9,9 @@ import { Constant } from '../../common/Constant';
 import { setFileLuuDuLieu } from '../fileStore/FileStorage';
 const { AzureHub } = NativeModules;
 import NavigationService from "../../navigator/NavigationService";
+import * as StackNavigation from '../../navigator/stack/StackNavigation';
+import dataManager from '../DataManager';
+import realmStore from '../realm/RealmStore';
 
 const URL_DEBUG = "https://kt365cafe.pos365.vn/";
 
@@ -76,7 +79,8 @@ export class HTTPService {
             headers: headers,
             body: JSON.stringify(jsonParam),
         }).then(extractData).catch((e) => {
-            dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'))
+            StackNavigation.navigate('Login');
+            // dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'))
             console.log("POST err ", e);
         })
     }
@@ -102,9 +106,9 @@ export class HTTPService {
 
 }
 const extractData = (response) => {
-    console.log("extractData Responses", index401, response)
+    console.log("extractData Responses === ", response)
     if (response.status == 200) {
-        return response.json();
+            return response.json();
     }
     else {
         if (response.status == 401) {
@@ -112,14 +116,17 @@ const extractData = (response) => {
             // if (!(response.url.includes(ApiPath.RETAILER_INFO) || response.url.includes(ApiPath.LOGIN))) {
             if (index401 == 10) {
                 setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
-                NavigationService.navigate("Login", {}, true);
+                realmStore.deleteAll()
+                setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
+                dataManager.dataChoosing = []
+                StackNavigation.navigate('Login', {}, true);
                 index401 = 0
             }
-            // }
-        } else
+        } else {
             dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'), () => {
                 dialogManager.destroy();
             }, null, null, I18n.t('dong'))
+        }
         return {
             status: response.status
         };

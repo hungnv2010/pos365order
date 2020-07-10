@@ -37,7 +37,7 @@ export default () => {
         const dim = Dimensions.get("screen");
         return dim.height >= dim.width ? Constant.PORTRAIT : Constant.LANDSCAPE;
     }
-    
+
     const isTablet = () => {
         return (aspectRatio <= 1.6) ? Constant.TABLET : Constant.PHONE;
     }

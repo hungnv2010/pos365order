@@ -11,10 +11,7 @@ import { getFileDuLieuString } from '../../data/fileStore/FileStorage';
 import { Constant } from '../../common/Constant';
 import store from '../../store/configureStore';
 
-
-
 export default (props) => {
-
 
   const [already, setAlready] = useState(false)
 

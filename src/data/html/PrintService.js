@@ -69,8 +69,8 @@ class PrintService {
                 HTMLBase = HTMLBase.replace("{Loai_Hoa_Don}", typeHeader)
                 HTMLBase = HTMLBase.replace("{Ma_Chung_Tu}", number + ": " + code)
                 HTMLBase = HTMLBase.replace("{Ngay_Tao_Karaoke}", dateToDate(new Date()))
-                HTMLBase = HTMLBase.replace("{Ngay}/{Thang}/{Nam}-{Gio}:{Phut}-Vao", dateToDate(JsonContent.ActiveDate, DATE_FORMAT, "DD/MM/YYYY - hh:mm"))
-                HTMLBase = HTMLBase.replace("{Ngay}/{Thang}/{Nam}-{Gio}:{Phut}-Ra", dateToDate(new Date(), DATE_FORMAT, "DD/MM/YYYY - hh:mm"))
+                HTMLBase = HTMLBase.replace("{Ngay}/{Thang}/{Nam}-{Gio}:{Phut}-Vao", dateToDate(JsonContent.ActiveDate, DATE_FORMAT, "DD/MM/YYYY - HH:mm"))
+                HTMLBase = HTMLBase.replace("{Ngay}/{Thang}/{Nam}-{Gio}:{Phut}-Ra", dateToDate(new Date(), DATE_FORMAT, "DD/MM/YYYY - HH:mm"))
                 HTMLBase = HTMLBase.replace("{Ten_Phong_Ban}", JsonContent.RoomName + "[" + JsonContent.Pos + "]")
                 HTMLBase = HTMLBase.replace("{Ten_Khach_Hang}", JsonContent.Partner && JsonContent.Partner.Name != "" ? JsonContent.partner.name : "Khách lẻ")
                 HTMLBase = HTMLBase.replace("{Nhan_Vien}", vendorSession.CurrentUser.Name)
@@ -91,10 +91,14 @@ class PrintService {
                 HTMLBase = HTMLBase.replace(/{Excess_Cash_Check}/g, (JsonContent.ExcessCash != 0) ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{Tien_Khach_Dua}", JsonContent.TotalPayment)
                 HTMLBase = HTMLBase.replace("{Tien_Thua_Tra_Khach}", JsonContent.ExcessCash)
-                HTMLBase = HTMLBase.replace("{Ghi_Chu_Check}", JsonContent.Description != "" ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
+                HTMLBase = HTMLBase.replace("{Ghi_Chu_Check}", JsonContent.Description && JsonContent.Description != "" ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{Ghi_Chu}", JsonContent.Description)
                 HTMLBase = HTMLBase.replace("{Chan_Trang}", "Xin cảm ơn, hẹn gặp lại quý khách!")
                 HTMLBase = HTMLBase.replace("{FOOTER_POS_365}", CONTENT_FOOTER_POS365)
+                // console.log("html ", JSON.stringify(HTMLBase));
+                // console.log("html ", JSON.stringify(HTMLBase));
+                // console.log("html ", JSON.stringify(HTMLBase));
+                console.log("html Description ", JsonContent.Description);
             }
             console.log("html ", JSON.stringify(HTMLBase));
             resolve(HTMLBase);

@@ -13,6 +13,7 @@ import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../theme/Colors';
 import dataManager from '../../data/DataManager';
+import * as StackNavigation from '../../navigator/stack/StackNavigation';
 const { Print } = NativeModules;
 const IP_DEFAULT = "192.168.99.";
 
@@ -222,16 +223,16 @@ const ContentComponent = (props) => {
                 realmStore.deleteAll()
                 setFileLuuDuLieu(Constant.CURRENT_ACCOUNT, "");
                 setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
-                // props.navigation.navigate('Login', { param: "logout" })
                 dataManager.dataChoosing = []
-                props.navigation.dispatch(
-                    CommonActions.reset({
-                        index: 0,
-                        routes: [
-                            { name: 'Login' },
-                        ],
-                    })
-                )
+                // props.navigation.dispatch(
+                //     CommonActions.reset({
+                //         index: 0,
+                //         routes: [
+                //             { name: 'Login' },
+                //         ],
+                //     })
+                // )
+                StackNavigation.navigate('Login', {}, true);
             }
         })
     }

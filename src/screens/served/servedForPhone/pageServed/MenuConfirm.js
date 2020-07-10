@@ -144,6 +144,7 @@ export default (props) => {
                 if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
                     // printService.PrintHtmlService(HtmlDefault, jsonContent)
                     printService.GenHtml(HtmlDefault, jsonContent).then(res => {
+                        console.log("onClickProvisional res ", res);
                         if (res && res != "") {
                             setData(res)
                         }
