@@ -42,35 +42,52 @@ export default (props) => {
         { name: "D", status: false },
     ]
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const init = async () => {
-            serverEvent = await realmStore.queryServerEvents()
+            let serverEvent = await realmStore.queryServerEvents()
             listPos.forEach((item, index) => {
                 const row_key = `${props.route.params.room.Id}_${item.name}`
                 let serverEventPos = serverEvent.filtered(`RowKey == '${row_key}'`)
                 if (JSON.stringify(serverEventPos) != "{}" && JSON.parse(serverEventPos[0].JsonContent).OrderDetails.length > 0) {
                     item.status = true
-                    if (item.name == props.Position) {
-                        serverEvent = serverEventPos
-                        console.log('JSON.parse(serverEvent[0].JsonContent)', JSON.parse(serverEvent[0].JsonContent));
-                        setJsonContent(JSON.parse(serverEvent[0].JsonContent))
-                        serverEvent.addListener((collection, changes) => {
-                            setJsonContent(JSON.parse(serverEvent[0].JsonContent))
-                        })
-                    }
                 }
+
             })
+            console.log('listPos', listPos);
+
             props.outputListPos(listPos)
             provisional.current = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
             console.log('provisional ', provisional.current);
+
             const getVendorSession = async () => {
                 let data = await getFileDuLieuString(Constant.VENDOR_SESSION, true);
                 console.log('ReturnProduct data', JSON.parse(data));
                 setVendorSession(JSON.parse(data))
             }
             getVendorSession();
+
         }
         init()
+        return () => {
+            if (serverEvent) serverEvent.removeAllListeners()
+            setJsonContent({})
+        }
+    }, [])
+
+
+    useLayoutEffect(() => {
+        const getListPos = async () => {
+            serverEvent = await realmStore.queryServerEvents()
+            const row_key = `${props.route.params.room.Id}_${props.Position}`
+            serverEvent = serverEvent.filtered(`RowKey == '${row_key}'`)
+            if (JSON.stringify(serverEvent) != "{}" && JSON.parse(serverEvent[0].JsonContent).OrderDetails.length > 0) {
+                setJsonContent(JSON.parse(serverEvent[0].JsonContent))
+                serverEvent.addListener((collection, changes) => {
+                    setJsonContent(JSON.parse(serverEvent[0].JsonContent))
+                })
+            }
+        }
+        getListPos()
         return () => {
             if (serverEvent) serverEvent.removeAllListeners()
             setJsonContent({})
