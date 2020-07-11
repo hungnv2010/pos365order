@@ -5,7 +5,6 @@ import ProductsItem from './ProductsItem';
 import { Constant } from '../../../../common/Constant';
 import I18n from '../../../../common/language/i18n';
 import { change_alias } from '../../../../common/Utils';
-import { useSelector } from 'react-redux';
 import useDebounce from '../../../../customHook/useDebounce';
 import { Colors, Metrics, Images } from '../../../../theme'
 
@@ -181,9 +180,11 @@ export default (props) => {
 
   const renderCateItem = (item, index) => {
     return (
-      <TouchableOpacity onPress={() => onClickCate(item, index)} key={index} style={[styles.renderCateItem, { backgroundColor: item.Id == listCateId[0] ? Colors.colorchinh : "white" }]}>
-        <Text numberOfLines={2} style={[styles.textRenderCateItem, { color: item.Id == listCateId[0] ? "white" : Colors.colorchinh }]}>{item.Name}</Text>
-      </TouchableOpacity>
+      <View style={[styles.renderCateItem, { backgroundColor: item.Id == listCateId[0] ? Colors.colorchinh : "white" }]}>
+        <TouchableOpacity onPress={() => onClickCate(item, index)} key={index} style={{}}>
+          <Text numberOfLines={2} style={[styles.textRenderCateItem, { color: item.Id == listCateId[0] ? "white" : Colors.colorchinh }]}>{item.Name}</Text>
+        </TouchableOpacity>
+      </View>
     );
   }
 
@@ -194,8 +195,8 @@ export default (props) => {
         isSearching ?
           null
           :
-          <View style={{ height: 65, flexDirection: "row", marginVertical: 5, marginHorizontal: 2 }}>
-            <View style={{ flex: 1 }}>
+          <View style={{ height: 65, flexDirection: "row", marginBottom: 14, marginTop: 7 }}>
+            <View style={{ flex: 1, marginHorizontal: 7 }}>
               <FlatList
                 extraData={listCateId}
                 horizontal={true}
@@ -203,6 +204,7 @@ export default (props) => {
                 data={category}
                 renderItem={({ item, index }) => renderCateItem(item, index)}
                 keyExtractor={(item, index) => '' + index}
+                ItemSeparatorComponent={() => <View style={{ width: 14 }}></View>}
               />
             </View>
           </View>
@@ -232,6 +234,7 @@ export default (props) => {
               extraData={product.Quantity}
               onEndReached={(info) => { loadMore(info) }}
               ListFooterComponent={isLoadMore ? <ActivityIndicator color={Colors.colorchinh} /> : null}
+              ItemSeparatorComponent={() => <View style={{ height: 14 }}></View>}
             />
             :
             <ActivityIndicator size="large" style={{}} color={Colors.colorchinh} />}
@@ -243,7 +246,7 @@ export default (props) => {
 }
 
 const styles = StyleSheet.create({
-  renderCateItem: { justifyContent: "center", alignItems: "center", paddingHorizontal: 5, marginLeft: 5, width: 145, },
+  renderCateItem: { justifyContent: "center", alignItems: "center", paddingHorizontal: 5, width: 136, },
   textRenderCateItem: { fontWeight: "bold", textTransform: "uppercase", textAlign: "center", },
   button: { borderWidth: 1, padding: 20, borderRadius: 10 },
 });
