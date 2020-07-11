@@ -8,6 +8,7 @@ import { change_alias } from '../../../../common/Utils';
 import { useSelector } from 'react-redux';
 import useDebounce from '../../../../customHook/useDebounce';
 import { Colors, Metrics, Images } from '../../../../theme'
+import { Subject } from 'rxjs';
 
 export default (props) => {
   const [isLoadMore, setIsLoadMore] = useState(false)
@@ -21,10 +22,11 @@ export default (props) => {
   const [valueSearch, setValueSearch] = useState(() => props.valueSearch)
   const count = useRef(0)
   const debouncedVal = useDebounce(valueSearch)
-
+  const subject = useRef(new Subject())
 
   useEffect(() => {
     const getSearchResult = async () => {
+      
       if (debouncedVal) {
         setHasProducts(false)
         setIsSearching(true)
@@ -50,6 +52,7 @@ export default (props) => {
       }
     }
     getSearchResult()
+    
   }, [debouncedVal])
 
   useEffect(() => {
@@ -71,12 +74,18 @@ export default (props) => {
         newCategories.push(item)
       })
       setCategory(newCategories)
+      
     }
     getCategories()
+    subject.current.debounceTime(500).subscribe(data => {
+      console.log(data)
+      props.outputListProducts([...data], 0)
+    }, err => console.error(err))
   }, [])
 
   const getProducts = useCallback(async () => {
     console.log('getProducts');
+    
     let results = await realmStore.queryProducts()
     results = results.sorted('Name')
     if (listCateId[0] != -1) {
@@ -133,7 +142,9 @@ export default (props) => {
         listProducts.unshift({ ...item })
       }
     }
-    props.outputListProducts([...listProducts], 0)
+    // props.outputListProducts([...listProducts], 0)
+    console.log('onClickProduct');
+    subject.current.next(listProducts);
   }
 
 
