@@ -438,7 +438,7 @@ export default (props) => {
                                             </TouchableOpacity>
                                             <TextInput
                                                 onChangeText={numb => {
-                                                    if (!Number.isInteger(+text)) return
+                                                    if (!Number.isInteger(+numb)) return
                                                     else {
                                                         item.Quantity = numb;
                                                         syncListProducts([...list])

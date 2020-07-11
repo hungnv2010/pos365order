@@ -52,6 +52,13 @@ export default (props) => {
   const clickRightIcon = async () => {
     dialogManager.showLoading()
     await dataManager.syncAllDatas()
+      .then(() => {
+        setAlready(true)
+      })
+      .catch((e) => {
+        console.log('syncAllDatas err', e);
+        setAlready(true)
+      })
     dialogManager.hiddenLoading()
   }
 
