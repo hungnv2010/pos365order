@@ -21,6 +21,7 @@ import { Metrics } from '../../../../theme';
 import { ReturnProduct } from '../../ReturnProduct';
 import { HTTPService } from '../../../../data/services/HttpService';
 import { ApiPath } from '../../../../data/services/ApiPath';
+import colors from '../../../../theme/Colors';
 
 
 export default (props) => {
@@ -138,7 +139,7 @@ export default (props) => {
         if (getCurrentIP && getCurrentIP != "") {
             if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
                 console.log("onClickProvisional ", jsonContent);
-                if(jsonContent.RoomName == undefined || jsonContent.RoomName == ""){
+                if (jsonContent.RoomName == undefined || jsonContent.RoomName == "") {
                     jsonContent.RoomName = props.route.params.room.Name;
                 }
                 if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
@@ -265,6 +266,18 @@ export default (props) => {
         })
     }
 
+    const totalPrice = (orderDetails) => {
+
+        console.log('getPrice', orderDetails);
+
+        let total = 0;
+        if (orderDetails && orderDetails.length > 0)
+            orderDetails.forEach(item => {
+                total += (item.IsLargeUnit ? item.PriceLargeUnit : item.Price) * item.Quantity
+            });
+        return total
+    }
+
     const viewPrintRef = useRef();
     const renderItem = (item, index) => {
         return (
@@ -326,7 +339,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                     <Text style={{ fontWeight: "bold" }}>{I18n.t('tong_thanh_tien')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 16, color: "#0072bc" }}>{currencyToString(jsonContent.Total)}đ</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 16, color: colors.colorchinh }}>{currencyToString(totalPrice(jsonContent.OrderDetails))}đ</Text>
                         {expand ?
                             <Icon style={{}} name="chevron-down" size={30} color="black" />
                             :
@@ -349,7 +362,7 @@ export default (props) => {
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_phai_tra')}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontWeight: "bold", fontSize: 16, color: "#0072bc", marginRight: 30 }}>{currencyToString(jsonContent.TotalPayment)}đ</Text>
+                                <Text style={{ fontWeight: "bold", fontSize: 16, color: "#0072bc", marginRight: 30 }}>{currencyToString(jsonContent.Total)}đ</Text>
                             </View>
                         </View>
                     </>

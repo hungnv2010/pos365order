@@ -21,6 +21,7 @@ import { Metrics } from '../../../../theme';
 import { ReturnProduct } from '../../ReturnProduct';
 import { HTTPService } from '../../../../data/services/HttpService';
 import { ApiPath } from '../../../../data/services/ApiPath';
+import colors from '../../../../theme/Colors';
 const { Print } = NativeModules;
 
 export default (props) => {
@@ -85,6 +86,7 @@ export default (props) => {
                 serverEvent.addListener((collection, changes) => {
                     setJsonContent(JSON.parse(serverEvent[0].JsonContent))
                 })
+                console.log('ReturnProduct JSON.parse(serverEvent[0].JsonContent)', JSON.parse(serverEvent[0].JsonContent));
             }
         }
         getListPos()
@@ -245,6 +247,18 @@ export default (props) => {
         })
     }
 
+    const totalPrice = (orderDetails) => {
+
+        console.log('getPrice', orderDetails);
+
+        let total = 0;
+        if (orderDetails && orderDetails.length > 0)
+            orderDetails.forEach(item => {
+                total += (item.IsLargeUnit ? item.PriceLargeUnit : item.Price) * item.Quantity
+            });
+        return total
+    }
+
     return (
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
@@ -298,7 +312,7 @@ export default (props) => {
                 <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                     <Text style={{ fontWeight: "bold" }}>{I18n.t('tong_thanh_tien')}</Text>
                     <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                        <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc" }}>{currencyToString(jsonContent.Total)}đ</Text>
+                        <Text style={{ fontWeight: "bold", fontSize: 15, color: colors.colorchinh }}>{currencyToString(totalPrice(jsonContent.OrderDetails))}đ</Text>
                         {expand ?
                             <Icon style={{}} name="chevron-down" size={30} color="black" />
                             :
@@ -310,18 +324,18 @@ export default (props) => {
                     <>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text>{I18n.t('tong_chiet_khau')}</Text>
-                            <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>- {currencyToString(jsonContent.Discount)}đ</Text>
+                            <Text style={{ fontSize: 15, color: "#0072bc", marginRight: 30 }}>- {currencyToString(jsonContent.Discount)}đ</Text>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text>VAT ({jsonContent.VATRates} %)</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontSize: 18, color: "#0072bc", marginRight: 30 }}>{jsonContent.VAT ? jsonContent.VAT : 0}đ</Text>
+                                <Text style={{ fontSize: 15, color: "#0072bc", marginRight: 30 }}>{currencyToString(jsonContent.VAT ? jsonContent.VAT : 0)}đ</Text>
                             </View>
                         </View>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between", }}>
                             <Text style={{ fontWeight: "bold" }}>{I18n.t('khach_phai_tra')}</Text>
                             <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-around" }}>
-                                <Text style={{ fontWeight: "bold", fontSize: 18, color: "#0072bc", marginRight: 30 }}>{currencyToString(jsonContent.TotalPayment)}đ</Text>
+                                <Text style={{ fontWeight: "bold", fontSize: 15, color: "#0072bc", marginRight: 30 }}>{currencyToString(jsonContent.Total)}đ</Text>
                             </View>
                         </View>
                     </>

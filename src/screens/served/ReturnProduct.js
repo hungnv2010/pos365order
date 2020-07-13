@@ -53,8 +53,10 @@ export const ReturnProduct = (props) => {
                         </TouchableOpacity>
                         <TextInput
                             onChangeText={text => {
+                                console.log("text ", text);
                                 if (!Number.isInteger(+text)) return
-                                setQuantityChange(text)
+                                if (Number(text) <= Number(Quantity))
+                                    setQuantityChange(text)
                             }}
                             style={styles.textQuantityModal}
                             value={"" + QuantityChange}

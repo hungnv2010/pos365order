@@ -16,6 +16,8 @@ import ViewPrint from '../../../more/ViewPrint';
 
 export default (props) => {
 
+
+
     // const [data, setData] = useState("");
     const [tab, setTab] = useState(1)
     const [showModal, setShowModal] = useState(false)
@@ -30,15 +32,20 @@ export default (props) => {
         { name: "C", status: false },
         { name: "D", status: false },
     ])
-
+    const printProvisional = useRef(false)
     const orientaition = useSelector(state => {
         console.log("useSelector state ", state.Common.orientaition);
         return state.Common.orientaition
     });
 
+    useEffect(() => {
+        return () => {
+            printProvisional.current = false
+        }
+    }, [])
 
     useEffect(() => {
-        if (tab != 1) {
+        if (tab != 1 && !printProvisional.current) {
             setTab(1)
         }
     }, [props.listProducts])
@@ -90,6 +97,7 @@ export default (props) => {
     }
 
     const onClickProvisional = (res) => {
+        printProvisional.current = true
         // if (res && res != "") {
         //     let html = data.replace("width: 76mm", "")
         //     setData(res)

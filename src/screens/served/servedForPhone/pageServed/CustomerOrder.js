@@ -547,7 +547,7 @@ const PopupDetail = (props) => {
                         <TextInput
                             onChangeText={text => {
                                 if (!Number.isInteger(+text)) return
-                                itemOrder.Quantity = text
+                                    itemOrder.Quantity = text
                                 setItemOrder({ ...itemOrder })
                             }}
                             style={styles.textQuantityModal}

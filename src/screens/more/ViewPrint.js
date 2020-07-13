@@ -36,6 +36,11 @@ export default forwardRef((props, ref) => {
         return state.Common.deviceType
     });
 
+    const orientation = useSelector(state => {
+        console.log("useSelector state ", state);
+        return state.Common.orientaition
+    });
+
     useEffect(() => {
         console.log("ViewPrint props ", props);
 
@@ -82,7 +87,7 @@ export default forwardRef((props, ref) => {
 
     const childRef = useRef();
     return (
-        <View style={{position: "absolute"}}>
+        <View style={{ position: "absolute" }}>
             {/* <TouchableOpacity style={{ backgroundColor: "red", padding: 20, }} ><Text>{props.html}</Text></TouchableOpacity> */}
             <View style={{ opacity: 0 }}>
                 <ScrollView>
@@ -93,7 +98,7 @@ export default forwardRef((props, ref) => {
                         }}>
                         <AutoHeightWebView
                             scrollEnabled={false}
-                            style={{ width: deviceType == Constant.PHONE ?  Dimensions.get('window').width : Dimensions.get('window').width/2 }}
+                            style={{ width: deviceType == Constant.PHONE ? Dimensions.get('window').width : (orientation == Constant.PORTRAIT ? Dimensions.get('window').width / 2 : Dimensions.get('window').height / 2) }}
                             // style={{ width: Dimensions.get('window').width }}
                             // customScript={`document.body.style.background = 'red';`}
 

@@ -11,7 +11,7 @@ const { AzureHub } = NativeModules;
 import NavigationService from "../../navigator/NavigationService";
 // import * as StackNavigation from '../../navigator/stack/StackNavigation';
 import { navigate } from '../../navigator/NavigationService';
-import dataManager from '../DataManager';
+// import dataManager from '../DataManager';
 import realmStore from '../realm/RealmStore';
 
 const URL_DEBUG = "https://kt365cafe.pos365.vn/";
@@ -80,7 +80,7 @@ export class HTTPService {
             headers: headers,
             body: JSON.stringify(jsonParam),
         }).then(extractData).catch((e) => {
-            // dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'))
+            dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'))
             console.log("POST err ", e);
         })
     }

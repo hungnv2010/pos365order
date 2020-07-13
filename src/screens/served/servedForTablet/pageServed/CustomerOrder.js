@@ -647,10 +647,9 @@ const PopupDetail = (props) => {
                             value={"" + itemOrder.Quantity}
                             onChangeText={text => {
                                 if (!Number.isInteger(+text)) return
-                                else {
-                                    itemOrder.Quantity = text
-                                    setItemOrder({ ...itemOrder })
-                                }
+                                itemOrder.Quantity = +text
+                                setItemOrder({ ...itemOrder })
+
                             }} />
                         <TouchableOpacity onPress={() => {
                             itemOrder.Quantity++

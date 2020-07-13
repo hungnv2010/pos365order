@@ -76,7 +76,8 @@ export default (props) => {
       
     }
     getCategories()
-    subject.current.debounceTime(200).subscribe(data => {
+    subject.current.debounceTime(300
+      ).subscribe(data => {
       console.log(data)
       props.outputListProducts([...data], 0)
     }, err => console.error(err))
