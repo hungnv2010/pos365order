@@ -436,30 +436,27 @@ export default (props) => {
                                                 }}>
                                                 <Icon name="minus-box" size={40} color={Colors.colorchinh} />
                                             </TouchableOpacity>
-                                            <TextInput
-                                                onChangeText={numb => {
-                                                    if (!Number.isInteger(+numb)) return
-                                                    else {
-                                                        item.Quantity = numb;
-                                                        syncListProducts([...list])
-                                                    }
-                                                }}
-                                                keyboardType="numeric"
-                                                textAlign="center"
-                                                style={{
-                                                    width: 40, fontSize: 16,
-                                                    fontWeight: "bold",
-                                                    shadowColor: "#000",
-                                                    shadowOffset: {
-                                                        width: 0,
-                                                        height: 1,
-                                                    },
-                                                    shadowOpacity: 0.18,
-                                                    shadowRadius: 1.00,
-                                                    elevation: 2,
-                                                    borderRadius: 2,
-                                                    height: 35
-                                                }}>{item.Quantity}</TextInput>
+                                            <View style={{
+                                                width: 60,
+                                                height: 35,
+                                                shadowColor: "#000",
+                                                shadowOffset: {
+                                                    width: 0,
+                                                    height: 1,
+                                                },
+                                                shadowOpacity: 0.18,
+                                                shadowRadius: 1.00,
+                                                elevation: 2,
+                                                borderRadius: 2,
+                                                justifyContent: "center",
+                                                alignItems: "center"
+                                            }}>
+                                                <Text
+                                                    style={{
+                                                        fontSize: 16,
+                                                        fontWeight: "bold",
+                                                    }}>{item.Quantity}</Text>
+                                            </View>
                                             <TouchableOpacity onPress={() => {
                                                 item.Quantity++
                                                 syncListProducts([...list])
