@@ -112,7 +112,7 @@ export default (props) => {
         listPosition.forEach(element => {
             if (element.key == props.Position) {
                 exist = true
-                syncListProducts([...element.list])
+                syncListProducts(element.list)
             }
         })
         if (!exist) {
@@ -313,7 +313,7 @@ export default (props) => {
             dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
             dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
         }
-        syncListProducts([...list])
+        syncListProducts(list)
     }
 
     const getTotalPrice = () => {
@@ -333,10 +333,14 @@ export default (props) => {
 
     const mapDataToList = (data) => {
         console.log("mapDataToList(data) ", data);
-        list.forEach(element => {
+        list.forEach((element, idx, arr) => {
             if (element.Sid == data.Sid) {
+                if (data.Quantity == 0) {
+                    arr.splice(idx, 1)
+                    syncListProducts(list)
+                }
                 element.Description = data.Description
-                element.Quantity = data.Quantity
+                element.Quantity = +data.Quantity
             }
         });
         console.log("mapDataToList(ls) ", list);
@@ -432,7 +436,7 @@ export default (props) => {
                                                     } else {
                                                         item.Quantity--
                                                     }
-                                                    syncListProducts([...list])
+                                                    syncListProducts(list)
                                                 }}>
                                                 <Icon name="minus-box" size={40} color={Colors.colorchinh} />
                                             </TouchableOpacity>
@@ -459,7 +463,7 @@ export default (props) => {
                                             </View>
                                             <TouchableOpacity onPress={() => {
                                                 item.Quantity++
-                                                syncListProducts([...list])
+                                                syncListProducts(list)
                                             }}>
                                                 <Icon name="plus-box" size={40} color={Colors.colorchinh} />
                                             </TouchableOpacity>
@@ -648,7 +652,7 @@ const PopupDetail = (props) => {
                             onChangeText={text => {
                                 if (!Number.isInteger(+text)) return
                                 else {
-                                    itemOrder.Quantity = text
+                                    itemOrder.Quantity = +text
                                     setItemOrder({ ...itemOrder })
                                 }
                             }} />
