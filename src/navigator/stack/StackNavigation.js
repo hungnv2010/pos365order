@@ -16,27 +16,7 @@ import DetailHistory from '../../screens/history/DetailHistory'
 import { CommonActions } from '@react-navigation/native';
 
 const MainStack = createStackNavigator();
-export const navigationRef = createRef();
 
-export function navigate(name, params, reset = false) {
-    console.log("navigate  navigationRef ===  ", navigationRef);
-
-    if (reset == false)
-        navigationRef.current?.navigate(name, params);
-    else {
-        setTimeout(() => {
-            navigationRef.current?.dispatch(
-                CommonActions.reset({
-                    index: 0,
-                    routes: [
-                        { name: name, params: params },
-                    ],
-                })
-            )
-        }, 500);
-    }
-
-}
 
 export default (props) => {
 

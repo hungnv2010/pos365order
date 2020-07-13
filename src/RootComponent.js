@@ -12,7 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import StackNavigation from './navigator/stack/StackNavigation';
 import { useDispatch } from 'react-redux';
 import { Constant } from './common/Constant'
-import { navigationRef } from './navigator/stack/StackNavigation';
+import { navigationRef } from './navigator/NavigationService';
 import RNExitApp from "react-native-exit-app";
 import I18n from './common/language/i18n'
 import signalRManager from './common/SignalR';

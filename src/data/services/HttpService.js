@@ -9,7 +9,8 @@ import { Constant } from '../../common/Constant';
 import { setFileLuuDuLieu } from '../fileStore/FileStorage';
 const { AzureHub } = NativeModules;
 import NavigationService from "../../navigator/NavigationService";
-import * as StackNavigation from '../../navigator/stack/StackNavigation';
+// import * as StackNavigation from '../../navigator/stack/StackNavigation';
+import { navigate } from '../../navigator/NavigationService';
 import dataManager from '../DataManager';
 import realmStore from '../realm/RealmStore';
 
@@ -79,7 +80,6 @@ export class HTTPService {
             headers: headers,
             body: JSON.stringify(jsonParam),
         }).then(extractData).catch((e) => {
-            StackNavigation.navigate('Login');
             // dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'))
             console.log("POST err ", e);
         })
@@ -119,7 +119,7 @@ const extractData = (response) => {
                 realmStore.deleteAll()
                 setFileLuuDuLieu(Constant.CURRENT_BRANCH, "");
                 dataManager.dataChoosing = []
-                StackNavigation.navigate('Login', {}, true);
+                navigate('Login', {}, true);
                 index401 = 0
             }
         } else {

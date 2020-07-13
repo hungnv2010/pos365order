@@ -13,7 +13,8 @@ import { CommonActions } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import colors from '../../theme/Colors';
 import dataManager from '../../data/DataManager';
-import * as StackNavigation from '../../navigator/stack/StackNavigation';
+// import * as StackNavigation from '../../navigator/NavigationService';
+import { navigate } from '../../navigator/NavigationService';
 const { Print } = NativeModules;
 const IP_DEFAULT = "192.168.99.";
 
@@ -232,7 +233,7 @@ const ContentComponent = (props) => {
                 //         ],
                 //     })
                 // )
-                StackNavigation.navigate('Login', {}, true);
+                navigate('Login', {}, true);
             }
         })
     }
