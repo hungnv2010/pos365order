@@ -171,11 +171,18 @@ export default (props) => {
 
   const handleButtonDecrease = (item, index) => {
     let qtt = getQuantity(item)
+    item.Quantity -= qtt
     let pos = listProducts.current.map(elm => elm.Id).indexOf(item.Id);
     if (item.SplitForSalesOrder || (item.ProductType == 2 && item.IsTimer)) {
       listProducts.current.splice(pos, 1)
     } else {
-      listProducts.current[pos].Quantity -= qtt
+      if (listProducts.current[pos].Quantity > 0) {
+        listProducts.current[pos].Quantity -= qtt
+        console.log('listProducts.current[pos].Quantity', listProducts.current[pos].Quantity);
+      }
+      if (listProducts.current[pos].Quantity == 0) {
+        listProducts.current = listProducts.current.filter(elm => elm.Id != item.Id)
+      }
     }
     setProduct([...product])
   }

@@ -303,14 +303,32 @@ export default (props) => {
 
     const mapDataToList = (data) => {
         console.log("mapDataToList(data) ", data);
-        list.forEach(element => {
+        list.forEach((element, idx, arr) => {
             if (element.Sid == data.Sid) {
+                if (data.Quantity == 0) {
+                    arr.splice(idx, 1)
+                }
                 element.Description = data.Description
-                element.Quantity = data.Quantity
+                element.Quantity = +data.Quantity
             }
         });
         console.log("mapDataToList(ls) ", list);
-        setListOrder([...list])
+        
+        let hasData = true
+        dataManager.dataChoosing.forEach(item => {
+            if (item.Id == props.route.params.room.Id) {
+                if (list.length == 0) {
+                    item.data = item.data.filter(it => it.key != props.Position)
+                }
+            }
+            if (item.data.length == 0) {
+                hasData = false
+            }
+        })
+        if (!hasData) {
+            handleDataChoosing()
+        }
+        syncListProducts([...list])
     }
 
     const getTotalPrice = () => {
@@ -537,7 +555,7 @@ const PopupDetail = (props) => {
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
-                            if (itemOrder.Quantity > 1) {
+                            if (itemOrder.Quantity > 0) {
                                 itemOrder.Quantity--
                                 setItemOrder({ ...itemOrder })
                             }
@@ -547,7 +565,7 @@ const PopupDetail = (props) => {
                         <TextInput
                             onChangeText={text => {
                                 if (!Number.isInteger(+text)) return
-                                    itemOrder.Quantity = text
+                                itemOrder.Quantity = text
                                 setItemOrder({ ...itemOrder })
                             }}
                             style={styles.textQuantityModal}
