@@ -356,7 +356,8 @@ export default (props) => {
             }
         })
         if (!hasData) {
-            handleDataChoosing()
+            dataManager.dataChoosing = dataManager.dataChoosing.filter(item => item.data.length > 0)
+            dispatch({ type: 'NUMBER_ORDER', numberOrder: dataManager.dataChoosing.length })
         }
     }
 
