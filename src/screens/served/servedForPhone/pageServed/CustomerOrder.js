@@ -303,10 +303,14 @@ export default (props) => {
 
     const mapDataToList = (data) => {
         console.log("mapDataToList(data) ", data);
-        list.forEach(element => {
+        list.forEach((element, idx, arr) => {
             if (element.Sid == data.Sid) {
+                if (data.Quantity == 0) {
+                    arr.splice(idx, 1)
+                    syncListProducts(list)
+                }
                 element.Description = data.Description
-                element.Quantity = data.Quantity
+                element.Quantity = +data.Quantity
             }
         });
         console.log("mapDataToList(ls) ", list);
