@@ -313,7 +313,7 @@ export default (props) => {
             }
         });
         console.log("mapDataToList(ls) ", list);
-        
+
         let hasData = true
         dataManager.dataChoosing.forEach(item => {
             if (item.Id == props.route.params.room.Id) {

@@ -88,15 +88,14 @@ class PrintService {
                 HTMLBase = HTMLBase.replace("{VAT}", currencyToString(JsonContent.VAT))
                 HTMLBase = HTMLBase.replace("{VAT%}", JsonContent.VATRates + "%")
                 HTMLBase = HTMLBase.replace("{Tong_Cong}", currencyToString(JsonContent.Total))
-                HTMLBase = HTMLBase.replace(/{Excess_Cash_Check}/g, (JsonContent.ExcessCash != 0) ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
+                HTMLBase = HTMLBase.replace(/{Excess_Cash_Check}/g, (JsonContent.ExcessCash != 0) &&
+                 (JsonContent.TotalPayment != undefined && JsonContent.TotalPayment != "") ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{Tien_Khach_Dua}", JsonContent.TotalPayment != undefined && JsonContent.TotalPayment != "" ? JsonContent.TotalPayment : "")
                 HTMLBase = HTMLBase.replace("{Tien_Thua_Tra_Khach}", JsonContent.ExcessCash)
                 HTMLBase = HTMLBase.replace("{Ghi_Chu_Check}", JsonContent.Description && JsonContent.Description != "" ? "style='visibility: unset'" : "style='visibility: collapse; display: none'")
                 HTMLBase = HTMLBase.replace("{Ghi_Chu}", JsonContent.Description)
                 HTMLBase = HTMLBase.replace("{Chan_Trang}", "Xin cảm ơn, hẹn gặp lại quý khách!")
                 HTMLBase = HTMLBase.replace("{FOOTER_POS_365}", CONTENT_FOOTER_POS365)
-                // console.log("html ", JSON.stringify(HTMLBase));
-                // console.log("html ", JSON.stringify(HTMLBase));
                 // console.log("html ", JSON.stringify(HTMLBase));
                 console.log("html Description ", JsonContent.Description);
             }

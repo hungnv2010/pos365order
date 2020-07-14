@@ -222,15 +222,15 @@ export default (props) => {
             Printer3: null,
             Printer4: null,
             Printer5: null,
-            ProductId: element.Id,
+            ProductId: element.ProductId,
             Quantity: data.QuantityChange * -1,
             RoomId: props.route.params.room.Id,
             RoomName: props.route.params.room.Name,
             SecondPrinter: null,
             Serveby: vendorSession.CurrentUser && vendorSession.CurrentUser.Id ? vendorSession.CurrentUser.Id : "",
-            Topping: element.Topping,
-            TotalTopping: element.TotalTopping,
-            Description: data.Description
+            // Topping: element.Topping,
+            // TotalTopping: element.TotalTopping,
+            // Description: data.Description
         }
         params.ServeEntities.push(obj)
 
@@ -271,7 +271,7 @@ export default (props) => {
                     {jsonContent.OrderDetails.map((item, index) => {
                         return (
                             <TouchableOpacity onPress={() => {
-                                console.log("itemProduct ", itemProduct);
+                                console.log("itemProduct  ==== ", item);
                                 setItemProduct(item)
                                 setTimeout(() => {
                                     setShowModal(true);

@@ -178,6 +178,8 @@ export default (props) => {
     }
 
     const cancelProduct = (item) => {
+        console.log("cancelProduct item ", item);
+        
         if (item.ProductType == 2 && item.IsTimer) {
             setToastDescription(I18n.t("khong_the_huy_tra_mat_hang_thoi_gian"))
             setShowToast(true)

@@ -227,6 +227,8 @@ PODS:
     - React
   - react-native-camera/RN (3.26.0):
     - React
+  - react-native-netinfo (5.9.4):
+    - React
   - react-native-safe-area-context (0.7.3):
     - React
   - react-native-view-shot (3.1.2):
@@ -330,6 +332,7 @@ DEPENDENCIES:
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-camera (from `../node_modules/react-native-camera`)
+  - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - react-native-view-shot (from `../node_modules/react-native-view-shot`)
   - react-native-webview (from `../node_modules/react-native-webview`)
@@ -428,6 +431,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-netinfo:
+    :path: "../node_modules/@react-native-community/netinfo"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
   react-native-view-shot:
@@ -516,6 +521,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: d5525f9ed5f782fdbacb64b9b01a43a9323d2386
   React-jsinspector: fa0ecc501688c3c4c34f28834a76302233e29dc0
   react-native-camera: 9e3d60336e221d62e5b72adf551ca31ff74a94b5
+  react-native-netinfo: eed0fb1d6a9424e98ce686f92aad62ff427d4bc9
   react-native-safe-area-context: 8260e5157617df4b72865f44006797f895b2ada7
   react-native-view-shot: 08c46c9e8e92f6681e8f2ffa55ac3d06e7e99070
   react-native-webview: 0e2881d2e3e72ad52a82445c1a116c43205fd471
@@ -543,6 +549,6 @@ SPEC CHECKSUMS:
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
-PODFILE CHECKSUM: 25af4c1481a49df2dbadc43c912de72455c18dfe
+PODFILE CHECKSUM: 577cbed3b00a92f4839de3358e767685f534d7dd
 
 COCOAPODS: 1.8.4

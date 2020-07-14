@@ -94,6 +94,7 @@ export default {
 
   // TODO: L
   lich_su_huy_tra_do: "Lịch sử Huỷ / Trả đồ",
+  loi_ket_noi_mang: "Vui lòng kiểm tra kết nối internet",
   loi_server: "Có lỗi trong quá trình kết nối server",
   loi_dang_nhap: "Lỗi! Vui lòng kiểm tra lại tài khoản đăng nhập.",
   loai_phieu: "Loại phiếu",
