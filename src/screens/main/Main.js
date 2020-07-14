@@ -23,7 +23,7 @@ export default (props) => {
         data = JSON.parse(data);
         console.log('this.info data.BID ', data.BID);
         let state = store.getState();
-        signalRManager.init({ ...data, SessionId: state.Common.info.SessionId })
+        signalRManager.init({ ...data, SessionId: state.Common.info.SessionId }, true)
       }
     }
     getVendorSession()
