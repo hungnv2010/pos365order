@@ -151,14 +151,14 @@ export default (props) => {
         console.log('getCurrentIP ', getCurrentIP);
         if (getCurrentIP && getCurrentIP != "") {
             if (provisional.current && provisional.current == Constant.PROVISIONAL_PRINT) {
-                if(jsonContent.RoomName == undefined || jsonContent.RoomName == ""){
+                if (jsonContent.RoomName == undefined || jsonContent.RoomName == "") {
                     jsonContent.RoomName = props.route.params.room.Name;
                 }
                 console.log("onClickProvisional RoomName ", jsonContent.RoomName);
                 if (jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) {
                     // printService.PrintHtmlService(HtmlDefault, jsonContent)
                     printService.GenHtml(HtmlDefault, jsonContent).then(res => {
-                        
+
                         props.onClickProvisional(res);
 
                     })
@@ -259,6 +259,37 @@ export default (props) => {
         return total
     }
 
+    const cancelProduct = (item) => {
+        console.log("cancelProduct item ", item);
+
+        if (item.ProductType == 2 && item.IsTimer) {
+            setToastDescription(I18n.t("khong_the_huy_tra_mat_hang_thoi_gian"))
+            setShowToast(true)
+            return
+        }
+        let totalQty = 0;
+        jsonContent.OrderDetails.forEach(elm => {
+            if (elm.ProductId == item.ProductId) {
+                totalQty += elm.Quantity
+            }
+        })
+
+        if (totalQty > 0) {
+            item.totalQty = totalQty
+            setItemProduct(item)
+            setTimeout(() => {
+                setShowModal(true);
+            }, 200);
+        } else {
+            setToastDescription(`Mặt hàng ${item.Name} Có số lượng hủy trả lớn hơn số lượng đã gọi`)
+            setShowToast(true)
+        }
+
+        console.log('cancelProduct', item);
+
+
+    }
+
     return (
         <View style={{ backgroundColor: "#fff", flex: 1 }}>
             {!(jsonContent.OrderDetails && jsonContent.OrderDetails.length > 0) ?
@@ -270,14 +301,7 @@ export default (props) => {
                 <ScrollView style={{ flex: 1 }}>
                     {jsonContent.OrderDetails.map((item, index) => {
                         return (
-                            <TouchableOpacity onPress={() => {
-                                console.log("itemProduct  ==== ", item);
-                                setItemProduct(item)
-                                setTimeout(() => {
-                                    setShowModal(true);
-                                }, 500);
-
-                            }} key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
+                            <TouchableOpacity onPress={() => cancelProduct(item)} key={index} style={[styles.item, { backgroundColor: (index % 2 == 0) ? Colors.backgroundYellow : Colors.backgroundWhite }]}>
                                 {
                                     item.ProductType == 2 && item.IsTimer ?
                                         <Icon style={{ margin: 5 }} name="clock-outline" size={30} color={Colors.colorchinh} />

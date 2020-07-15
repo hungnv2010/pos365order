@@ -107,7 +107,7 @@ export default (props) => {
                     <Icon onPress={() => removeItem(item)} name="close-circle-outline" style={{ position: "absolute", top: 0, right: 0, paddingLeft: 5, paddingBottom: 5 }} size={30} color={"#808080"} />
                     <Text style={{ textAlign: "center", textTransform: "uppercase", color: "#000", fontWeight: "bold" }}>{item.Name}</Text>
                     <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>Số sản phẩm: {totalProduct(item.data)}</Text>
-                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>Tạm tính: {currencyToString(getTotalPrice(item.data))} đ</Text>
+                    <Text style={{ textAlign: "center", color: "#000", marginTop: 10 }}>{currencyToString(getTotalPrice(item.data))} đ</Text>
                 </TouchableOpacity>
             )}
             numColumns={numberColumn}

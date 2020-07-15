@@ -321,7 +321,7 @@ export default (props) => {
         list.forEach(item => {
             if (!(item.ProductType == 2 && item.IsTimer)) {
                 let price = item.IsLargeUnit ? item.PriceLargeUnit : item.Price
-                total += price * item.Quantity + item.TotalTopping
+                total += (price + item.TotalTopping) * item.Quantity
             }
         })
         return total

@@ -179,7 +179,7 @@ export default (props) => {
 
     const cancelProduct = (item) => {
         console.log("cancelProduct item ", item);
-        
+
         if (item.ProductType == 2 && item.IsTimer) {
             setToastDescription(I18n.t("khong_the_huy_tra_mat_hang_thoi_gian"))
             setShowToast(true)
@@ -199,7 +199,7 @@ export default (props) => {
                 setShowModal(true);
             }, 200);
         } else {
-            setToastDescription(I18n.t("khong_the_huy_tra_mat_hang_nay"))
+            setToastDescription(`Mặt hàng ${item.Name} Có số lượng hủy trả lớn hơn số lượng đã gọi`)
             setShowToast(true)
         }
 
