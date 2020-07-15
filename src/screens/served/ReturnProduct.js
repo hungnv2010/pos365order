@@ -37,7 +37,7 @@ export const ReturnProduct = (props) => {
     return (
         <View >
             <View style={styles.headerModal}>
-                <Text style={styles.headerModalText}>Huỷ/Trả {Name}</Text>
+                <Text style={styles.headerModalText}>{I18n.t('huy_tra')} {Name}</Text>
             </View>
             <View style={{ padding: 10 }}>
 
@@ -70,7 +70,7 @@ export const ReturnProduct = (props) => {
                     </View>
                 </View>
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} >
-                    <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')} còn lại</Text>
+                    <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('con_lai_so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
 
                         <TextInput
@@ -99,14 +99,14 @@ export const ReturnProduct = (props) => {
                         </View>
                         <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 10 }}>
                             <TouchableOpacity onPress={() => {
-                                setDescription("Khách yêu cầu")
+                                setDescription(I18n.t('khach_yeu_cau'))
                             }} style={{}} >
-                                <Text style={{}}>Khách yêu cầu</Text>
+                                <Text style={{}}>{I18n.t('khach_yeu_cau')}</Text>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => {
-                                setDescription("Thao tác sai")
+                                setDescription(I18n.t('thao_tac_sai'))
                             }} style={{}} >
-                                <Text style={{}}>Thao tác sai</Text>
+                                <Text style={{}}>{I18n.t('thao_tac_sai')}</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

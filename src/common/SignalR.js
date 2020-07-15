@@ -9,22 +9,24 @@ import { decodeBase64 } from './Base64'
 import I18n from '../common/language/i18n'
 import dialogManager from '../components/dialog/DialogManager';
 import NetInfo from "@react-native-community/netinfo";
+import dataManager from '../data/DataManager';
 
 var statusInternet = { currentStatus: false, previousStatus: false };
 
 class SignalRManager {
 
+    constructor() {
+        this.isStartSignalR = false;
+        this.isStartHub = false;
+    }
 
-
-    init(data) {
-        console.log("this.info", data.Rid);
+    init(data, forceUpdate = false) {
         this.data = data;
         this.info = {
             SessionId: data.SessionId,
             rId: data.RID,
             bId: data.BID
         }
-        console.log("this.info", this.info);
 
         this.subject = new Subject()
         this.subject.distinct(serverEvent => serverEvent.Version)
@@ -42,21 +44,34 @@ class SignalRManager {
         connectionHub.logging = true
         this.proxy = connectionHub.createHubProxy("saleHub")
         this.proxy.on("Update", (serverEvent) => { this.subject.next(serverEvent) })
-        const hub = () => {
-            connectionHub.start()
-                .done(() => {
-                    console.log('Now connected, connection ID=' + connectionHub.id);
-                    this.isStartSignalR = true
-                })
-                .fail(() => {
-                    console.log("Failed");
-                })
+
+        const hub = (status = "") => {
+            if (this.isStartHub == false) {
+                this.isStartHub = true
+                connectionHub.start()
+                    .done(() => {
+                        // alert(status + 'Now connected, connection ID=' + connectionHub.id);
+                        this.isStartSignalR = true
+                        this.isStartHub = false
+                        if (dialogManager)
+                            dialogManager.hiddenLoading();
+                    })
+                    .fail(() => {
+                        console.log("Failed");
+                        this.isStartSignalR = false
+                        this.isStartHub = false
+                        if (dialogManager)
+                            dialogManager.hiddenLoading()
+                    })
+            }
         }
 
-        // hub();
+        if (forceUpdate == true) {
+            hub(1);
+        }
 
         connectionHub.connectionSlow(() => {
-            alert('We are currently experiencing difficulties with the connection.')
+            console.log('We are currently experiencing difficulties with the connection.')
         });
 
         connectionHub.error((error) => {
@@ -68,21 +83,36 @@ class SignalRManager {
             if (detailedError === 'An SSL error has occurred and a secure connection to the server cannot be made.') {
                 console.log('When using react-native-signalr on ios with http remember to enable http in App Transport Security https://github.com/olofd/react-native-signalr/issues/14')
             }
-            console.log('SignalR error: ' + errorMessage, detailedError)
-            // hub();
+            // alert('SignalR error: ' + errorMessage, detailedError)
+            this.clickRightIcon();
+            setTimeout(() => {
+                dialogManager.showLoading()
+                hub(2);
+            }, 5000);
         });
 
         // Subscribe
         const unsubscribe = NetInfo.addEventListener(state => {
             statusInternet = { currentStatus: state.isConnected, previousStatus: statusInternet.currentStatus }
-            // && this.isStartSignalR == false
-            if(statusInternet.currentStatus == true && statusInternet.previousStatus == false ){
-                hub();
+            if (statusInternet.currentStatus == true && statusInternet.previousStatus == false) {
+                this.clickRightIcon();
+                this.init(this.data, true)
             }
         });
 
         // Unsubscribe
         // unsubscribe();
+    }
+
+    async clickRightIcon() {
+        dialogManager.showLoading()
+        await dataManager.syncAllDatas()
+            .then(() => {
+            })
+            .catch((e) => {
+                console.log('syncAllDatas err', e);
+            })
+        dialogManager.hiddenLoading()
     }
 
     sendMessageOrder = (message) => {
@@ -107,7 +137,7 @@ class SignalRManager {
                 dialogManager.showPopupOneButton(I18n.t('loi_server'), I18n.t('thong_bao'))
             }
         } catch (e) {
-            console.log("sendMessageOrder error " + JSON.stringify(e));
+            // alert("sendMessageOrder error " + JSON.stringify(e));
             // this.init(this.data);
         }
     }
