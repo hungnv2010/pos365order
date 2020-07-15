@@ -639,9 +639,9 @@ const PopupDetail = (props) => {
     return (
         <View>
             <View style={{ backgroundColor: Colors.colorchinh, borderTopRightRadius: 4, borderTopLeftRadius: 4, }}>
-                <Text style={{ margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, color: "#fff" }}>{itemOrder.Name}</Text>
+                <Text style={{ margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, marginVertical: 20, color: "#fff" }}>{itemOrder.Name}</Text>
             </View>
-            <View style={{ padding: 10 }}>
+            <View style={{ padding: 20 }}>
                 <View style={{ flexDirection: "row", justifyContent: "center", }} onPress={() => setShowModal(false)}>
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('don_gia')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7, backgroundColor: "#D5D8DC" }}>
@@ -693,7 +693,7 @@ const PopupDetail = (props) => {
                             placeholder={I18n.t('nhap_ghi_chu')} />
                     </View>
                 </View>
-                <View style={{ alignItems: "center", justifyContent: "space-between", flexDirection: "row", marginTop: 10 }}>
+                <View style={{ alignItems: "center", justifyContent: "space-between", flexDirection: "row", marginTop: 20 }}>
                     <TouchableOpacity onPress={() => props.setShowModal(false)} style={{ alignItems: "center", margin: 2, flex: 1, borderWidth: 1, borderColor: Colors.colorchinh, padding: 5, borderRadius: 4, backgroundColor: "#fff" }} >
                         <Text style={{ color: Colors.colorchinh, textTransform: "uppercase" }}>{I18n.t('huy')}</Text>
                     </TouchableOpacity>

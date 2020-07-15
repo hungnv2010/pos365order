@@ -39,7 +39,7 @@ export const ReturnProduct = (props) => {
             <View style={styles.headerModal}>
                 <Text style={styles.headerModalText}>{I18n.t('huy_tra')} {Name}</Text>
             </View>
-            <View style={{ padding: 10 }}>
+            <View style={{ padding: 20 }}>
 
                 <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} >
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.colorchinh, borderTopRightRadius: 4, borderTopLeftRadius: 4,
     },
     headerModalText: {
-        margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, color: "#fff"
+        margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, color: "#fff", marginVertical: 20
     },
     button: {
         borderColor: Colors.colorchinh,
@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     },
     wrapButtonModal: {
         alignItems: "center",
-        margin: 2,
+        margin: 10,
         flex: 1,
         borderWidth: 1,
         borderColor: Colors.colorchinh,

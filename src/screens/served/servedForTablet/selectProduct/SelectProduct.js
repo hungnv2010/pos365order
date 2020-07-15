@@ -60,7 +60,7 @@ export default (props) => {
 
 
   useEffect(() => {
-    console.log(props.listProducts, 'props.listProducts');
+    console.log(props.listProducts, 'selectProds props.listProducts');
     setListProducts(props.listProducts)
   }, [props.listProducts])
 

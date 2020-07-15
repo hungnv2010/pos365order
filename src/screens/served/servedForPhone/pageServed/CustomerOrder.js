@@ -543,7 +543,7 @@ const PopupDetail = (props) => {
             <View style={styles.headerModal}>
                 <Text style={styles.headerModalText}>{itemOrder.Name}</Text>
             </View>
-            <View style={{ padding: 10 }}>
+            <View style={{ padding: 20 }}>
                 <View style={{ flexDirection: "row", justifyContent: "center", }} onPress={() => setShowModal(false)}>
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('don_gia')}</Text>
                     <View style={styles.wrapTextPriceModal}>
@@ -639,7 +639,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.colorchinh, borderTopRightRadius: 4, borderTopLeftRadius: 4,
     },
     headerModalText: {
-        margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, color: "#fff"
+        margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, marginVertical: 20, color: "#fff"
     },
     button: {
         borderColor: Colors.colorchinh,
