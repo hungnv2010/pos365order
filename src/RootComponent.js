@@ -70,7 +70,7 @@ export default () => {
                 };
                 // if (text.indexOf("Error") > -1) i = 0;
                 if ((text.indexOf("Error") > -1) && check == false) {
-                    setToastDescription("Kiểm tra kết nối máy in. Địa chỉ IP " + text.split("::")[0])
+                    setToastDescription(I18n.t('kiem_tra_ket_noi_may_in') + " " + text.split("::")[0])
                     setShowToast(true)
                 }
             });

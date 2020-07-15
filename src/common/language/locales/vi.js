@@ -37,6 +37,7 @@ export default {
   chuyen_ban: "Chuyển bàn",
   chuc_nang_dang_duoc_phat_trien: "Chức năng đang được phát triển.",
   chon_mon: "Chọn món",
+  con_lai_so_luong: "SL còn lại",
 
   // TODO: D
   dang_dung: "Đang dùng",
@@ -85,12 +86,15 @@ export default {
   khach_da_tra: "Khách đã trả",
   khong_the_huy_tra_mat_hang_nay: "Không thể hủy trả mặt hàng này",
   khong_the_huy_tra_mat_hang_thoi_gian: "Không thể hủy trả mặt hàng thời gian",
+  kiem_tra_ket_noi_may_in: "Kiểm tra kết nối máy in. Địa chỉ IP",
+  khach_yeu_cau: "Khách yêu cầu",
 
   // TODO: H
   hoa_don: "Hoá đơn",
   hotline: "Hotline",
   hang_hoa: "Hàng hóa",
   hoan_thanh: "Hoàn thành",
+  huy_tra: "Huỷ/Trả",
 
   // TODO: L
   lich_su_huy_tra_do: "Lịch sử Huỷ / Trả đồ",
@@ -223,6 +227,7 @@ export default {
   tong_chiet_khau: "Tổng chiết khấu",
   tu: "từ",
   thuc_don_da_goi: "Thực đơn đã gọi",
+  thao_tac_sai: "Thao tác sai",
   // TODO: U
 
   // TODO: V
