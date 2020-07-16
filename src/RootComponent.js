@@ -53,7 +53,12 @@ export default () => {
             let getCurrentIP = await getFileDuLieuString(Constant.IPPRINT, true);
             console.log('getCurrentIP ', getCurrentIP);
             if (getCurrentIP && getCurrentIP != "") {
-                Print.registerPrint(getCurrentIP)
+                let size = await getFileDuLieuString(Constant.SIZE_INPUT, true);
+                if (size && size != "") {
+                    Print.registerPrint(getCurrentIP + "_" + size)
+                } else {
+                    Print.registerPrint(getCurrentIP + "_72")
+                }
             }
         }
         let check = false;

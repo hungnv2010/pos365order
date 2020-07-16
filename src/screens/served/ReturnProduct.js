@@ -21,6 +21,11 @@ export const ReturnProduct = (props) => {
     const [vendorSession, setVendorSession] = useState(props.vendorSession);
     const [Description, setDescription] = useState("");
 
+    const { deviceType } = useSelector(state => {
+        console.log("useSelector state ", state);
+        return state.Common
+    });
+
     useEffect(() => {
         console.log("ReturnProduct ", props);
     }, [])
@@ -38,10 +43,10 @@ export const ReturnProduct = (props) => {
     return (
         <View >
             <View style={styles.headerModal}>
-                <Text style={styles.headerModalText}>{I18n.t('huy_tra')} {Name}</Text>
+                <Text style={[styles.headerModalText, { marginVertical: deviceType == Constant.PHONE ? 10 : 20 }]}>{I18n.t('huy_tra')} {Name}</Text>
             </View>
             <View style={{ padding: 20 }}>
-                <View style={{  flexDirection: "row", justifyContent: "center", alignItems:"center" }} >
+                <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }} >
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
@@ -69,8 +74,8 @@ export const ReturnProduct = (props) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{  flexDirection: "row", justifyContent: "center", alignItem:"center" }} >
-                    <Text style={{ fontSize: 14, flex: 3 , alignSelf:"center"}}>{I18n.t('con_lai_so_luong')}</Text>
+                <View style={{ flexDirection: "row", justifyContent: "center", alignItem: "center" }} >
+                    <Text style={{ fontSize: 14, flex: 3, alignSelf: "center" }}>{I18n.t('con_lai_so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
 
                         <TextInput
@@ -83,7 +88,7 @@ export const ReturnProduct = (props) => {
                 </View>
                 {vendorSession.Settings.ReturnHistory == true ?
                     <View>
-                        <View style={{  flexDirection: "row", justifyContent: "center" , alignItems:"center"}} onPress={() => setShowModal(false)}>
+                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }} onPress={() => setShowModal(false)}>
                             <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('ly_do')}</Text>
                             <View style={{ flexDirection: "row", flex: 7 }}>
                                 <TextInput
@@ -97,7 +102,7 @@ export const ReturnProduct = (props) => {
                                     placeholder={I18n.t('ly_do')} />
                             </View>
                         </View>
-                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems:"center" }}>
+                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems: "center" }}>
                             <View style={{ flex: 3 }}></View>
                             <View style={{ flex: 7, flexDirection: "row", justifyContent: "space-between", marginVertical: 10 }}>
                                 <TouchableOpacity onPress={() => {

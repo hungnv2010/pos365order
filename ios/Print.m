@@ -24,6 +24,7 @@
   WKWebView * webView;
   NSString *html;
   NSString *IP;
+  NSInteger SizeInput;
   bool hasListeners;
   NSMutableArray *imageArray;
   bool PrintImageClient;
@@ -34,8 +35,13 @@ RCT_EXPORT_MODULE();
 
 RCT_EXPORT_METHOD(registerPrint:(NSString *)param) {
   NSLog(@"registerPrint param %@", param);
+  NSArray *arrayOfComponents = [param componentsSeparatedByString:@"_"];
 //  imageArray = [[NSMutableArray alloc] init];
-  IP = param;
+  IP = arrayOfComponents[0];
+  SizeInput = [arrayOfComponents[1] integerValue];
+  if(SizeInput)
+  NSLog(@"registerPrint IP %@", IP);
+  NSLog(@"registerPrint SizeInput %d", SizeInput);
   isConnectAndPrint = NO;
   _printerManager = [PrinterManager sharedInstance];
   [_printerManager AddConnectObserver:self selector:@selector(handleNotification:)];//Add
@@ -270,7 +276,9 @@ RCT_EXPORT_METHOD(printImage:(NSString *)param) {
     BitmapSetting *bitmapSetting  = currentprinter.BitmapSetts;
     //                                       bitmapSetting.Alignmode = Align_Right;
     bitmapSetting.Alignmode = Align_Center;
-    bitmapSetting.limitWidth = 72*8;//ESC
+    int Size = SizeInput > 0 ? SizeInput : 72;
+    NSLog(@"printImageFromClient Size %d", Size);
+    bitmapSetting.limitWidth = Size*8;//ESC
     NSLog(@"printImageFromClient 3 %@", [images objectAtIndex:i]);
     NSData *data;
     data = [cmd GetBitMapCmd:bitmapSetting image:[images objectAtIndex:i]];

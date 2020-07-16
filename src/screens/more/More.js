@@ -209,6 +209,11 @@ const ContentComponent = (props) => {
             if (getCurrentIP && getCurrentIP != "") {
                 setIp(getCurrentIP)
             }
+            // let size = await getFileDuLieuString(Constant.SIZE_INPUT, true);
+            // console.log('size ', size);
+            // if (size && size != "") {
+            //     setPaperSize(size)
+            // }
             let provisional = await getFileDuLieuString(Constant.PROVISIONAL_PRINT, true);
             console.log('provisional ', provisional);
             if (provisional && provisional != "" && provisional == Constant.PROVISIONAL_PRINT) {
@@ -242,7 +247,10 @@ const ContentComponent = (props) => {
         if (ipInput.length > 11) {
             setIp(ipInput)
             setFileLuuDuLieu(Constant.IPPRINT, ipInput)
-            Print.registerPrint(ipInput)
+            console.log("paperSize ", paperSize);
+            setFileLuuDuLieu(Constant.SIZE_INPUT, paperSize)
+            let size = paperSize != "" ? paperSize : "72";
+            Print.registerPrint(ipInput + "_" + size)
         }
         setShowModal(false)
     }
@@ -257,8 +265,13 @@ const ContentComponent = (props) => {
             <ScrollView style={{ flexGrow: 1 }}>
                 <View style={{ padding: 20, borderBottomWidth: 0.5, borderBottomColor: "#ddd" }}>
                     <Text style={{ color: Colors.colorchinh, fontSize: 18 }}>{I18n.t('ket_noi_may_in')}</Text>
-                    <TouchableOpacity style={{ paddingVertical: 10, paddingTop: 20 }} onPress={() => {
+                    <TouchableOpacity style={{ paddingVertical: 10, paddingTop: 20 }} onPress={async () => {
                         setShowModal(true)
+                        let size = await getFileDuLieuString(Constant.SIZE_INPUT, true);
+                        console.log('size ', size);
+                        if (size && size != "") {
+                            setPaperSize(size)
+                        }
                     }}>
                         <Text style={{}}>{I18n.t('may_in_tam_tinh')} ({I18n.t('qua_mang_lan')} {ip})</Text>
                     </TouchableOpacity>

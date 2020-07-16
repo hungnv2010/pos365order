@@ -639,7 +639,7 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.colorchinh, borderTopRightRadius: 4, borderTopLeftRadius: 4,
     },
     headerModalText: {
-        margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, marginVertical: 20, color: "#fff"
+        margin: 5, textTransform: "uppercase", fontSize: 15, fontWeight: "bold", marginLeft: 20, marginVertical: 10, color: "#fff"
     },
     button: {
         borderColor: Colors.colorchinh,
