@@ -7,6 +7,7 @@ import { Snackbar } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
 import { getFileDuLieuString } from '../../data/fileStore/FileStorage';
 import { Constant } from '../../common/Constant';
+import colors from '../../theme/Colors';
 
 
 // export default (props) => {
@@ -40,8 +41,7 @@ export const ReturnProduct = (props) => {
                 <Text style={styles.headerModalText}>{I18n.t('huy_tra')} {Name}</Text>
             </View>
             <View style={{ padding: 20 }}>
-
-                <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} >
+                <View style={{  flexDirection: "row", justifyContent: "center", alignItems:"center" }} >
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
@@ -69,13 +69,13 @@ export const ReturnProduct = (props) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} >
-                    <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('con_lai_so_luong')}</Text>
+                <View style={{  flexDirection: "row", justifyContent: "center", alignItem:"center" }} >
+                    <Text style={{ fontSize: 14, flex: 3 , alignSelf:"center"}}>{I18n.t('con_lai_so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
 
                         <TextInput
                             editable={false} selectTextOnFocus={false}
-                            style={styles.textQuantityModal}
+                            style={[styles.textQuantityModal, { marginHorizontal: 0 }]}
                             value={"" + ((Quantity - QuantityChange) > 0 ? (Quantity - QuantityChange) : 0)}
                             keyboardType="numeric" />
 
@@ -83,7 +83,7 @@ export const ReturnProduct = (props) => {
                 </View>
                 {vendorSession.Settings.ReturnHistory == true ?
                     <View>
-                        <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} onPress={() => setShowModal(false)}>
+                        <View style={{  flexDirection: "row", justifyContent: "center" , alignItems:"center"}} onPress={() => setShowModal(false)}>
                             <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('ly_do')}</Text>
                             <View style={{ flexDirection: "row", flex: 7 }}>
                                 <TextInput
@@ -97,17 +97,20 @@ export const ReturnProduct = (props) => {
                                     placeholder={I18n.t('ly_do')} />
                             </View>
                         </View>
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", marginVertical: 10 }}>
-                            <TouchableOpacity onPress={() => {
-                                setDescription(I18n.t('khach_yeu_cau'))
-                            }} style={{}} >
-                                <Text style={{}}>{I18n.t('khach_yeu_cau')}</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => {
-                                setDescription(I18n.t('thao_tac_sai'))
-                            }} style={{}} >
-                                <Text style={{}}>{I18n.t('thao_tac_sai')}</Text>
-                            </TouchableOpacity>
+                        <View style={{ flexDirection: "row", justifyContent: "center", alignItems:"center" }}>
+                            <View style={{ flex: 3 }}></View>
+                            <View style={{ flex: 7, flexDirection: "row", justifyContent: "space-between", marginVertical: 10 }}>
+                                <TouchableOpacity onPress={() => {
+                                    setDescription(I18n.t('khach_yeu_cau'))
+                                }} style={{}} >
+                                    <Text style={{ textDecorationLine: "underline", color: colors.colorLightBlue }}>{I18n.t('khach_yeu_cau')}</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => {
+                                    setDescription(I18n.t('thao_tac_sai'))
+                                }} style={{}} >
+                                    <Text style={{ textDecorationLine: "underline", color: colors.colorLightBlue }}>{I18n.t('thao_tac_sai')}</Text>
+                                </TouchableOpacity>
+                            </View>
                         </View>
                     </View>
                     : null}
@@ -171,7 +174,7 @@ const styles = StyleSheet.create({
         alignItems: "center", flexDirection: "row", flex: 7, backgroundColor: "#D5D8DC"
     },
     wrapAllButtonModal: {
-        alignItems: "center", justifyContent: "space-between", flexDirection: "row", marginTop: 10
+        alignItems: "center", justifyContent: "space-between", flexDirection: "row",
     },
     wrapButtonModal: {
         alignItems: "center",

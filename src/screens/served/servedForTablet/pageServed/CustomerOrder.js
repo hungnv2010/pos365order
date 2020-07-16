@@ -649,7 +649,7 @@ const PopupDetail = (props) => {
                     </View>
 
                 </View>
-                <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} >
+                <View style={{ alignItems:"center", flexDirection: "row", justifyContent: "center" , marginTop:10}} >
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('so_luong')}</Text>
                     <View style={{ alignItems: "center", flexDirection: "row", flex: 7 }}>
                         <TouchableOpacity onPress={() => {
@@ -677,7 +677,7 @@ const PopupDetail = (props) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <View style={{ padding: 0, flexDirection: "row", justifyContent: "center" }} onPress={() => setShowModal(false)}>
+                <View style={{ alignItems:"center", flexDirection: "row", justifyContent: "center" , marginTop:10}} onPress={() => setShowModal(false)}>
                     <Text style={{ fontSize: 14, flex: 3 }}>{I18n.t('ghi_chu')}</Text>
                     <View style={{ flexDirection: "row", flex: 7 }}>
                         <TextInput
